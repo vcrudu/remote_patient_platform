@@ -1,0 +1,105 @@
+<section ng-controller="registerCtrl" id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-check"></i> </span>
+                    <h2>Registration Wizard </h2>
+
+                </header>
+
+                <!-- widget div-->
+                <div>
+
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <!-- widget content -->
+                    <div class="widget-body">
+
+                        <div class="row">
+                                <div id="bootstrap-wizard-1" class="col-sm-12">
+                                    <div class="form-bootstrapWizard">
+                                        <ul class="bootstrapWizard form-wizard">
+                                            <li ui-sref-active="active">
+                                                <a ui-sref="register.type" data-toggle="tab"> <span class="step">1</span> <span class="title">Account type</span> </a>
+                                            </li>
+                                            <li ui-sref-active="active">
+                                                <a ui-sref="register.basic" data-toggle="tab"> <span class="step">2</span> <span class="title">User</span> </a>
+                                            </li>
+                                            <li ui-sref-active="active">
+                                                <a ui-sref="register.address" data-toggle="tab"> <span class="step">3</span> <span class="title">Address</span> </a>
+                                            </li>
+                                            <li ui-sref-active="active">
+                                                <a ui-sref="register.medical" data-toggle="tab"> <span class="step">4</span> <span class="title">Medical</span> </a>
+                                            </li>
+                                            <li ui-sref-active="active">
+                                                <a ui-sref="register.save" data-toggle="tab"> <span class="step">5</span> <span class="title">Save Form</span> </a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="tab-content">
+                                        <ui-view></ui-view>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <ul class="pager wizard no-margin">
+                                                        <!--<li class="previous first disabled">
+                                                        <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+                                                        </li>-->
+                                                        <li ng-class="previousButtonClass()">
+                                                            <a ng-click="moveBack()" class="btn btn-lg btn-default"> Previous </a>
+                                                        </li>
+                                                        <!--<li class="next last">
+                                                        <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+                                                        </li>-->
+                                                        <li ng-class="nextButtonClass()">
+                                                            <a ng-click="moveNext()" class="btn btn-lg txt-color-darken"> Next </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                        </div>
+
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+    </div>
+
+    <!-- end row -->
+
+</section>

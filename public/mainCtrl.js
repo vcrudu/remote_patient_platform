@@ -1,0 +1,73 @@
+/**
+ * Created by Victor on 29/04/2015.
+ */
+(function(){
+    var app = angular.module('app', ['ui.router','ui.bootstrap.datetimepicker']);
+    app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
+        $urlRouterProvider.otherwise("/login");
+        $stateProvider.state('login',{
+            url:"/login",
+            views:{
+                "headerView":{templateUrl:"loggedOutHeader.html"},
+                "mainView":{templateUrl:"login.html"}
+            }
+        }).state('register',{
+            url:"/register",
+            views:{
+                "headerView":{templateUrl:"registerHeader.html"},
+                "mainView":{templateUrl:"register.html"}
+            },
+            controller:'registerCtrl'
+        }).state('register.type',{
+            url:"/type",
+            templateUrl:"register.type.html",
+            controller:'registerCtrl',
+            data:{
+                previousState:NaN,
+                nextState:"register.basic",
+                order:0
+            }
+        }).state('register.basic',{
+            url:"/basic",
+            templateUrl:"register.basic.html",
+            controller:'registerBasicCtrl',
+            data:{
+                previousState:"register.type",
+                nextState:"register.address",
+                order:1
+            }
+        }).state('register.address',{
+            url:"/address",
+            templateUrl:"register.address.html",
+            controller:'registerCtrl',
+            data:{
+                previousState:"register.basic",
+                nextState:"register.medical",
+                order:2
+            }
+        }).state('register.medical',{
+            url:"/medical",
+            templateUrl:"register.medical.html",
+            controller:'registerCtrl',
+            data:{
+                previousState:"register.address",
+                nextState:"register.save",
+                order:3
+            }
+        }).state('register.save',{
+            url:"/save",
+            templateUrl:"register.save.html",
+            controller:'registerCtrl',
+            data:{
+                previousState:"register.address",
+                nextState:NaN,
+                order:4
+            }
+        });
+    }]);
+
+    app.controller('mainCtrl', ['$scope',function($scope){
+            $scope.extr_page="extr-page";
+            $scope.bodyClass="desktop-detected pace-done";
+    }]);
+})();
