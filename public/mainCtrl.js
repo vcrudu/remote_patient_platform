@@ -39,7 +39,7 @@
         }).state('register.address',{
             url:"/address",
             templateUrl:"register.address.html",
-            controller:'registerCtrl',
+            controller:'registerAddressCtrl',
             data:{
                 previousState:"register.basic",
                 nextState:"register.medical",
@@ -48,7 +48,7 @@
         }).state('register.medical',{
             url:"/medical",
             templateUrl:"register.medical.html",
-            controller:'registerCtrl',
+            controller:'registerMedicalCtrl',
             data:{
                 previousState:"register.address",
                 nextState:"register.save",
@@ -59,7 +59,7 @@
             templateUrl:"register.save.html",
             controller:'registerCtrl',
             data:{
-                previousState:"register.address",
+                previousState:"register.medical",
                 nextState:NaN,
                 order:4
             }

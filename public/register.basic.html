@@ -12,7 +12,8 @@
                             <label class="input" ng-class="formBasic.email.$dirty && (formBasic.email.$error.required ||
                             formBasic.email.$error.email)?'state-error':''"> <i class="icon-append fa fa-envelope-o"></i>
                                 <input type="email" name="email" placeholder="Email address" required ng-model="newUser.email" ng-model-options="{ updateOn: 'default blur' }" >
-                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
+                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                            </label>
                                 <em ng-show="formBasic.email.$dirty && formBasic.email.$error.required" class="invalid">Email is required.</em>
                             <em ng-show="formBasic.email.$dirty && formBasic.email.$error.email" class="invalid">Email is invalid</em>
                         </section>

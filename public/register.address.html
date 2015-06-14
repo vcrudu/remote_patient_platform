@@ -9,9 +9,9 @@
                     <fieldset>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="select">
-                                    <select name="country">
-                                        <option value="0" selected="" disabled="">Country</option>
+                                <label class="select" ng-class="formAddress.country.$dirty && formAddress.country.$error.required?'state-error':''">
+                                    <select name="country" required ng-model="newUser.country" >
+                                        <option value="" selected="" disabled="">Country</option>
                                         <option value="14">Austria</option>
                                         <option value="21">Belgium</option>
                                         <option value="31">British Indian Ocean Territory</option>
@@ -34,33 +34,38 @@
                                         <option value="231">Virgin Islands (British)</option>
                                         <option value="232">Virgin Islands (U.S.)</option>
                                     </select> <i></i> </label>
+                                <em ng-show="formAddress.country.$dirty && formAddress.country.$error.required" class="invalid">Country is required.</em>
                             </section>
 
                             <section class="col col-6">
-                                <label class="input">
-                                    <input type="text" name="county" placeholder="County">
+                                <label class="input" ng-class="formAddress.county.$dirty && formAddress.county.$error.required?'state-error':''">
+                                    <input type="text" name="county" required ng-model="newUser.county" placeholder="County">
                                 </label>
+                                <em ng-show="formAddress.county.$dirty && formAddress.county.$error.required" class="invalid">County is required.</em>
                             </section>
                         </div>
 
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input">
-                                    <input type="text" name="city" placeholder="City">
+                                <label class="input" ng-class="formAddress.town.$dirty && formAddress.town.$error.required?'state-error':''">
+                                    <input type="text" name="town" required ng-model="newUser.town" placeholder="Town">
                                 </label>
+                                <em ng-show="formAddress.town.$dirty && formAddress.town.$error.required" class="invalid">Town is required.</em>
                             </section>
 
                             <section class="col col-6">
-                                <label class="input">
-                                    <input type="text" name="code" placeholder="Post code">
+                                <label class="input" ng-class="formAddress.postCode.$dirty && formAddress.postCode.$error.required?'state-error':''">
+                                    <input type="text" name="postCode" required ng-model="newUser.postCode" placeholder="Post code">
                                 </label>
+                                <em ng-show="formAddress.postCode.$dirty && formAddress.postCode.$error.required" class="invalid">Post code is required.</em>
                             </section>
                         </div>
 
                         <section>
-                            <label for="address1" class="input">
-                                <input type="text" name="address1" id="address1" placeholder="Address Line 1">
+                            <label for="address1" class="input" ng-class="formAddress.address1.$dirty && formAddress.address1.$error.required?'state-error':''">
+                                <input type="text" name="address1" id="address1" required ng-model="newUser.address1" placeholder="Address Line 1">
                             </label>
+                            <em ng-show="formAddress.address1.$dirty && formAddress.address1.$error.required" class="invalid">Address line 1 is required.</em>
                         </section>
 
                         <section>
