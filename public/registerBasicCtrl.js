@@ -11,8 +11,21 @@ angular.module('app').controller('registerBasicCtrl',['$scope','$log','$state', 
         $scope.formBasic.surname.$setDirty();
         $scope.formBasic.gender.$setDirty();
         $scope.formBasic.dateOfBirth.$setDirty();
+        $scope.formBasic.password.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
+        $scope.formBasic.passwordConfirm.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
         if(fromState.data.order<toState.data.order && $scope.formBasic.$invalid){
            event.preventDefault();
         }
     });
+
+    $scope.$watch("newUser.password", function() {
+        $scope.formBasic.password.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
+        $scope.formBasic.passwordConfirm.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
+    });
+
+    $scope.$watch("newUser.passwordConfirm", function() {
+        $scope.formBasic.password.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
+        $scope.formBasic.passwordConfirm.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
+    });
+
 }]);

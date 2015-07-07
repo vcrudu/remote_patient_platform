@@ -9,6 +9,8 @@ angular.module('app').controller('registerMedicalCtrl',['$scope','$log','$state'
         $scope.formMedical.weight.$setDirty();
         if(fromState.data.order<toState.data.order && $scope.formMedical.$invalid){
            event.preventDefault();
+        }else {
+            $scope.formMedical.$commitViewValue();
         }
     });
 }]);

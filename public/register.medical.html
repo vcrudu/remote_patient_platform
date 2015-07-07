@@ -10,24 +10,30 @@
                  <fieldset>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input" ng-class="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.required?'state-error':''">
-                                    <input type="text" name="nhsNumber" required ng-model="newUser.nhsNumber" placeholder="NHS Number">
+                                <label class="input" ng-class="formMedical.nhsNumber.$dirty &&
+                                (formMedical.nhsNumber.$error.required && formMedical.nhsNumber.$error.nhsNumberValid)?'state-error':''">
+                                    <input type="text" name="nhsNumber" required nhs-number-valid ng-model="newUser.nhsNumber" placeholder="NHS Number">
                                 </label>
                                 <em ng-show="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.required" class="invalid">NHS Number is required.</em>
+                                <em ng-show="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.nhsNumberValid" class="invalid">NHS Number is not valid.</em>
                             </section>
                         </div>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input" ng-class="formMedical.height.$dirty && formMedical.height.$error.required?'state-error':''">
-                                    <input type="text" name="height" required ng-model="newUser.height" placeholder="Current Height">
+                                <label class="input" ng-class="formMedical.height.$dirty && (formMedical.height.$error.required
+                                && formMedical.height.$error.isWeightHeight)?'state-error':''">
+                                    <input type="text" name="height" required is-weight-height ng-model="newUser.height" placeholder="Current Height">
                                 </label>
                                 <em ng-show="formMedical.height.$dirty && formMedical.height.$error.required" class="invalid">Height is required.</em>
+                                <em ng-show="formMedical.height.$dirty && formMedical.height.$error.isWeightHeight" class="invalid">Height is not valid.</em>
                             </section>
                             <section class="col col-6">
-                                <label class="input" ng-class="formMedical.weight.$dirty && formMedical.height.$error.required?'state-error':''">
-                                    <input type="text" name="weight" required ng-model="newUser.weight" placeholder="Current Weight">
+                                <label class="input" ng-class="formMedical.weight.$dirty && (formMedical.weight.$error.required
+                                && formMedical.weight.$error.isWeightHeight)?'state-error':''">
+                                    <input type="text" name="weight" required is-weight-height ng-model="newUser.weight" placeholder="Current Weight">
                                 </label>
                                 <em ng-show="formMedical.weight.$dirty && formMedical.weight.$error.required" class="invalid">Weight is required.</em>
+                                <em ng-show="formMedical.weight.$dirty && formMedical.weight.$error.isWeightHeight" class="invalid">Weight is not valid.</em>
                             </section>
                         </div>
                      <div class="row">
@@ -36,48 +42,48 @@
                                  <div class="row">
                                      <div class="col col-6">
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="asthma" ng-model="newUser.asthma">
                                              <i></i>Asthma (on medication)</label>
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="cancer" ng-model="newUser.cancer">
                                              <i></i>Cancer</label>
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="diabetes" ng-model="newUser.diabetes">
                                              <i></i>Diabetes</label>
                                      </div>
                                      <div class="col col-6">
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="heart" ng-model="newUser.heart">
                                              <i></i>Chronic heart disease</label>
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="kidney" ng-model="newUser.kidney">
                                              <i></i>Chronic kidney disease</label>
                                          <label class="checkbox">
-                                             <input type="checkbox" name="checkbox">
+                                             <input type="checkbox" name="lung" ng-model="newUser.lung">
                                              <i></i>Chronic lung disease</label>
                                      </div>
                                  </div>
                              <div class="row">
                                  <div class="col col-6">
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="epilepsy" ng-model="newUser.epilepsy">
                                          <i></i>Epilepsy</label>
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="stroke" ng-model="newUser.stroke">
                                          <i></i>Stroke/TIA</label>
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="hypertension" ng-model="newUser.hypertension">
                                          <i></i>Hypertension (high blood pressure)</label>
                                  </div>
                                  <div class="col col-6">
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="hypothyroidism" ng-model="newUser.hypothyroidism">
                                          <i></i>Hypothyroidism (underactive thyroid)</label>
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="mental" ng-model="newUser.mental">
                                          <i></i>Mental health concerns (give details)</label>
                                      <label class="checkbox">
-                                         <input type="checkbox" name="checkbox">
+                                         <input type="checkbox" name="operations" ng-model="newUser.operations">
                                          <i></i>Previous operations</label>
                                  </div>
                              </div>

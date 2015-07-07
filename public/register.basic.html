@@ -11,7 +11,7 @@
                         <section>
                             <label class="input" ng-class="formBasic.email.$dirty && (formBasic.email.$error.required ||
                             formBasic.email.$error.email)?'state-error':''"> <i class="icon-append fa fa-envelope-o"></i>
-                                <input type="email" name="email" placeholder="Email address" required ng-model="newUser.email" ng-model-options="{ updateOn: 'default blur' }" >
+                                <input type="email" name="email" placeholder="Email address" required ng-model="newUser.email">
                                 <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
                             </label>
                                 <em ng-show="formBasic.email.$dirty && formBasic.email.$error.required" class="invalid">Email is required.</em>
@@ -19,10 +19,10 @@
                         </section>
 
                         <section>
-                            <label class="input" ng-class="formBasic.password.$dirty && (formBasic.password.$error.required||formBasic.passwordConfirm.$error.matchPassword)?'state-error':''">
+                            <label class="input" ng-class="formBasic.password.$dirty && (formBasic.password.$error.required||formBasic.password.$error.matchPassword)?'state-error':''">
                                 <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="password" placeholder="Password" id="password" required match-password
-                                       password-format differ-from-email ng-model="newUser.password" ng-model-options="{ updateOn: 'default blur' }" >
+                                <input type="password" name="password" placeholder="Password" id="password" required
+                                       password-format differ-from-email ng-model="newUser.password" >
                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                             <em ng-show="formBasic.password.$dirty && formBasic.password.$error.required" class="invalid">Password is required.</em>
                             <em ng-show="formBasic.password.$dirty && formBasic.password.$error.matchPassword" class="invalid">Password does not match.</em>
@@ -33,7 +33,7 @@
                         <section>
                             <label class="input" ng-class="formBasic.passwordConfirm.$dirty && (formBasic.passwordConfirm.$error.required||formBasic.passwordConfirm.$error.matchPassword)?'state-error':''">
                                 <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="passwordConfirm" placeholder="Confirm password" required match-password ng-model="newUser.passwordConfirm" ng-model-options="{ updateOn: 'default blur' }" >
+                                <input type="password" name="passwordConfirm" placeholder="Confirm password" required ng-model="newUser.passwordConfirm" ng-model-options="{ updateOn: 'default blur' }" >
                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                             <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.required" class="invalid">Password is required.</em>
                             <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.matchPassword" class="invalid">Password does not match.</em>

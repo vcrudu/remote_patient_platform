@@ -2,12 +2,17 @@
  * Created by Victor on 12/05/2015.
  */
 
-angular.module('app').controller('registerCtrl',['$scope','$log','$state', function($scope, $log, $state){
+angular.module('app').controller('registerCtrl',['$scope','$log','$state','toastr','authService',
+    function($scope, $log, $state, toastr, authService){
         $scope.newUser ={type:"Patient"};
         $scope.states = [];
 
         $scope.moveNext = function(){
-            $state.go($state.$current.data.nextState);
+            if($state.$current.data.nextState){
+                $state.go($state.$current.data.nextState);
+            }else{
+                authService.signup($scope.newUser, successSignIn, errorSignIn);
+            }
         };
 
         $scope.moveBack = function(){
@@ -19,6 +24,14 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state', funct
         };
 
         $scope.nextButtonClass = function(){
-            return $state.$current.data.nextState?"next":"next disabled";
+            return "next";
+        };
+
+        var successSignIn = function(response){
+            $state.go('patient');
+        };
+
+        var errorSignIn = function(err){
+            toastr.error(err,'Error');
         };
 }]);

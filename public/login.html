@@ -4,7 +4,7 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-            <form action="index.html" id="login-form" class="smart-form client-form">
+            <form name="loginForm" novalidate id="login-form" class="smart-form client-form">
                 <header>
                     Sign In
                 </header>
@@ -14,17 +14,19 @@
                     <section>
                         <label class="label">E-mail</label>
                         <label class="input"> <i class="icon-append fa fa-user"></i>
-                            <input type="email" name="email">
+                            <input type="email" name="email" ng-model="userCredentials.email" required>
                             <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
+                        <em ng-show="loginForm.email.$error.$dirty && loginForm.email.$error.required" class="invalid">The username is required!</em>
                     </section>
 
                     <section>
                         <label class="label">Password</label>
                         <label class="input"> <i class="icon-append fa fa-lock"></i>
-                            <input type="password" name="password">
+                            <input type="password" name="password" ng-model="userCredentials.password" required>
                             <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b> </label>
+                        <em ng-show="loginForm.password.$dirty && loginForm.password.$error.required" class="invalid">The password is required!</em>
                         <div class="note">
-                            <a href="forgotpassword.html">Forgot password?</a>
+                            <a ui-sref="forgotPassword">Forgot password?</a>
                         </div>
                     </section>
 
@@ -35,7 +37,8 @@
                     </section>
                 </fieldset>
                 <footer>
-                    <button type="submit" class="btn btn-primary">
+                    <span></span>
+                    <button ng-click="signIn()" class="btn btn-primary">
                         Sign in
                     </button>
                 </footer>
