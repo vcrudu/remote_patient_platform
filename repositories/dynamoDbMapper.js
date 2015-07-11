@@ -6,9 +6,6 @@
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
 
-    function dateToNumber(date){
-        //date.
-    }
 
     module.exports  = {
         createUserFromBody : function(requestBody){
@@ -36,9 +33,7 @@
                     name:{S:patient.name},
                     surname:{S:patient.surname},
                     title:{S:patient.title},
-                    dateOfBirth:{N:patient.dateOfBirth},
-                    dateOfBirth:{S:patient.dateOfBirth},
-
+                    dateOfBirth:{N:patient.dateOfBirth}
 
             };
         }

@@ -15,15 +15,21 @@
       },
         createUserFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
-            createdDateTime.setTime(dbEntity.createdDateTime.N);
+            if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
-                token: dbEntity.token.S,
+                token: dbEntity.tokenString.S,
                 createdDateTime:createdDateTime
             };
         },
-
+        createUserDetailsFromDbEntity : function(dbEntity){
+            return {
+                email: dbEntity.email.S,
+                firstname: dbEntity.firstname.S,
+                surname: dbEntity.surname.S
+            };
+        },
         createUserDetailsFromBody : function(requestBody){
             return domainModel.createPatient(requestBody);
         }

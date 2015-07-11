@@ -24,6 +24,13 @@
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "path": "^0.11.14",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "mocha": "^2.2.5"
   }
 }

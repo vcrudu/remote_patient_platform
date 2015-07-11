@@ -25,8 +25,8 @@ angular.module('app').directive('smartDatepicker', function () {
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         angular.forEach(onSelectCallbacks, function (callback) {
-                            callback.call(this, selectedDate)
-                        })
+                            callback.call(this, selectedDate);
+                        });
                     }
                 };
 
@@ -40,7 +40,7 @@ angular.module('app').directive('smartDatepicker', function () {
 
                 if (tAttributes.changeYear) options.changeYear = tAttributes.changeYear == "true";
 
-                tElement.datepicker(options)
+                tElement.datepicker(options);
             }
-        }
+        };
 });

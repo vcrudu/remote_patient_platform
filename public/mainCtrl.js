@@ -17,7 +17,8 @@
             url:"/patient",
             views:{
                 "headerView":{templateUrl:"patient.header.html"},
-                "mainView":{templateUrl:"patient.body.html"}
+                "mainView":{templateUrl:"patient.body.html"},
+                "asideView":{templateUrl:"asideNav.html"}
             }
         }).state('register',{
             url:"/register",
@@ -71,7 +72,7 @@
                 nextState:NaN,
                 order:4
             }
-        })
+        });
     }]);
 
     app.config(function(toastrConfig) {
@@ -113,10 +114,10 @@
         return{
           request:function(config){
               if($localStorage.token){
-                    config.headers['authorization'] = 'bearer'.concat(' ',$localStorage.token);
+                    config.headers.authorization = 'bearer'.concat(' ',$localStorage.token);
               }
               else{
-                  config.headers['authorization'] = NaN;
+                  config.headers.authorization = NaN;
               }
               return config;
           },
@@ -159,10 +160,22 @@
             $scope.extr_page="extr-page";
             $scope.bodyClass="desktop-detected pace-done";
 
+        $scope.isAuthenticated = function(){
+            return authService.isAuthenticated();
+        };
+
+        $scope.$on('signin', function(){
+            $scope.extr_page="";
+        });
+
             $scope.logOut = function(){
                 authService.logout(function(){
                     toastr.info('Logged out!','Information');
                 });
+
+
+                $scope.extr_page="extr-page";
+
                 $state.go('login');
             };
     }]);
