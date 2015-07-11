@@ -14,7 +14,7 @@
 
        return dynamodb;
 
-    }
+    };
 
     module.exports = {
 
@@ -52,10 +52,10 @@
                 Key: { email: { S: user.email }},
                 TableName:'Users',
                 ExpressionAttributeValues: {
-                    ":token": {"S":user.token  },
+                    ":tokenString": {"S":user.token  },
                 },
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET token=:token'
+                UpdateExpression: 'SET tokenString=:tokenString'
             };
 
 
@@ -97,5 +97,5 @@
                 callback(null, data);
             });
         }
-    }
+    };
 })();

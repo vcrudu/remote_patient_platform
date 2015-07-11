@@ -11,13 +11,14 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'authService',
                 function(success){
                     if(success.success) {
                         $state.go('patient');
+                        $scope.$emit('signin');
                     }else{
                         toastr.warning('Invalid username or password!');
                     }
             },function(error){
                     toastr.error(error, 'Error');
                 }
-            )
+            );
         }
     };
 }]);

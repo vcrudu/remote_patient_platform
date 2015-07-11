@@ -6,9 +6,6 @@
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
 
-    function dateToNumber(date){
-        //date.
-    }
 
     module.exports  = {
         createUserFromBody : function(requestBody){
@@ -121,6 +118,7 @@
             return {
                     id: {S:patient.id},
                     name:{S:patient.name},
+<<<<<<< HEAD
                     surname: {S:patient.surname},
                     title: {S:patient.title},
                     dateOfBirth: {N:dateOfBirthNumber},
@@ -179,6 +177,11 @@
                 contactDetails : allRelevantContactDetails
             }
         },
+=======
+                    surname:{S:patient.surname},
+                    title:{S:patient.title},
+                    dateOfBirth:{N:patient.dateOfBirth}
+>>>>>>> 45c61e1aeb3b489d03d03e058ebd012eb41eb2a9
 
         mapAddressFromDbEntity : function(item)
         {

@@ -12,7 +12,7 @@
        var getDb = function(){
        var dynamodb = new AWS.DynamoDB(connectionOptions);
        return dynamodb;
-    }
+    };
 
     module.exports = {
 
@@ -34,7 +34,7 @@
                 }
                 console.log("The user has been found successfully.");
                 if(data.Item) {
-                    var user = UserFactory.createUserFromDbEntity(data.Item);
+                    var user = UserFactory.createUserDetailsFromDbEntity(data.Item);
                     callback(null, user);
                 }else{
                     callback(null, null);
@@ -49,8 +49,8 @@
             var params = {
                 Item: {
                     email: { S: user.email},
-                    passwordHash:{S:user.passwordHash},
-                    tokenString:{S:user.token}
+                    firstname:{S:user.firstname},
+                    surname:{S:user.surname}
                 },
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
@@ -69,5 +69,5 @@
                 callback(null, data);
             });
         }
-    }
+    };
 })();

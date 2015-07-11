@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 19/06/2015.
  */
-'use strict';
+
 
 angular.module('app')
     .constant('appSettings',{serverUrl:'http://localhost:8080'})
@@ -44,9 +44,10 @@ angular.module('app')
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: data
-                }
+                };
                 $http(req).success(function(data){
-                    $localStorage.token = data;
+                    $localStorage.token = data.token;
+                    $localStorage.isAuthenticated = true;
                     success(data);
                 }).error(error);
             },
@@ -59,15 +60,20 @@ angular.module('app')
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: data
-                }
+                };
                 $http(req).success(function(data){
                     $localStorage.token = data.data.token;
                     success(data);
                 }).error(error);
             },
 
+            isAuthenticated: function () {
+                return $localStorage.isAuthenticated;
+            },
+
             logout: function (success) {
                 delete $localStorage.token;
+                $localStorage.isAuthenticated = false;
                 success();
             }
         };
