@@ -9,8 +9,10 @@
          var salt = bcrypt.genSaltSync(10);
          var passwordHash = bcrypt.hashSync(requestBody.password, salt);
          return {
-               email: requestBody.email,
-               passwordHash: passwordHash
+               email : requestBody.email,
+               passwordHash : passwordHash,
+               firstname : requestBody.firstName,
+               surname : requestBody.surname
          };
       },
         createUserFromDbEntity : function(dbEntity){

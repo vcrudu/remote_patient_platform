@@ -9,7 +9,7 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'authService',
         if($scope.loginForm.$valid){
             authService.signin($scope.userCredentials,
                 function(success){
-                    if(success.success) {
+                    if(success.token) {
                         $state.go('patient');
                         $scope.$emit('signin');
                     }else{

@@ -113,11 +113,11 @@
     app.factory('authorisationInjector',['$localStorage',function($localStorage){
         return{
           request:function(config){
-              if($localStorage.token){
-                    config.headers.authorization = 'bearer'.concat(' ',$localStorage.token);
+              if($localStorage.user){
+                    config.headers.authorization = 'bearer'.concat(' ',$localStorage.user.token);
               }
               else{
-                  config.headers.authorization = NaN;
+                  config.headers.authorization = undefined;
               }
               return config;
           },
@@ -160,12 +160,11 @@
             $scope.extr_page="extr-page";
             $scope.bodyClass="desktop-detected pace-done";
 
-        $scope.isAuthenticated = function(){
-            return authService.isAuthenticated();
-        };
 
         $scope.$on('signin', function(){
             $scope.extr_page="";
+            $scope.userName = authService.getUserName();
+
         });
 
             $scope.logOut = function(){
