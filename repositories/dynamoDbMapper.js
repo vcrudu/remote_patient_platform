@@ -6,6 +6,163 @@
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
 
+    function buildArray(source, mapper)
+    {
+        var all = [];
+        for(var i=0; i<source.length; i++)
+        {
+            var temp = mapper(source[i]);
+            all.push(temp);
+        }
+        return all;
+    }
+
+    //
+    //-----------------Map To DbEntity-------------------
+    //
+
+    function mapOtherIdentifiersToDbEntity(identifier)
+    {
+        return {
+            otherIdentifierType: {S: identifier.otherIdentifierType},
+            otherIdentifier: {S: identifier.otherIdentifier}
+        };
+    }
+
+    //----------------- Relevant Contacts
+    function mapRelevantContactsDetailsToDbEntity(contactDetail)
+    {
+        return {
+            contactType : {S : contactDetail.contactType},
+            contact : {S : contactDetail.contact}
+        };
+    }
+
+    function mapRelevantContactsToDbEntity(relevantContact)
+    {
+        var allRelevantContactDetails;
+        for(var i=0; i<relevantContact.contactDetails.length; i++)
+        {
+            var temp = mapRelevantContactsDetailsToDbEntity(relevantContact.contactDetails[i]);
+            allRelevantContactDetails.push(temp);
+        }
+        return {
+            fullName : {S: relevantContact.fullName},
+            relationship : {S: relevantContact.relationship},
+            contactDetails : {L : allRelevantContactDetails}
+        };
+    }
+    //---------------- End Relevant Contacts
+
+    function mapDevicesToDbEntity(device)
+    {
+        return {
+            model : {S: device.model},
+            serialNumber : {S: device.serialNumber},
+            manufacturer : {S: device.manufacturer},
+            deviceType : {S: device.deviceType}
+        };
+    }
+
+    function mapHealthProblemsToDbEntity(item)
+    {
+        return {
+            problemType : {S: item.problemType},
+            date : {S: item.date},
+            description : {S: item.description}
+        };
+    }
+
+    function mapAddressToDbEntity(item)
+    {
+        return {
+            id:{S: item.id},
+            addressLine1:{S: item.addressLine1},
+            addressLine2:{S: item.addressLine2},
+            town:{S: item.town},
+            county:{S: item.county},
+            country:{S: item.country},
+            postCode:{S: item.postCode},
+            longitude:{S: item.longitude},
+            latitude:{S: item.latitude}
+        };
+    }
+
+    //-----------------End Map To DbEntity-------------------
+
+    //
+    //-----------------Map From DbEntity-------------------
+    //
+
+
+    function mapOtherIdentifiersFromDbEntity(identifier)
+    {
+        return{
+            otherIdentifierType: identifier.otherIdentifierType.S,
+            otherIdentifier: identifier.otherIdentifier.S
+        };
+    }
+
+    function mapRelevantContactDetailsToDbEntity(contactDetail)
+    {
+        return{
+            contactType : contactDetail.contactType.S,
+            contact : contactDetail.contact.S
+        };
+    }
+
+    function mapRelevantContactsFromDbEntity(relevantContact)
+    {
+        var allRelevantContactDetails;
+        for(var i=0; i<relevantContact.contactDetails.L.length; i++)
+        {
+            var temp = mapRelevantContactDetailsToDbEntity(relevantContact.contactDetails.L[i]);
+            allRelevantContactDetails.push(temp);
+        }
+        return {
+            fullName : relevantContact.fullName.S,
+            relationship : relevantContact.relationship.S,
+            contactDetails : allRelevantContactDetails
+        };
+    }
+
+
+    function mapAddressFromDbEntity(item)
+    {
+        return new Address({
+            id: item.id.S,
+            addressLine1: item.addressLine1.S,
+            addressLine2: item.addressLine2.S,
+            town: item.town.S,
+            county: item.county.S,
+            country: item.country.S,
+            postCode: item.postCode.S,
+            longitude: item.longitude.S,
+            latitude: item.latitude.S
+        });
+    }
+
+    function mapDevicesFromDbEntity(device)
+    {
+        return {
+            model :  device.model.S,
+            serialNumber : device.serialNumber.S,
+            manufacturer : device.manufacturer.S,
+            deviceType : device.deviceType.S
+        };
+    }
+
+    function mapHealthProblemsFromDbEntity(item)
+    {
+        return {
+            problemType : item.problemType.S,
+            date : item.date.S,
+            description : item.description.S
+        };
+    }
+
+    //-----------------End Map From DbEntity-------------------
+
 
     module.exports  = {
         createUserFromBody : function(requestBody){
@@ -27,98 +184,17 @@
             };
         },
 
-        //
-        //-----------------Map To DbEntity-------------------
-        //
-
-        mapOtherIdentifiersToDbEntity : function(identifier)
-        {
-            return {
-                    otherIdentifierType: {S: identifier.otherIdentifierType},
-                    otherIdentifier: {S: identifier.otherIdentifier}
-                }
-        },
-
-        //----------------- Relevant Contacts
-        mapRelevantContactsDetailsToDbEntity : function(contactDetail)
-        {
-            return {
-                contactType : {S : contactDetail.contactType},
-                contact : {S : contactDetail.contact}
-            }
-        },
-
-        mapRelevantContactsToDbEntity : function(relevantContact)
-        {
-            var allRelevantContactDetails;
-            for(var i=0; i<relevantContact.contactDetails.length; i++)
-            {
-                var temp = mapRelevantContactsDetailsToDbEntity(relevantContact.contactDetails[i]);
-                allRelevantContactDetails.push(temp);
-            }
-            return {
-                fullName : {S: relevantContact.fullName},
-                relationship : {S: relevantContact.relationship},
-                contactDetails : {L : allRelevantContactDetails}
-            }
-        },
-        //---------------- End Relevant Contacts
-
-        mapDevicesToDbEntity : function(device)
-        {
-            return {
-                model : {S: device.model},
-                serialNumber : {S: device.serialNumber},
-                manufacturer : {S: device.manufacturer},
-                deviceType : {S: device.deviceType}
-            }
-        },
-
-        mapAddressToDbEntity : function(item)
-        {
-            return {
-                id:{S: item.id},
-                addressLine1:{S: item.addressLine1},
-                addressLine2:{S: item.addressLine2},
-                town:{S: item.town},
-                county:{S: item.county},
-                country:{S: item.country},
-                postCode:{S: item.postCode},
-                longitude:{S: item.longitude},
-                latitude:{S: item.longitude}
-            }
-        },
-
         createUserDetailsDbEntityFromPatient : function(patient){
-            var allOtherIdentifiers;
-            for(var i=0; i<patient.otherIdentifiers.length; i++)
-            {
-                var temp = mapOtherIdentifiersToDbEntity(patient.otherIdentifiers[i]);
-                allOtherIdentifiers.push(temp);
-            }
 
-            var allRelevantContacts;
-            for(var i=0; i<patient.relevantContacts.length; i++)
-            {
-                var temp = mapRelevantContactsToDbEntity(patient.relevantContacts[i]);
-                allRelevantContacts.push(temp);
-            }
-
-            var allDevices;
-            for(var i=0; i<patient.devices; i++)
-            {
-                var temp = mapDevicesToDbEntity(patient.devices[i]);
-                allDevices.push(temp);
-            }
             var fullAddress = mapAddressToDbEntity(patient.address);
-
-            var dateOfBirthNumber = dateOfBirth.getTime().toString();
-
-
+            var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
+            var allOtherIdentifiers = buildArray(patient.otherIdentifiers, mapOtherIdentifiersToDbEntity);
+            var allRelevantContacts = buildArray(patient.relevantContacts, mapRelevantContactsToDbEntity);
+            var allDevices = buildArray(patient.devices, mapDevicesToDbEntity);
+            var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
             return {
                     id: {S:patient.id},
                     name:{S:patient.name},
-<<<<<<< HEAD
                     surname: {S:patient.surname},
                     title: {S:patient.title},
                     dateOfBirth: {N:dateOfBirthNumber},
@@ -136,107 +212,24 @@
                     address: {M:fullAddress},
                     avatar: {S:patient.avatar},
                     externalId: {S:patient.externalId},
-                    devices: {L:allDevices}
+                    devices: {L:allDevices},
+                    healthProblems : {L:allHealthProblems}
             };
         },
 
 
-
-       //
-       //-----------------Map from DbEntity-------------------
-       //
-
-
-        mapOtherIdentifiersFromDbEntity : function(identifier)
-        {
-            return{
-                otherIdentifierType: identifier.otherIdentifierType.S,
-                otherIdentifier: identifier.otherIdentifier.S
-            }
-        },
-
-        mapRelevantContactDetailsToDbEntity : function(contactDetail)
-        {
-            return{
-                contactType : contactDetail.contactType.S,
-                contact : contactDetail.contact.S
-            }
-        },
-
-        mapRelevantContactsFromDbEntity : function(relevantContact)
-        {
-            var allRelevantContactDetails;
-            for(var i=0; i<relevantContact.contactDetails.L.length; i++)
-            {
-                var temp = mapRelevantContactDetailsToDbEntity(relevantContact.contactDetails.L[i]);
-                allRelevantContactDetails.push(temp);
-            }
-            return {
-                fullName : relevantContact.fullName.S,
-                relationship : relevantContact.relationship.S,
-                contactDetails : allRelevantContactDetails
-            }
-        },
-=======
-                    surname:{S:patient.surname},
-                    title:{S:patient.title},
-                    dateOfBirth:{N:patient.dateOfBirth}
->>>>>>> 45c61e1aeb3b489d03d03e058ebd012eb41eb2a9
-
-        mapAddressFromDbEntity : function(item)
-        {
-            return new Address({
-                id: item.id.S,
-                addressLine1: item.addressLine1.S,
-                addressLine2: item.addressLine2.S,
-                town: item.town.S,
-                county: item.county.S,
-                country: item.country.S,
-                postCode: item.postCode.S,
-                longitude: item.longitude.S,
-                latitude: item.longitude.S
-            });
-        },
-
-        mapDevicesFromDbEntity : function(device)
-        {
-            return {
-                model :  device.model.S,
-                serialNumber : device.serialNumber.S,
-                manufacturer : device.manufacturer.S,
-                deviceType : device.deviceType.S
-            }
-        },
-
         mapPatientFromUserDetailsDbEntity: function(dbEntity)
         {
             var dateOfBirthOriginal = new Date().setTime(parseInt(dbEntity.dateOfBirth.N));
-            var allOtherIdentifiers;
-            var allRelevantContacts;
+            var allOtherIdentifiers = buildArray(dbEntity.otherIdentifiers.L, mapOtherIdentifiersFromDbEntity);
+            var allRelevantContacts = buildArray(dbEntity.relevantContacts.L, mapRelevantContactsFromDbEntity);
             var fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
-            var allDevices;
-
-            for(var i=0; i<dbEntity.otherIdentifiers.L.length; i++)
-            {
-                var temp = mapOtherIdentifiersFromDbEntity(dbEntity.otherIdentifiers.L[i]);
-                allOtherIdentifiers.push(temp);
-            }
-
-            for(var i=0; i<dbEntity.relevantContacts.L.length; i++)
-            {
-                var temp = mapRelevantContactsFromDbEntity(dbEntity.relevantContacts.L[i]);
-                allRelevantContacts.push(temp);
-            }
-
-            for(var i=0; i<dbEntity.devices.L.length; i++)
-            {
-                var temp = mapDevicesFromDbEntity(dbEntity.devices.L[i]);
-                allDevices.push(temp);
-            }
+            var allDevices = buildArray(dbEntity.devices.L, mapDevicesFromDbEntity);
+            var allHealthProblems = buildArray(dbEntity.healthProblems, mapHealthProblemsFromDbEntity);
 
             var checkNull = function(arg1){
                 if(arg1) return arg1.S;
-                else undefined;
+                else return undefined;
             };
 
             var patient = new Patient({
@@ -245,21 +238,22 @@
                     surname: dbEntity.surname.S,
                     title: dbEntity.title.S,
                     dateOfBirth: dateOfBirthOriginal,
-                    sex: dbEntity.sex.S,
+                    sex: checkNull(dbEntity.sex.S),
                     gender: dbEntity.gender.S,
                     ethnicity: dbEntity.ethnicity.S,
                     nhsNumber: dbEntity.nhsNumber.S,
                     otherIdentifiers: allOtherIdentifiers,
-                    phone: dbEntity.phone.S,
-                    mobile: checkNull(dbEntity.mobile),
-                    fax: dbEntity.fax.S,
+                    phone: checkNull(dbEntity.phone.S),
+                    mobile: checkNull(dbEntity.mobile.S),
+                    fax: checkNull(dbEntity.fax.S),
                     email: dbEntity.email.S,
                     relevantContacts: allRelevantContacts,
                     communicationPreference: dbEntity.communicationPreference.S,
                     address: fullAddress,
-                    avatar: dbEntity.avatar.S,
-                    externalId: dbEntity.externalId.S,
-                    devices: allDevices
+                    avatar: checkNull(dbEntity.avatar.S),
+                    externalId: checkNull(dbEntity.externalId.S),
+                    devices: allDevices,
+                    healthProblems: allHealthProblems
                 }
             );
             return patient;
