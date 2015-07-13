@@ -1,7 +1,6 @@
 /**
  * Created by Victor on 19/06/2015.
  */
-'use strict';
 
 angular.module('app')
     .constant('appSettings',{serverUrl:'http://localhost:8080'})
@@ -44,7 +43,7 @@ angular.module('app')
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: data
-                }
+                };
                 $http(req).success(function(res){
                     $localStorage.user = res.data;
                     success(res.data);
@@ -59,7 +58,7 @@ angular.module('app')
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: data
-                }
+                };
                 $http(req).success(function(res){
                     $localStorage.user = res.data;
                     success(res.data);
