@@ -50,7 +50,8 @@
                 Item: {
                     email: { S: user.email},
                     firstname:{S:user.firstname},
-                    surname:{S:user.surname}
+                    surname:{S:user.surname},
+                    caregiverId:{S:"1"}
                 },
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',

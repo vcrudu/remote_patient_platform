@@ -2,7 +2,6 @@
  * Created by Victor on 19/06/2015.
  */
 
-
 angular.module('app')
     .constant('appSettings',{serverUrl:'http://localhost:8080'})
     .factory('authService',
@@ -45,10 +44,13 @@ angular.module('app')
                     },
                     data: data
                 };
-                $http(req).success(function(data){
-                    $localStorage.token = data.token;
-                    $localStorage.isAuthenticated = true;
-                    success(data);
+                $http(req).success(function(res){
+                    if(res.data) {
+                        $localStorage.user = res.data;
+                        success(res.data);
+                    }else {
+                        error(res);
+                    }
                 }).error(error);
             },
 
@@ -61,19 +63,26 @@ angular.module('app')
                     },
                     data: data
                 };
-                $http(req).success(function(data){
-                    $localStorage.token = data.data.token;
-                    success(data);
+                $http(req).success(function(res){
+                    if(res.data) {
+                        $localStorage.user = res.data;
+                        success(res.data);
+                    }else {
+                        error(res);
+                    }
                 }).error(error);
             },
 
             isAuthenticated: function () {
-                return $localStorage.isAuthenticated;
+                return $localStorage.user===undefined;
+            },
+
+            getUserName: function () {
+                return $localStorage.user.firstname + ' ' + $localStorage.user.surname;
             },
 
             logout: function (success) {
-                delete $localStorage.token;
-                $localStorage.isAuthenticated = false;
+                delete $localStorage.user;
                 success();
             }
         };

@@ -9,14 +9,14 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'authService',
         if($scope.loginForm.$valid){
             authService.signin($scope.userCredentials,
                 function(success){
-                    if(success.success) {
                         $state.go('patient');
                         $scope.$emit('signin');
-                    }else{
-                        toastr.warning('Invalid username or password!');
-                    }
             },function(error){
-                    toastr.error(error, 'Error');
+                    if (error==="Unauthorized"){
+                        toastr.error("Wrong username or password!", 'Error');
+                    }else {
+                        toastr.error(error, 'Error');
+                    }
                 }
             );
         }
