@@ -36,6 +36,10 @@ describe("Test mapping from entity to Db", function () {
             contactType: "Mobile",
             contact: "07512345678"
         });
+
+        patient.attachDevice("PT307", "SN12345","A&D Medical", "BloodPressure");
+        var today = new Date(1941, 06, 01);
+        patient.addHealthProblem("Head Pain", today, "Health problem description.");
     });
 
     it("Is mapping correct", function(){
@@ -100,7 +104,7 @@ describe("Test mapping from entity to Db", function () {
         for(i=0; i<patient.healthProblems.length; i++)
         {
             assert.equal(dbPatient.healthProblems.L[i].problemType.S, patient.healthProblems[i].problemType, "Health problems type does not match");
-            assert.equal(dbPatient.healthProblems.L[i].date.S, patient.healthProblems[i].date, "Health problems date does not match");
+            assert.equal(dbPatient.healthProblems.L[i].date.N, patient.healthProblems[i].date.getTime(), "Health problems date does not match");
             assert.equal(dbPatient.healthProblems.L[i].description.S, patient.healthProblems[i].description, "Health problems description type does not match");
         }
     });

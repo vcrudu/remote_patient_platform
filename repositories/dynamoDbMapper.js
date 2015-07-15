@@ -66,9 +66,10 @@
 
     function mapHealthProblemsToDbEntity(item)
     {
+        var dateTemp = item.date.getTime().toString();
         return {
             problemType : {S: item.problemType},
-            date : {S: item.date},
+            date : {N: dateTemp},
             description : {S: item.description}
         };
     }
@@ -154,9 +155,10 @@
 
     function mapHealthProblemsFromDbEntity(item)
     {
+        var dateTemp = new Date().setTime(parseInt(item.date.N));
         return {
             problemType : item.problemType.S,
-            date : item.date.S,
+            date : item.dateTemp,
             description : item.description.S
         };
     }
