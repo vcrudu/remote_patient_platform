@@ -45,8 +45,12 @@ angular.module('app')
                     data: data
                 };
                 $http(req).success(function(res){
-                    $localStorage.user = res.data;
-                    success(res.data);
+                    if(res.data) {
+                        $localStorage.user = res.data;
+                        success(res.data);
+                    }else {
+                        error(res);
+                    }
                 }).error(error);
             },
 
@@ -60,8 +64,12 @@ angular.module('app')
                     data: data
                 };
                 $http(req).success(function(res){
-                    $localStorage.user = res.data;
-                    success(res.data);
+                    if(res.data) {
+                        $localStorage.user = res.data;
+                        success(res.data);
+                    }else {
+                        error(res);
+                    }
                 }).error(error);
             },
 
