@@ -9,7 +9,7 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'authService',
         if($scope.loginForm.$valid){
             authService.signin($scope.userCredentials,
                 function(success){
-                        $state.go('patient');
+                        $state.go('patient.vitalsigns');
                         $scope.$emit('signin');
             },function(error){
                     if (error==="Unauthorized"){
