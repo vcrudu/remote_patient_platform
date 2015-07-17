@@ -15,7 +15,7 @@ describe("Test mapping from entity to Db", function () {
                 dateOfBirth: dateOfBirth, sex: "Male",
                 gender: "Male",
                 ethnicity: "European", nhsNumber: "943 476 5919",
-                otherIdentifierType: "France", otherIdentifier: "12345678",
+                otherIdentifierType: "France", otherIdentifier: "12345678", fullName: "Jhon Smith", relationship:"Friend", contactDetails:{contactType : "Friend", contact: "Gh"},
                 email: "john.smith@test.com", phone: "+373 796 04494", mobile: "+373 796 04494",
                 fax: "+373 796 04494", communicationPreference: "Phone",
                 addressLine1: "92 Bathurst Gardens", addressLine2: "Second floor",
@@ -24,6 +24,22 @@ describe("Test mapping from entity to Db", function () {
                 postCode: "W1H 2JL"
             }
         );
+
+        patient.addRelevantContact({fullName: "Peter Bowl", relationship: "Friend"});
+        patient.addRelevantContactDetail({
+            fullName: "Peter Bowl",
+            contactType: "Phone",
+            contact: "01892345678"
+        });
+        patient.addRelevantContactDetail({
+            fullName: "Peter Bowl",
+            contactType: "Mobile",
+            contact: "07512345678"
+        });
+
+        patient.attachDevice("PT307", "SN12345","A&D Medical", "BloodPressure");
+        var today = new Date(1941, 06, 01);
+        patient.addHealthProblem("Head Pain", today, "Health problem description.");
     });
 
     it("Is mapping correct", function(){
@@ -53,11 +69,11 @@ describe("Test mapping from entity to Db", function () {
         {
             assert.equal(dbPatient.relevantContacts.L[i].fullName.S, patient.relevantContacts[i].fullName, "Relevant contacts does not match");
             assert.equal(dbPatient.relevantContacts.L[i].relationship.S, patient.relevantContacts[i].relationship, "Relevant contacts does not match");
-            assert.equal(dbPatient.relevantContacts.L[i].contactDetails.length, patient.relevantContacts[i].contactDetails.length, "Relevant contacts details does not match");
-            for(var j=0; j<patient.relevantContacts[i].contactDetails.length; i++)
+            assert.equal(dbPatient.relevantContacts.L[i].contactDetails.L.length, patient.relevantContacts[i].contactDetails.length, "Relevant contacts details length does not match");
+            for(var j=0; j < patient.relevantContacts[i].contactDetails.length; j++)
             {
-                assert.equal(dbPatient.relevantContacts.L[i].contactDetails[j].contactType.S, patient.relevantContacts[i].contactDetails[j].contactType, "Relevant contacts details does not match");
-                assert.equal(dbPatient.relevantContacts.L[i].contactDetails[j].contact.S, patient.relevantContacts[i].contactDetails[j].contact, "Relevant contacts details does not match");
+                assert.equal(dbPatient.relevantContacts.L[i].contactDetails.L[j].contactType.S, patient.relevantContacts[i].contactDetails[j].contactType, "Relevant contacts details does not match");
+                assert.equal(dbPatient.relevantContacts.L[i].contactDetails.L[j].contact.S, patient.relevantContacts[i].contactDetails[j].contact, "Relevant contacts details does not match");
             }
 
         }
@@ -88,7 +104,7 @@ describe("Test mapping from entity to Db", function () {
         for(i=0; i<patient.healthProblems.length; i++)
         {
             assert.equal(dbPatient.healthProblems.L[i].problemType.S, patient.healthProblems[i].problemType, "Health problems type does not match");
-            assert.equal(dbPatient.healthProblems.L[i].date.S, patient.healthProblems[i].date, "Health problems date does not match");
+            assert.equal(dbPatient.healthProblems.L[i].date.N, patient.healthProblems[i].date.getTime(), "Health problems date does not match");
             assert.equal(dbPatient.healthProblems.L[i].description.S, patient.healthProblems[i].description, "Health problems description type does not match");
         }
     });

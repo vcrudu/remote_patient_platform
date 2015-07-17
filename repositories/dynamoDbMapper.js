@@ -40,7 +40,7 @@
 
     function mapRelevantContactsToDbEntity(relevantContact)
     {
-        var allRelevantContactDetails;
+        var allRelevantContactDetails = [];
         for(var i=0; i<relevantContact.contactDetails.length; i++)
         {
             var temp = mapRelevantContactsDetailsToDbEntity(relevantContact.contactDetails[i]);
@@ -66,9 +66,10 @@
 
     function mapHealthProblemsToDbEntity(item)
     {
+        var dateTemp = item.date.getTime().toString();
         return {
             problemType : {S: item.problemType},
-            date : {S: item.date},
+            date : {N: dateTemp},
             description : {S: item.description}
         };
     }
@@ -103,7 +104,7 @@
         };
     }
 
-    function mapRelevantContactDetailsToDbEntity(contactDetail)
+    function mapRelevantContactDetailsFromDbEntity(contactDetail)
     {
         return{
             contactType : contactDetail.contactType.S,
@@ -113,10 +114,10 @@
 
     function mapRelevantContactsFromDbEntity(relevantContact)
     {
-        var allRelevantContactDetails;
+        var allRelevantContactDetails = [];
         for(var i=0; i<relevantContact.contactDetails.L.length; i++)
         {
-            var temp = mapRelevantContactDetailsToDbEntity(relevantContact.contactDetails.L[i]);
+            var temp = mapRelevantContactDetailsFromDbEntity(relevantContact.contactDetails.L[i]);
             allRelevantContactDetails.push(temp);
         }
         return {
@@ -154,9 +155,10 @@
 
     function mapHealthProblemsFromDbEntity(item)
     {
+        var dateTemp = new Date().setTime(parseInt(item.date.N));
         return {
             problemType : item.problemType.S,
-            date : item.date.S,
+            date : item.dateTemp,
             description : item.description.S
         };
     }
