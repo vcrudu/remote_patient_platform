@@ -1,9 +1,44 @@
 <section id="widget-grid" ng-controller="patientAppointmentsCtrl" class="">
     <!-- row -->
     <div class="row">
-        <!--Patient content -->
-        <h2 style="margin: auto; width: 50%; height: 50%">Appointments content</h2>
+        <!--Appointments content -->
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+            <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-stethoscope"></i>Appointments</h1>
+        </div>
+
+        <section>
+            <div class="row">
+                <article class="col-sm-12 sortable-grid ui-sortable">
+                    <div class="jarviswidget jarviswidget-sortable" role="widget">
+                        <header role="heading">
+
+                            <ul class="nav nav-tabs pull-right in" id="myTab">
+                                <li ui-sref-active="active" >
+                                    <a ui-sref="patient.appointments.view"> <i class="fa fa-shopping-cart"></i></i> <span class="hidden-mobile hidden-tablet">Appointments</span></a>
+                                </li>
+
+                                <li ui-sref-active="active" >
+                                    <a ui-sref="patient.appointments.book"> <i class="fa fa-check"></i> <span class="hidden-mobile hidden-tablet">Book</span></a>
+                                </li>
+
+                            </ul>
+
+                            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                        </header>
+                        <div class="no-padding" role="content">
+                            <div class="widget-body">
+                                <div id="myTabContent" class="tab-content">
+                                    <ui-view></ui-view>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
     </div>
+
 
     <!-- end row -->
 

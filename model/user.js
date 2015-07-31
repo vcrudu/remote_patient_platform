@@ -11,7 +11,7 @@
          return {
                email : requestBody.email,
                passwordHash : passwordHash,
-               firstname : requestBody.firstName,
+               firstname : requestBody.name,
                surname : requestBody.surname
          };
       },
@@ -28,7 +28,7 @@
         createUserDetailsFromDbEntity : function(dbEntity){
             return {
                 email: dbEntity.email.S,
-                firstname: dbEntity.firstname.S,
+                firstname: dbEntity.name.S,
                 surname: dbEntity.surname.S
             };
         },

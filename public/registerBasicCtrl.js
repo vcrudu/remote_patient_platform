@@ -7,7 +7,7 @@ angular.module('app').controller('registerBasicCtrl',['$scope','$log','$state', 
         $scope.formBasic.email.$setDirty();
         $scope.formBasic.password.$setDirty();
         $scope.formBasic.passwordConfirm.$setDirty();
-        $scope.formBasic.firstname.$setDirty();
+        $scope.formBasic.name.$setDirty();
         $scope.formBasic.surname.$setDirty();
         $scope.formBasic.gender.$setDirty();
         $scope.formBasic.dateOfBirth.$setDirty();

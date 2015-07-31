@@ -74,18 +74,23 @@
         };
     }
 
+    function buildDynamoDbString(str){
+        if(str) return {S:str};
+        else return {NULL:true};
+    }
+
     function mapAddressToDbEntity(item)
     {
         return {
             id:{S: item.id},
             addressLine1:{S: item.addressLine1},
-            addressLine2:{S: item.addressLine2},
+            addressLine2:buildDynamoDbString(item.addressLine2),
             town:{S: item.town},
             county:{S: item.county},
             country:{S: item.country},
             postCode:{S: item.postCode},
-            longitude:{S: item.longitude},
-            latitude:{S: item.latitude}
+            longitude:buildDynamoDbString(item.longitude),
+            latitude:buildDynamoDbString(item.latitude)
         };
     }
 
@@ -205,15 +210,15 @@
                     ethnicity: {S:patient.ethnicity},
                     nhsNumber: {S:patient.nhsNumber},
                     otherIdentifiers: {L:allOtherIdentifiers},
-                    phone: {S:patient.phone},
-                    mobile: {S:patient.mobile},
-                    fax: {S:patient.fax},
+                    phone: buildDynamoDbString(patient.phone),
+                    mobile: buildDynamoDbString(patient.mobile),
+                    fax: buildDynamoDbString(patient.fax),
                     email: {S:patient.email},
                     relevantContacts: {L:allRelevantContacts},
-                    communicationPreference: {S:patient.communicationPreference},
+                    communicationPreference:buildDynamoDbString(patient.communicationPreference),
                     address: {M:fullAddress},
-                    avatar: {S:patient.avatar},
-                    externalId: {S:patient.externalId},
+                    avatar: buildDynamoDbString(patient.avatar),
+                    externalId: buildDynamoDbString(patient.externalId),
                     devices: {L:allDevices},
                     healthProblems : {L:allHealthProblems}
             };

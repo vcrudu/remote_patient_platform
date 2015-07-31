@@ -7,7 +7,8 @@
     var AWS               = require('aws-sdk');
     var UserFactory       = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
-    var TABLE_NAME         ="UsersDetails";
+    var TABLE_NAME        ="UsersDetails";
+    var dynamoDbMapper    = require("./dynamoDbMapper");
 
        var getDb = function(){
        var dynamodb = new AWS.DynamoDB(connectionOptions);
@@ -42,17 +43,12 @@
             });
         },
 
-        save : function(user, callback) {
+        save : function(patient, callback) {
 
             var dynamodb = getDb();
 
             var params = {
-                Item: {
-                    email: { S: user.email},
-                    firstname:{S:user.firstname},
-                    surname:{S:user.surname},
-                    caregiverId:{S:"1"}
-                },
+                Item: dynamoDbMapper.createUserDetailsDbEntityFromPatient(patient),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
