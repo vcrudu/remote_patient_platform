@@ -45,11 +45,11 @@ angular.module('app')
                     data: data
                 };
                 $http(req).success(function(res){
-                    if(res.data) {
+                    if(!res.error) {
                         $localStorage.user = res.data;
                         success(res.data);
                     }else {
-                        error(res);
+                        error(res.error);
                     }
                 }).error(error);
             },
@@ -64,11 +64,11 @@ angular.module('app')
                     data: data
                 };
                 $http(req).success(function(res){
-                    if(res.data) {
+                    if(!res.error) {
                         $localStorage.user = res.data;
                         success(res.data);
                     }else {
-                        error(res);
+                        error(res.error);
                     }
                 }).error(error);
             },

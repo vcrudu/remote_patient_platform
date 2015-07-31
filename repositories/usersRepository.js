@@ -96,6 +96,29 @@
                 console.log("The user has been inserted successfully.");
                 callback(null, data);
             });
+        },
+        delete : function(user, callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                Key: {
+                    email: { S: user.email}
+                },
+                TableName: 'Users'
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                console.log("The user has been deleted successfully!");
+                callback(null, data);
+            });
         }
+
     };
 })();

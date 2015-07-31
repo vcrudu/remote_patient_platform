@@ -17,6 +17,26 @@
                                 <em ng-show="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.required" class="invalid">NHS Number is required.</em>
                                 <em ng-show="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.nhsNumberValid" class="invalid">NHS Number is not valid.</em>
                             </section>
+                            <section class="col col-6">
+                                <label class="select">
+                                    <select class="input-md" name="ethnicity" ng-init="newUser.ethnicity=0" ng-model="newUser.ethnicity">
+                                        <option value="0" selected>Choose ethnicity</option>
+                                        <option value="British/Mixed British">British/Mixed British</option>
+                                        <option value="Irish">Irish</option>
+                                        <option value="Other White Background">Other White Background</option>
+                                        <option value="White & BlackCaribbean">White & BlackCaribbean</option>
+                                        <option value="White & Black African">White & Black African</option>
+                                        <option value="Other Mixed Background">Other Mixed Background</option>
+                                        <option value="Indian/ British Indian">Indian/ British Indian</option>
+                                        <option value="Pakistani/British Pakistani">Pakistani/British Pakistani</option>
+                                        <option value="Bangladeshi/British Bangladeshi">Bangladeshi/British Bangladeshi</option>
+                                        <option value="Other Asian Background">Other Asian Background</option>
+                                        <option value="Caribbean">Caribbean</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Other Black Bakground">Other Black Bakground</option>
+                                        <option value="Other ethnic group">Other ethnic group</option>
+                                    </select> <i></i> </label>
+                            </section>
                         </div>
                         <div class="row">
                             <section class="col col-6">

@@ -12,27 +12,27 @@
                                 <label class="select" ng-class="formAddress.country.$dirty && formAddress.country.$error.required?'state-error':''">
                                     <select name="country" required ng-model="newUser.country" >
                                         <option value="" selected="" disabled="">Country</option>
-                                        <option value="14">Austria</option>
-                                        <option value="21">Belgium</option>
-                                        <option value="31">British Indian Ocean Territory</option>
-                                        <option value="38">Canada</option>
-                                        <option value="72">Finland</option>
-                                        <option value="81">Germany</option>
-                                        <option value="84">Greece</option>
-                                        <option value="105">Italy</option>
-                                        <option value="124">Luxembourg</option>
-                                        <option value="140">Moldova, Republic of</option>
-                                        <option value="153">New Zealand</option>
-                                        <option value="160">Norway</option>
-                                        <option value="175">Romania</option>
-                                        <option value="195">Spain</option>
-                                        <option value="203">Sweden</option>
-                                        <option value="204">Switzerland</option>
-                                        <option value="221">United Arab Emirates</option>
-                                        <option value="222">United Kingdom</option>
-                                        <option value="223">United States</option>
-                                        <option value="231">Virgin Islands (British)</option>
-                                        <option value="232">Virgin Islands (U.S.)</option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Greece">Greece</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Luxembourg">Luxembourg</option>
+                                        <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                        <option value="New Zealand">New Zealand</option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Romania">Romania</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">Switzerland</option>
+                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="United States">United States</option>
+                                        <option value="Virgin Islands (British)">Virgin Islands (British)</option>
+                                        <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
                                     </select> <i></i> </label>
                                 <em ng-show="formAddress.country.$dirty && formAddress.country.$error.required" class="invalid">Country is required.</em>
                             </section>
@@ -62,28 +62,32 @@
                         </div>
 
                         <section>
-                            <label for="address1" class="input" ng-class="formAddress.address1.$dirty && formAddress.address1.$error.required?'state-error':''">
-                                <input type="text" name="address1" id="address1" required ng-model="newUser.address1" placeholder="Address Line 1">
+                            <label for="addressLine1" class="input" ng-class="formAddress.addressLine1.$dirty && formAddress.addressLine1.$error.required?'state-error':''">
+                                <input type="text" name="addressLine1" id="addressLine1" required ng-model="newUser.addressLine1" placeholder="Address Line 1">
                             </label>
-                            <em ng-show="formAddress.address1.$dirty && formAddress.address1.$error.required" class="invalid">Address line 1 is required.</em>
+                            <em ng-show="formAddress.addressLine1.$dirty && formAddress.addressLine1.$error.required" class="invalid">Address line 1 is required.</em>
                         </section>
 
                         <section>
-                            <label for="address2" class="input">
-                                <input type="text" name="address2" id="address2" placeholder="Address Line 2">
+                            <label for="addressLine2" class="input">
+                                <input type="text" name="addressLine2" id="addressLine2" ng-model="newUser.addressLine2" placeholder="Address Line 2">
                             </label>
                         </section>
 
                         <div class="row">
                         <section class="col col-6">
                             <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                                <input type="tel" name="phone" placeholder="Phone" data-mask="(999) 999-9999">
+                                <input type="tel" name="phone" ng-model="newUser.phone" phone-mobile-required is-phone placeholder="Phone">
                             </label>
+                            <em ng-show="(formAddress.phone.$dirty && formAddress.phone.$error.phoneMobileRequired)"
+                                class="invalid">Phone or Mobile is required!</em>
+                            <em ng-show="(formAddress.phone.$dirty && formAddress.phone.$error.isPhone)" class="invalid">Phone number format is invalid!</em>
                         </section>
                             <section class="col col-6">
                                 <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                                    <input type="tel" name="phone" placeholder="Mobile" data-mask="(999) 999-9999">
+                                    <input type="tel" name="mobile" ng-model="newUser.mobile" is-phone placeholder="Mobile">
                                 </label>
+                                <em ng-show="(formAddress.mobile.$dirty && formAddress.mobile.$error.isPhone)" class="invalid">Mobile number format is invalid!</em>
                             </section>
                         </div>
                     </fieldset>
