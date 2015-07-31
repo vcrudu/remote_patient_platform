@@ -20,6 +20,7 @@
     module.exports = {
 
         getAll : function(){
+            var dynamodb = getDb();
 
         },
 

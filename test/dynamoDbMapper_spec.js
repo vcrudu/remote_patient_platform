@@ -6,7 +6,7 @@ var dynamoDbMapper = require("../repositories/dynamoDbMapper");
 var entitiesFactory = require("@vcrudu/hcm.domainmodel");
 
 describe("Test mapping from entity to Db", function () {
-    var pacient;
+    var patient;
     var dateOfBirth = new Date(1941, 06, 01);
     before(function(){
 
