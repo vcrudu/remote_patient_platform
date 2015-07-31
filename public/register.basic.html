@@ -11,11 +11,12 @@
                         <section>
                             <label class="input" ng-class="formBasic.email.$dirty && (formBasic.email.$error.required ||
                             formBasic.email.$error.email)?'state-error':''"> <i class="icon-append fa fa-envelope-o"></i>
-                                <input type="email" name="email" placeholder="Email address" required ng-model="newUser.email">
+                                <input type="email" name="email" placeholder="Email address" required check-exists-user ng-model="newUser.email">
                                 <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
                             </label>
                                 <em ng-show="formBasic.email.$dirty && formBasic.email.$error.required" class="invalid">Email is required.</em>
                             <em ng-show="formBasic.email.$dirty && formBasic.email.$error.email" class="invalid">Email is invalid</em>
+                            <em ng-show="formBasic.email.$dirty && formBasic.email.$error.checkExistsUser" class="invalid">User already exists!</em>
                         </section>
 
                         <section>

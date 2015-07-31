@@ -12,7 +12,7 @@
     var _                   = require("underscore");
 
     module.exports.init = function(app) {
-        app.get('/checkExistsUser', function (req, res) {
+        app.get('/getAvailableDevices', function (req, res) {
             usersRepository.findOneByEmail(req.body.email, function (err, user) {
                 if (err) {
                     res.json({

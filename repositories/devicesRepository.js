@@ -7,6 +7,7 @@
     var AWS             = require('aws-sdk');
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
+    var tableName = 'Devices';
 
        var getDb = function(){
 
@@ -18,11 +19,21 @@
 
     module.exports = {
 
-        findOneByEmail : function(email, callback){
+        getAll : function(){
+
+        },
+
+        save : function(){},
+
+        delete : function(){}
+
+
+        /*findOneByEmail : function(email, callback){
+
 
             var params = {
                 Key: { email: { S: email }},
-                TableName:'Users',
+                TableName: tableName,
                 ReturnConsumedCapacity: 'TOTAL'
             };
 
@@ -50,7 +61,7 @@
 
             var params = {
                 Key: { email: { S: user.email }},
-                TableName:'Users',
+                TableName: tableName,
                 ExpressionAttributeValues: {
                     ":tokenString": {"S":user.token  },
                 },
@@ -80,7 +91,7 @@
                     passwordHash:{S:user.passwordHash},
                     tokenString:{S:user.token}
                 },
-                TableName: 'Users',
+                TableName: tableName,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
                 ReturnValues: 'ALL_OLD'
@@ -96,6 +107,6 @@
                 console.log("The user has been inserted successfully.");
                 callback(null, data);
             });
-        }
+        }*/
     };
 })();

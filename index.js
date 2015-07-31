@@ -4,6 +4,7 @@ var morgan = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var auth = require("./auth");
+var checkExistsUserController = require("./controllers/checkExistsUser");
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -39,4 +40,5 @@ app.get('/register',function(req, res){
     res.sendFile('register.html', options);
 });
 
+checkExistsUserController.init(app);
 app.listen(8080);
