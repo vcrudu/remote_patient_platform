@@ -23,7 +23,7 @@ describe("Test mapping from entity to Db", function () {
         usersDetailsRepository.getAll(function(err,patients){
             patientsResult=patients;
             console.log(typeof patientsResult);
-            assert.equal(typeof patientsResult, "array", "Result should be array");
+            assert.notEqual(patientsResult.length, 0, "Result should be array with length > 0");
             done();
         });
 

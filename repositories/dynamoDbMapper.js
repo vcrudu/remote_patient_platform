@@ -227,7 +227,8 @@
 
         mapPatientFromUserDetailsDbEntity: function(dbEntity)
         {
-            var dateOfBirthOriginal = new Date().setTime(parseInt(dbEntity.dateOfBirth.N));
+            var dateOfBirthOriginal = new Date();
+            dateOfBirthOriginal.setTime(parseInt(dbEntity.dateOfBirth.N));
             var allOtherIdentifiers = buildArray(dbEntity.otherIdentifiers.L, mapOtherIdentifiersFromDbEntity);
             var allRelevantContacts = buildArray(dbEntity.relevantContacts.L, mapRelevantContactsFromDbEntity);
             var fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
@@ -245,20 +246,20 @@
                     surname: dbEntity.surname.S,
                     title: dbEntity.title.S,
                     dateOfBirth: dateOfBirthOriginal,
-                    sex: checkNull(dbEntity.sex.S),
+                    sex: checkNull(dbEntity.sex),
                     gender: dbEntity.gender.S,
                     ethnicity: dbEntity.ethnicity.S,
                     nhsNumber: dbEntity.nhsNumber.S,
                     otherIdentifiers: allOtherIdentifiers,
-                    phone: checkNull(dbEntity.phone.S),
-                    mobile: checkNull(dbEntity.mobile.S),
-                    fax: checkNull(dbEntity.fax.S),
+                    phone: checkNull(dbEntity.phone),
+                    mobile: checkNull(dbEntity.mobile),
+                    fax: checkNull(dbEntity.fax),
                     email: dbEntity.email.S,
                     relevantContacts: allRelevantContacts,
                     communicationPreference: dbEntity.communicationPreference.S,
                     address: fullAddress,
-                    avatar: checkNull(dbEntity.avatar.S),
-                    externalId: checkNull(dbEntity.externalId.S),
+                    avatar: checkNull(dbEntity.avatar),
+                    externalId: checkNull(dbEntity.externalId),
                     devices: allDevices,
                     healthProblems: allHealthProblems
                 }
