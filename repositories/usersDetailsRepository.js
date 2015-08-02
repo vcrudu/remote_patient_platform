@@ -7,8 +7,9 @@
     var AWS               = require('aws-sdk');
     var UserFactory       = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
-    var TABLE_NAME        ="UsersDetails";
+    var TABLE_NAME        = "UserDetails";
     var dynamoDbMapper    = require("./dynamoDbMapper");
+    var _                 = require('underscore');
 
        var getDb = function(){
        var dynamodb = new AWS.DynamoDB(connectionOptions);
@@ -64,6 +65,35 @@
 
                 console.log("The user has been inserted successfully.");
                 callback(null, data);
+            });
+        },
+
+        getAll : function(callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                TableName: TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            dynamodb.scan(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                var dbPpatients = data.Items;
+
+                var resultPatients=[];
+
+                _.forEach(dbPpatients, function(patient){
+                    resultPatients.push(dynamoDbMapper.mapPatientFromUserDetailsDbEntity(patient));
+                });
+
+                console.log("The users has been retrieved successfully.");
+                callback(null, resultPatients);
             });
         }
     };

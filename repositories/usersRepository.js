@@ -7,6 +7,7 @@
     var AWS             = require('aws-sdk');
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
+    var TABLE_NAME        = 'User';
 
        var getDb = function(){
 
@@ -22,7 +23,7 @@
 
             var params = {
                 Key: { email: { S: email }},
-                TableName:'Users',
+                TableName:'User',
                 ReturnConsumedCapacity: 'TOTAL'
             };
 
@@ -50,7 +51,7 @@
 
             var params = {
                 Key: { email: { S: user.email }},
-                TableName:'Users',
+                TableName:TABLE_NAME,
                 ExpressionAttributeValues: {
                     ":tokenString": {"S":user.token  },
                 },
@@ -80,7 +81,7 @@
                     passwordHash:{S:user.passwordHash},
                     tokenString:{S:user.token}
                 },
-                TableName: 'Users',
+                TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
                 ReturnValues: 'ALL_OLD'
@@ -105,7 +106,7 @@
                 Key: {
                     email: { S: user.email}
                 },
-                TableName: 'Users'
+                TableName: TABLE_NAME
             };
 
             dynamodb.deleteItem(params, function(err, data) {
