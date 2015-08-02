@@ -7,7 +7,8 @@
     var AWS             = require('aws-sdk');
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
-    var tableName = 'Devices';
+    var deviceModelDbMapper = require('./deviceModelDbMapper');
+    var TABLE_NAME = 'Devices';
 
        var getDb = function(){
 
@@ -19,80 +20,34 @@
 
     module.exports = {
 
-        getAll : function(){
-            var dynamodb = getDb();
-
-        },
-
-        save : function(){},
-
-        delete : function(){}
-
-
-        /*findOneByEmail : function(email, callback){
-
-
-            var params = {
-                Key: { email: { S: email }},
-                TableName: tableName,
-                ReturnConsumedCapacity: 'TOTAL'
-            };
-
-            var dynamodb = getDb();
-
-            dynamodb.getItem(params, function(err, data){
-                if(err) {
-                    console.error(err);
-                    callback(err, null);
-                    return;
-                }
-                console.log("The user has been found successfully.");
-                if(data.Item) {
-                    var user = UserFactory.createUserFromDbEntity(data.Item);
-                    callback(null, user);
-                }else{
-                    callback(null, null);
-                }
-            });
-        },
-
-        updateToken : function(user, callback) {
-
+        getAll : function(callback){
             var dynamodb = getDb();
 
             var params = {
-                Key: { email: { S: user.email }},
-                TableName: tableName,
-                ExpressionAttributeValues: {
-                    ":tokenString": {"S":user.token  },
-                },
+                TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET tokenString=:tokenString'
+                ReturnItemCollectionMetrics: 'SIZE',
+                ReturnValues: 'ALL_OLD'
             };
 
-
-            dynamodb.updateItem(params, function (err, data) {
-                if (err) {
+            var resultDevices;
+            dynamodb.query(params,function(err, data){
+                if(err){
                     console.error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The token has been updated successfully.");
-                callback(null, data);
+                resultDevices = data.Items;
+                callback(null, resultDevices);
             });
         },
 
-        save : function(user, callback) {
-
+        save : function(device, callback){
             var dynamodb = getDb();
 
             var params = {
-                Item: {
-                    email: { S: user.email},
-                    passwordHash:{S:user.passwordHash},
-                    tokenString:{S:user.token}
-                },
-                TableName: tableName,
+                Item: deviceModelDbMapper.mapDeviceDetailsDbEntityFromDevice(device),
+                TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
                 ReturnValues: 'ALL_OLD'
@@ -105,9 +60,32 @@
                     return;
                 }
 
-                console.log("The user has been inserted successfully.");
+                console.log("The device model has been inserted successfully.");
                 callback(null, data);
             });
-        }*/
+        },
+
+        delete : function(device, callback){
+            var dynamodb = getDb();
+
+            var params = {
+                Key: {
+                    model: { S: device.model}
+                },
+                TableName: 'TABLE_NAME'
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                console.log("The user has been deleted successfully!");
+                callback(null, data);
+            });
+        }
+
     };
 })();

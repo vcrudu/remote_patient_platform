@@ -125,17 +125,17 @@
             var temp = mapRelevantContactDetailsFromDbEntity(relevantContact.contactDetails.L[i]);
             allRelevantContactDetails.push(temp);
         }
-        return {
+        return domainModel.createRelevantContact( {
             fullName : relevantContact.fullName.S,
             relationship : relevantContact.relationship.S,
             contactDetails : allRelevantContactDetails
-        };
+        });
     }
 
 
     function mapAddressFromDbEntity(item)
     {
-        return new Address({
+        return domainModel.createAddress({
             id: item.id.S,
             addressLine1: item.addressLine1.S,
             addressLine2: item.addressLine2.S,
@@ -239,7 +239,7 @@
                 else return undefined;
             };
 
-            var patient = new Patient({
+            var patient = domainModel.createPatient({
                     id: dbEntity.id.S,
                     name: dbEntity.name.S,
                     surname: dbEntity.surname.S,
