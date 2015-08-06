@@ -28,12 +28,29 @@ var assert = require('assert');
 
         this.email=args.email;
         this.createdDate = args.createdDate || new Date();
-        var orderStatusHistory = [{orderStatus:'New', statusChangedDate:args.statusChangedDate}];
 
-        function changeOrderStatus(newStatus){
-            orderStatusHistory.push({orderStatus:newStatus,statusChangedDate:new Date()})
+        var orderStatusHistory = [];
+
+        if(args.orderStatusHistory) {
+            //Verify if orderStatusHistory is Array
+            assert.ok(args.orderStatusHistory.constructor.toString().indexOf("Array")>-1,"Order status history should be an array");
+
+            //Verify if each element of orderStatusHistory has orderStatus and statusChangedDate
+            _.forEach(args.orderStatusHistory, function(orderStatusHistoryElem){
+                assert.ok(orderStatuses.indexOf(orderStatusHistoryElem.orderStatus)>-1,
+                    "Order status history element should have orderStatus property!");
+                assert.ok(orderStatusHistoryElem.statusChangedDate,
+                    "Order status history element should have statusChangedDate property!");
+            });
+            orderStatusHistory = args.orderStatusHistory;
         }
+        else orderStatusHistory = [{orderStatus:'New', statusChangedDate:new Date()}];
 
+        this.changeOrderStatus = function(newStatus){
+            assert.ok(orderStatuses.indexOf(newStatus)>-1,
+                "newStatus should be Order status!");
+            orderStatusHistory.push({orderStatus:newStatus,statusChangedDate:new Date()});
+        };
 
         this.shippingAddress = domainModel.createAddress(args);
         var orderItems = [];
