@@ -75,11 +75,15 @@
 
             var dynamodb = getDb();
 
+            var createdDateTime = new Date();
+
             var params = {
                 Item: {
                     email: { S: user.email},
                     passwordHash:{S:user.passwordHash},
-                    tokenString:{S:user.token}
+                    tokenString:{S:user.token},
+                    isActive:{BOOL:user.isActive},
+                    createdDateTime:{N:createdDateTime.getTime().toString()}
                 },
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',

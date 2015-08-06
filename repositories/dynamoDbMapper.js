@@ -160,7 +160,8 @@
 
     function mapHealthProblemsFromDbEntity(item)
     {
-        var dateTemp = new Date().setTime(parseInt(item.date.N));
+        var dateTemp = new Date();
+        dateTemp.setTime(parseInt(item.date.N));
         return {
             problemType : item.problemType.S,
             date : item.dateTemp,

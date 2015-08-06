@@ -12,7 +12,8 @@
                email : requestBody.email,
                passwordHash : passwordHash,
                firstname : requestBody.name,
-               surname : requestBody.surname
+               surname : requestBody.surname,
+               isActive:false
          };
       },
         createUserFromDbEntity : function(dbEntity){
@@ -22,6 +23,7 @@
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
+                isActive:dbEntity.isActive.BOOL,
                 createdDateTime:createdDateTime
             };
         },
@@ -34,6 +36,16 @@
         },
         createUserDetailsFromBody : function(requestBody){
             return domainModel.createPatient(requestBody);
+        },
+        createDbEntityFromUser : function(user){
+            var createdDateTime = new Date();
+                return {
+                    email           : {S     : user.email},
+                    passwordHash    : {S     : user.passwordHash},
+                    tokenString     : {S     : user.token},
+                    isActive        : {BOOL  : user.isActive},
+                    createdDateTime : {N     : createdDateTime.getTime().toString()}
+                };
         }
     };
 })();
