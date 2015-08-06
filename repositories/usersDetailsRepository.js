@@ -92,7 +92,7 @@
                     resultPatients.push(dynamoDbMapper.mapPatientFromUserDetailsDbEntity(patient));
                 });
 
-                console.log("The users has been retrieved successfully.");
+                //console.log("The users has been retrieved successfully.");
                 callback(null, resultPatients);
             });
         }
