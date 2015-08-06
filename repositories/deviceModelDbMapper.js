@@ -9,30 +9,33 @@
 
     module.exports  = {
 
-        mapDeviceDetailsDbEntityFromDevice : function(device){
-
+        mapDbEntityFromDeviceModel : function(device){
             return {
                 model : {S : device.model},
                 description : {S : device.description},
-                price : {N : device.price},
-                specifications : {SS : device.specifications},
+                price : {N : device.price.toString()},
+                specifications : {SS : device.getDeviceModelSpecifications()},
                 manufacturerUrl : {S : device.manufacturerUrl},
-                imagesUrls : {L : device.imagesUrls}
+                imagesUrls : {SS : device.getImagesUrls()},
+                deviceModelType : {S : device.deviceModelType}
             };
 
         },
 
-        mapDeviceFromDeviceDetailsDbEntity : function(dbEntity){
+        mapDeviceModelFromDbEntity : function(dbEntity){
 
-            var deviceModel = new DeviceModel({
+            var deviceModel = domainModel.createDeviceModel({
 
                 model : dbEntity.model.S,
                 description : dbEntity.description.S,
-                price : dbEntity.price.N,
+                price : parseFloat(dbEntity.price.N),
                 specifications : dbEntity.specifications.SS,
                 manufacturerUrl : dbEntity.manufacturerUrl.S,
-                imagesUrls : dbEntity.imagesUrls.L
+                imagesUrls : dbEntity.imagesUrls.SS,
+                deviceModelType : dbEntity.deviceModelType.S
             });
+
+            return deviceModel;
 
         }
 

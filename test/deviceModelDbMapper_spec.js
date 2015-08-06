@@ -13,18 +13,22 @@ describe("Test mapping from entity to Db", function () {
 
         deviceModel = entitiesFactory.createDeviceModel({
             model: "PT307", description: "SN12345", price: 2.95,
-            specifications: ["Negru", "Alb"], manufacturerUrl: "http://example.com",
-            imagesUrls: ["http://image1.jpg", "http://image2.jpg"], deviceModelType: "BloodPressure"
+            manufacturerUrl: "http://example.com", specifications: ["Negru", "Alb"],
+            imagesUrls :["http://localhost/image1.jpg", "http://localhost/image2.jpg"],  deviceModelType: "BloodPressure"
         });
+        deviceModel.addDeviceModelSpecifications("Negru", "Alb");
+        deviceModel.addImagesUrls("http://localhost/image1.jpg", "http://localhost/image2.jpg");
     });
     it("Is mapping correct", function() {
-        var dbDeviceModel =DeviceModel.mapDeviceDetailsDbEntityFromDevice(deviceModel);
+        var dbDeviceModel =DeviceModel.mapDbEntityFromDeviceModel(deviceModel);
+        var temp = deviceModel.getDeviceModelSpecifications();
+        var temp1 = deviceModel.getImagesUrls();
         assert.equal(dbDeviceModel.model.S, deviceModel.model, "Device model does not match");
         assert.equal(dbDeviceModel.description.S, deviceModel.description, "Device model description does not match");
         assert.equal(dbDeviceModel.price.N, deviceModel.price, "Device model price does not match");
-        assert.equal(dbDeviceModel.specifications.SS, deviceModel.specifications, "Device model specifications does not match");
+        assert.equal(dbDeviceModel.specifications.SS, temp, "Device model specifications does not match");
         assert.equal(dbDeviceModel.manufacturerUrl.S, deviceModel.manufacturerUrl, "Device model manufacturer URL does not match");
-        assert.equal(dbDeviceModel.imagesUrls.L, deviceModel.imagesUrls, "Device model images URLs does not match");
+        assert.equal(dbDeviceModel.imagesUrls.SS, temp1, "Device model images URLs does not match");
     });
 });
 

@@ -8,7 +8,8 @@
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
     var deviceModelDbMapper = require('./deviceModelDbMapper');
-    var TABLE_NAME = 'Devices';
+    var _ = require('underscore');
+    var TABLE_NAME = 'DeviceModel';
 
        var getDb = function(){
 
@@ -25,20 +26,26 @@
 
             var params = {
                 TableName: TABLE_NAME,
-                ReturnConsumedCapacity: 'TOTAL',
-                ReturnItemCollectionMetrics: 'SIZE',
-                ReturnValues: 'ALL_OLD'
+                ReturnConsumedCapacity: 'TOTAL'
+
             };
 
-            var resultDevices;
-            dynamodb.query(params,function(err, data){
+
+            dynamodb.scan(params,function(err, data){
                 if(err){
                     console.error(err);
                     callback(err, null);
                     return;
                 }
-                resultDevices = data.Items;
-                callback(null, resultDevices);
+                var dbDeviceModels = data.Items;
+
+                var resultDeviceModels = [];
+                _.forEach(dbDeviceModels, function(deviceModel){
+                    resultDeviceModels.push(deviceModelDbMapper.mapDeviceModelFromDbEntity(deviceModel));
+                });
+                console.log("The device model has been retrieved successfully.");
+
+                callback(null, resultDeviceModels);
             });
         },
 
@@ -46,7 +53,7 @@
             var dynamodb = getDb();
 
             var params = {
-                Item: deviceModelDbMapper.mapDeviceDetailsDbEntityFromDevice(device),
+                Item: deviceModelDbMapper.mapDbEntityFromDeviceModel(device),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
@@ -72,7 +79,7 @@
                 Key: {
                     model: { S: device.model}
                 },
-                TableName: 'TABLE_NAME'
+                TableName: TABLE_NAME
             };
 
             dynamodb.deleteItem(params, function(err, data) {
@@ -82,7 +89,7 @@
                     return;
                 }
 
-                console.log("The user has been deleted successfully!");
+                console.log("The device model has been deleted successfully!");
                 callback(null, data);
             });
         }
