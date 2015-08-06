@@ -49,6 +49,8 @@ var assert = require('assert');
         this.changeOrderStatus = function(newStatus){
             assert.ok(orderStatuses.indexOf(newStatus)>-1,
                 "newStatus should be Order status!");
+            assert.ok(orderStatusHistory[orderStatusHistory.length-1]=="Delivered","Order has been delivered already!");
+
             orderStatusHistory.push({orderStatus:newStatus,statusChangedDate:new Date()});
         };
 
