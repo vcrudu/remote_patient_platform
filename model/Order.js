@@ -74,9 +74,12 @@ var assert = require('assert');
             });
 
             if(existingOrderItem){
-                existingOrderItem.quantity++;
-            }else{
-                orderItems.push(new OrderItem(deviceModel,1));
+                if(existingOrderItem.quantity>1){
+                    existingOrderItem.quantity--;
+                }
+                else{
+                    orderItems.splice(orderItems.indexOf(existingOrderItem),1);
+                }
             }
         };
 
