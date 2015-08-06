@@ -10,6 +10,7 @@ var assert = require('assert');
 (function(){
     module.exports = function(args){
         var orderStatuses = ['New','Paid', 'Shipped','Delivered'];
+        assert.ok(args.email,"Email is mandatory");
         assert.ok(args.orderStatus,"Order status should be specified!");
         assert.notEqual(orderStatuses.indexOf(args.orderStatus),-1, "Invalid order status!");
 
@@ -25,9 +26,17 @@ var assert = require('assert');
             address.id = uuid.v4();
         }
 
+        this.email=args.email;
+        this.createdDate = args.createdDate || new Date();
+        var orderStatusHistory = [{orderStatus:'New', statusChangedDate:args.statusChangedDate}];
+
+        function changeOrderStatus(newStatus){
+            orderStatusHistory.push({orderStatus:newStatus,statusChangedDate:new Date()})
+        }
+
+
         this.shippingAddress = domainModel.createAddress(args);
         var orderItems = [];
-
         this.addOrderItem = function(deviceModel){
             var existingOrderLine = _.find(orderLines,function(orderItem){
                return orderItem.deviceModel === deviceModel;
