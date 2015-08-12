@@ -53,7 +53,7 @@
             var dynamodb = getDb();
 
             var params = {
-                Item: deviceModelDbMapper.mapDbEntityFromDeviceModel(device),
+                Item: deviceModelDbMapper.mapDeviceModelToDbEntity(device),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',

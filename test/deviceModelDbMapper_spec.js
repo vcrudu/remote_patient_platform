@@ -20,7 +20,7 @@ describe("Test mapping from entity to Db", function () {
         deviceModel.addImagesUrls("http://localhost/image1.jpg", "http://localhost/image2.jpg");
     });
     it("Is mapping correct", function() {
-        var dbDeviceModel =DeviceModel.mapDbEntityFromDeviceModel(deviceModel);
+        var dbDeviceModel =DeviceModel.mapDeviceModelToDbEntity(deviceModel);
         var temp = deviceModel.getDeviceModelSpecifications();
         var temp1 = deviceModel.getImagesUrls();
         assert.equal(dbDeviceModel.model.S, deviceModel.model, "Device model does not match");

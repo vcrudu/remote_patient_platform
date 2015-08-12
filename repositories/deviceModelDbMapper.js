@@ -9,7 +9,7 @@
 
     module.exports  = {
 
-        mapDbEntityFromDeviceModel : function(device){
+        mapDeviceModelToDbEntity : function(device){
             return {
                 model : {S : device.model},
                 description : {S : device.description},
