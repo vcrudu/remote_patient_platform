@@ -42,7 +42,7 @@ var entitiesFactory      = require("@vcrudu/hcm.domainmodel");
             it("Throw - Id is not a valid v4 uuid!",function(){
                // /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(orderUnderTest.id).should.be.true;
             });
-  
+
             it("Create Order successfully and have all the properties initialized",function(){
 
             });
