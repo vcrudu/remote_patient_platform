@@ -7,8 +7,6 @@ var uuid = require("node-uuid");
 var _ = require("underscore");
 var entitiesFactory      = require("@vcrudu/hcm.domainmodel");
 
-var Address = require("./address");
-
 (function(){
     module.exports = function(args){
         assert.ok(args.email, "Email is required!");
