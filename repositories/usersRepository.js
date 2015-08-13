@@ -23,7 +23,7 @@
 
             var params = {
                 Key: { email: { S: email }},
-                TableName:'User',
+                TableName:TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL'
             };
 
