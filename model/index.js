@@ -3,8 +3,12 @@
  */
 var UserFactoryImplementation = require('./user');
 var OrderImplementation = require('./order');
+var EventImplementation = require('./event');
+var HealthProfessionalImplementation = require('./healthProfessional');
 
 module.exports = {
     UserFactory:UserFactoryImplementation,
-    Order:OrderImplementation
+    Order:OrderImplementation,
+    Event:EventImplementation,
+    HealthProfessional:HealthProfessionalImplementation
 };

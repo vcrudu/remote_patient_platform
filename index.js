@@ -5,6 +5,9 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var auth = require("./auth");
 var checkExistsUserController = require("./controllers/checkExistsUser");
+var controllers = require('./controllers');
+var https = require('https');
+var fs = require('fs');
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -26,6 +29,9 @@ app.use(morgan("dev"));
 
 auth.configureJwt(app);
 
+checkExistsUserController.init(app);
+controllers.init(app);
+
 app.get('/',function(req, res){
     var options = {
         root: __dirname + '/public/'
@@ -40,5 +46,8 @@ app.get('/register',function(req, res){
     res.sendFile('register.html', options);
 });
 
-checkExistsUserController.init(app);
-app.listen(8080);
+https.createServer({
+    key:fs.readFileSync('./cert/trichromekey.pem'),
+    cert:fs.readFileSync('./cert/trichromecert.pem'),
+    passphrase: "PucaMica123"
+},app).listen(8080);
