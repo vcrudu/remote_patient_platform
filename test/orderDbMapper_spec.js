@@ -33,7 +33,7 @@ describe("Test mapping from Order entity to Db", function () {
         var dbOrder =OrderDbMapper.mapOrderToDbEntity(order);
         assert.equal(dbOrder.userId.S, order.userId, "Order user ID does not match");
         assert.equal(dbOrder.orderStatus.S, order.orderStatus, "Order status does not match");
-        assert.equal(dbOrder.createdDate.S, order.createdDate.getTime(), "Order created date does not match");
+        assert.equal(dbOrder.createdDate.N, order.createdDate.getTime(), "Order created date does not match");
         assert.equal(dbOrder.orderStatusHistory.L.length, temp.length, "Order length does not match");
         for(var i=0; i<dbOrder.orderStatusHistory.L.length; i++) {
             assert.equal(dbOrder.orderStatusHistory.L[i].orderStatus.S, temp[i].orderStatus, "Order status history element does not match");

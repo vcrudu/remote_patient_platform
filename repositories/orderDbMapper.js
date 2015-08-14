@@ -97,7 +97,7 @@
             return {
                 userId : {S : order.userId},
                 orderStatus : {S : order.orderStatus},
-                createdDate : {S : order.createdDate.getTime().toString()},
+                createdDate : {N : order.createdDate.getTime().toString()},
                 orderStatusHistory : {L : allOrderStatusHistory},
                 orderItems : {L : allOrderItems},
                 shippingAddress : {M : fullAddress}
@@ -108,7 +108,7 @@
         mapOrderFromDbEntity : function(dbEntity){
 
             var createdDateOriginal = new Date();
-            createdDateOriginal.setTime((dbEntity.createdDate.S));
+            createdDateOriginal.setTime((dbEntity.createdDate.N));
 
             var allOrderStatusHistory = buildArray(dbEntity.orderStatusHistory.L, mapOrderStatusHistoryFromDbEntity);
             var allOrderItems = buildArray(dbEntity.orderItems.L, mapOrderItemFromDbEntity);
