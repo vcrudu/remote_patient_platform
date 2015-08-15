@@ -3,7 +3,7 @@
  */
 
 angular.module('app')
-    .constant('appSettings',{serverUrl:'https://localhost:8080'})
+    .constant('appSettings',{serverUrl:'//localhost:8080'})
     .factory('authService',
     ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
 
