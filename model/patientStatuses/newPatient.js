@@ -3,9 +3,11 @@
  */
 
 (function(){
-    module.exports = function(status){
-        var statuses = ["New","DevicesOrdered","DevicesDelivered","DevicesAttached","Green","Amber","Red"];
-        assert.ok(statuses.indexOf(status)!=-1, "Invalid patient status");
+    module.exports = function(){
+        return {
+            getNotification:function(){
 
+            }
+        }
     };
 })();

@@ -12,13 +12,15 @@ var assert = require('assert');
 
         var eventType = ["HeartRate","BloodPressure","BloodGlucose",
             "BloodOxygen","RespiratoryRate","Temperature",
-            "Weight", "FallDetection","BloodInr","ECG"];
+            "Weight", "FallDetection","BloodInr","ECG","QuestionAnswer"];
+
+        //Todo-here to decide if the event could contain more then one measurement
 
         assert.ok(args.heartRate || args.bloodPressure ||
             args.bloodGlucose || args.bloodOxygen ||
             args.respiratoryRate || args.temperature ||
             args.weight || args.fallDetection ||
-            args.bloodInr || args.ecg, "The measurement should be provided!");
+            args.bloodInr || args.questionAnswer || args.ecg, "The measurement should be provided!");
 
         assert(args.measurementDateTime,"Measurement date and time should be provided!");
         var measurementDateTime = args.measurementDateTime;
@@ -68,6 +70,10 @@ var assert = require('assert');
             assert.ok(args.bloodInr instanceof Number && args.bloodInr>0, "Invalid blood Inr value!");
             measurementType="BloodInr";
             this.bloodInr=args.bloodInr;
+        }else if(args.questionAnswer){
+            measurementType="QuestionAnswer";
+            this.questionAnswer=args.questionAnswer;
+            this.questionId;
         } else assert.ok(false, "Invalid measurement type!");
 
 
@@ -122,10 +128,15 @@ var assert = require('assert');
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime};
             }
+
         };
 
         this.getMeasurementDateTime = function(){
             return measurementDateTime;
+        };
+
+        this.getEventId = function(){
+            return measurementDateTime.getTime().toString()+'#'+measurementType;
         };
     };
 })();
