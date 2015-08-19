@@ -22,6 +22,10 @@
     width: 200px;
 }
 
+#header{
+    background-color: #ffffff;
+}
+
 .separate{
     margin: 10%;
 }

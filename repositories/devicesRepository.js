@@ -4,6 +4,7 @@
 
 (function(){
 
+    var logging     = require('../logging');
     var AWS             = require('aws-sdk');
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
@@ -48,7 +49,32 @@
                 callback(null, resultDeviceModels);
             });
         },
+        getOne : function(model, callback){
+            var dynamodb = getDb();
 
+            var params = {
+                Key: { model: { S: model }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    logging.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                logging.getLogger().trace(model + "device has been retrieved successfully!");
+
+                if(data.Item) {
+                    var deviceModel = deviceModelDbMapper.mapDeviceModelFromDbEntity(data.Item);
+                    callback(null, deviceModel);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
         save : function(device, callback){
             var dynamodb = getDb();
 
@@ -72,12 +98,48 @@
             });
         },
 
-        delete : function(device, callback){
+        update : function(device, callback){
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { /* required */
+                    model: { S: device.model}
+                },
+                TableName: TABLE_NAME, /* required */
+                ExpressionAttributeValues: {
+                    ":description":{"S":device.description},
+                    ":price":{"N":device.price.toString()},
+                    ":manufacturerUrl":{"S":device.manufacturerUrl},
+                    ":deviceModelType":{"S":device.deviceModelType},
+                    ":imagesUrls":{"SS":device.getImagesUrls},
+                    ":specifications":{"SS":device.getDeviceModelSpecifications()}
+                },
+                ReturnConsumedCapacity: 'TOTAL',
+                ReturnValues: 'NONE',
+                UpdateExpression: 'SET description=:description, ' +
+                'price=:price, manufactureUrl=:manufactureUrl, ' +
+                'deviceModelType=:deviceModelType, ' +
+                'imagesUrls=:imagesUrls, specifications=:specifications'
+            };
+
+            dynamodb.updateItem(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                console.log("The device model has been updated successfully.");
+                callback(null, data);
+            });
+        },
+
+        delete : function(deviceId, callback){
             var dynamodb = getDb();
 
             var params = {
                 Key: {
-                    model: { S: device.model}
+                    model: { S: deviceId}
                 },
                 TableName: TABLE_NAME
             };
@@ -93,6 +155,5 @@
                 callback(null, data);
             });
         }
-
     };
 })();

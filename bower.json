@@ -37,6 +37,7 @@
     "angular-spinner": "~0.6.1",
     "spin": "~1.1.6",
     "angular-local-storage": "~0.2.2",
-    "fullcalendar": "~2.3.2"
+    "fullcalendar": "~2.3.2",
+    "bootstrap": "~3.3.5"
   }
 }

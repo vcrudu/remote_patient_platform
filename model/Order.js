@@ -30,12 +30,10 @@ var assert = require('assert');
         };
 
 
-        if(args.id) {
-            assert.equal(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(args.id),true,"Id is not a valid v4 uuid!");
-            this.id = args.id;
-        }else{
-            this.id = uuid.v4();
-        }
+        assert.ok(args.id, "Order id is mandatory!");
+
+        assert.equal(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(args.id),true,"Order id is not a valid v4 uuid!");
+        this.id = args.id;
 
         if(args.orderStatusHistory) {
             //Verify if orderStatusHistory is Array
@@ -107,4 +105,4 @@ var assert = require('assert');
         };
 
     };
-})();
+})()

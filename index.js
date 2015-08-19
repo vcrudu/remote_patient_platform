@@ -7,6 +7,7 @@ var auth = require("./auth");
 var checkExistsUserController = require("./controllers/checkExistsUser");
 var controllers = require('./controllers');
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
 
 process.env.JWT_SECRET = "HABICARIA";
@@ -46,8 +47,10 @@ app.get('/register',function(req, res){
     res.sendFile('register.html', options);
 });
 
-https.createServer({
+/*https.createServer({
     key:fs.readFileSync('./cert/trichromekey.pem'),
     cert:fs.readFileSync('./cert/trichromecert.pem'),
     passphrase: "PucaMica123"
-},app).listen(8080);
+},app).listen(8080);*/
+
+app.listen(8080);

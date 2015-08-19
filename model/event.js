@@ -73,7 +73,7 @@ var assert = require('assert');
         }else if(args.questionAnswer){
             measurementType="QuestionAnswer";
             this.questionAnswer=args.questionAnswer;
-            this.questionId;
+            this.questionId = args.questionId;
         } else assert.ok(false, "Invalid measurement type!");
 
 

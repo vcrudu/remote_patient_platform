@@ -9,10 +9,10 @@
         return{
             request:function(config){
                 if($localStorage.user){
-                    config.headers.authorization = 'bearer'.concat(' ',$localStorage.user.token);
+                    config.headers['x-access-token'] = $localStorage.user.token;
                 }
                 else{
-                    config.headers.authorization = undefined;
+                    config.headers['x-access-token'] = undefined;
                 }
                 return config;
             },

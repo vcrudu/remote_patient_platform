@@ -8,6 +8,6 @@
             getNotification:function(){
 
             }
-        }
+        };
     };
 })();
