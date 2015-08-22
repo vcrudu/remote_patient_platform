@@ -18,23 +18,24 @@
     };
 
     module.exports = {
-        getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, callback){
+        getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, pageSize, callback){
 
             var params = {
-                "ExpressionAttributeNames":
+                ExpressionAttributeNames:
                 {
                     "#measurementType" :"measurementType",
                     "#measurementDateTime" :"measurementDateTime"
                 },
-                "ExpressionAttributeValues":
+                ExpressionAttributeValues:
                 {
                     ":measurementType" :{"S": measureType},
                     ":startTime":{"N": startTime.getTime().toString()},
                     ":endTime":{"N": endTime.getTime().toString()}
                 },
-                "FilterExpression": "#measurementDateTime>=:startTime AND" +
+                FilterExpression: "#measurementDateTime>=:startTime AND" +
                 "#measurementDateTime<=:startTime AND #measurementType=:measurementType",
-                "TableName": TABLE_NAME
+                TableName: TABLE_NAME,
+                 Limit: pageSize
             };
 
             var dynamodb = getDb();
@@ -60,7 +61,7 @@
             var dynamodb = getDb();
 
             var params = {
-                Item: eventsDbMapper.mapEventToDbEntity(),
+                Item: eventsDbMapper.mapEventToDbEntity(event),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',

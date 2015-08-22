@@ -19,7 +19,7 @@ var _ = require('underscore');
                 {
                     var incidentTicket = logging.getIncidentTicketNumber("dv");
                     logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                    res.send(500).json({
+                    res.status(500).json({
                         success:false,
                         error:logging.getUserErrorMessage(incidentTicket)
                     });
@@ -47,7 +47,7 @@ var _ = require('underscore');
                 {
                     var incidentTicket = logging.getIncidentTicketNumber("dv");
                     logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                    res.send(500).json({
+                    res.status(500).json({
                         success:false,
                         error:logging.getUserErrorMessage(incidentTicket)
                     });
@@ -66,7 +66,7 @@ var _ = require('underscore');
         router.post('/devices', function(req, res){
 
             if(!req.body.model){
-                res.send(400).json({
+                res.status(400).json({
                     success: false,
                     error: "The request should contain device model details."
                 });
@@ -79,7 +79,7 @@ var _ = require('underscore');
                 deviceEntityToCreate = domainModel.createDeviceModel(req.body);
             }catch(err){
                 logging.getLogger().error({url:req.url,userId:req.decoded.email,err:err});
-                res.send(400).json({
+                res.status(400).json({
                     success: false,
                     error: err.message
                 });
@@ -91,14 +91,14 @@ var _ = require('underscore');
                 {
                     var incidentTicket = logging.getIncidentTicketNumber("dv");
                     logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                    res.send(500).json({
+                    res.status(500).json({
                         success:false,
                         error:logging.getUserErrorMessage(incidentTicket)
                     });
                 } else {
 
                     if(device){
-                        res.send(400).json({
+                        res.status(400).json({
                             success:false,
                             error:"Such device model already exists. Use put instead to update it."
                         });
@@ -108,7 +108,7 @@ var _ = require('underscore');
                             {
                                 var incidentTicket = logging.getIncidentTicketNumber("dv");
                                 logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                                res.send(500).json({
+                                res.status(500).json({
                                     success:false,
                                     error:logging.getUserErrorMessage(incidentTicket)
                                 });
@@ -193,7 +193,7 @@ var _ = require('underscore');
             var devicesList = req.body;
 
             if(devicesList.constructor!==Array) {
-                res.send(400).json({
+                res.status(400).json({
                     success: false,
                     error: "The body should be array of devices. Please provide entity id as parameter."
                 });
@@ -224,7 +224,7 @@ var _ = require('underscore');
 
             }catch(err){
                 logging.getLogger().error({url:req.url,userId:req.decoded.email,err:err});
-                res.send(400).json({
+                res.status(400).json({
                     success: false,
                     error: err.message
                 });
@@ -237,7 +237,7 @@ var _ = require('underscore');
                 {
                     var incidentTicket = logging.getIncidentTicketNumber("dv");
                     logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                    res.send(500).json({
+                    res.status(500).json({
                         success:false,
                         error:logging.getUserErrorMessage(incidentTicket)
                     });
@@ -249,7 +249,7 @@ var _ = require('underscore');
                             {
                                 var incidentTicket = logging.getIncidentTicketNumber("dv");
                                 logging.getLogger().error({incident:incidentTicket,url:req.url,userId:req.decoded.email},err);
-                                res.send(500).json({
+                                res.status(500).json({
                                     success:false,
                                     error:logging.getUserErrorMessage(incidentTicket)
                                 });
@@ -264,7 +264,7 @@ var _ = require('underscore');
                             }
                         });
                     }else{
-                        res.send(400).json({
+                        res.status(400).json({
                             success:false,
                             error:"Such a device model does not exists. Use post to add a new device model."
                         });

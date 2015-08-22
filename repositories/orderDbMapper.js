@@ -4,7 +4,7 @@
 
 (function() {
 
-    var Order = require('../model').Order;
+    var orderFactory = require('../model').OrderFactory;
     var domainModel = require('@vcrudu/hcm.domainmodel');
 
     function buildArray(source, mapper)
@@ -20,18 +20,18 @@
 
     function mapOrderStatusHistoryToDbEntity(orderStatusHistoryElem)
     {
-        return {
+        return { M: {
             orderStatus : {S: orderStatusHistoryElem.orderStatus},
-            statusChangedDate : {S: orderStatusHistoryElem.statusChangedDate.getTime().toString()}
-        };
+            statusChangedDate : {N: orderStatusHistoryElem.statusChangedDate.getTime().toString()}
+        }};
     }
 
     function mapOrderItemToDbEntity(orderItemElem)
     {
-        return {
+        return { M: {
             model : {S: orderItemElem.model},
             quantity : {N: orderItemElem.quantity}
-        };
+        }};
     }
 
     function buildDynamoDbString(str){
@@ -57,10 +57,10 @@
     function mapOrderStatusHistoryFromDbEntity(orderStatusHistoryElem)
     {
         var createdStatusChangedDate = new Date();
-        createdStatusChangedDate.setTime(orderStatusHistoryElem.statusChangedDate.S);
+        createdStatusChangedDate.setTime(orderStatusHistoryElem.M.statusChangedDate.N);
 
         return {
-            orderStatus :  orderStatusHistoryElem.orderStatus.S,
+            orderStatus :  orderStatusHistoryElem.M.orderStatus.S,
             statusChangedDate : createdStatusChangedDate
         };
     }
@@ -68,8 +68,8 @@
     function mapOrderItemFromDbEntity(orderItemElem)
     {
         return {
-            model : orderItemElem.model.S,
-            quantity : orderItemElem.quantity.N
+            model : orderItemElem.M.model.S,
+            quantity : orderItemElem.M.quantity.N
         };
     }
 
@@ -95,9 +95,11 @@
             var allOrderStatusHistory = buildArray(order.getOrderStatusHistory(), mapOrderStatusHistoryToDbEntity);
             var allOrderItems = buildArray(order.getOrderItems(), mapOrderItemToDbEntity);
             return {
+                orderId: {S : order.orderId},
                 userId : {S : order.userId},
-                orderStatus : {S : order.orderStatus},
+                orderStatus : {S : order.getOrderStatus()},
                 createdDate : {N : order.createdDate.getTime().toString()},
+                modifiedDate : {N : order.modifiedDate.getTime().toString()},
                 orderStatusHistory : {L : allOrderStatusHistory},
                 orderItems : {L : allOrderItems},
                 shippingAddress : {M : fullAddress}
@@ -108,25 +110,38 @@
         mapOrderFromDbEntity : function(dbEntity){
 
             var createdDateOriginal = new Date();
-            createdDateOriginal.setTime((dbEntity.createdDate.N));
+            createdDateOriginal.setTime((parseInt(dbEntity.createdDate.N)));
+            var modifiedDateOriginal = new Date();
+            modifiedDateOriginal.setTime((parseInt(dbEntity.modifiedDate.N)));
 
             var allOrderStatusHistory = buildArray(dbEntity.orderStatusHistory.L, mapOrderStatusHistoryFromDbEntity);
             var allOrderItems = buildArray(dbEntity.orderItems.L, mapOrderItemFromDbEntity);
             var fullAddress = mapOrderShippingAddressFromDbEntity(dbEntity.shippingAddress.M);
 
-            var order = new Order({
-
+            var order = orderFactory.RehydrateObject({
+                orderId : dbEntity.orderId.S,
                 userId : dbEntity.userId.S,
                 orderStatus : dbEntity.orderStatus.S,
                 createdDate : createdDateOriginal,
+                modifiedDate :modifiedDateOriginal,
                 orderStatusHistory : allOrderStatusHistory,
                 orderItems : allOrderItems,
                 shippingAddress : fullAddress
             });
 
             return order;
-        }
+        },
 
+        mapOrderLightFromDbEntity : function(dbEntity){
+
+            var order = {
+                orderId: dbEntity.orderId.S,
+                userId: dbEntity.userId.S,
+                orderStatus: dbEntity.orderStatus.S
+            };
+
+            return order;
+        }
     };
 
 })();

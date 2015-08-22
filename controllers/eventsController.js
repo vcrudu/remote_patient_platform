@@ -2,31 +2,44 @@
  * Created by Victor on 06/08/2015.
  */
 
+var eventsRepository     = require('../repositories').Events;
+var Event = require('../model').Event;
+var logging = require("../logging");
+
 (function(){
 
-    module.exports.init = function(app){
-        app.get('/v1/api/events', function(req, res){
-            var params = req.params;
+    module.exports.init = function(router){
+        router.get('/events', function(req, res){
+            var pageSize = req.query.pageSize;
+            var pageNumber = req.query.pageNumber;
+            var measureType = req.query.measureType;
+
         });
 
-        app.get('/v1/api/events/:userId', function(req, res){
-            var params = req.params;
-        });
+        router.post('/events', function(req, res){
+            var eventToSave;
+            try{
+                eventToSave = new Event(req.body);
+            }catch(error){
+                res.status(400).json({
+                    success:false,
+                    message:error.message
+                });
+                return;
+            }
 
-        app.post('/v1/api/events', function(req, res){
-            var body = req.body;
-        });
-
-        app.put('/v1/api/events', function(req, res){
-            res.send(400);
-        });
-
-        app.put('/v1/api/events/:userId', function(req, res){
-            var params = req.params;
-        });
-
-        app.delete('/v1/api/events', function(req, res){
-            res.send(400);
+            eventsRepository.save(eventToSave, function(err, data){
+                if(err){
+                    var incidentTicket = logging.getIncidentTicketNumber('ev');
+                    logging.getLogger().error({incidentTicket:incidentTicket},err);
+                    res.status(500).json({
+                        success:false,
+                        message:logging.getUserErrorMessage(incidentTicket)
+                    });
+                }else{
+                    res.status(200);
+                }
+            });
         });
     };
 })();
