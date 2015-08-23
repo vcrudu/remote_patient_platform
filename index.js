@@ -9,6 +9,7 @@ var controllers = require('./controllers');
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
+var logging     = require('../logging');
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -53,4 +54,7 @@ app.get('/register',function(req, res){
     passphrase: "PucaMica123"
 },app).listen(8080);*/
 
-app.listen(process.env.port || 8081);
+var PORT = process.env.port || 8081;
+logging.getLogger().trace({message:"Main port used - ",port:PORT});
+
+app.listen(PORT);
