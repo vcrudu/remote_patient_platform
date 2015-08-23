@@ -3,14 +3,14 @@
  */
 var UserFactoryImplementation = require('./user');
 var OrderFactoryImplementation = require('./order');
-var EventImplementation = require('./event');
+var EventFactoryImplementation = require('./event');
 var PaymentImplementation = require('./payment');
 var HealthProfessionalImplementation = require('./healthProfessional');
 
 module.exports = {
     UserFactory:UserFactoryImplementation,
     OrderFactory:OrderFactoryImplementation,
-    Event:EventImplementation,
+    EventFactory:EventFactoryImplementation,
     Payment:PaymentImplementation,
     HealthProfessional:HealthProfessionalImplementation
 };

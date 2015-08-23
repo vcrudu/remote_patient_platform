@@ -3,7 +3,7 @@
  */
 
 var eventsRepository     = require('../repositories').Events;
-var Event = require('../model').Event;
+var EventFactory = require('../model').EventFactory;
 var logging = require("../logging");
 
 (function(){
@@ -13,13 +13,18 @@ var logging = require("../logging");
             var pageSize = req.query.pageSize;
             var pageNumber = req.query.pageNumber;
             var measureType = req.query.measureType;
-
+            if(req.query.sample){
+                if(!req.query.measureType)
+                    req.query.measureType = EventFactory.getMeasurementTypes()[0];
+                res.json(EventFactory.getSample(req.query.measureType));
+            }
         });
 
         router.post('/events', function(req, res){
             var eventToSave;
+            req.body.userId =  req.decoded.email;
             try{
-                eventToSave = new Event(req.body);
+                eventToSave = EventFactory.buildEvent(req.body);
             }catch(error){
                 res.status(400).json({
                     success:false,
@@ -28,7 +33,7 @@ var logging = require("../logging");
                 return;
             }
 
-            eventsRepository.save(eventToSave, function(err, data){
+            eventsRepository.getOne(req.decoded.email, eventToSave.getMeasurementDateTime(), function(err, event){
                 if(err){
                     var incidentTicket = logging.getIncidentTicketNumber('ev');
                     logging.getLogger().error({incidentTicket:incidentTicket},err);
@@ -36,8 +41,24 @@ var logging = require("../logging");
                         success:false,
                         message:logging.getUserErrorMessage(incidentTicket)
                     });
+                }else if(event){
+                    res.status(400).json({
+                        success:false,
+                        message:'Event has been provided already.'
+                    });
                 }else{
-                    res.status(200);
+                    eventsRepository.save(eventToSave, function(err, data){
+                        if(err){
+                            var incidentTicket = logging.getIncidentTicketNumber('ev');
+                            logging.getLogger().error({incidentTicket:incidentTicket},err);
+                            res.status(500).json({
+                                success:false,
+                                message:logging.getUserErrorMessage(incidentTicket)
+                            });
+                        }else{
+                            res.status(200).end();
+                        }
+                    });
                 }
             });
         });

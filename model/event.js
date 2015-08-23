@@ -8,11 +8,11 @@ var _ = require('underscore');
 var assert = require('assert');
 
 (function(){
-    module.exports = function(args){
+    var eventTypes = ["HeartRate","BloodPressure","BloodGlucose",
+        "BloodOxygen","RespiratoryRate","Temperature",
+        "Weight", "FallDetection","BloodInr","ECG","QuestionAnswer"];
 
-        var eventType = ["HeartRate","BloodPressure","BloodGlucose",
-            "BloodOxygen","RespiratoryRate","Temperature",
-            "Weight", "FallDetection","BloodInr","ECG","QuestionAnswer"];
+    function Event(args){
 
         //Todo-here to decide if the event could contain more then one measurement
 
@@ -23,7 +23,7 @@ var assert = require('assert');
             args.bloodInr || args.questionAnswer || args.ecg, "The measurement should be provided!");
 
         assert(args.measurementDateTime,"Measurement date and time should be provided!");
-        var measurementDateTime = args.measurementDateTime;
+        var measurementDateTime = new Date(args.measurementDateTime);
 
         assert(args.userId,"User id should be provided!");
         this.userId = args.userId;
@@ -135,8 +135,61 @@ var assert = require('assert');
             return measurementDateTime;
         };
 
+        this.getSample = function(measurementType){
+
+        };
+
         this.getEventId = function(){
             return measurementDateTime.getTime().toString()+'#'+measurementType;
         };
+    }
+    module.exports = {
+        buildEvent:function(args){
+            return new Event(args);
+        },
+        getSample:function(measurementType){
+            var testUserId = 'test@test.com';
+            var nowDateTime = new Date();
+            if(measurementType=="HeartRate"){
+                return {heartRate:80,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            }else if(measurementType=="BloodPressure"){
+                return {bloodPressure:{systolic:120,diastolic:80},
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            } else if( measurementType=="BloodGlucose"){
+                return {bloodGlucose:130,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            } else if(measurementType=="BloodOxygen"){
+                return {bloodOxygen:98,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            }else if(measurementType=="RespiratoryRate"){
+                return {respiratoryRate:15,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            }else if(measurementType=="Temperature"){
+                return {temperature:36.6,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            } if(measurementType=="Weight"){
+                return {weight:80,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            } else if(measurementType=="FallDetection"){
+                return {fallDetection:true,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            } else if(measurementType=="BloodInr"){
+                return {bloodInr:2.8,
+                    measurementType:measurementType,
+                    measurementDateTime:nowDateTime};
+            }
+        },
+        getMeasurementTypes:function(){
+            return eventTypes;
+        }
     };
 })();

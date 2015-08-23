@@ -4,7 +4,7 @@
 
 (function() {
 
-    var Event = require('../model').Event;
+    var EventFactory = require('../model').EventFactory;
 
     module.exports  = {
 
@@ -89,13 +89,13 @@
             measurementDateTime.setTime(parseInt(dbEntity.measurementDateTime.N));
 
             if(dbEntity.measurementType.S=="HeartRate"){
-                return new Event({
+                return EventFactory.buildEvent({
                     heartRate:parseInt(dbEntity.heartRate.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             }else if(event.getMeasurementType()=="BloodPressure"){
-                return new Event({
+                return EventFactory.buildEvent({
                     bloodPressure:{
                             systolic:parseInt(dbEntity.bloodPressure.M.systolic.N),
                             diastolic:parseInt(dbEntity.bloodPressure.M.diastolic.N)
@@ -104,43 +104,43 @@
                     measurementDateTime:measurementDateTime
                 });
             } else if( event.getMeasurementType()=="BloodGlucose"){
-                return new Event({
+                return EventFactory.buildEvent({
                     bloodGlucose:parseFloat(dbEntity.bloodGlucose.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             } else if(event.getMeasurementType()=="BloodOxygen"){
-                return new Event({
+                return EventFactory.buildEvent({
                     bloodOxygen:parseInt(dbEntity.bloodOxygen.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             }else if(event.getMeasurementType()=="RespiratoryRate"){
-                return new Event({
+                return EventFactory.buildEvent({
                     respiratoryRate:parseInt(dbEntity.respiratoryRate.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             }else if(event.getMeasurementType()=="Temperature"){
-                return new Event({
+                return EventFactory.buildEvent({
                     temperature:parseFloat(dbEntity.temperature.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             } if(event.getMeasurementType()=="Weight"){
-                return new Event({
+                return EventFactory.buildEvent({
                     weight:parseFloat(dbEntity.weight.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             } else if(event.getMeasurementType()=="FallDetection"){
-                return new Event({
+                return EventFactory.buildEvent({
                     fallDetection:dbEntity.fallDetection.BOOL=='true',
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
             } else if(event.getMeasurementType()=="BloodInr"){
-                return new Event({
+                return EventFactory.buildEvent({
                     bloodInr:parseFloat(dbEntity.bloodInr.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime

@@ -16,8 +16,8 @@ app.use(express.static(__dirname+"/public/"));
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-access-token');
     next();
 });
 
@@ -53,4 +53,4 @@ app.get('/register',function(req, res){
     passphrase: "PucaMica123"
 },app).listen(8080);*/
 
-app.listen(8080);
+app.listen(process.env.port || 8081);

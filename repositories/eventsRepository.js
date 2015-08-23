@@ -18,6 +18,32 @@
     };
 
     module.exports = {
+
+        getOne:function(userId, measurementDateTime, callback){
+            var params = {
+                Key: { userId: { S: userId },measurementDateTime:{N:measurementDateTime.getTime().toString()}},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+                console.log("The event has been found successfully.");
+                if(data.Item) {
+                    var event = eventsDbMapper.mapEventFromDbEntity(data.Item);
+                    callback(null, event);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
+
         getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, pageSize, callback){
 
             var params = {
