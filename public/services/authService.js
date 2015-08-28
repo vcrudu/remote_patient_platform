@@ -3,7 +3,7 @@
  */
 
 angular.module('app')
-    .constant('appSettings',{serverUrl:'//localhost:8080'})
+    .constant('appSettings',{serverUrl:'//hcm-qa.elasticbeanstalk.com'})
     .factory('authService',
     ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
 
@@ -39,14 +39,16 @@ angular.module('app')
                 var req = {
                     method: 'POST',
                     url: appSettings.serverUrl + '/signin',
-                    headers: {
-                        'Access-Control-Allow-Origin':'*'
-                    },
                     data: data
                 };
                 $http(req).success(function(res){
                     if(!res.error) {
                         $localStorage.user = res.data;
+                        $localStorage.user.socket = window.io.connect('http://localhost:8080');
+                        $localStorage.user.socket.emit('messages','Hello Server');
+                        $localStorage.user.socket.on('notification', function(notification){
+                            alert(notification);
+                        });
                         success(res.data);
                     }else {
                         error(res.error);
@@ -58,9 +60,7 @@ angular.module('app')
                 var req = {
                     method: 'POST',
                     url: appSettings.serverUrl + '/signup',
-                    headers: {
-                        'Access-Control-Allow-Origin':'*'
-                    },
+
                     data: data
                 };
                 $http(req).success(function(res){
@@ -82,6 +82,7 @@ angular.module('app')
             },
 
             logout: function (success) {
+                $localStorage.user.socket.emit('messages','Disconected');
                 delete $localStorage.user;
                 success();
             }

@@ -8,6 +8,7 @@
     var eventsDbMapper     = require('./eventsDbMapper');
     var connectionOptions = require('./awsOptions');
     var TABLE_NAME        = 'Event';
+    var _ = require('underscore');
 
        var getDb = function(){
 
@@ -44,26 +45,51 @@
             });
         },
 
-        getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, pageSize, callback){
+        getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, callback){
 
-            var params = {
-                ExpressionAttributeNames:
-                {
-                    "#measurementType" :"measurementType",
-                    "#measurementDateTime" :"measurementDateTime"
-                },
-                ExpressionAttributeValues:
-                {
-                    ":measurementType" :{"S": measureType},
-                    ":startTime":{"N": startTime.getTime().toString()},
-                    ":endTime":{"N": endTime.getTime().toString()}
-                },
-                FilterExpression: "#measurementDateTime>=:startTime AND" +
-                "#measurementDateTime<=:startTime AND #measurementType=:measurementType",
-                TableName: TABLE_NAME,
-                 Limit: pageSize
-            };
+            var filterExpression='';
+            var params;
+            if(measureType!='All') {
+                filterExpression = '#measurementType=:measurementType';
 
+
+                params = {
+                    KeyConditionExpression: 'userId=:userId AND' +
+                    '#measurementDateTime>=:startTime',
+
+                    ExpressionAttributeNames: {
+                        "#measurementType": "measurementType",
+                        "#measurementDateTime": "measurementDateTime"
+                    },
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId},
+                        ":measurementType": {"S": measureType},
+                        ":startTime": {"N": startTime.getTime().toString()}//,
+                        //":endTime":{"N": endTime.getTime().toString()}
+                    },
+                    FilterExpression: filterExpression,
+                    TableName: TABLE_NAME,
+                    Limit: 30
+                };
+            }else{
+                params = {
+                    KeyConditionExpression: 'userId=:userId AND' +
+                    '#measurementDateTime>=:startTime',
+
+                    ExpressionAttributeNames: {
+                        "#measurementType": "measurementType",
+                        "#measurementDateTime": "measurementDateTime"
+                    },
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId},
+                        ":measurementType": {"S": measureType},
+                        ":startTime": {"N": startTime.getTime().toString()}//,
+                        //":endTime":{"N": endTime.getTime().toString()}
+                    },
+                    TableName: TABLE_NAME,
+                    Limit: 30
+                };
+            }
             var dynamodb = getDb();
 
             dynamodb.query(params, function(err, data){
@@ -73,9 +99,13 @@
                     return;
                 }
                 console.log("The events has been retrieved successfully.");
-                if(data.Item) {
-                    var user = UserFactory.createUserFromDbEntity(data.Item);
-                    callback(null, user);
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var event = eventsDbMapper.mapEventFromDbEntity(item);
+                        results.push(event.getMeasurement());
+                    });
+                    callback(null, results);
                 }else{
                     callback(null, null);
                 }

@@ -47,25 +47,25 @@ var orderService = require('../services').OrderService;
 
         });
 
-        router.post('/orders', function(req, res){
+        router.post('/orders', function(req, res) {
 
-            logging.getLogger().trace({url:req.url,userId:req.decoded.email},"Order requested to be created");
+            logging.getLogger().trace({url: req.url, userId: req.decoded.email}, "Order requested to be created");
 
-            orderService.createNewOrder(req, function(error, result){
-                if(error){
-                    if(error.unhandled) {
+            orderService.createOrder(req, function (error, result) {
+                if (error) {
+                    if (error.unhandled) {
                         res.status(400).json({
                             success: false,
                             message: error.message
                         });
-                    }else {
+                    } else {
                         res.status(500).json({
                             success: false,
                             error: error.message
                         });
                     }
                     return;
-                }else{
+                } else {
 
                     res.json({
                         count: 1,
@@ -73,7 +73,10 @@ var orderService = require('../services').OrderService;
                         items: [result],
                         description: "The result contains the list of created orders."
                     });
-                    logging.getLogger().trace({url:req.url,userId:req.decoded.email}, "Order has been created successfully.");
+                    logging.getLogger().trace({
+                        url: req.url,
+                        userId: req.decoded.email
+                    }, "Order has been created successfully.");
                 }
             });
         });

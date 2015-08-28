@@ -30,36 +30,36 @@ var assert = require('assert');
         var measurementType;
 
         if(args.heartRate){
-            assert.ok(typeof args.heartRate === "number" && args.heartRate>0 && args.heartRate<300, "Invalid heart rate!");
+            assert.ok(!isNaN(args.heartRate) && args.heartRate>0 && args.heartRate<300, "Invalid heart rate!");
             this.heartRate = args.heartRate;
             measurementType="HeartRate";
         }else if(args.bloodPressure){
             assert.ok(args.bloodPressure.systolic, "Systolic value is not specified!");
             assert.ok(args.bloodPressure.diastolic, "Diastolic value is not specified!");
 
-            assert.ok(systolic instanceof Number && (systolic>0 && systolic<300), "Invalid systolic value!");
-            assert.ok(diastolic instanceof Number && (diastolic>0 && diastolic<300), "Invalid systolic value!");
+            assert.ok(!isNaN(args.bloodPressure.systolic) && (args.bloodPressure.systolic>0 && args.bloodPressure.systolic<300), "Invalid systolic value!");
+            assert.ok(!isNaN(args.bloodPressure.diastolic) && (args.bloodPressure.diastolic>0 && args.bloodPressure.diastolic<300), "Invalid systolic value!");
 
-            this.bloodPressure = {systolic : systolic, diastolic : diastolic};
+            this.bloodPressure = {systolic : args.bloodPressure.systolic, diastolic : args.bloodPressure.diastolic};
             measurementType="BloodPressure";
         } else if(args.bloodGlucose){
-            assert.ok(args.bloodGlucose instanceof Number, "Invalid blood glucose value!");
+            assert.ok(!isNaN(args.bloodGlucose), "Invalid blood glucose value!");
             this.bloodGlucose=args.bloodGlucose;
             measurementType="BloodGlucose";
         } else if(args.bloodOxygen){
-            assert.ok(args.bloodOxygen instanceof Number && args.bloodOxygen<=100 && args.bloodOxygen>=50, "Invalid blood oxygen value!");
+            assert.ok(!isNaN(args.bloodOxygen) && args.bloodOxygen<=100 && args.bloodOxygen>=50, "Invalid blood oxygen value!");
             measurementType="BloodOxygen";
             this.bloodOxygen=args.bloodOxygen;
         }else if(args.respiratoryRate){
-            assert.ok(args.respiratoryRate instanceof Number && args.respiratoryRate<=300 && args.respiratoryRate>=1, "Invalid respiratory rate value!");
+            assert.ok(!isNaN(args.respiratoryRate) && args.respiratoryRate<=300 && args.respiratoryRate>=1, "Invalid respiratory rate value!");
             measurementType="RespiratoryRate";
             this.respiratoryRate=args.respiratoryRate;
         }else if(args.temperature){
-            assert.ok(args.temperature instanceof Number && args.temperature<=50 && args.temperature>=20, "Invalid temperature value!");
+            assert.ok(!isNaN(args.temperature) && args.temperature<=50 && args.temperature>=20, "Invalid temperature value!");
             measurementType="Temperature";
             this.temperature=args.temperature;
         } else if(args.weight){
-            assert.ok(args.weight instanceof Number && args.weight<500 && args.weight>=1, "Invalid weight value!");
+            assert.ok(!isNaN(args.weight) && args.weight<500 && args.weight>=1, "Invalid weight value!");
             measurementType="Weight";
             this.weight=args.weight;
         } else if(args.fallDetection){
@@ -67,7 +67,7 @@ var assert = require('assert');
             measurementType="FallDetection";
             this.fallDetection=args.fallDetection;
         } else if(args.bloodInr){
-            assert.ok(args.bloodInr instanceof Number && args.bloodInr>0, "Invalid blood Inr value!");
+            assert.ok(!isNaN(args.bloodInr) && args.bloodInr>0, "Invalid blood Inr value!");
             measurementType="BloodInr";
             this.bloodInr=args.bloodInr;
         }else if(args.questionAnswer){

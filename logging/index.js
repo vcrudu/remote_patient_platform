@@ -9,7 +9,7 @@ var log = bunyan.createLogger({name: 'hcm.registration'});
     module.exports = {
         getIncidentTicketNumber : function(componentCode){
             var dateTime = new Date();
-            return componentCode+dateTime.getDay()+dateTime.getMonth()+dateTime.getHours+dateTime.getMinutes();
+            return componentCode+dateTime.getDate()+dateTime.getMonth()+dateTime.getHours()+dateTime.getMinutes();
         },
         getUserErrorMessage : function(incidentTicket){
             return "Something went wrong! We apologize about this." +

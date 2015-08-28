@@ -3,9 +3,6 @@ var app = express();
 var morgan = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-var auth = require("./auth");
-var checkExistsUserController = require("./controllers/checkExistsUser");
-var controllers = require('./controllers');
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
@@ -29,10 +26,6 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
-auth.configureJwt(app);
-
-checkExistsUserController.init(app);
-controllers.init(app);
 
 app.get('/',function(req, res){
     var options = {
@@ -48,16 +41,10 @@ app.get('/register',function(req, res){
     res.sendFile('register.html', options);
 });
 
-/*https.createServer({
-    key:fs.readFileSync('./cert/trichromekey.pem'),
-    cert:fs.readFileSync('./cert/trichromecert.pem'),
-    passphrase: "PucaMica123"
-},app).listen(8080);*/
 
 var PORT = process.env.port || 8080;
 logging.getLogger().trace({message:"Main port used - ",port:PORT});
 
 var server = http.createServer(app);
-var notifications = require('./notifications');
-notifications.init(server);
+
 server.listen(PORT);

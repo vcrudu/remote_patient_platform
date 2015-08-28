@@ -1,5 +1,5 @@
 /**
- * Created by Victor on 13/08/2015.
+ * Created by Victor on 28/08/2015.
  */
 
 var uuid = require("node-uuid");
@@ -36,4 +36,3 @@ var assert = require('assert');
         this.currency = args.currency;
     };
 })();
-

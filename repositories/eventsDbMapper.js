@@ -94,7 +94,7 @@
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            }else if(event.getMeasurementType()=="BloodPressure"){
+            }else if(dbEntity.measurementType.S=="BloodPressure"){
                 return EventFactory.buildEvent({
                     bloodPressure:{
                             systolic:parseInt(dbEntity.bloodPressure.M.systolic.N),
@@ -103,19 +103,19 @@
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            } else if( event.getMeasurementType()=="BloodGlucose"){
+            } else if( dbEntity.measurementType.S=="BloodGlucose"){
                 return EventFactory.buildEvent({
                     bloodGlucose:parseFloat(dbEntity.bloodGlucose.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            } else if(event.getMeasurementType()=="BloodOxygen"){
+            } else if(dbEntity.measurementType.S=="BloodOxygen"){
                 return EventFactory.buildEvent({
                     bloodOxygen:parseInt(dbEntity.bloodOxygen.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            }else if(event.getMeasurementType()=="RespiratoryRate"){
+            }else if(dbEntity.measurementType.S=="RespiratoryRate"){
                 return EventFactory.buildEvent({
                     respiratoryRate:parseInt(dbEntity.respiratoryRate.N),
                     userId:dbEntity.userId.S,
@@ -127,19 +127,19 @@
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            } if(event.getMeasurementType()=="Weight"){
+            } if(dbEntity.measurementType.S=="Weight"){
                 return EventFactory.buildEvent({
                     weight:parseFloat(dbEntity.weight.N),
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            } else if(event.getMeasurementType()=="FallDetection"){
+            } else if(dbEntity.measurementType.S=="FallDetection"){
                 return EventFactory.buildEvent({
                     fallDetection:dbEntity.fallDetection.BOOL=='true',
                     userId:dbEntity.userId.S,
                     measurementDateTime:measurementDateTime
                 });
-            } else if(event.getMeasurementType()=="BloodInr"){
+            } else if(dbEntity.measurementType.S=="BloodInr"){
                 return EventFactory.buildEvent({
                     bloodInr:parseFloat(dbEntity.bloodInr.N),
                     userId:dbEntity.userId.S,

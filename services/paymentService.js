@@ -11,7 +11,34 @@ stripe.setApiVersion('2015-08-19');
     module.exports = {
       pay:function(paymentDetails,callback){
 
-          callback(null);
-      }
+      },
+        getCustomers:function(callback) {
+            stripe.customers.list(
+                { limit: 3 },
+                function(err, customers) {
+                    var list = customers;
+                    callback(customers);
+                }
+            );
+        },
+        getCustomer:function(customerId, callback) {
+            stripe.customers.retrieve(
+                customerId,
+                function(err, customer) {
+                    callback(customer);
+                }
+            );
+        },
+        charge:function(payment, callback) {
+            stripe.charges.create({
+                amount: payment.amount,
+                currency: payment.currency,
+                //source: {payment}, // obtained with Stripe.js
+                description: "Charge for test@example.com"
+            }, function(err, charge) {
+                callback(err, charge);
+            });
+        }
+
     };
 })();

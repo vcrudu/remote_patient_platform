@@ -10,7 +10,7 @@ var paymentService = require('./paymentService');
 
 (function(){
     module.exports={
-            createNewOrder:function(req, callback){
+            createOrder:function(req, callback){
                 if(!req.body.orderId){
                     callback(new Error('Order is missing!'),null);
                     return;
@@ -28,6 +28,12 @@ var paymentService = require('./paymentService');
                         callback(error,null);
                         return;
                     }
+
+                    if(req.body.payment){
+                        var payment = new Payment(req.body.payment);
+                        paymentService.pay(payment);
+                    }
+
                     ordersRepository.save(orderEntityToCreate, function(err, createdOrder){
                         if(err)
                         {
