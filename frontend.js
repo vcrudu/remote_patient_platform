@@ -58,6 +58,6 @@ var PORT = process.env.port || 8080;
 logging.getLogger().trace({message:"Main port used - ",port:PORT});
 
 var server = http.createServer(app);
-var notifications = require('./notifications');
-notifications.init(server);
+//var notifications = require('./notifications');
+//notifications.init(server);
 server.listen(PORT);
