@@ -44,11 +44,8 @@ angular.module('app')
                 $http(req).success(function(res){
                     if(!res.error) {
                         $localStorage.user = res.data;
-                        $localStorage.user.socket = window.io.connect('http://localhost:8080');
-                        $localStorage.user.socket.emit('messages','Hello Server');
-                        $localStorage.user.socket.on('notification', function(notification){
-                            alert(notification);
-                        });
+                       // $localStorage.user.socket = window.io.connect(appSettings.serverUrl);
+                       // $localStorage.user.socket.emit('messages','Hello Server');
                         success(res.data);
                     }else {
                         error(res.error);
@@ -82,7 +79,7 @@ angular.module('app')
             },
 
             logout: function (success) {
-                $localStorage.user.socket.emit('messages','Disconected');
+                //$localStorage.user.socket.emit('messages','Disconected');
                 delete $localStorage.user;
                 success();
             }
