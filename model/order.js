@@ -19,7 +19,7 @@ var util = require('util');
         assert.ok(args.orderItems,"Order items are mandatory!");
         assert.ok(util.isArray(args.orderItems),"Order items list is mandatory. Apparently the orderItems is not a list.");
 
-        var orderStatuses = ['New','Paid','Canceled', 'Shipped','Delivered'];
+        var orderStatuses = ['New','Paid','Cancelled', 'Shipped','Delivered'];
         var orderStatus = 'New';
         var orderStatusHistory = [];
         var orderItems = [];
@@ -150,6 +150,10 @@ var util = require('util');
             },0);
             return orderStatusHistory;
         };
+
+        this.getDescription = function(){
+            return "Order monitoring devices.";
+        }
 
         this.getDto = function(){
             return {orderId:this.orderId,
