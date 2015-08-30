@@ -26,10 +26,10 @@ describe('Stripe',function(){
                     return 10*100;
             },orderId:"TestOrder1"};
 
-            var payment = {cardNumber:4242424242424242,
-                expireMonth:11,
-                expireYear:2017,
-                cardSecurityNumber:111,
+            var payment = {cardNumber:'4242424242424242',
+                expireMonth:'11',
+                expireYear:'2017',
+                cardSecurityNumber:'111',
                 nameOnCard:'Victor Crudu'
             };
             paymentService.chargeNonCustomer(payment, order, function(err, charge){

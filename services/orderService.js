@@ -2,6 +2,7 @@
  * Created by Victor on 19/08/2015.
  */
 var ordersRepository = require('../repositories').Orders;
+var devicesRepository = require('../repositories').Devices;
 var orderFactory = require('../model').OrderFactory;
 var Payment = require('../model').Payment;
 var logging     = require('../logging');
@@ -10,7 +11,7 @@ var paymentService = require('./paymentService');
 
 (function() {
 
-    function handleStorageError(error, callback){
+    function processUnhandledError(req, error, callback){
         var incidentTicket = logging.getIncidentTicketNumber("or");
         logging.getLogger().error({
             incident: incidentTicket,
@@ -25,34 +26,43 @@ var paymentService = require('./paymentService');
     function saveOrder(req, order, callback) {
         ordersRepository.save(order, function (error, savedOrder) {
             if (error) {
-                var incidentTicket = logging.getIncidentTicketNumber("or");
-                logging.getLogger().error({
-                    incident: incidentTicket,
-                    url: req.url,
-                    userId: req.decoded.email
-                }, error);
-                var unhandledError = new Error(logging.getUserErrorMessage(incidentTicket));
-                unhandledError.unhandled = true;
-                callback(unhandledError, null);
+                processUnhandledError(req, error, callback);
             } else {
                 callback(null, savedOrder);
             }
         });
     }
 
+    function getValidDevices(req, callback) {
+        devicesRepository.getAll(function (err, result) {
+            var devices=[];
+            if (err) {
+                processUnhandledError(req, err, callback);
+            } else {
+                _.forEach(result, function (device) {
+                    devices.push(device);
+                });
+                callback(null, devices);
+            }
+        });
+    }
+
+
     module.exports = {
         createOrder: function (req, callback) {
 
-            var orderEntityToCreate;
-            ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
-                if (order) {
-                    var handledError = new Error("The order already exists!");
-                    handledError.unhandled = false;
-                    callback(handledError);
+            getValidDevices(req, function (err, devices) {
+                if(err){
+                    callback(err,null);
                     return;
                 }
+
+                var orderEntityToCreate;
+
                 try {
-                    orderEntityToCreate = orderFactory.BuildObject(_.extend(req.body, {userId: req.decoded.email}));
+                    orderEntityToCreate = orderFactory.BuildObject(_.extend(req.body, {
+                        userId: req.decoded.email, devices: devices
+                    }));
                 } catch (error) {
                     logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
                     callback(error, null);
@@ -61,23 +71,14 @@ var paymentService = require('./paymentService');
 
                 if (req.body.payment) {
                     var payment = new Payment(req.body.payment);
-                    paymentService.chargeNonCustomer(payment, order, function (error, charge) {
+                    paymentService.chargeNonCustomer(payment, orderEntityToCreate, function (error, charge) {
                         if (error) {
                             if (error.type == 'StripeCardError') {
-                                var handledError = new Error(error.message);
-                                handledError.unhandled = false;
-                                callback(handledError, null);
+                                callback(error, null);
                                 return;
                             } else {
-                                var incidentTicket = logging.getIncidentTicketNumber("or");
-                                logging.getLogger().error({
-                                    incident: incidentTicket,
-                                    url: req.url,
-                                    userId: req.decoded.email
-                                }, error);
-                                var unhandledError = new Error(logging.getUserErrorMessage(incidentTicket));
-                                unhandledError.unhandled = true;
-                                callback(unhandledError, null);
+                                processUnhandledError(req, error, callback);
+                                return;
                             }
                         } else {
                             orderEntityToCreate.changeOrderStatus('Paid');
@@ -87,7 +88,7 @@ var paymentService = require('./paymentService');
                         }
                     });
                 } else {
-                    saveOrder(req, order, function (error, createdOrder) {
+                    saveOrder(req, orderEntityToCreate, function (error, createdOrder) {
                         callback(error, createdOrder);
                     });
                 }
@@ -95,30 +96,31 @@ var paymentService = require('./paymentService');
         },
 
         payOrder: function (req, callback) {
+            if (!req.body.orderId) {
+                callback(new Error('Order id is missing!'), null);
+                return;
+            }
+
             if (!req.body.payment) {
                 callback(new Error('Payment details are missing!'), null);
                 return;
             }
 
-            ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
+            ordersRepository.getOrderByOrderId(req.decoded.email, req.body.orderId, function (err, order) {
+                if(!order.canPay()){
+                    callback(new Error('Order is already paid or cancelled!'), null);
+                    return;
+                }
+
                 var payment = new Payment(req.body.payment);
                 paymentService.chargeNonCustomer(payment, order, function (error, charge) {
                     if (error) {
                         if (error.type == 'StripeCardError') {
-                            var handledError = new Error(error.message);
-                            handledError.unhandled = false;
-                            callback(handledError, null);
+                            callback(error, null);
                             return;
                         } else {
-                            var incidentTicket = logging.getIncidentTicketNumber("or");
-                            logging.getLogger().error({
-                                incident: incidentTicket,
-                                url: req.url,
-                                userId: req.decoded.email
-                            }, error);
-                            var unhandledError = new Error(logging.getUserErrorMessage(incidentTicket));
-                            unhandledError.unhandled = true;
-                            callback(unhandledError, null);
+                           processUnhandledError(req,error, callback);
+                           return;
                         }
                     } else {
                         order.changeOrderStatus('Paid');
@@ -132,7 +134,10 @@ var paymentService = require('./paymentService');
 
         markOrderShipped: function (req, callback) {
             ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
-                handleStorageError(callback);
+                if(err) {
+                    processUnhandledError(req, err, callback);
+                    return;
+                }
                 order.changeOrderStatus('Shipped');
                 saveOrder(req, order, function (error, savedOrder) {
                     callback(error, savedOrder);
@@ -140,9 +145,37 @@ var paymentService = require('./paymentService');
             });
         },
 
+        updateOrder: function (req, callback) {
+            ordersRepository.getOrderByOrderId(req.decoded.email, req.body.orderId, function (err, order) {
+                if(err) {
+                    processUnhandledError(req, err, callback);
+                    return;
+                }
+
+                if(req.body.orderItems && req.body.orderItems.length>0) {
+                    order.clearOrderItems();
+
+                    _.forEach(req.body.orderItems, function (orderItem) {
+                        order.addOrderItem(orderItem.model, orderItem.quality);
+                    });
+
+                    order.modifiedDate = new Date();
+
+                    saveOrder(req, order, function (error, savedOrder) {
+                        callback(error, savedOrder);
+                    });
+                }else{
+                    callback(null, order);
+                }
+            });
+        },
+
         markOrderDelivered: function (req, callback) {
             ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
-                handleStorageError(callback);
+                if(err) {
+                    processUnhandledError(req, err, callback);
+                    return;
+                }
                 order.changeOrderStatus('Delivered');
                 saveOrder(req, order, function (error, savedOrder) {
                     callback(error, savedOrder);

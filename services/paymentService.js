@@ -12,25 +12,19 @@
         switch (err.type) {
             case 'StripeCardError':
                 // A declined card error
-                err.message; // => e.g. "Your card's expiration year is invalid."
                 return {unhandled:false, error:err};
-                break;
             case 'StripeInvalidRequest':
                 // Invalid parameters were supplied to Stripe's API
                 return {unhandled:true, error:err};
-                break;
             case 'StripeAPIError':
                 // An error occurred internally with Stripe's API
                 return {unhandled:true, error:err};
-                break;
             case 'StripeConnectionError':
                 // Some kind of error occurred during the HTTPS communication
                 return {unhandled:true, error:err};
-                break;
             case 'StripeAuthenticationError':
                 // You probably used an incorrect API key
                 return {unhandled:true, error:err};
-                break;
         }
     }
 
@@ -82,17 +76,20 @@
                 currency: 'gbp',
                 source: source,
                 description: description
-            }, function (err, charge) {
+            }, {
+                idempotency_key: order.orderId
+            },function (err, charge) {
                 callback(err, charge);
             });
         },
 
         chargeNonCustomer: function (cardDetails, order, callback) {
+            var amount = order.getAmountToPay();
             stripe.charges.create({
-                amount: order.getAmountToPay(),
+                amount: amount,
                 currency: 'gbp',
                 source: {
-                    card: 'card',
+                    object: cardDetails.fundingType,
                     number: cardDetails.cardNumber,
                     exp_month: cardDetails.expireMonth,
                     exp_year: cardDetails.expireYear,
@@ -100,7 +97,10 @@
                     name: cardDetails.nameOnCard
                 },
                 description: order.getDescription(),
-                metadata: {orderId: order.orderId}
+                metadata: {orderId: order.orderId},
+
+            }, {
+                idempotency_key: order.orderId
             }, function (err, charge) {
                 callback(err, charge);
             });

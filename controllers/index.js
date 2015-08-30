@@ -5,6 +5,7 @@
 var express = require('express');
 var jwt                 = require("jsonwebtoken");
 var ordersController = require('./ordersController');
+var usersController = require('./usersController');
 var devicesController = require('./devicesController');
 var commonController = require('./commonController');
 var eventsController = require('./eventsController');
@@ -42,7 +43,7 @@ var logging     = require('../logging');
         ordersController.init(apiRoutes);
         commonController.init(apiRoutes);
         eventsController.init(apiRoutes);
-
+        usersController.init(apiRoutes);
         app.use('/v1/api',apiRoutes);
 
     };

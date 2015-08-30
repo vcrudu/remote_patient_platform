@@ -21,19 +21,19 @@
 
     };
 
-    var devices;
-
-    devicesRepository.getAll(function(err, devices){
-        if(err)
-        {
-            logging.getLogger().error(err);
-        } else {
-            _.forEach(devices, function(device){
-                devices.push(device);
-            });
-        }
-    });
-
+    function getValidDevices(callback) {
+        devicesRepository.getAll(function (err, result) {
+            var devices=[];
+            if (err) {
+                callback(err,null);
+            } else {
+                _.forEach(result, function (device) {
+                    devices.push(device);
+                });
+                callback(null, devices);
+            }
+        });
+    }
 
     function getOrdersByUserId(userId, orderStatus, callback){
 
@@ -41,10 +41,11 @@
             TableName: TABLE_NAME, /* required */
             ExpressionAttributeValues: {
                 ":userId":{"S":userId},
-                ":newStatus":{"S":orderStatus}
+                ":orderStatus":{"S":orderStatus}
             },
             ReturnConsumedCapacity: 'INDEXES',
-            KeyConditionExpression  : 'userId = :userId AND orderStatus = :newStatus'
+            KeyConditionExpression  : 'userId = :userId',
+            FilterExpression: 'orderStatus = :orderStatus'
         };
 
         var dynamodb = getDb();
@@ -57,57 +58,50 @@
             }
             console.log("The order has been found successfully.");
             if(data.Items) {
-                var orders = [];
-                _.forEach(data.Items, function(order){
-                    var mappedOrder = OrderDbMapper.mapOrderFromDbEntity(order);
-                    mappedOrder.devices=devices;
-                    orders.push(mappedOrder);
-                });
-                callback(null, orders);
+                if(data.Items.length>0) {
+                    getValidDevices(function(error, devices){
+                        var orders = [];
+                        _.forEach(data.Items, function (order) {
+                            var mappedOrder = OrderDbMapper.mapOrderFromDbEntity(order);
+                            mappedOrder.setDevices(devices);
+                            orders.push(mappedOrder);
+                        });
+                        callback(null, orders);
+                    });
+                }
             }else{
                 callback(null, null);
             }
         });
     }
 
-    function getOrderByOrderId(orderId, callback){
+    function getOrderByOrderId(userId, orderId, callback) {
 
         var params = {
             TableName: TABLE_NAME, /* required */
-            IndexName:orderIdIndexName,
             ExpressionAttributeValues: {
-                ":orderId":{"S":orderId}
+                ":userId":{"S":userId},
+                ":orderId": {"S": orderId}
             },
             ReturnConsumedCapacity: 'INDEXES',
-            KeyConditionExpression  : 'orderId = :orderId'
+            KeyConditionExpression: 'userId = :userId AND orderId = :orderId'
         };
 
         var dynamodb = getDb();
 
-        dynamodb.query(params, function(err, data){
-            if(err) {
+        dynamodb.query(params, function (err, data) {
+            if (err) {
                 console.error(err);
                 callback(err, null);
                 return;
             }
-            if(data.Items.length>0) {
-                var lightOrder = OrderDbMapper.mapOrderLightFromDbEntity(data.Items[0]);
-                getOrdersByUserId(lightOrder.userId, lightOrder.orderStatus, function(err, orders){
-                    if(err)
-                    {
-                        var incidentTicket = logging.getIncidentTicketNumber("or");
-                        var unhandledError = new Error(logging.getUserErrorMessage(incidentTicket));
-                        unhandledError.unhandled=true;
-                        callback(unhandledError, null);
-                    } else {
-                        var result = [];
-                        _.forEach(orders, function(order){
-                            result.push(order.getDto());
-                        });
-                        callback(null,result);
-                    }
+            if (data.Items.length > 0) {
+                getValidDevices(function (error, devices) {
+                    var order = OrderDbMapper.mapOrderFromDbEntity(data.Items[0]);
+                    order.setDevices(devices);
+                    callback(null, order);
                 });
-            }else{
+            } else {
                 callback(null, null);
             }
         });
@@ -164,7 +158,7 @@
                     callback(err, null);
                     return;
                 }
-                getOrderByOrderId(order.orderId, function(err, data){
+                getOrderByOrderId(order.userId, order.orderId, function(err, data){
                     console.log("The order has been inserted successfully.");
                     callback(null, data);
                 });

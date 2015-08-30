@@ -13,7 +13,7 @@ var log = bunyan.createLogger({name: 'hcm.registration'});
         },
         getUserErrorMessage : function(incidentTicket){
             return "Something went wrong! We apologize about this." +
-            " Use please the incident ticket "+ incidentTicket + "and contact please our support.";
+            " Use please the incident ticket "+ incidentTicket + " and contact please our support.";
         },
         getLogger:function(){
             return log;

@@ -12,8 +12,8 @@ var assert = require('assert');
         assert.ok(args.expireMonth,"Expire month is mandatory!");
         assert.ok(args.expireYear,"Expire year is mandatory!");
         assert.ok(args.cardSecurityNumber,"Card security number is mandatory!");
-        assert.ok(args.fundingType,"Funding type is mandatory!");
         assert.ok(args.nameOnCard,"Name on card is mandatory!");
+        this.fundingType='card';
 
         this.paymentMethod = args.paymentMethod;
         this.cardNumber = args.cardNumber;
