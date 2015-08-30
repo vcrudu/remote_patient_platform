@@ -13,7 +13,7 @@
                passwordHash : passwordHash,
                firstname : requestBody.name,
                surname : requestBody.surname,
-               isActive:false
+               isActive:true
          };
       },
         createUserFromDbEntity : function(dbEntity){

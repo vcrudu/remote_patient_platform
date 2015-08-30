@@ -3,7 +3,15 @@
  */
 
 var bunyan = require('bunyan');
-var log = bunyan.createLogger({name: 'hcm.registration'});
+var log = bunyan.createLogger({name: 'hcm.registration',
+    streams: [{
+        level:'trace',
+        type: 'rotating-file',
+        path: './log/hcm.log',
+        period: '1d',   // daily rotation
+        count: 3        // keep 3 back copies
+    }]
+});
 
 (function(){
     module.exports = {

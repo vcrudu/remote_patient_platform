@@ -54,10 +54,9 @@ app.get('/register',function(req, res){
     passphrase: "PucaMica123"
 },app).listen(8080);*/
 
-var PORT = process.env.port || 8080;
-logging.getLogger().trace({message:"Main port used - ",port:PORT});
-
+var PORT = process.env.port || 8081;
+logging.getLogger().trace({message:"Server started at port " + PORT} );
 var server = http.createServer(app);
-var notifications = require('./notifications');
-notifications.init(server);
+//var notifications = require('./notifications');
+//notifications.init(server);
 server.listen(PORT);
