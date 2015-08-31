@@ -54,7 +54,7 @@ app.get('/register',function(req, res){
  passphrase: "PucaMica123"
  },app).listen(8080);*/
 
-var PORT = process.env.port || 8080;
+var PORT = process.env.port || 8081;
 logging.getLogger().trace({message:"Front end started at port ",port:PORT});
 var server = http.createServer(app);
 //var notifications = require('./notifications');

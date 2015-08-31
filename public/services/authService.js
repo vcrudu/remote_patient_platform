@@ -3,7 +3,7 @@
  */
 
 angular.module('app')
-    .constant('appSettings',{serverUrl:'//localhost:8081'})
+    .constant('appSettings',{serverUrl:'http://hcm-qa.elasticbeanstalk.com'})
     .factory('authService',
     ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
 

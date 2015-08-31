@@ -21,10 +21,12 @@ var logging     = require('../logging');
                 req.query.token || req.headers['x-access-token'];
             if (token) {
                 jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-                    if(err){
-                        res.status(403).send({
-                            success:false,
-                            message: 'Failed to authenticate token.'
+                    if(err) {
+                        logging.getLogger().trace({url: req.url, error: err});
+                        res.status(403).json({
+                            success: false,
+                            message: 'Failed to authenticate token.',
+                            error: err
                         });
                     }else{
                         req.decoded = decoded;
