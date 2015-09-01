@@ -3,7 +3,10 @@
  */
 
 angular.module('app')
-    .constant('appSettings',{serverUrl:'http://localhost:8081'})
+    .constant('appSettings',{
+        qaserverUrl:'http://hcm-qa.elasticbeanstalk.com',
+        serverUrl:'http://localhost:8081'
+    })
     .factory('authService',
     ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
 
@@ -73,7 +76,7 @@ angular.module('app')
             },
 
             isAuthenticated: function () {
-                return $localStorage.user===undefined;
+                return $localStorage.user != undefined;
             },
 
             getUserName: function () {

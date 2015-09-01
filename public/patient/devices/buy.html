@@ -1,15 +1,33 @@
-<div class="tab-pane fade padding-10 no-padding-bottom active in" id="s1">
-    <div class="row no-space">
+<div class="tab-pane fade padding-10 no-padding-bottom active in">
 
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats">
+    <div class="row">
+        <div ng-repeat="device in vm.devices" class="col-sm-6 col-md-4 col-lg-3 padding-5 "
+             ng-click="vm.showDetails(device)">
+            <div class="well well-light " style="height: 300px;overflow: hidden">
+                <div ng-if="device.imagesUrls && device.imagesUrls.length" style="height: 150px;">
+                    <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive "
+                         style="margin-left: auto;margin-right: auto">
+                </div>
+                <div class="row">
+                    <div class="col-xs-8 ">
+                        <h3>{{device.model}}
+                            <small><p>({{device.deviceModelType}})</p></small>
+                        </h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h2 class="pull-right txt-color-red">
+                            {{device.price | number : 2}}&pound
+                        </h2>
+                    </div>
+                </div>
 
-            <div class="row">
-                <h1>Buy device</h1>
+                <p class="note">
+                    {{device.description}}
+                </p>
+
             </div>
-
         </div>
     </div>
-
 
 
 </div>
