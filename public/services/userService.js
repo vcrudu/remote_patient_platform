@@ -11,9 +11,7 @@ angular.module('app')
                     url: appSettings.serverUrl + '/v1/api/users/'+$localStorage.user.email,
                     headers: {
                         'Access-Control-Request-Origin': 'http://localhost:8081',
-                        'x-access-token': $localStorage.user.token,
-                        'Access-Control-Request-Method': 'POST',
-                        'Access-Control-Request-Headers': 'x-access-token'
+                        'x-access-token': $localStorage.user.token
                     }
                 };
                 $http(req).success(function(res){
@@ -24,5 +22,5 @@ angular.module('app')
                     }
                 }).error(error);
             }
-        }
+        };
     }]);

@@ -3,7 +3,7 @@
  */
 
 angular.module('app')
-    .constant('appSettings',{serverUrl:'http://hcm-qa.elasticbeanstalk.com'})
+    .constant('appSettings',{serverUrl:'http://localhost:8081'})
     .factory('authService',
     ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
 
@@ -44,8 +44,10 @@ angular.module('app')
                 $http(req).success(function(res){
                     if(!res.error) {
                         $localStorage.user = res.data;
-                       // $localStorage.user.socket = window.io.connect(appSettings.serverUrl);
-                       // $localStorage.user.socket.emit('messages','Hello Server');
+                        window.socket = window.io.connect(appSettings.serverUrl);
+                        window.socket.on('connect', function() {
+                            window.socket.emit('authenticate', {token: $localStorage.user.token});
+                        });
                         success(res.data);
                     }else {
                         error(res.error);
@@ -79,7 +81,8 @@ angular.module('app')
             },
 
             logout: function (success) {
-                //$localStorage.user.socket.emit('messages','Disconected');
+                window.socket.disconnect()
+                delete window.socket;
                 delete $localStorage.user;
                 success();
             }

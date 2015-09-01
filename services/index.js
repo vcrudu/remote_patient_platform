@@ -4,10 +4,12 @@
 
 var orderService = require('./orderService');
 var paymentService = require('./paymentService');
+var videoService = require('./videoService');
 
 (function(){
     module.exports={
         OrderService:orderService,
-        PaymentService:paymentService
+        PaymentService:paymentService,
+        VideoService:videoService
     };
 })();

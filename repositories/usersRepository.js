@@ -71,6 +71,31 @@
             });
         },
 
+        updateOnlineStatus : function(userId, onlineStatus, socketId, callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { email: { S: userId }},
+                TableName:TABLE_NAME,
+                ExpressionAttributeValues: {
+                    ":onlineStatus": {"BOOL":onlineStatus  },
+                },
+                ReturnConsumedCapacity: 'TOTAL',
+                UpdateExpression: 'SET onlineStatus=:onlineStatus'
+            };
+
+            dynamodb.updateItem(params, function (err, data) {
+                if (err) {
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+                console.log("Online status updated successfully.");
+                callback(null, data);
+            });
+        },
+
         save : function(user, callback) {
 
             var dynamodb = getDb();

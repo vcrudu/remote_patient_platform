@@ -9,11 +9,12 @@
          var salt = bcrypt.genSaltSync(10);
          var passwordHash = bcrypt.hashSync(requestBody.password, salt);
          return {
-               email : requestBody.email,
-               passwordHash : passwordHash,
-               firstname : requestBody.name,
-               surname : requestBody.surname,
-               isActive:true
+             email: requestBody.email,
+             passwordHash: passwordHash,
+             firstname: requestBody.name,
+             surname: requestBody.surname,
+             isActive: true,
+             onlineStatus: false
          };
       },
         createUserFromDbEntity : function(dbEntity){
@@ -24,6 +25,7 @@
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
                 isActive:dbEntity.isActive.BOOL,
+                onlineStatus: dbEntity.onlineStatus.BOOL,
                 createdDateTime:createdDateTime
             };
         },
@@ -44,6 +46,7 @@
                     passwordHash    : {S     : user.passwordHash},
                     tokenString     : {S     : user.token},
                     isActive        : {BOOL  : user.isActive},
+                    onlineStatus    : {BOOL  : user.onlineStatus},
                     createdDateTime : {N     : createdDateTime.getTime().toString()}
                 };
         }
