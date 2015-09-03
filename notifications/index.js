@@ -21,9 +21,9 @@
                         jwt.verify(data.token, process.env.JWT_SECRET, function(err, decoded) {
                             if(!err){
                                 socket.userId = decoded.email;
-                                usersRepository.updateOnlineStatus(decoded.email,true,socket.id,function(err, result){
+                                usersRepository.updateOnlineStatus(decoded.email,'online',socket.id,function(err, result){
                                     socket.auth=true;
-                                    console.log("online status true...");
+                                    console.log("online status online...");
                                     /*_.each(io.nsps, function(nsp) {
                                         if(_.findWhere(nsp.sockets, {id: socket.id})) {
                                             console.log("restoring socket to", nsp.name);
@@ -57,9 +57,9 @@
 
                 socket.on('disconnect', function () {
                     console.log('Disconnected!');
-                    usersRepository.updateOnlineStatus(socket.userId, false,socket.id,function(err, result){
+                    usersRepository.updateOnlineStatus(socket.userId, 'offline',socket.id,function(err, result){
                         socket.auth=false;
-                        console.log("online status false...");
+                        console.log("online status offline...");
                        /* _.each(io.nsps, function(nsp) {
                             if(_.findWhere(nsp.sockets, {id: socket.id})) {
                                 console.log("restoring socket to", nsp.name);

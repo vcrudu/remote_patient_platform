@@ -173,14 +173,7 @@
 
 
     module.exports  = {
-        createUserFromBody : function(requestBody){
-            var salt = bcrypt.genSaltSync(10);
-            var passwordHash = bcrypt.hashSync(requestBody.password, salt);
-            return {
-                email: requestBody.email,
-                passwordHash: passwordHash
-            };
-        },
+        //Todo-here to move db mapper from user model to here
         createUserFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
             createdDateTime.setTime(dbEntity.createdDateTime.N);
@@ -188,6 +181,10 @@
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.token.S,
+                isActive:dbEntity.isActive.BOOL,
+                name:dbEntity.name.S,
+                surname:dbEntity.surname.S,
+                onlineStatus:dbEntity.onlineStatus.S,
                 createdDateTime:createdDateTime
             };
         },

@@ -6,6 +6,7 @@
  */
 
 var userDetailsRepository     = require('../repositories').UsersDetails;
+var usersRepository     = require('../repositories').Users;
 var logging = require("../logging");
 
 
@@ -27,6 +28,25 @@ var logging = require("../logging");
     module.exports.init = function(router){
         router.get('/users/:userId', function(req, res){
             userDetailsRepository.findOneByEmail(req.params.userId, function(err,data){
+                if(err){
+                    var incidentTicket = logging.getIncidentTicketNumber('us');
+                    logging.getLogger().error({incidentTicket:incidentTicket},err);
+                    res.status(500).json({
+                        success:false,
+                        message:logging.getUserErrorMessage(incidentTicket)
+                    });
+                }else {
+                    res.send({
+                        success:true,
+                        count:data.length,
+                        result:data
+                    });
+                }
+            });
+        });
+
+        router.get('/providers', function(req, res){
+            usersRepository.getAll(function(err,data){
                 if(err){
                     var incidentTicket = logging.getIncidentTicketNumber('us');
                     logging.getLogger().error({incidentTicket:incidentTicket},err);

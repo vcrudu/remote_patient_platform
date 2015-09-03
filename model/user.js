@@ -11,21 +11,41 @@
          return {
              email: requestBody.email,
              passwordHash: passwordHash,
-             firstname: requestBody.name,
+             name: requestBody.name,
              surname: requestBody.surname,
              isActive: true,
-             onlineStatus: false
+             onlineStatus: "offline"
          };
       },
         createUserFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
+            var onlineStatus = 'offline';
+            var socketId = undefined;
+            if(dbEntity.onlineStatus.S) onlineStatus=dbEntity.onlineStatus.S;
+            if(dbEntity.socketId.S) onlineStatus=dbEntity.socketId.S;
             if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
                 isActive:dbEntity.isActive.BOOL,
-                onlineStatus: dbEntity.onlineStatus.BOOL,
+                onlineStatus: onlineStatus,
+                socketId:socketId,
+                createdDateTime:createdDateTime
+            };
+        },
+        createUserDtoFromDbEntity : function(dbEntity){
+            var createdDateTime = new Date();
+            var onlineStatus = 'offline';
+            var socketId = undefined;
+            if(dbEntity.onlineStatus) onlineStatus=dbEntity.onlineStatus.S;
+            if(dbEntity.socketId) socketId=dbEntity.socketId.S;
+            if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
+            return {
+                email: dbEntity.email.S,
+                name:dbEntity.name.S,
+                surname:dbEntity.surname.S,
+                onlineStatus: onlineStatus,
                 createdDateTime:createdDateTime
             };
         },
@@ -46,7 +66,7 @@
                     passwordHash    : {S     : user.passwordHash},
                     tokenString     : {S     : user.token},
                     isActive        : {BOOL  : user.isActive},
-                    onlineStatus    : {BOOL  : user.onlineStatus},
+                    onlineStatus    : {S  : user.onlineStatus},
                     createdDateTime : {N     : createdDateTime.getTime().toString()}
                 };
         }

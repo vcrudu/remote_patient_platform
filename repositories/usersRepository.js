@@ -8,6 +8,7 @@
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
     var TABLE_NAME        = 'User';
+    var _             = require('underscore');
 
        var getDb = function(){
 
@@ -79,7 +80,7 @@
                 Key: { email: { S: userId }},
                 TableName:TABLE_NAME,
                 ExpressionAttributeValues: {
-                    ":onlineStatus": {"BOOL":onlineStatus  },
+                    ":onlineStatus": {"S":onlineStatus  },
                 },
                 ReturnConsumedCapacity: 'TOTAL',
                 UpdateExpression: 'SET onlineStatus=:onlineStatus'
@@ -108,6 +109,8 @@
                     passwordHash:{S:user.passwordHash},
                     tokenString:{S:user.token},
                     isActive:{BOOL:user.isActive},
+                    name:{S:user.firstname},
+                    surname:{S:user.surname},
                     createdDateTime:{N:createdDateTime.getTime().toString()}
                 },
                 TableName: TABLE_NAME,
@@ -147,6 +150,35 @@
 
                 console.log("The user has been deleted successfully!");
                 callback(null, data);
+            });
+        },
+        getAll : function(callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                TableName: TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            dynamodb.scan(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                var dbUsers = data.Items;
+
+                var resultUsers=[];
+
+                _.forEach(dbUsers, function(dbUser){
+                    var user = UserFactory.createUserDtoFromDbEntity(dbUser);
+                    resultUsers.push(user);
+                });
+
+                //console.log("The users has been retrieved successfully.");
+                callback(null, resultUsers);
             });
         }
 
