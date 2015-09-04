@@ -5,16 +5,6 @@ angular.module('app')
         var self = this;
 
 
-        //var httpConfig = function () {
-        //    return {
-        //        headers: {
-        //            //'Content-Type': 'application/json; charset=utf-8',
-        //            'Accept': 'application/json',
-        //            'x-access-token': $localStorage.user.token
-        //        }
-        //    };
-        //};
-
         self.get = function (endpoint) {
             return $http.get(appSettings.serverUrl + endpoint);
 
@@ -31,10 +21,10 @@ angular.module('app')
 
     }])
     .factory('BasketService',
-    ['$localStorage', '$filter', '$rootScope', function ($localStorage, $filter, $rootScope) {
+    ['$localStorage', '$filter', '$rootScope', 'dataaccess', function ($localStorage, $filter, $rootScope, dataaccess) {
 
         var self = this,
-            basket =  new Basket(null);
+            basket = new Basket(null);
 
         //if($localStorage.basket){
         //    basket.Items =  $localStorage.basket.Items;
@@ -59,7 +49,7 @@ angular.module('app')
                 basket.Items.push(new BasketItem(device, quantity))
             }
 
-            $localStorage.basket = basket;
+            self.updateBasket(basket);
 
             $rootScope.$broadcast('basketChanged');
         };
@@ -71,7 +61,7 @@ angular.module('app')
                 basket.Items.splice(basket.Items.indexOf(existed), 1);
             }
 
-            $localStorage.basket = basket;
+            self.updateBasket(basket);
 
             $rootScope.$broadcast('basketChanged');
         };
@@ -95,8 +85,63 @@ angular.module('app')
             return result;
         };
 
+        self.updateBasket = function (basket) {
+            $localStorage.basket = basket;
+
+        };
+
+        self.confirmOrder = function () {
+
+            var basket = self.getBasket();
+            if (!basket) {
+                return;
+            }
+
+            var order = {
+                shippingAddress: basket.shippingAddress,
+                payment: basket.payment,
+                orderItems: []
+            };
+
+            angular.forEach(basket.Items, function (item) {
+                order.orderItems.push(
+                    {
+                        model: item.Device.model,
+                        quantity: item.Quantity
+                    }
+                );
+            });
+
+            return dataaccess.post('/v1/api/orders',order);
+        };
 
         return self;
     }
     ])
-;
+    .factory('common',
+    ['dataaccess', function common(dataaccess) {
+
+        var self = this;
+
+        self.getCountries = function () {
+            return dataaccess.get('/resourses/json/countries.json');
+        };
+
+        self.getMonths = function () {
+            return [
+                {id: 1, name: "January"},
+                {id: 2, name: "February"},
+                {id: 3, name: "March"},
+                {id: 4, name: "April"},
+                {id: 5, name: "May"},
+                {id: 6, name: "June"},
+                {id: 7, name: "July"},
+                {id: 8, name: "August"},
+                {id: 9, name: "September"},
+                {id: 10, name: "October"},
+                {id: 11, name: "November"},
+                {id: 12, name: "December"}]
+        };
+
+        return self;
+    }]);

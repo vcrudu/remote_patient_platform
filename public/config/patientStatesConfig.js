@@ -38,7 +38,18 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patient.devices.checkout",
             templateUrl: "patient/devices/checkout.html",
             controller: 'patientDevicesCheckoutCtrl as vm'
-        }).state("patient.messages", {
+        })
+        .state("patient.devices.checkout-pay", {
+            url: "/patient.devices.checkout-pay",
+            templateUrl: "patient/devices/pay.html",
+            controller: 'patientDevicesCheckoutPayCtrl as vm'
+        })
+        .state("patient.devices.checkout-pay-confirm", {
+            url: "/patient.devices.checkout-pay-confirm",
+            templateUrl: "patient/devices/pay-confirm.html",
+            controller: 'patientDevicesCheckoutPayConfirmCtrl as vm'
+        })
+        .state("patient.messages", {
             url: "/patient.messages",
             templateUrl: "patient/messages/patient.messages.html",
             controller: 'patientMessagesCtrl'

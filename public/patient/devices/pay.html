@@ -1,0 +1,162 @@
+<form name="checkoutform" class="smart-form" novalidate ng-submit="vm.submitForm(checkoutform)">
+
+    <legend>Checkout</legend>
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.fname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
+                    <input type="text" name="fname" placeholder="First name" ng-model="vm.firstname" required>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.fname.$invalid"
+                    class="invalid">First name is required</em>
+            </section>
+            <section class="col col-6">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.lname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
+                    <input type="text" name="lname" placeholder="Last name"  ng-model="vm.lastname" required>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.lname.$invalid"
+                    class="invalid">Last name is required</em>
+            </section>
+        </div>
+
+        <div class="row" ng-if="false">
+            <section class="col col-6">
+                <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+                    <input type="email" name="email" placeholder="E-mail">
+                </label>
+            </section>
+            <section class="col col-6">
+                <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                    <input type="tel" name="phone" placeholder="Phone" is-phone>
+                </label>
+            </section>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="row">
+            <section class="col col-4">
+                <label class="select"
+                       ng-class="{'state-error': vm.submitted && checkoutform.country.$invalid}">
+                    <select name="country" ng-model="vm.shippingAddress.country"
+                            ng-options="country.code as country.name for country in vm.countries" required>
+                        <option style="display:none" value="">Country</option>
+                    </select> <i></i> </label>
+                <em ng-show=" vm.submitted && checkoutform.country.$invalid"
+                    class="invalid">Please select country</em>
+            </section>
+            <section class="col col-3">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.county.$invalid}">
+                    <input type="text" name="county" placeholder="County" ng-model="vm.shippingAddress.county" required>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.county.$invalid"
+                    class="invalid">County is required</em>
+            </section>
+            <section class="col col-3">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.town.$invalid}">
+                    <input type="text" name="town" placeholder="Town" ng-model="vm.shippingAddress.town" required>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.town.$invalid"
+                    class="invalid">Town is required</em>
+            </section>
+
+            <section class="col col-2">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.code.$invalid}">
+                    <input type="text" name="code" placeholder="Post code" ng-model="vm.shippingAddress.postCode"
+                           required>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.code.$invalid"
+                    class="invalid">Post code is required</em>
+            </section>
+        </div>
+
+        <section>
+            <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.address.$invalid}">
+                <input type="text" name="address" placeholder="Address" ng-model="vm.shippingAddress.addressLine1"
+                       required>
+            </label>
+            <em ng-show=" vm.submitted && checkoutform.address.$invalid"
+                class="invalid">Address is required</em>
+        </section>
+
+        <section>
+            <label class="textarea">
+                <textarea rows="3" name="info" placeholder="Additional info"
+                          ng-model="vm.shippingAddress.addressLine2"></textarea>
+            </label>
+        </section>
+    </fieldset>
+
+    <fieldset>
+        <!--<section>-->
+        <!--<div class="inline-group">-->
+        <!--<label class="radio">-->
+        <!--<input type="radio" name="radio-inline" checked="">-->
+        <!--<i></i>Visa</label>-->
+        <!--<label class="radio">-->
+        <!--<input type="radio" name="radio-inline">-->
+        <!--<i></i>MasterCard</label>-->
+        <!--<label class="radio">-->
+        <!--<input type="radio" name="radio-inline">-->
+        <!--<i></i>American Express</label>-->
+        <!--</div>-->
+        <!--</section>-->
+
+        <section>
+            <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardholdername.$invalid}">
+                <input type="text" name="cardholdername" placeholder="Name on card" required
+                       ng-model="vm.payment.nameOnCard">
+            </label>
+            <em ng-show=" vm.submitted && checkoutform.cardholdername.$invalid"
+                class="invalid">Name on card is required</em>
+        </section>
+
+        <div class="row">
+            <section class="col col-10">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardNumber.$invalid}">
+                    <input type="text" name="cardNumber" placeholder="Card number"
+                           data-smart-masked-input="9999 9999 9999 9999" required ng-model="vm.payment.cardNumber">
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.cardNumber.$invalid"
+                    class="invalid">Card number is required</em>
+            </section>
+            <section class="col col-2">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cvv.$invalid}">
+                    <input type="text" name="cvv" placeholder="CVV2" data-smart-masked-input="999" required
+                           ng-model="vm.payment.cardSecurityNumber">
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.cvv.$invalid"
+                    class="invalid">CVV is required</em>
+            </section>
+        </div>
+
+        <div class="row">
+            <label class="label col col-4">Expiration date</label>
+            <section class="col col-5">
+                <label class="select" ng-class="{'state-error': vm.submitted && checkoutform.month.$invalid}">
+                    <select name="month" ng-model="vm.payment.month"
+                            ng-options="month.id as month.name for month in vm.months" required
+                            ng-model="vm.payment.expireMonth">
+                        <option style="display:none" value="">Month</option>
+                    </select> <i></i>
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.month.$invalid"
+                    class="invalid">Month is required</em>
+            </section>
+            <section class="col col-3">
+                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.year.$invalid}">
+                    <input type="text" name="year" placeholder="Year" data-smart-masked-input="2099" required
+                           ng-model="vm.payment.expireYear">
+                </label>
+                <em ng-show=" vm.submitted && checkoutform.year.$invalid"
+                    class="invalid">Year is required</em>
+            </section>
+        </div>
+    </fieldset>
+
+    <footer>
+        <button type="submit" class="btn btn-primary">
+            Pay
+        </button>
+    </footer>
+</form>
