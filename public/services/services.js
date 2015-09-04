@@ -66,7 +66,7 @@ angular.module('app')
             $rootScope.$broadcast('basketChanged');
         };
 
-        self.clearBasket = function (device) {
+        self.clearBasket = function () {
             basket = new Basket(null);
             delete $localStorage.basket;
             $rootScope.$broadcast('basketChanged');
@@ -112,7 +112,7 @@ angular.module('app')
                 );
             });
 
-            return dataaccess.post('/v1/api/orders',order);
+            return dataaccess.post('/v1/api/orders', order);
         };
 
         return self;
@@ -143,5 +143,164 @@ angular.module('app')
                 {id: 12, name: "December"}]
         };
 
+        self.getErrorMessage = function (response) {
+            var result = '';
+
+            if (response.message) {
+                result = response.message;
+            }
+            return result;
+        };
         return self;
-    }]);
+    }])
+    .factory('Messaging', ['common',
+        function (  common) {
+
+            var self = this;
+
+
+            var isNullOrEmpty = function (val) {
+                return !val || val.trim().length == 0;
+            };
+
+            self.info = function (size, title, message) {
+
+
+                if (isNullOrEmpty(message)) {
+                    return;
+                }
+
+                if (size == undefined) {
+                    size = 'small';
+                }
+
+
+                switch (size) {
+                    case 'big':
+                        $.bigBox({
+                            title: title,
+                            content: message,
+                            color: "#5384AF",
+                            icon: "fa fa-info fadeRight animated",
+                            timeout: 5000
+                        });
+                        break;
+                    case 'small':
+                        $.smallBox({
+                            title: title,
+                            content: message,
+                            color: "#5384AF",
+                            iconSmall: "fa fa-info fadeRight animated",
+                            timeout: 5000
+                        });
+                        break;
+                }
+
+            };
+            self.success = function (size, title, message) {
+
+                if (isNullOrEmpty(message)) {
+                    return;
+                }
+
+                if (size == undefined) {
+                    size = 'small';
+                }
+
+
+                switch (size) {
+                    case 'big':
+                        $.bigBox({
+                            title: title,
+                            content: message,
+                            color: "#739E73",
+                            icon: "fa fa-check shake animated",
+                            timeout: 5000
+                        });
+                        break;
+                    case 'small':
+                        $.smallBox({
+                            title: title,
+                            content: message,
+                            color: "#739E73",
+                            iconSmall: "fa fa-check shake animated",
+                            timeout: 4000
+                        });
+                        break;
+                }
+
+            };
+
+            self.warning = function (size, title, message) {
+
+
+                if (isNullOrEmpty(message)) {
+                    return;
+                }
+
+                if (size == undefined) {
+                    size = 'small';
+                }
+
+                switch (size) {
+                    case 'big':
+                        $.bigBox({
+                            title: title,
+                            content: message,
+                            color: "#C79121",
+                            icon: "fa fa-warning swing animated",
+                            timeout: 5000
+                        });
+                        break;
+                    case 'small':
+                        $.smallBox({
+                            title: title,
+                            content: message,
+                            color: "#C79121",
+                            iconSmall: "fa fa-warning swing animated",
+                            timeout: 5000
+                        });
+                        break;
+                }
+            };
+
+            self.error = function (size, title, message) {
+
+                if (isNullOrEmpty(message)) {
+                    return;
+                }
+
+                if (size == undefined) {
+                    size = 'small';
+                }
+
+                switch (size) {
+                    case 'big':
+                        $.bigBox({
+                            title: title,
+                            content: message,
+                            color: "#C46A69",
+                            icon: "fa fa-warning swing animated",
+                            timeout: 5000
+                        });
+                        break;
+                    case 'small':
+                        $.smallBox({
+                            title: title,
+                            content: message,
+                            color: "#C46A69",
+                            iconSmall: "fa fa-warning swing animated",
+                            timeout: 5000
+                        });
+                        break;
+                }
+            };
+
+
+            self.errHandle = function (e) {
+                self.error('small', 'Error', common.getErrorMessage(e));
+            };
+            return self;
+
+        }])
+;

@@ -1,17 +1,29 @@
 angular.module('app')
-    .controller('patientDevicesCheckoutPayConfirmCtrl', ['$scope', '$log', '$state', 'toastr', 'authService', 'BasketService', 'common', '$localStorage',
-        function ($scope, $log, $state, toastr, authService, BasketService, common, $localStorage) {
+    .controller('patientDevicesCheckoutPayConfirmCtrl', ['$scope', '$log', '$state', 'toastr', 'authService', 'BasketService', 'Messaging',
+        function ($scope, $log, $state, toastr, authService, BasketService, Messaging) {
 
             var vm = this;
 
             vm.basket = BasketService.getBasket();
 
             vm.confirmOrder = function(){
+
+                vm.loading = true;
                 BasketService.confirmOrder()
                     .then(function(result){
-                      alert(JSON.stringify(result));
+                        vm.loading = false;
+                        if(result && result.data){
+                            if(!result.data.success){
+                                Messaging.errHandle(result.data);
+                            }else{
+                                BasketService.clearBasket();
+                                $state.go('patient.devices');
+                            }
+
+                        }
                     },function(e){
-                        alert(JSON.stringify(e));
+                        vm.loading = false;
+                        Messaging.errHandle(e);
                     })
             }
         }

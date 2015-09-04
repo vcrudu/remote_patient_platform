@@ -1,6 +1,6 @@
 angular.module('app')
     .factory('deviceService',
-    ['dataaccess', '$q','$filter', function (dataaccess, $q,$filter) {
+    ['dataaccess', '$q', '$filter', function (dataaccess, $q, $filter) {
 
         var self = this,
             cached = [];
@@ -9,7 +9,7 @@ angular.module('app')
 
 
         self.get = function (model) {
-            return $filter('filter')(cached,function(d){
+            return $filter('filter')(cached, function (d) {
                 return d.model === model;
             })[0];
         };
@@ -23,12 +23,12 @@ angular.module('app')
             dataaccess.get(apiEndpoint)
                 .success(function (res) {
 
-                    if (res.items) {
+                    if (res && res.items) {
                         cached = res.items;
+                        d.resolve(res);
+                    } else {
+                        d.reject("Devices not found");
                     }
-
-                    d.resolve(res);
-
                 }).error(function (err) {
                     d.reject(err);
                 });

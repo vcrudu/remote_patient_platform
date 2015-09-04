@@ -87,7 +87,11 @@
         </div>
     </fieldset>
     <footer>
-        <div class="btn btn-primary" ng-click="vm.confirmOrder()">
+        <div class="btn btn-primary" ng-click="vm.confirmOrder()" ng-disabled="vm.loading">
+            <div ng-show="vm.loading">
+                <i class="fa fa-refresh fa-spin margin-right-5" ></i>
+                Processing...
+            </div>
             Confirm order
         </div>
     </footer>
