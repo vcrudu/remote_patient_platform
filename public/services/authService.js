@@ -5,7 +5,7 @@
 angular.module('app')
     .constant('appSettings',{
         qaserverUrl:'http://hcm-qa.elasticbeanstalk.com',
-        serverUrl:'http://hcm-qa.elasticbeanstalk.com'
+        serverUrl:'http://localhost:8081'
     })
     .factory('authService',
     ['$http', '$localStorage','$window','appSettings','toastr','ngDialog', function($http, $localStorage, $window, appSettings,toastr,ngDialog) {
