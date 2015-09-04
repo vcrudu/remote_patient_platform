@@ -30,7 +30,7 @@
     {
         return { M: {
             model : {S: orderItemElem.model},
-            quantity : {N: orderItemElem.quantity}
+            quantity : {N: orderItemElem.quantity.toString()}
         }};
     }
 

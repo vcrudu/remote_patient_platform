@@ -7,7 +7,7 @@ var assert = require('assert');
 (function(){
     module.exports = function(args){
         var cardBrand = ["Visa","American Express","MasterCard","Discover","JCB","Diners Club","Unknown"];
-        var fundingType = ["credit", "debit", "prepaid", "unknown"];
+        var fundingTypes = ["credit", "debit", "prepaid", "unknown"];
         assert.ok(args.cardNumber,"Card number is mandatory!");
         assert.ok(args.expireMonth,"Expire month is mandatory!");
         assert.ok(args.expireYear,"Expire year is mandatory!");

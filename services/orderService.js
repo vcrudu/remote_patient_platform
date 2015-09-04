@@ -70,7 +70,14 @@ var paymentService = require('./paymentService');
                 }
 
                 if (req.body.payment) {
-                    var payment = new Payment(req.body.payment);
+                    var payment;
+
+                    try{
+                        payment = new Payment(req.body.payment);
+                    }catch(error){
+                        logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
+                        callback(error, null);
+                    }
                     paymentService.chargeNonCustomer(payment, orderEntityToCreate, function (error, charge) {
                         if (error) {
                             if (error.type == 'StripeCardError') {
