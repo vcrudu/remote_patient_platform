@@ -1,0 +1,130 @@
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"msg":"Call use router","time":"2015-09-03T16:49:10.530Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T16:49:10.534Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T20:34:10.807Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T20:34:11.114Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T20:34:40.918Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T20:34:41.164Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15592,"level":10,"msg":"Call use router","time":"2015-09-03T20:58:37.593Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15592,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T20:58:37.598Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16048,"level":10,"msg":"Call use router","time":"2015-09-03T21:01:42.945Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16048,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:01:42.949Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18528,"level":10,"msg":"Call use router","time":"2015-09-03T21:04:08.036Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18528,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:04:08.040Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":6812,"level":10,"msg":"Call use router","time":"2015-09-03T21:05:43.186Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":6812,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:05:43.190Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"msg":"Call use router","time":"2015-09-03T21:13:18.768Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:13:18.773Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:10.140Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:10.365Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:22.636Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:22.943Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:27.683Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:27.886Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:31.883Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:32.090Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:40.932Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:41.147Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:57.264Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:57.504Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:31.235Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:31.446Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:33.099Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:33.326Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:52.109Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:52.309Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:56.823Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:57.012Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:24:17.333Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:24:17.693Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:24:50.455Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:24:50.675Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:26:25.603Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:26:25.846Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:26:31.902Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:26:32.113Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:09.867Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:10.103Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:19.467Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:19.651Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:57.592Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:57.810Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:31:07.434Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:31:07.661Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":12800,"level":10,"msg":"Call use router","time":"2015-09-03T21:48:01.690Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":12800,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:48:01.695Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20012,"level":10,"msg":"Call use router","time":"2015-09-03T21:52:37.208Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20012,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:52:37.214Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19908,"level":10,"msg":"Call use router","time":"2015-09-03T21:53:37.154Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19908,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:53:37.158Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"msg":"Call use router","time":"2015-09-03T21:54:42.218Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:54:42.222Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16992,"level":10,"msg":"Call use router","time":"2015-09-03T21:54:57.258Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16992,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:54:57.262Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14992,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:12.300Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14992,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:12.304Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20416,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:17.308Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20416,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:17.312Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16664,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:27.389Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16664,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:27.394Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:32.350Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:32.355Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:56:03.333Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:56:03.691Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18940,"level":10,"msg":"Call use router","time":"2015-09-03T21:58:57.610Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18940,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:58:57.614Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8232,"level":10,"msg":"Call use router","time":"2015-09-03T22:00:02.692Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8232,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:00:02.697Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18056,"level":10,"msg":"Call use router","time":"2015-09-03T22:00:42.795Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18056,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:00:42.800Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17656,"level":10,"msg":"Call use router","time":"2015-09-03T22:01:07.779Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17656,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:01:07.784Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"msg":"Call use router","time":"2015-09-03T22:01:57.925Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:01:57.929Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18028,"level":10,"msg":"Call use router","time":"2015-09-03T22:02:57.928Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18028,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:02:57.932Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20188,"level":10,"msg":"Call use router","time":"2015-09-03T22:31:50.436Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20188,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:31:50.440Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"msg":"Call use router","time":"2015-09-03T22:32:25.450Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:32:25.618Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15488,"level":10,"msg":"Call use router","time":"2015-09-03T22:42:13.111Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15488,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:42:13.114Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20744,"level":10,"msg":"Call use router","time":"2015-09-03T23:00:55.754Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20744,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:00:55.763Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20580,"level":10,"msg":"Call use router","time":"2015-09-03T23:03:01.000Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20580,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:03:01.005Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":21184,"level":10,"msg":"Call use router","time":"2015-09-03T23:05:40.948Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":21184,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:05:40.953Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20956,"level":10,"msg":"Call use router","time":"2015-09-03T23:05:55.987Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20956,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:05:55.991Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16688,"level":10,"msg":"Call use router","time":"2015-09-03T23:07:46.050Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16688,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:07:46.054Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19684,"level":10,"msg":"Call use router","time":"2015-09-03T23:08:41.209Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19684,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:08:41.214Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16852,"level":10,"msg":"Call use router","time":"2015-09-03T23:08:51.253Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16852,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:08:51.261Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"msg":"Call use router","time":"2015-09-03T23:11:36.440Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:11:36.443Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20152,"level":10,"msg":"Call use router","time":"2015-09-03T23:12:45.436Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20152,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:12:45.439Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16300,"level":10,"msg":"Call use router","time":"2015-09-03T23:14:10.661Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16300,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:14:10.664Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18044,"level":10,"msg":"Call use router","time":"2015-09-03T23:17:07.844Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18044,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:17:07.848Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17360,"level":10,"msg":"Call use router","time":"2015-09-03T23:17:48.210Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17360,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:17:48.215Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8028,"level":10,"msg":"Call use router","time":"2015-09-03T23:19:58.249Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8028,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:19:58.254Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17620,"level":10,"msg":"Call use router","time":"2015-09-03T23:20:13.123Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17620,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:20:13.131Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17072,"level":10,"msg":"Call use router","time":"2015-09-03T23:21:03.246Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17072,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:21:03.251Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15584,"level":10,"msg":"Call use router","time":"2015-09-03T23:23:00.489Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15584,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:23:00.492Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14668,"level":10,"msg":"Call use router","time":"2015-09-03T23:24:08.144Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14668,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:24:08.147Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15788,"level":10,"msg":"Call use router","time":"2015-09-03T23:25:33.987Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15788,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:25:33.994Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19052,"level":10,"msg":"Call use router","time":"2015-09-03T23:31:19.632Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19052,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:31:19.638Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18868,"level":10,"msg":"Call use router","time":"2015-09-03T23:31:34.527Z","v":0}
+{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18868,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:31:34.533Z","v":0}

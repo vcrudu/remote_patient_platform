@@ -1,0 +1,96 @@
+<h3 class=" txt-color-blueLight">Order confirmation</h3>
+
+<form class="smart-form">
+    <fieldset>
+        <b><label class="label txt-color-blue">Products</label></b>
+
+    </fieldset>
+    <fieldset>
+
+        <div class="col col-xs-12 padding-top-10">
+            <div ng-repeat="item in vm.basket.Items">
+                <div class="row">
+                    <div class="col-xs-2 text-center">
+                        <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img" style="max-width: 100px">
+                    </div>
+                    <div class="col-xs-4">
+                        <h3>{{item.Device.model}}
+                            <small><p>({{item.Device.deviceModelType}})</p></small>
+                        </h3>
+                        <p class="note ">
+                            {{item.Device.description}}
+                        </p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <div class="pull-right text-center">
+                            <div class=" text-primary ">
+                                {{item.Quantity | number :0}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <div class="pull-right  ">
+                            {{item.Price | number :2}}&pound
+                        </div>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <div class="pull-right text-center">
+                            <b>{{item.Quantity * item.Price | number :2}}&pound</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col col-xs-12">
+            <div class="row">
+                <div class="pull-right">
+                    <b>Total:{{vm.basket.getAmount() | number :2}}&pound</b>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="col col-6">
+            <b><label class="label txt-color-blue">Shipment info</label></b>
+
+            <section>
+                <p class="note">
+                    <b>{{vm.basket.shippingAddress.country}}</b><i ng-if="vm.basket.shippingAddress.county">
+                    ({{vm.basket.shippingAddress.county}})</i>
+                    <span ng-if="vm.basket.shippingAddress.town">,{{vm.basket.shippingAddress.town}}</span>
+                </p>
+
+                <p class="note">
+                    {{vm.basket.shippingAddress.addressLine1}}
+                    <br>
+                        <span ng-if="vm.basket.shippingAddress.addressLine2">
+                            {{vm.basket.shippingAddress.addressLine2}}
+                        </span>
+                </p>
+            </section>
+        </div>
+        <div class="col col-6 text-right">
+            <b><label class="label text-right txt-color-blue">Payment info</label></b>
+
+            <section>
+                <p class="note">
+                    {{vm.basket.payment.nameOnCard}}
+                </p>
+
+                <p class="note">
+                    {{vm.basket.payment.cardNumber}}
+                </p>
+
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <div class="btn btn-primary" ng-click="vm.confirmOrder()">
+            Confirm order
+        </div>
+    </footer>
+</form>
+
+

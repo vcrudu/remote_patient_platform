@@ -11,6 +11,8 @@ angular.module('app').controller('patientDevicesCheckoutCtrl', ['$scope', '$log'
 
         vm.removeItem = function(item){
             BasketService.removeItem(item);
-        }
+        };
+
+
     }
 ]);
