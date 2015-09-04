@@ -20,7 +20,7 @@
         createUserFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
             var onlineStatus = 'offline';
-            var socketId = undefined;
+            var socketId;
             if(dbEntity.onlineStatus.S) onlineStatus=dbEntity.onlineStatus.S;
             if(dbEntity.socketId.S) onlineStatus=dbEntity.socketId.S;
             if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
@@ -37,7 +37,7 @@
         createUserDtoFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
             var onlineStatus = 'offline';
-            var socketId = undefined;
+            var socketId;
             if(dbEntity.onlineStatus) onlineStatus=dbEntity.onlineStatus.S;
             if(dbEntity.socketId) socketId=dbEntity.socketId.S;
             if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));

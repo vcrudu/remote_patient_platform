@@ -8,7 +8,7 @@ angular.module('app')
         serverUrl:'http://localhost:8081'
     })
     .factory('authService',
-    ['$http', '$localStorage','appSettings', function($http, $localStorage, appSettings) {
+    ['$http', '$localStorage','$window','appSettings','toastr','ngDialog','currentCallDetails', function($http, $localStorage, $window, appSettings,toastr,ngDialog, currentCallDetails) {
 
         function urlBase64Decode(str) {
             var output = str.replace('-', '+').replace('_', '/');
@@ -54,6 +54,27 @@ angular.module('app')
                             window.socket.on('connect', function() {
                                 window.socket.emit('authenticate', {token: $localStorage.user.token});
                             });
+
+                            window.socket.on('call', function(data) {
+                                toastr.warning('Ringing......', 'Warn');
+                                currentCallDetails.data = data;
+                                ngDialog.open({
+                                    template:'provider/call.ringing.html',
+                                    controller:'callRingingCtrl'
+                                });
+                            });
+
+                            window.socket.on('answer', function(data) {
+                                currentCallDetails.data = data;
+                                var url = data.meeting.start_url;
+                                $window.open(url);
+                            });
+
+                            window.socket.on('meetingData', function(data) {
+                                currentCallDetails.data = data;
+                                var url = data.meeting.join_url;
+                                $window.open(url);
+                            });
                         }
                         success(res.data);
                     }else {
@@ -80,7 +101,7 @@ angular.module('app')
             },
 
             isAuthenticated: function () {
-                return $localStorage.user != undefined;
+                return $localStorage.user !== undefined;
             },
 
             getUserName: function () {
@@ -88,7 +109,7 @@ angular.module('app')
             },
 
             logout: function (success) {
-                window.socket.disconnect()
+                window.socket.disconnect();
                 //delete window.socket;
                 delete $localStorage.user;
                 success();

@@ -5,6 +5,7 @@
 (function() {
 
     var usersRepository     = require('../repositories').Users;
+    var videoService     = require('../services/videoService');
     var jwt                 = require("jsonwebtoken");
     var _                 = require("underscore");
 
@@ -54,6 +55,54 @@
                         socket.disconnect('unauthorized');
                     }
                 }, 10000);*/
+
+                socket.on('call', function (data) {
+                    var namespace = io.sockets;
+                    usersRepository.findOneByEmail(data.recipient, function (err, user) {
+                        if (err) {
+                            socket.emit('errorRetrieveUser', data);
+                        } else if (user) {
+                            var recipientSocket = _.find(nsp.sockets, function (aSocket) {
+                                return aSocket.id === user.socketId;
+                            });
+                            if (recipientSocket && recipientSocket.connected) {
+                                recipientSocket.emit('call', data);
+                            } else {
+                                socket.emit('recipientOffline', data);
+                            }
+                        } else {
+                            socket.emit('invalidRecipient', data);
+                        }
+                    });
+                });
+
+                socket.on('answer', function (data) {
+                    var namespace = io.sockets;
+                    usersRepository.findOneByEmail(data.caller, function (err, user) {
+                        if (err) {
+                            socket.emit('errorRetrieveUser', data);
+                        } else if (user) {
+                            var callerSocket = _.find(nsp.sockets, function (aSocket) {
+                                return aSocket.id === user.socketId;
+                            });
+                            if (callerSocket && callerSocket.connected) {
+                                videoService.createVideoMeeting(data.caller, function (err, meeting) {
+                                    if (err) {
+                                        callerSocket.emit('errorZoom', err);
+                                        socket.emit('errorZoom', err);
+                                    } else {
+                                        callerSocket.emit('answer', _.extend(data, meeting));
+                                        socket.emit('meetingData', {joinUrl: meeting.join_url});
+                                    }
+                                });
+                            } else {
+                                socket.emit('recipientOffline', data);
+                            }
+                        } else {
+                            socket.emit('invalidRecipient', data);
+                        }
+                    });
+                });
 
                 socket.on('disconnect', function () {
                     console.log('Disconnected!');

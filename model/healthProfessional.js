@@ -2,10 +2,10 @@
  * Created by Victor on 13/08/2015.
  */
 
-var assert = require("assert");
-var uuid = require("node-uuid");
-var _ = require("underscore");
-var entitiesFactory      = require("@vcrudu/hcm.domainmodel");
+var assert          = require("assert");
+var uuid            = require("node-uuid");
+var _               = require("underscore");
+var entitiesFactory = require("@vcrudu/hcm.domainmodel");
 
 (function(){
     module.exports = function(args){

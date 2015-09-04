@@ -1,4 +1,4 @@
-<aside  id="left-panel" ng-controller="asideNavCtrl">
+<aside  id="left-panel" ng-controller="asideNavCtrl as main">
 
 <div class="login-info" style="margin-top: 20px">
 <span> <!-- User image size is adjusted inside CSS, it should stay as it -->
@@ -26,14 +26,17 @@
             <a ui-sref="patient.devices.buy"><i class="fa fa-lg fa-fw fa-stethoscope"></i> <span class="menu-item-parent">Devices</span></a>
         </li>
 
-        <li >
-            <a href="#"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Appointments</span><b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-            <ul>
+        <li>
+            <a ng-click="switchState()"><i class="fa fa-lg fa-fw fa-user-md"></i>
+                <span class="menu-item-parent">Appointments</span>
+                <b class="collapse-sign"><em ng-class="stateClass"></em></b>
+            </a>
+            <ul ng-style="childrenStateClass">
                 <li ui-sref-active="active">
-                <a ui-sref="patient.appointments.view"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
+                    <a ui-sref="patient.appointments.view"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
                 </li>
                 <li ui-sref-active="active">
-                    <a ui-sref="patient.appointments.view"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Urgent call</span></a>
+                    <a ui-sref="patient.call"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Urgent call</span></a>
                 </li>
             </ul>
         </li>

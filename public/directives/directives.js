@@ -8,7 +8,7 @@ angular.module('app')
 
                 $rootScope.$on('basketChanged', function () {
                     scope.basket = BasketService.getBasket();
-                })
+                });
 
             }
         };

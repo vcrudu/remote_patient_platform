@@ -42,6 +42,27 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patient.messages",
             templateUrl: "patient/messages/patient.messages.html",
             controller: 'patientMessagesCtrl'
+        }).state("patient.call", {
+            url: "/patient.call",
+            templateUrl: "patient/appointments/patient.call.html",
+            controller: 'patientCallCtrl',
+            resolve:{
+                providers:function($http,$localStorage,appSettings){
+
+                    var req = {
+                        method: 'GET',
+                        url: appSettings.serverUrl + '/v1/api/providers/',
+                        headers: {
+                            'Access-Control-Request-Origin': 'http://localhost:8081',
+                            'x-access-token': $localStorage.user.token
+                        }
+                    };
+
+                    return $http(req).then(function(res){
+                        return res.data.result;
+                    });
+                }
+            }
         }).state("patient.appointments", {
             url: "/patient.appointments",
             templateUrl: "patient/appointments/patient.appointments.html",

@@ -43,7 +43,7 @@ angular.module('app')
 
         var getDevice = function (device) {
             return $filter('filter')(basket.Items, function (i) {
-                return i.Device.model == device.model
+                return i.Device.model == device.model;
             })[0];
 
         };
@@ -56,7 +56,7 @@ angular.module('app')
                 existed.Quantity += quantity;
             }
             else {
-                basket.Items.push(new BasketItem(device, quantity))
+                basket.Items.push(new BasketItem(device, quantity));
             }
 
             $localStorage.basket = basket;

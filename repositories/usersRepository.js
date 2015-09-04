@@ -81,9 +81,10 @@
                 TableName:TABLE_NAME,
                 ExpressionAttributeValues: {
                     ":onlineStatus": {"S":onlineStatus  },
+                    ":socketId": {"S":socketId  },
                 },
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET onlineStatus=:onlineStatus'
+                UpdateExpression: 'SET onlineStatus=:onlineStatus, socketId=:socketId'
             };
 
             dynamodb.updateItem(params, function (err, data) {

@@ -1,0 +1,20 @@
+<div class="tab-pane fade padding-10 no-padding-bottom active in" id="s1">
+    <div class="row no-space">
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="pan panel-heading">Medical providers</div>
+                <div class="panel-body">
+                    <!-- List group -->
+                    <ul class="list-inline ">
+                        <li data-ng-repeat="provider in providers" style="width: 120px; ">
+                            <button type="button" class="list-group-item" ng-click="call(provider.email)"
+                                    ng-bind="provider.name +' ' + provider.surname"></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
