@@ -2,7 +2,7 @@
  * Created by Victor on 31/08/2015.
  */
 
-angular.module('app').value('currentCallDetails',{data:{}}).factory('callService',['$http', '$localStorage','appSettings',
+angular.module('app').factory('callService',['$http', '$localStorage','appSettings',
     function($http,$localStorage,appSettings){
         return {
             getProviders:function(success, error){

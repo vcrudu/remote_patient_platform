@@ -5,10 +5,10 @@
 angular.module('app')
     .constant('appSettings',{
         qaserverUrl:'http://hcm-qa.elasticbeanstalk.com',
-        serverUrl:'http://localhost:8081'
+        serverUrl:'http://hcm-qa.elasticbeanstalk.com'
     })
     .factory('authService',
-    ['$http', '$localStorage','$window','appSettings','toastr','ngDialog','currentCallDetails', function($http, $localStorage, $window, appSettings,toastr,ngDialog, currentCallDetails) {
+    ['$http', '$localStorage','$window','appSettings','toastr','ngDialog', function($http, $localStorage, $window, appSettings,toastr,ngDialog) {
 
         function urlBase64Decode(str) {
             var output = str.replace('-', '+').replace('_', '/');
@@ -57,7 +57,7 @@ angular.module('app')
 
                             window.socket.on('call', function(data) {
                                 toastr.warning('Ringing......', 'Warn');
-                                currentCallDetails.data = data;
+                                $localStorage.callData = data;
                                 ngDialog.open({
                                     template:'provider/call.ringing.html',
                                     controller:'callRingingCtrl'
@@ -65,14 +65,14 @@ angular.module('app')
                             });
 
                             window.socket.on('answer', function(data) {
-                                currentCallDetails.data = data;
-                                var url = data.meeting.start_url;
+                                $localStorage.callData = data;
+                                var url = data.start_url;
                                 $window.open(url);
                             });
 
                             window.socket.on('meetingData', function(data) {
-                                currentCallDetails.data = data;
-                                var url = data.meeting.join_url;
+                                $localStorage.callData = data;
+                                var url = data.join_url;
                                 $window.open(url);
                             });
                         }

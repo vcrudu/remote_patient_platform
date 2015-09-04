@@ -62,7 +62,7 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-                            var recipientSocket = _.find(nsp.sockets, function (aSocket) {
+                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
                                 return aSocket.id === user.socketId;
                             });
                             if (recipientSocket && recipientSocket.connected) {
@@ -82,7 +82,7 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-                            var callerSocket = _.find(nsp.sockets, function (aSocket) {
+                            var callerSocket = _.find(namespace.sockets, function (aSocket) {
                                 return aSocket.id === user.socketId;
                             });
                             if (callerSocket && callerSocket.connected) {

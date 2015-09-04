@@ -22,7 +22,7 @@
             var onlineStatus = 'offline';
             var socketId;
             if(dbEntity.onlineStatus.S) onlineStatus=dbEntity.onlineStatus.S;
-            if(dbEntity.socketId.S) onlineStatus=dbEntity.socketId.S;
+            if(dbEntity.socketId.S) socketId=dbEntity.socketId.S;
             if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,
