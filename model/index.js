@@ -5,7 +5,7 @@ var UserFactoryImplementation = require('./user');
 var OrderFactoryImplementation = require('./order');
 var EventFactoryImplementation = require('./event');
 var PaymentImplementation = require('./payment');
-var HealthProfessionalImplementation = require('./healthProfessional');
+var HealthProfessionalImplementation = require('./healthProvider');
 
 module.exports = {
     UserFactory:UserFactoryImplementation,
