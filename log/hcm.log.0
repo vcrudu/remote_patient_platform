@@ -1,130 +1,427 @@
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"msg":"Call use router","time":"2015-09-03T16:49:10.530Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T16:49:10.534Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T20:34:10.807Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T20:34:11.114Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T20:34:40.918Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14920,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T20:34:41.164Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15592,"level":10,"msg":"Call use router","time":"2015-09-03T20:58:37.593Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15592,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T20:58:37.598Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16048,"level":10,"msg":"Call use router","time":"2015-09-03T21:01:42.945Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16048,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:01:42.949Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18528,"level":10,"msg":"Call use router","time":"2015-09-03T21:04:08.036Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18528,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:04:08.040Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":6812,"level":10,"msg":"Call use router","time":"2015-09-03T21:05:43.186Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":6812,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:05:43.190Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"msg":"Call use router","time":"2015-09-03T21:13:18.768Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:13:18.773Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:10.140Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:10.365Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:22.636Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:22.943Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:27.683Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:27.886Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:31.883Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:32.090Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:40.932Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:41.147Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:22:57.264Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:22:57.504Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:31.235Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:31.446Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:33.099Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:33.326Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:52.109Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:52.309Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:23:56.823Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:23:57.012Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:24:17.333Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:24:17.693Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:24:50.455Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:24:50.675Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:26:25.603Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:26:25.846Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:26:31.902Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:26:32.113Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:09.867Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:10.103Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:19.467Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:19.651Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:29:57.592Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:29:57.810Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:31:07.434Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17812,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:31:07.661Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":12800,"level":10,"msg":"Call use router","time":"2015-09-03T21:48:01.690Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":12800,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:48:01.695Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20012,"level":10,"msg":"Call use router","time":"2015-09-03T21:52:37.208Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20012,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:52:37.214Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19908,"level":10,"msg":"Call use router","time":"2015-09-03T21:53:37.154Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19908,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:53:37.158Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"msg":"Call use router","time":"2015-09-03T21:54:42.218Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:54:42.222Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16992,"level":10,"msg":"Call use router","time":"2015-09-03T21:54:57.258Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16992,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:54:57.262Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14992,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:12.300Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14992,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:12.304Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20416,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:17.308Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20416,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:17.312Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16664,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:27.389Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16664,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:27.394Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"msg":"Call use router","time":"2015-09-03T21:55:32.350Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:55:32.355Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"Devices list requested.","time":"2015-09-03T21:56:03.333Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15564,"level":10,"url":"/devices","userId":"vcrudu@hotmail.com","msg":"4 devices provided.","time":"2015-09-03T21:56:03.691Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18940,"level":10,"msg":"Call use router","time":"2015-09-03T21:58:57.610Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18940,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T21:58:57.614Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8232,"level":10,"msg":"Call use router","time":"2015-09-03T22:00:02.692Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8232,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:00:02.697Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18056,"level":10,"msg":"Call use router","time":"2015-09-03T22:00:42.795Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18056,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:00:42.800Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17656,"level":10,"msg":"Call use router","time":"2015-09-03T22:01:07.779Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17656,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:01:07.784Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"msg":"Call use router","time":"2015-09-03T22:01:57.925Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15612,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:01:57.929Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18028,"level":10,"msg":"Call use router","time":"2015-09-03T22:02:57.928Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18028,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:02:57.932Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20188,"level":10,"msg":"Call use router","time":"2015-09-03T22:31:50.436Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20188,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:31:50.440Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"msg":"Call use router","time":"2015-09-03T22:32:25.450Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:32:25.618Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15488,"level":10,"msg":"Call use router","time":"2015-09-03T22:42:13.111Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15488,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T22:42:13.114Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20744,"level":10,"msg":"Call use router","time":"2015-09-03T23:00:55.754Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20744,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:00:55.763Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20580,"level":10,"msg":"Call use router","time":"2015-09-03T23:03:01.000Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20580,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:03:01.005Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":21184,"level":10,"msg":"Call use router","time":"2015-09-03T23:05:40.948Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":21184,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:05:40.953Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20956,"level":10,"msg":"Call use router","time":"2015-09-03T23:05:55.987Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20956,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:05:55.991Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16688,"level":10,"msg":"Call use router","time":"2015-09-03T23:07:46.050Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16688,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:07:46.054Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19684,"level":10,"msg":"Call use router","time":"2015-09-03T23:08:41.209Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19684,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:08:41.214Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16852,"level":10,"msg":"Call use router","time":"2015-09-03T23:08:51.253Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16852,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:08:51.261Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"msg":"Call use router","time":"2015-09-03T23:11:36.440Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":2844,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:11:36.443Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20152,"level":10,"msg":"Call use router","time":"2015-09-03T23:12:45.436Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":20152,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:12:45.439Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16300,"level":10,"msg":"Call use router","time":"2015-09-03T23:14:10.661Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":16300,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:14:10.664Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18044,"level":10,"msg":"Call use router","time":"2015-09-03T23:17:07.844Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18044,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:17:07.848Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17360,"level":10,"msg":"Call use router","time":"2015-09-03T23:17:48.210Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17360,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:17:48.215Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8028,"level":10,"msg":"Call use router","time":"2015-09-03T23:19:58.249Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":8028,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:19:58.254Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17620,"level":10,"msg":"Call use router","time":"2015-09-03T23:20:13.123Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17620,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:20:13.131Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17072,"level":10,"msg":"Call use router","time":"2015-09-03T23:21:03.246Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":17072,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:21:03.251Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15584,"level":10,"msg":"Call use router","time":"2015-09-03T23:23:00.489Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15584,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:23:00.492Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14668,"level":10,"msg":"Call use router","time":"2015-09-03T23:24:08.144Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":14668,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:24:08.147Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15788,"level":10,"msg":"Call use router","time":"2015-09-03T23:25:33.987Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":15788,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:25:33.994Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19052,"level":10,"msg":"Call use router","time":"2015-09-03T23:31:19.632Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":19052,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:31:19.638Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18868,"level":10,"msg":"Call use router","time":"2015-09-03T23:31:34.527Z","v":0}
-{"name":"hcm.registration","hostname":"VICTOR-LAPTOP","pid":18868,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-03T23:31:34.533Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4560,"level":10,"msg":"Call use router","time":"2015-09-04T06:34:11.824Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4560,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:34:11.828Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7176,"level":10,"msg":"Call use router","time":"2015-09-04T06:34:58.150Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7176,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:34:58.155Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6608,"level":10,"msg":"Call use router","time":"2015-09-04T06:35:44.242Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6608,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:35:44.246Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"msg":"Call use router","time":"2015-09-04T06:36:02.033Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:36:02.036Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T06:36:10.956Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T06:36:11.335Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T06:37:18.633Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T06:37:18.996Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T06:38:17.333Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7380,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T06:38:17.669Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7344,"level":10,"msg":"Call use router","time":"2015-09-04T06:38:57.775Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7344,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:38:57.779Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4856,"level":10,"msg":"Call use router","time":"2015-09-04T06:39:09.561Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4856,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:39:09.566Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7332,"level":10,"msg":"Call use router","time":"2015-09-04T06:39:26.485Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7332,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:39:26.491Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"msg":"Call use router","time":"2015-09-04T06:39:31.607Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:39:31.611Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T06:45:13.643Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T06:45:14.029Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T06:55:33.229Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4240,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T06:55:33.582Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6492,"level":10,"msg":"Call use router","time":"2015-09-04T06:55:53.750Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6492,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T06:55:53.757Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7148,"level":10,"msg":"Call use router","time":"2015-09-04T07:08:10.087Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7148,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:08:10.090Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7148,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:09:07.222Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7148,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:09:07.578Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6828,"level":10,"msg":"Call use router","time":"2015-09-04T07:15:29.533Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6828,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:15:29.538Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":448,"level":10,"msg":"Call use router","time":"2015-09-04T07:17:24.707Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":448,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:17:24.711Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8092,"level":10,"msg":"Call use router","time":"2015-09-04T07:18:13.912Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8092,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:18:13.916Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":1084,"level":10,"msg":"Call use router","time":"2015-09-04T07:20:06.760Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":1084,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:20:06.764Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5036,"level":10,"msg":"Call use router","time":"2015-09-04T07:28:27.680Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5036,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:28:27.684Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"msg":"Call use router","time":"2015-09-04T07:28:45.327Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:28:45.331Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:29:56.064Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:29:56.808Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:30:29.725Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:30:30.097Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:30:54.776Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:30:55.122Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6904,"level":10,"msg":"Call use router","time":"2015-09-04T07:32:21.279Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6904,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:32:21.283Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2920,"level":10,"msg":"Call use router","time":"2015-09-04T07:35:57.670Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2920,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:35:57.674Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4116,"level":10,"msg":"Call use router","time":"2015-09-04T07:36:05.493Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4116,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:36:05.497Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7572,"level":10,"msg":"Call use router","time":"2015-09-04T07:37:06.870Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7572,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:37:06.874Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"msg":"Call use router","time":"2015-09-04T07:38:29.403Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:38:29.407Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:38:33.000Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:38:33.515Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:38:35.892Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:38:36.261Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:38:37.719Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:38:38.057Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:38:39.353Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7688,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:38:39.701Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4628,"level":10,"msg":"Call use router","time":"2015-09-04T07:39:16.691Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4628,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:39:16.695Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7176,"level":10,"msg":"Call use router","time":"2015-09-04T07:39:24.717Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7176,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:39:24.722Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"msg":"Call use router","time":"2015-09-04T07:41:10.962Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:41:10.966Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4688,"level":10,"msg":"Call use router","time":"2015-09-04T07:44:25.562Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4688,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:44:25.566Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7668,"level":10,"msg":"Call use router","time":"2015-09-04T07:44:52.196Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7668,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:44:52.200Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":1224,"level":10,"msg":"Call use router","time":"2015-09-04T07:45:30.568Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":1224,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:45:30.572Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7884,"level":10,"msg":"Call use router","time":"2015-09-04T07:45:47.040Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7884,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:45:47.044Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"msg":"Call use router","time":"2015-09-04T07:46:22.746Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T07:46:22.751Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:46:29.570Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:46:29.941Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:49:38.620Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:49:40.520Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:56:46.961Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:56:47.469Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:56:51.145Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:56:51.510Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T07:58:35.698Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T07:58:37.497Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:00:45.760Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:00:47.499Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:00:50.839Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:00:51.184Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:00:52.623Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:00:52.971Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:00:54.068Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:00:54.426Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:02:06.271Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:02:06.834Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:02:35.625Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:02:36.008Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:10:50.648Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:10:52.484Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:13:02.163Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:13:02.658Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:15:01.893Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:15:02.433Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:15:03.793Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:15:04.155Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:15:05.924Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:15:06.288Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:16:36.788Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:16:37.147Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:16:38.915Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:16:39.286Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:16:40.707Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:16:41.073Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:16:42.473Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:16:42.840Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:17:26.655Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:17:27.022Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:17:28.682Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:17:29.049Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:17:30.144Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:17:30.480Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:17:41.608Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:17:43.576Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:17:45.206Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:17:45.570Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:18:21.774Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:18:22.145Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:18:26.027Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:18:26.404Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:18:28.233Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:18:28.578Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:20:50.087Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:20:50.465Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:20:52.541Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:20:52.905Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:22:01.129Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:22:01.722Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:22:02.741Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:22:03.106Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:24:06.164Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:24:06.728Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:25:10.441Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:25:10.983Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:25:29.006Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:25:29.332Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:25:55.917Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:25:56.290Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:26:42.328Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:26:42.843Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:27:05.652Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:27:06.013Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:33:16.342Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:33:16.856Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:37:32.528Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:37:32.897Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:37:47.546Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:37:47.910Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:39:13.758Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:39:14.261Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:41:38.372Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:41:38.962Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:41:40.817Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:41:41.190Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:42:25.565Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:42:25.921Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:42:27.765Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:42:28.127Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:42:29.888Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:42:30.241Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:48:53.479Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:48:54.079Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:51:56.294Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:51:56.812Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:54:20.909Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:54:21.433Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:54:23.905Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:54:24.270Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:56:16.264Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:56:18.547Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:56:20.372Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:56:20.716Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T08:56:22.010Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":3652,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T08:56:22.372Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7952,"level":10,"msg":"Call use router","time":"2015-09-04T08:59:35.076Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7952,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T08:59:35.080Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7620,"level":10,"msg":"Call use router","time":"2015-09-04T09:00:44.670Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7620,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:00:44.674Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7272,"level":10,"msg":"Call use router","time":"2015-09-04T09:01:28.801Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7272,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:01:28.804Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7620,"level":10,"msg":"Call use router","time":"2015-09-04T09:02:00.029Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7620,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:02:00.034Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8004,"level":10,"msg":"Call use router","time":"2015-09-04T09:02:52.841Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8004,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:02:52.844Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":424,"level":10,"msg":"Call use router","time":"2015-09-04T09:03:44.711Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":424,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:03:44.715Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7492,"level":10,"msg":"Call use router","time":"2015-09-04T09:04:51.910Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7492,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:04:51.914Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4704,"level":10,"msg":"Call use router","time":"2015-09-04T09:04:58.853Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":4704,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:04:58.857Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6200,"level":10,"msg":"Call use router","time":"2015-09-04T09:05:18.680Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6200,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:05:18.684Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2020,"level":10,"msg":"Call use router","time":"2015-09-04T09:05:52.467Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2020,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:05:52.471Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5180,"level":10,"msg":"Call use router","time":"2015-09-04T09:06:20.002Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5180,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:06:20.006Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8108,"level":10,"msg":"Call use router","time":"2015-09-04T09:06:24.150Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8108,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:06:24.155Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"msg":"Call use router","time":"2015-09-04T09:06:26.544Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:06:26.548Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:07:58.534Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:07:58.925Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:08:00.819Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7484,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:08:01.216Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"msg":"Call use router","time":"2015-09-04T09:09:08.867Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:09:08.872Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:09:41.785Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:09:42.148Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:09:43.850Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:09:44.197Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:09:45.996Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:09:46.363Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8720,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T09:10:49.088Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8508,"level":10,"msg":"Call use router","time":"2015-09-04T09:13:54.201Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8508,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:13:54.205Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8508,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:14:07.243Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8508,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:14:07.624Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8508,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T09:14:34.000Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7868,"level":10,"msg":"Call use router","time":"2015-09-04T09:16:46.834Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7868,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:16:46.838Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":10,"msg":"Call use router","time":"2015-09-04T09:38:30.987Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:38:30.991Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:38:45.189Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:38:45.561Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T09:39:06.704Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10216,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Expire month is mandatory!","generatedMessage":false},"msg":"","time":"2015-09-04T09:39:07.082Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":10,"msg":"Call use router","time":"2015-09-04T09:42:53.907Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:42:53.911Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:43:05.291Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:43:05.675Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T09:43:25.160Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10012,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Expire month is mandatory!","generatedMessage":false},"msg":"","time":"2015-09-04T09:43:25.518Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"msg":"Call use router","time":"2015-09-04T09:47:00.901Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T09:47:00.905Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:47:08.548Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:47:08.949Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:47:10.262Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:47:10.609Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:47:11.721Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:47:12.068Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T09:47:13.240Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T09:47:13.582Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T09:47:34.975Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10008,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T10:24:48.588Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8400,"level":10,"msg":"Call use router","time":"2015-09-04T12:11:34.936Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8400,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:11:34.940Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6400,"level":10,"msg":"Call use router","time":"2015-09-04T12:13:21.191Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6400,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:13:21.195Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"msg":"Call use router","time":"2015-09-04T12:15:28.003Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:15:28.011Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:15:29.247Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6984,"level":10,"msg":"Call use router","time":"2015-09-04T12:16:17.685Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6984,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:16:17.689Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9564,"level":10,"msg":"Call use router","time":"2015-09-04T12:18:27.537Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9564,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:18:27.541Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"msg":"Call use router","time":"2015-09-04T12:18:47.131Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:18:47.135Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:19:21.499Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:19:21.876Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:19:24.229Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:19:24.579Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:19:27.248Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5868,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:19:27.610Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"msg":"Call use router","time":"2015-09-04T12:20:29.527Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:20:29.534Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:20:40.648Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:20:41.009Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:20:45.202Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:20:45.555Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6612,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:21:10.469Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8800,"level":10,"msg":"Call use router","time":"2015-09-04T12:22:10.677Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8800,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:22:10.681Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"msg":"Call use router","time":"2015-09-04T12:23:15.310Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:23:15.314Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:23:41.659Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:23:42.038Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:24:00.168Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9764,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:24:43.400Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"msg":"Call use router","time":"2015-09-04T12:25:22.866Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:25:22.872Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:25:26.328Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:25:52.593Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:25:52.979Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:26:07.023Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":2840,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:27:24.221Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8428,"level":10,"msg":"Call use router","time":"2015-09-04T12:28:38.723Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8428,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:28:38.728Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6988,"level":10,"msg":"Call use router","time":"2015-09-04T12:29:42.700Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6988,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:29:42.704Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":10,"msg":"Call use router","time":"2015-09-04T12:29:49.602Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:29:49.609Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:29:52.723Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:29:53.086Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:29:57.129Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8496,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:29:57.482Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"msg":"Call use router","time":"2015-09-04T12:30:07.937Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:30:07.941Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:30:08.646Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:30:09.047Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:30:25.024Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:30:27.687Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9000,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:30:28.054Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8176,"level":10,"msg":"Call use router","time":"2015-09-04T12:30:34.496Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8176,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:30:34.500Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"msg":"Call use router","time":"2015-09-04T12:30:51.677Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T12:30:51.680Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T12:31:58.866Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T12:31:59.447Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:32:24.314Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:32:42.227Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:32:42.594Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:32:55.682Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:32:56.027Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:32:59.990Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:00.476Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:26.816Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:27.203Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:28.708Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:29.069Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:30.156Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:30.511Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:48.290Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:48.636Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:49.642Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:50.012Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:33:50.945Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:33:51.299Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:34:00.595Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:34:02.107Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:34:03.130Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:34:03.477Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:34:04.402Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:34:04.744Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/orders","userId":"pivalig@gmail.com","msg":"Order requested to be created","time":"2015-09-04T12:34:09.433Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":50,"url":"/orders","userId":"pivalig@gmail.com","err":{"name":"AssertionError","expected":true,"operator":"==","message":"Address line 1 is required!","generatedMessage":false},"msg":"","time":"2015-09-04T12:34:09.791Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:04:15.413Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:04:15.869Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:04:27.094Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:04:27.533Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:04:32.613Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7080,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:04:33.046Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"msg":"Call use router","time":"2015-09-04T21:07:33.369Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:07:33.373Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:10:38.518Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:10:39.060Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:10:44.094Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11320,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:10:44.432Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10516,"level":10,"msg":"Call use router","time":"2015-09-04T21:15:46.596Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10516,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:15:46.600Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"msg":"Call use router","time":"2015-09-04T21:16:09.508Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7608,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:16:09.512Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":12012,"level":10,"msg":"Call use router","time":"2015-09-04T21:18:22.440Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":12012,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:18:22.444Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8016,"level":10,"msg":"Call use router","time":"2015-09-04T21:18:54.243Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8016,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:18:54.247Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7036,"level":10,"msg":"Call use router","time":"2015-09-04T21:19:19.640Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7036,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:19:19.644Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7320,"level":10,"msg":"Call use router","time":"2015-09-04T21:19:50.321Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7320,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:19:50.326Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9968,"level":10,"msg":"Call use router","time":"2015-09-04T21:20:02.781Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9968,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:20:02.785Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9968,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"Devices list requested.","time":"2015-09-04T21:20:10.305Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9968,"level":10,"url":"/devices","userId":"pivalig@gmail.com","msg":"4 devices provided.","time":"2015-09-04T21:20:10.659Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7972,"level":10,"msg":"Call use router","time":"2015-09-04T21:20:24.609Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7972,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:20:24.616Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6716,"level":10,"msg":"Call use router","time":"2015-09-04T21:20:40.397Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6716,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:20:40.416Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6512,"level":10,"msg":"Call use router","time":"2015-09-04T21:20:55.396Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6512,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:20:55.402Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7124,"level":10,"msg":"Call use router","time":"2015-09-04T21:21:00.426Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7124,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:21:00.443Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6820,"level":10,"msg":"Call use router","time":"2015-09-04T21:21:50.854Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6820,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:21:50.859Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11996,"level":10,"msg":"Call use router","time":"2015-09-04T21:23:10.877Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11996,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:23:10.881Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10552,"level":10,"msg":"Call use router","time":"2015-09-04T21:23:18.774Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10552,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:23:18.778Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9284,"level":10,"msg":"Call use router","time":"2015-09-04T21:23:58.426Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9284,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:23:58.430Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11148,"level":10,"msg":"Call use router","time":"2015-09-04T21:24:09.443Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11148,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:24:09.447Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10024,"level":10,"msg":"Call use router","time":"2015-09-04T21:24:24.222Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10024,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:24:24.226Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9916,"level":10,"msg":"Call use router","time":"2015-09-04T21:27:21.125Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9916,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:27:21.129Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10420,"level":10,"msg":"Call use router","time":"2015-09-04T21:28:38.636Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":10420,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:28:38.640Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8556,"level":10,"msg":"Call use router","time":"2015-09-04T21:35:36.840Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8556,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:35:36.845Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8364,"level":10,"msg":"Call use router","time":"2015-09-04T21:35:55.381Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8364,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:35:55.385Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7124,"level":10,"msg":"Call use router","time":"2015-09-04T21:52:46.074Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":7124,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:52:46.078Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9232,"level":10,"msg":"Call use router","time":"2015-09-04T21:54:13.935Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9232,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:54:13.939Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9572,"level":10,"msg":"Call use router","time":"2015-09-04T21:57:21.861Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9572,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T21:57:21.865Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6700,"level":10,"msg":"Call use router","time":"2015-09-04T22:03:22.063Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":6700,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:03:22.067Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11748,"level":10,"msg":"Call use router","time":"2015-09-04T22:03:52.234Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":11748,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:03:52.238Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5620,"level":10,"msg":"Call use router","time":"2015-09-04T22:04:57.260Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":5620,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:04:57.264Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9100,"level":10,"msg":"Call use router","time":"2015-09-04T22:05:21.490Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9100,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:05:21.495Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8016,"level":10,"msg":"Call use router","time":"2015-09-04T22:09:06.749Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":8016,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:09:06.753Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9512,"level":10,"msg":"Call use router","time":"2015-09-04T22:14:43.199Z","v":0}
+{"name":"hcm.registration","hostname":"ProvectaSoft_1","pid":9512,"level":10,"message":"Server started at port 8081","msg":"","time":"2015-09-04T22:14:43.203Z","v":0}

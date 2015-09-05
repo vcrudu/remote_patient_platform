@@ -118,6 +118,19 @@ angular.module('app')
         return self;
     }
     ])
+    .factory('ProviderService',
+    ['$localStorage', '$filter', '$rootScope', 'dataaccess', function ($localStorage, $filter, $rootScope, dataaccess) {
+
+        var self = this;
+
+        self.search= function () {
+
+            return dataaccess.get('/v1/api/providers/');
+        };
+
+        return self;
+    }
+    ])
     .factory('common',
     ['dataaccess', function common(dataaccess) {
 
