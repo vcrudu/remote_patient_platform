@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title"><i class="fa fa-phone fa-fw "></i>
+        Call</h4>
+</div>
+<div class="modal-body hidden-overflow ">
+    <div class="well well-light provider">
+        <img ng-src="{{provider.image}}" class="img-responsive " ng-class="{'online':provider.onlineStatus=='online'}">
+        <h4 class="text-center">
+            {{provider.name}} {{provider.surname}}
+        </h4>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="text-center">
+        <button class="btn btn-labeled btn-danger" ng-click="cancel()">
+                            <span class="btn-label">
+                            <i class="fa fa-phone  fa-rotate-90"></i></span>Cancel
+        </button>
+    </div>
+
+</div>
