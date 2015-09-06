@@ -21,16 +21,23 @@
             var createdDateTime = new Date();
             var onlineStatus = 'offline';
             var socketId;
-            if(dbEntity.onlineStatus.S) onlineStatus=dbEntity.onlineStatus.S;
-            if(dbEntity.socketId.S) socketId=dbEntity.socketId.S;
+            //Todo-here to put this in config
+            //Todo-here to define the gender of the user
+            var avatar='https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png';
+            if(dbEntity.onlineStatus) onlineStatus=dbEntity.onlineStatus.S;
+            if(dbEntity.avatar) avatar=dbEntity.avatar.S;
+            if(dbEntity.socketId) socketId=dbEntity.socketId.S;
             if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,
+                name:dbEntity.name.S,
+                surname:dbEntity.surname.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
                 isActive:dbEntity.isActive.BOOL,
                 onlineStatus: onlineStatus,
                 socketId:socketId,
+                avatar:avatar,
                 createdDateTime:createdDateTime
             };
         },

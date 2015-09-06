@@ -5,10 +5,11 @@
 angular.module('app')
     .constant('appSettings',{
         qaserverUrl:'http://hcm-qa.elasticbeanstalk.com',
-        serverUrl:'http://localhost:8081'
+        serverUrl:'http://192.168.0.13:8081'
     })
     .factory('authService',
-    ['$http', '$localStorage','$window','appSettings','toastr','ngDialog', function($http, $localStorage, $window, appSettings,toastr,ngDialog) {
+    ['$http', '$localStorage','$window','$modal','$rootScope','appSettings','toastr','ngDialog','callService',
+         function($http, $localStorage, $window,$modal, $rootScope, appSettings,toastr,ngDialog, callService) {
 
         function urlBase64Decode(str) {
             var output = str.replace('-', '+').replace('_', '/');
@@ -56,24 +57,65 @@ angular.module('app')
                             });
 
                             window.socket.on('call', function(data) {
-                                toastr.warning('Ringing......', 'Warn');
                                 $localStorage.callData = data;
-                                ngDialog.open({
-                                    template:'provider/call.ringing.html',
-                                    controller:'callRingingCtrl'
+
+                                callService.getContact(data.caller, function(contact){
+                                    $localStorage.callModal = $modal.open({
+                                        templateUrl: 'patient/appointments/dialog.call.html',
+                                        controller : function($scope,$modalInstance,provider,isCalling) {
+
+                                            $scope.provider = provider;
+                                            $scope.isCalling = isCalling;
+
+                                            $rootScope.$on('cancelCall',function(){
+                                                $modalInstance.dismiss('cancel');
+                                            });
+
+                                            $scope.cancel = function () {
+                                                //Todo-here to change the provider to contact
+                                                if (provider && provider.email && window.socket && window.socket.connected) {
+                                                    window.socket.emit('cancel', {recipient:$localStorage.user.email , caller: provider.email});
+                                                }
+                                                $modalInstance.dismiss('cancel');
+                                            };
+
+                                            $scope.answer = function () {
+                                                if (provider && provider.email && window.socket && window.socket.connected) {
+                                                    window.socket.emit('answer', {recipient: $localStorage.user.email , caller: provider.email});
+                                                }
+                                                $modalInstance.dismiss('cancel');
+                                            };
+                                        },
+                                        resolve: {
+                                            //Todo-here the provider should be changed to contact
+                                            provider: function () {
+                                                return contact;
+                                            },
+                                            isCalling: function () {
+                                                return false;
+                                            }
+                                        }
+                                    });
+                                },function(error){
+                                    toastr.error(error);
                                 });
                             });
 
                             window.socket.on('answer', function(data) {
                                 $localStorage.callData = data;
                                 var url = data.start_url;
+                                $localStorage.callModal.close('cancel');
                                 $window.open(url);
                             });
 
-                            window.socket.on('meetingData', function(data) {
+                            window.socket.on('cancel', function(data) {
                                 $localStorage.callData = data;
-                                var url = data.join_url;
-                                $window.open(url);
+                                $localStorage.callModal.close('cancel');
+                            });
+
+                            window.socket.on('meetingData', function(join_url) {
+                                $localStorage.callModal.close('cancel');
+                                $window.open(join_url.joinUrl);
                             });
                         }
                         success(res.data);

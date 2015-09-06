@@ -174,7 +174,7 @@
                 var resultUsers=[];
 
                 _.forEach(dbUsers, function(dbUser){
-                    var user = UserFactory.createUserDtoFromDbEntity(dbUser);
+                    var user = UserFactory.createUserFromDbEntity(dbUser);
                     resultUsers.push(user);
                 });
 

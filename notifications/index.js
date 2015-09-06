@@ -76,6 +76,34 @@
                     });
                 });
 
+                socket.on('cancel', function (data) {
+                    var namespace = io.sockets;
+                    usersRepository.findOneByEmail(data.recipient, function (err, user) {
+                        if (err) {
+                            socket.emit('errorRetrieveUser', data);
+                        } else if (user) {
+                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                return aSocket.id === user.socketId;
+                            });
+                            if (recipientSocket && recipientSocket.connected) {
+                                usersRepository.findOneByEmail(data.caller, function (err, callerUser) {
+                                    if (callerUser) {
+                                        var callerSocket = _.find(namespace.sockets, function (aCallerSocket) {
+                                            return aCallerSocket.id === callerUser.socketId;
+                                        });
+                                        callerSocket.emit('cancel', data);
+                                    }
+                                });
+                                recipientSocket.emit('cancel', data);
+                            } else {
+                                socket.emit('recipientOffline', data);
+                            }
+                        } else {
+                            socket.emit('invalidRecipient', data);
+                        }
+                    });
+                });
+
                 socket.on('answer', function (data) {
                     var namespace = io.sockets;
                     usersRepository.findOneByEmail(data.caller, function (err, user) {

@@ -18,6 +18,19 @@ angular.module('app').factory('callService',['$http', '$localStorage','appSettin
                 $http(req).success(function(res){
                     success(res);
                 }).error(error);
+            },
+            getContact:function(userId, success, error){
+                var req = {
+                    method: 'GET',
+                    url: appSettings.serverUrl + '/v1/api/contacts/'+userId,
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    }
+                };
+
+                $http(req).success(function(data){
+                    success(data.result);
+                }).error(error);
             }
         } ;
     }

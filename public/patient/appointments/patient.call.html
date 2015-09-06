@@ -9,7 +9,7 @@
 
             <div class=" col-md-3" ng-repeat="p in vm.providers">
                 <div class="well well-light provider">
-                    <img ng-src="{{p.image}}" class="img-responsive " ng-class="{'online':p.onlineStatus=='online'}">
+                    <img ng-src="{{p.avatar}}" class="img-responsive " ng-class="{'online':p.onlineStatus=='online'}">
                     <h4 class="text-center">
                         {{p.name}} {{p.surname}}
                     </h4>
@@ -18,7 +18,7 @@
 
                     <div class="text-center">
                         <button class="btn btn-labeled btn-success" ng-disabled="p.onlineStatus !='online'"
-                             ng-click="vm.call(p)">
+                             ng-click="vm.call(p, true)">
                             <span class="btn-label">
                             <i class="fa fa-phone"></i></span>Make a call
                         </button>
