@@ -102,18 +102,10 @@
 
             var dynamodb = getDb();
 
-            var createdDateTime = new Date();
+            var dbUser = UserFactory.createDbEntityFromUser(user);
 
             var params = {
-                Item: {
-                    email: { S: user.email},
-                    passwordHash:{S:user.passwordHash},
-                    tokenString:{S:user.token},
-                    isActive:{BOOL:user.isActive},
-                    name:{S:user.firstname},
-                    surname:{S:user.surname},
-                    createdDateTime:{N:createdDateTime.getTime().toString()}
-                },
+                Item: dbUser,
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',

@@ -8,14 +8,15 @@
       createUserFromBody : function(requestBody){
          var salt = bcrypt.genSaltSync(10);
          var passwordHash = bcrypt.hashSync(requestBody.password, salt);
-         return {
-             email: requestBody.email,
-             passwordHash: passwordHash,
-             name: requestBody.name,
-             surname: requestBody.surname,
-             isActive: true,
-             onlineStatus: "offline"
-         };
+          return {
+              email: requestBody.email,
+              passwordHash: passwordHash,
+              name: requestBody.name,
+              surname: requestBody.surname,
+              isActive: true,
+              socketId:'NULL',
+              onlineStatus: "offline"
+          };
       },
         createUserFromDbEntity : function(dbEntity){
             var createdDateTime = new Date();
@@ -71,6 +72,8 @@
                 return {
                     email           : {S     : user.email},
                     passwordHash    : {S     : user.passwordHash},
+                    name            : {S:user.name},
+                    surname         : {S:user.surname},
                     tokenString     : {S     : user.token},
                     isActive        : {BOOL  : user.isActive},
                     onlineStatus    : {S  : user.onlineStatus},
