@@ -119,8 +119,10 @@
                                         callerSocket.emit('errorZoom', err);
                                         socket.emit('errorZoom', err);
                                     } else {
-                                callerSocket.emit('answer', _.extend(data, meeting));
-                                socket.emit('meetingData', {joinUrl: meeting.join_url});
+                                        callerSocket.emit('answer', _.extend(data, meeting));
+                                        setTimeout(function(){
+                                            socket.emit('meetingData', {joinUrl: meeting.join_url});
+                                        },5000);
                             }
                         });
                     } else {

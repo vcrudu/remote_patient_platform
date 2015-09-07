@@ -4,7 +4,7 @@
 
 angular.module('app').controller('patientCallCtrl', ['$scope', '$log', '$state',
     'toastr', 'authService', '$localStorage', 'ProviderService', 'Messaging','$modal','$rootScope',
-    function ($scope, $log, $state, toastr, authService, $localStorage, ProviderService, Messaging, $modal,$rootScope) {
+    function ($scope, $log, $state, toastr, authService, $localStorage, ProviderService, Messaging, $modal,$window) {
 
         var vm = this;
 
@@ -38,35 +38,37 @@ angular.module('app').controller('patientCallCtrl', ['$scope', '$log', '$state',
                 })
         };
 
+        function StartCallSound(){
+            if(window.snd) {
+                window.snd.play();
+
+            }
+        }
+
+        function StopCallSound(){
+            if(window.snd) {
+                window.snd.pause();
+            }
+        }
 
         vm.searchProviders();
 
         vm.call = function (provider, isCalling) {
-            $localStorage.callModal = $modal.open({
+            $localStorage.callData = {recipient: provider.email, caller: $localStorage.user.email};
+
+            $localStorage.callerModal = $modal.open({
                 templateUrl: 'patient/appointments/dialog.call.html',
                 controller : function($scope,$modalInstance,$rootScope, provider,isCalling){
 
+                    StartCallSound();
                     $scope.provider = provider;
                     $scope.isCalling = isCalling;
 
-                    $rootScope.$on('cancelCall',function(){
-                        $modalInstance.dismiss('cancel');
-                    });
-
                     $scope.cancel = function () {
-                        //Todo-here to change the provider to contact
-                        if (provider && provider.email && window.socket && window.socket.connected) {
-                            //Todo-here recipient and caller is inverted:We should somehow solve describe this better.
-                            window.socket.emit('cancel', {recipient: provider.email, caller: $localStorage.user.email});
-                        }
-                        $modalInstance.dismiss('cancel');
+                        $modalInstance.dismiss({send:true});
                     };
 
                     $scope.answer = function () {
-                        if (provider && provider.email && window.socket && window.socket.connected) {
-                            window.socket.emit('answer', {recipient: $localStorage.user.email , caller: provider.email});
-                        }
-                        $modalInstance.dismiss('cancel');
                     };
                 },
                 resolve: {
@@ -78,8 +80,16 @@ angular.module('app').controller('patientCallCtrl', ['$scope', '$log', '$state',
                     }
                 }
             });
-            if (provider && provider.email && window.socket && window.socket.connected) {
 
+            $localStorage.callerModal.result.then(function () {
+            }, function (arg) {
+                if (arg.send && window.socket && window.socket.connected) {
+                    window.socket.emit('cancel', $localStorage.callData);
+                    StopCallSound();
+                }
+            });
+
+            if (provider && provider.email && window.socket && window.socket.connected) {
                 window.socket.emit('call', {recipient: provider.email, caller: $localStorage.user.email});
             }
         };
