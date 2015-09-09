@@ -1,0 +1,352 @@
+<div class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+
+    <div class="jarviswidget jarviswidget-color-darken " data-widget-editbutton="false"
+         data-widget-custombutton="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
+
+            <h2>Provider Registration Wizard </h2>
+        </header>
+        <!-- widget div-->
+        <div id="bootstrap-wizard-1" class="  " rc-wizard="sampleWizard"
+             rc-disabled="rc.firstForm.submitInProgress" rc-su>
+
+
+            <div class="form-bootstrapWizard clearfix margin-top-10">
+                <ul class="bootstrapWizard form-wizard">
+
+                    <li data-target="#step1" class="active">
+                        <a href="#first" data-toggle="tab"> <span class="step">1</span>
+                            <span class="title">User</span>
+                        </a>
+                    </li>
+                    <li data-target="#step2">
+                        <a href="#step2" data-toggle="tab"> <span class="step">2</span> <span
+                                class="title">Additional info</span> </a>
+                    </li>
+                    <li data-target="#step3" >
+                        <a href="#step3" data-toggle="tab"> <span class="step">3</span> <span
+                                class="title">Availability</span> </a>
+                    </li>
+                    <li data-target="#finish">
+                        <a href="#finish" data-toggle="tab"> <span class="step">4</span> <span
+                                class="title">Finish</span> </a>
+                    </li>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <br>
+
+            <div class="tab-content ">
+                <form class="tab-pane smart-form  active" id="first" name="firstForm"
+                      rc-step novalidate>
+                    <br>
+                    <fieldset>
+
+                        <section>
+                            <label class="input"
+                                   ng-class="{'state-error': (firstForm.email.$dirty || rc.sampleWizard.submitted())  && firstForm.email.$invalid }">
+                                <i class="icon-append fa fa-envelope-o"></i>
+                                <input type="email" name="email" placeholder="Email address" required
+                                       ng-model="vm.newProvider.email">
+                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                            </label>
+                            <em class="invalid">
+                                <span ng-show=" rc.sampleWizard.submitted() && firstForm.email.$error.required">Email is required</span>
+                                <span ng-show=" firstForm.email.$dirty && firstForm.email.$error.email">Invalid email</span>
+                            </em>
+                        </section>
+
+                        <section>
+                            <label class="input"
+                                   ng-class="{'state-error': (firstForm.password.$dirty || rc.sampleWizard.submitted() ) && firstForm.password.$invalid }">
+                                <i class="icon-append fa fa-lock"></i>
+                                <input type="password" name="password" placeholder="Password" id="password"
+                                       required
+                                       password-format ng-model="vm.newProvider.password">
+                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+                            <em class="invalid">
+                                <span ng-show="rc.sampleWizard.submitted() && firstForm.password.$error.required">Password is required.</span>
+                                <span ng-show="firstForm.password.$dirty && firstForm.password.$error.matchPassword">Password does not match.</span>
+                                        <span ng-show="firstForm.password.$dirty && firstForm.password.$error.passwordFormat">Password must contain at least six characters, at least one
+                                        number (0-9), one lowercase letter (a-z), one uppercase letter (A-Z)!.</span>
+                            </em>
+                        </section>
+
+                        <section>
+                            <label class="input"
+                                   ng-class="{'state-error': (firstForm.passwordConfirm.$dirty  || rc.sampleWizard.submitted() ) && (firstForm.passwordConfirm.$error.required || vm.newProvider.password != vm.newProvider.passwordConfirm ) }">
+                                <i class="icon-append fa fa-lock"></i>
+                                <input type="password" name="passwordConfirm" placeholder="Confirm password"
+                                       required ng-model="vm.newProvider.passwordConfirm "
+                                       ng-model-options="{ updateOn: 'default blur' }">
+                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+                            <em class="invalid">
+                                <span ng-show="rc.sampleWizard.submitted() && firstForm.passwordConfirm.$error.required">Password confirmation is required.</span>
+                                <span ng-show="firstForm.passwordConfirm.$dirty &&vm.newProvider.password != vm.newProvider.passwordConfirm">Password does not match.</span>
+                            </em>
+                        </section>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-2">
+                                <label class="select"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted()  && firstForm.title.$invalid }">
+                                    <select name="title" ng-model="vm.newProvider.title"
+                                            ng-options="t as t for t in vm.titles" required>
+                                        <option style="display:none" value="">Title</option>
+                                    </select> <i></i>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.title.$error.required"
+                                    class="invalid">Gender is required.</em>
+                            </section>
+                            <section class="col col-5">
+                                <label class="input"
+                                       ng-class="{'state-error': (firstForm.name.$dirty || rc.sampleWizard.submitted() )  && firstForm.name.$invalid }">
+                                    <input type="text" name="name" required ng-model="vm.newProvider.name"
+                                           placeholder="First name">
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted() && firstForm.name.$error.required"
+                                    class="invalid">First name is required.</em>
+                            </section>
+                            <section class="col col-5">
+                                <label class="input"
+                                       ng-class="{'state-error': (firstForm.surname.$dirty || rc.sampleWizard.submitted() ) && firstForm.surname.$invalid }">
+                                    <input type="text" name="surname" required ng-model="vm.newProvider.surname"
+                                           placeholder="Surname">
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.surname.$error.required"
+                                    class="invalid">Last name is required.</em>
+                            </section>
+                        </div>
+
+                        <div class="row">
+                            <section class="col col-6">
+                                <label class="select"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted()  && firstForm.gender.$invalid }">
+                                    <select name="gender" ng-model="vm.newProvider.gender"
+                                            ng-options="g.value as g.text for g in vm.genders" required>
+                                        <option style="display:none" value="">Gender</option>
+                                    </select> <i></i>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.gender.$error.required"
+                                    class="invalid">Gender is required.</em>
+                            </section>
+                            <section class="col col-6">
+
+                                <label class="input"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted()   && firstForm.dateOfBirth.$invalid }">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="dropdownDob" role="button"
+                                           data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="date" required name="dateOfBirth"
+                                                       placeholder="Date of birth" class="form-control"
+                                                       data-ng-model="vm.newProvider.dateOfBirth">
+                                                        <span class="input-group-addon"><i
+                                                                ng-class="{'text-danger': rc.sampleWizard.submitted() && firstForm.dateOfBirth.$invalid }"
+                                                                class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker data-ng-model="vm.newProvider.dateOfBirth"
+                                                            ng-required="true"
+                                                            data-datetimepicker-config="{ dropdownSelector: '#dropdownDob',minView:'day',startView:'year' }"></datetimepicker>
+                                        </ul>
+                                    </div>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.dateOfBirth.$error.required"
+                                    class="invalid">Please enter your birth date</em>
+                            </section>
+                        </div>
+                    </fieldset>
+
+                </form>
+                <form class="tab-pane smart-form  margin-top-10 " id="step2" name="step2Form" rc-step novalidate>
+                    <br>
+
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-4">
+                                <label class="input"
+                                       ng-class="{'state-error': (step2Form.practiceName.$dirty || rc.sampleWizard.submitted())  && step2Form.practiceName.$invalid }">
+                                    <input type="text" name="practiceName" placeholder="Practice name" required
+                                           ng-model="vm.newProvider.practiceName">
+                                </label>
+                                <em class="invalid">
+                                    <span ng-show=" rc.sampleWizard.submitted() && step2Form.practiceName.$error.required">Practice name is required</span>
+                                </em>
+                            </section>
+                            <section class="col col-4">
+                                <label class="select"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted()  && step2Form.providerType.$invalid }">
+                                    <select name="providerType" ng-model="vm.newProvider.providerType"
+                                            ng-options="p as p for p in vm.providerTypes" required>
+                                        <option style="display:none" value="">Health Professional Type</option>
+                                    </select> <i></i>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted()  && step2Form.providerType.$invalid"
+                                    class="invalid">Health Professional Type is required.</em>
+                            </section>
+                            <section class="col col-4">
+                                <label class="input"
+                                       ng-class="{'state-error': (step2Form.practiceIdentifier.$dirty || rc.sampleWizard.submitted())  && step2Form.practiceIdentifier.$invalid }">
+                                    <input type="text" name="practiceIdentifier" placeholder="Practice Identifier"
+                                           required
+                                           ng-model="vm.newProvider.practiceIdentifier">
+                                </label>
+                                <em class="invalid">
+                                    <span ng-show=" rc.sampleWizard.submitted() && step2Form.practiceIdentifier.$error.required">Practice Identifier is required</span>
+                                </em>
+                            </section>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-4">
+                                <label class="select"
+                                       ng-class="{'state-error':  rc.sampleWizard.submitted() && step2Form.country.$invalid}">
+                                    <select name="country" ng-model="vm.newProvider.address.country"
+                                            ng-options="country.name as country.name for country in vm.countries"
+                                            required>
+                                        <option style="display:none" value="">Country</option>
+                                    </select> <i></i> </label>
+                                <em ng-show=" rc.sampleWizard.submitted() && step2Form.country.$invalid"
+                                    class="invalid">Please select country</em>
+                            </section>
+                            <section class="col col-3">
+                                <label class="input"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.county.$invalid}">
+                                    <input type="text" name="county" placeholder="County"
+                                           ng-model="vm.newProvider.address.county" required>
+                                </label>
+                                <em ng-show=" rc.sampleWizard.submitted() && step2Form.county.$invalid"
+                                    class="invalid">County is required</em>
+                            </section>
+                            <section class="col col-3">
+                                <label class="input"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.town.$invalid}">
+                                    <input type="text" name="town" placeholder="Town"
+                                           ng-model="vm.newProvider.address.town"
+                                           required>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted() && step2Form.town.$invalid"
+                                    class="invalid">Town is required</em>
+                            </section>
+
+                            <section class="col col-2">
+                                <label class="input"
+                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.code.$invalid}">
+                                    <input type="text" name="code" placeholder="Post code"
+                                           ng-model="vm.newProvider.address.postCode"
+                                           required>
+                                </label>
+                                <em ng-show="rc.sampleWizard.submitted() && step2Form.code.$invalid"
+                                    class="invalid">Post code is required</em>
+                            </section>
+                        </div>
+
+                        <section>
+                            <label class="input"
+                                   ng-class="{'state-error': vm.submitted && step2Form.address.$invalid}">
+                                <input type="text" name="address" placeholder="Address"
+                                       ng-model="vm.newProvider.address.addressLine1"
+                                       required>
+                            </label>
+                            <em ng-show=" vm.submitted && step2Form.address.$invalid"
+                                class="invalid">Address is required</em>
+                        </section>
+
+                        <section>
+                            <label class="textarea">
+                                <textarea rows="3" name="info" placeholder="Additional info"
+                                          ng-model="vm.newProvider.address.addressLine2"></textarea>
+                            </label>
+                        </section>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-6">
+                                <label class="input"
+                                       ng-class="{'state-error': (step2Form.phone.$dirty || rc.sampleWizard.submitted()) && step2Form.phone.$invalid}">
+                                    <i class="icon-prepend fa fa-phone"></i>
+                                    <input type="tel" name="phone" ng-model="vm.phone" is-phone placeholder="Phone"
+                                           ng-required="!vm.mobile && !vm.phone">
+                                </label>
+                                <em class="invalid">
+                                    <span ng-show="(step2Form.phone.$dirty && step2Form.phone.$error.isPhone)">Phone number format is invalid.</span>
+                                </em>
+                            </section>
+                            <section class="col col-6">
+                                <label class="input"
+                                       ng-class="{'state-error': (step2Form.mobile.$dirty || rc.sampleWizard.submitted()) && step2Form.mobile.$invalid}">
+                                    <i class="icon-prepend fa fa-phone"></i>
+                                    <input type="tel" name="mobile" ng-model="vm.mobile" is-phone placeholder="Mobile"
+                                           ng-required="!vm.mobile && !vm.phone">
+                                </label>
+                                <em class="invalid">
+                                    <span ng-show="(step2Form.mobile.$dirty && step2Form.mobile.$error.isPhone)">Mobile number format is invalid.</span>
+                                </em>
+                            </section>
+                        </div>
+                    </fieldset>
+                </form>
+                <form class="tab-pane smart-form  margin-top-10 " id="step3" name="thirdForm"
+                      rc-step novalidate  >
+                    <br>
+                    <weekday-schedule ng-model="vm.daysSchedule"></weekday-schedule>
+                </form>
+                <form class="tab-pane smart-form  margin-top-10 text-center" id="finish" name="finishForm"
+                      rc-step novalidate rc-submit="vm.save()">
+                    <br>
+                    <h2  class="txt-color-greenLight">
+                        <i class="fa fa-fw fa-check"></i>
+                        <span class="semi-bold"  >Congratulations</span>
+
+                        <p class="txt-color-darken">
+                            <small >You are one step away from creating a new provider</small>
+                        </p>
+                    </h2>
+                </form>
+            </div>
+            <div class="form-actions">
+                <div class="row pager">
+                    <div class="col-sm-12">
+                        <div class="pull-left btn btn-default" ng-click="vm.goBack()" ng-disabled="vm.saving">
+                            Cancel
+                        </div>
+
+                        <div class="pull-right">
+                            <a class="btn btn-default" ng-click="rc.sampleWizard.backward()"
+                               ng-disabled="vm.saving"
+                               ng-show="rc.sampleWizard.currentIndex > rc.sampleWizard.firstIndex">Back</a>
+                            <a class="btn btn-primary" data-loading-text="Please Wait..."
+                               ng-click="rc.sampleWizard.forward()"
+                               ng-show="rc.sampleWizard.currentIndex < rc.sampleWizard.navigationLength"
+                                    >Next</a>
+
+
+                            <a class="btn btn-primary " ng-disabled="vm.saving"
+                               ng-click="rc.sampleWizard.forward()"
+                               ng-show="rc.sampleWizard.currentIndex == rc.sampleWizard.navigationLength "
+                                    >Create provider
+                                <!--<span class="ladda-label" localize="Complete"></span>-->
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- end widget div -->
+
+    </div>
+    <!-- end widget -->
+
+</div>

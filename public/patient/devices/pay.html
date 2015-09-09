@@ -135,8 +135,7 @@
             <section class="col col-5">
                 <label class="select" ng-class="{'state-error': vm.submitted && checkoutform.month.$invalid}">
                     <select name="month" ng-model="vm.payment.expireMonth"
-                            ng-options="month.id as month.name for month in vm.months" required
-                            ng-model="vm.payment.expireMonth">
+                            ng-options="month.id as month.name for month in vm.months" required>
                         <option style="display:none" value="">Month</option>
                     </select> <i></i>
                 </label>

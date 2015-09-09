@@ -6,13 +6,13 @@ angular.module('app')
 
 
         self.get = function (endpoint) {
-            return $http.get(appSettings.serverUrl + endpoint);
+            return $http.get((appSettings.debug ? appSettings.debugServerUrl : appSettings.serverUrl) + endpoint);
 
         };
 
         self.post = function (endpoint, data) {
 
-            return $http.post(appSettings.serverUrl + endpoint,
+            return $http.post((appSettings.debug ? appSettings.debugServerUrl : appSettings.serverUrl) + endpoint,
                 JSON.stringify(data));
         };
 
@@ -123,9 +123,13 @@ angular.module('app')
 
         var self = this;
 
-        self.search= function () {
+        self.search = function () {
 
             return dataaccess.get('/v1/api/providers/');
+        };
+
+        self.save = function (provider) {
+            return dataaccess.post('/v1/api/providers/', provider)
         };
 
         return self;
@@ -156,6 +160,50 @@ angular.module('app')
                 {id: 12, name: "December"}]
         };
 
+        self.getPersonTitles = function () {
+            return [
+                "Mr.",
+                "Mrs.",
+                "Ms."
+            ];
+        };
+
+        self.getProviderTypes = function () {
+            return [
+                "Caregiver",
+                "Nurse",
+                "Medicine",
+                "General practice",
+                "Anaesthetics",
+                "Ophthalmology",
+                "Paediatrics",
+                "Pathology",
+                "Psychiatry",
+                "Surgery"
+            ];
+        };
+
+        self.getWeekDays = function () {
+            return [
+                {value: 1, text: "Sunday"},
+                {value: 2, text: "Monday"},
+                {value: 3, text: "Tuesday"},
+                {value: 4, text: "Wednesday"},
+                {value: 5, text: "Thursday"},
+                {value: 6, text: "Friday"},
+                {value: 7, text: "Saturday"}
+            ];
+        };
+
+        self.getGenders = function () {
+            return [
+                {value: "Male", text: "Male"},
+                {value: "Female", text: "Female"},
+                {value: "NoAnswer", text: "Prefer not to answer"}
+            ];
+        };
+
+
         self.getErrorMessage = function (response) {
             var result = '';
 
@@ -164,10 +212,12 @@ angular.module('app')
             }
             return result;
         };
+
+
         return self;
     }])
     .factory('Messaging', ['common',
-        function (  common) {
+        function (common) {
 
             var self = this;
 
