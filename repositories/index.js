@@ -6,11 +6,13 @@ var devicesRepository = require('./devicesRepository');
 var usersDetailsRepository = require('./usersDetailsRepository');
 var ordersRepository = require('./ordersRepository');
 var eventsRepository = require('./eventsRepository');
+var providersRepository = require('./providersRepository');
 
 module.exports ={
     Users:usersRepository,
     UsersDetails:usersDetailsRepository,
     Devices:devicesRepository,
     Orders:ordersRepository,
-    Events:eventsRepository
+    Events:eventsRepository,
+    Providers:providersRepository
 };

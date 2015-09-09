@@ -5,7 +5,7 @@
 (function() {
 
     //var domainModel = require('@vcrudu/hcm.domainmodel');
-    var domainModel = require('../model').HealthProfessional;
+    var domainModel = require('../model').Provider;
 
     module.exports  = {
 
@@ -17,7 +17,7 @@
                 surname : {S : item.surname},
                 practiceName : {S : item.practiceName},
                 practiceIdentifier : {S : item.practiceIdentifier},
-                healthProfessionalType : {S : item.healthProfessionalType}
+                providerType : {S : item.providerType}
             };
         },
 
@@ -29,7 +29,7 @@
                 surname: dbEntity.surname.S,
                 practiceName: dbEntity.practiceName.S,
                 practiceIdentifier: dbEntity.practiceIdentifier.S,
-                healthProfessionalType: dbEntity.healthProfessionalType.S
+                providerType: dbEntity.providerType.S
             });
         }
     };

@@ -153,7 +153,7 @@ angular.module('app')
                 {id: 9, name: "September"},
                 {id: 10, name: "October"},
                 {id: 11, name: "November"},
-                {id: 12, name: "December"}]
+                {id: 12, name: "December"}];
         };
 
         self.getErrorMessage = function (response) {
@@ -173,7 +173,7 @@ angular.module('app')
 
 
             var isNullOrEmpty = function (val) {
-                return !val || val.trim().length == 0;
+                return !val || val.trim().length === 0;
             };
 
             self.info = function (size, title, message) {
@@ -183,7 +183,7 @@ angular.module('app')
                     return;
                 }
 
-                if (size == undefined) {
+                if (size === undefined) {
                     size = 'small';
                 }
 
@@ -216,7 +216,7 @@ angular.module('app')
                     return;
                 }
 
-                if (size == undefined) {
+                if (size === undefined) {
                     size = 'small';
                 }
 
@@ -251,7 +251,7 @@ angular.module('app')
                     return;
                 }
 
-                if (size == undefined) {
+                if (size === undefined) {
                     size = 'small';
                 }
 
@@ -283,7 +283,7 @@ angular.module('app')
                     return;
                 }
 
-                if (size == undefined) {
+                if (size === undefined) {
                     size = 'small';
                 }
 

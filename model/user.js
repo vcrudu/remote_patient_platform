@@ -13,6 +13,7 @@
               passwordHash: passwordHash,
               name: requestBody.name,
               surname: requestBody.surname,
+              type: requestBody.type,
               isActive: true,
               socketId:'NULL',
               onlineStatus: "offline"
@@ -36,6 +37,7 @@
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
                 isActive:dbEntity.isActive.BOOL,
+                type: dbEntity.type.S,
                 onlineStatus: onlineStatus,
                 socketId:socketId,
                 avatar:avatar,
@@ -53,11 +55,13 @@
                 email: dbEntity.email.S,
                 name:dbEntity.name.S,
                 surname:dbEntity.surname.S,
+                type:dbEntity.type.S,
                 onlineStatus: onlineStatus,
                 createdDateTime:createdDateTime
             };
         },
         createUserDetailsFromDbEntity : function(dbEntity){
+            //Todo-here to clarify what's up with this method
             return {
                 email: dbEntity.email.S,
                 firstname: dbEntity.name.S,
@@ -67,18 +71,19 @@
         createUserDetailsFromBody : function(requestBody){
             return domainModel.createPatient(requestBody);
         },
-        createDbEntityFromUser : function(user){
+        createDbEntityFromUser : function(user) {
             var createdDateTime = new Date();
-                return {
-                    email           : {S     : user.email},
-                    passwordHash    : {S     : user.passwordHash},
-                    name            : {S:user.name},
-                    surname         : {S:user.surname},
-                    tokenString     : {S     : user.token},
-                    isActive        : {BOOL  : user.isActive},
-                    onlineStatus    : {S  : user.onlineStatus},
-                    createdDateTime : {N     : createdDateTime.getTime().toString()}
-                };
+            return {
+                email: {S: user.email},
+                passwordHash: {S: user.passwordHash},
+                name: {S: user.name},
+                surname: {S: user.surname},
+                tokenString: {S: user.token},
+                isActive: {BOOL: user.isActive},
+                type: {S: user.type},
+                onlineStatus: {S: user.onlineStatus},
+                createdDateTime: {N: createdDateTime.getTime().toString()}
+            };
         }
     };
 })();

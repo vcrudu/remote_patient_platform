@@ -63,24 +63,5 @@ var logging = require("../logging");
                 }
             });
         });
-
-        router.get('/providers', function(req, res){
-            usersRepository.getAll(function(err,data){
-                if(err){
-                    var incidentTicket = logging.getIncidentTicketNumber('us');
-                    logging.getLogger().error({incidentTicket:incidentTicket},err);
-                    res.status(500).json({
-                        success:false,
-                        message:logging.getUserErrorMessage(incidentTicket)
-                    });
-                }else {
-                    res.send({
-                        success:true,
-                        count:data.length,
-                        result:data
-                    });
-                }
-            });
-        });
     };
 })();

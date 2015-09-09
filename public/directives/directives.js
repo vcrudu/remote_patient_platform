@@ -23,6 +23,6 @@ angular.module('app')
                 if (tAttributes.maskPlaceholder) options.placeholder = tAttributes.maskPlaceholder;
                 tElement.mask(tAttributes.smartMaskedInput, options);
             }
-        }
+        };
     })
 ;

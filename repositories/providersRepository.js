@@ -7,9 +7,9 @@
     var AWS                 = require('aws-sdk');
     //var UserFactory         = require('../model').UserFactory;
     var connectionOptions   = require('./awsOptions');
-    var hpMapper            = require('./healthProfessionalDbMapper');
+    var providerDbMapper            = require('./providerDbMapper');
     var _                   = require('underscore');
-    var TABLE_NAME          = 'HealthProfessional';
+    var TABLE_NAME          = 'Provider';
 
     var getDb = function(){
         return new AWS.DynamoDB(connectionOptions);
@@ -36,7 +36,7 @@
 
                 var dbData = [];
                 _.forEach(dbCollection, function(dbModel){
-                    dbData.push(hpMapper.mapFromDbEntity(dbModel));
+                    dbData.push(providerDbMapper.mapFromDbEntity(dbModel));
                 });
                 console.log("The " + TABLE_NAME + " data has been retrieved successfully.");
 
@@ -48,7 +48,7 @@
             var dynamodb = getDb();
 
             var params = {
-                Item: hpMapper.mapToDbEntity(obj),
+                Item:providerDbMapper.mapToDbEntity(obj),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
