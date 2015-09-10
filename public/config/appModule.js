@@ -3,7 +3,7 @@
  */
 (function(){
      angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','ngStorage',
-    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap']);
+    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm']);
 
     angular.module('app').factory('authorisationInterceptor',['$localStorage',function($localStorage){
         return{

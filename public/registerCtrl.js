@@ -4,7 +4,7 @@
 
 angular.module('app').controller('registerCtrl',['$scope','$log','$state','toastr','authService',
     function($scope, $log, $state, toastr, authService){
-        $scope.newUser ={type:"Patient"};
+        $scope.newUser ={type:"patient"};
         $scope.states = [];
 
         $scope.moveNext = function(){

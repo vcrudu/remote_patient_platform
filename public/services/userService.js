@@ -8,7 +8,7 @@ angular.module('app')
             getUserDetails: function (success, error) {
                 var req = {
                     method: 'GET',
-                    url: appSettings.serverUrl + '/v1/api/users/'+$localStorage.user.email,
+                    url: appSettings.getServerUrl() + '/v1/api/users/'+$localStorage.user.email,
                     headers: {
                         'Access-Control-Request-Origin': 'http://localhost:8081',
                         'x-access-token': $localStorage.user.token

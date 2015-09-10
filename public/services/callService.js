@@ -8,7 +8,7 @@ angular.module('app').factory('callService',['$http', '$localStorage','appSettin
             getProviders:function(success, error){
                 var req = {
                     method: 'GET',
-                    url: appSettings.serverUrl + '/v1/api/providers/',
+                    url: appSettings.getServerUrl() + '/v1/api/providers/',
                     headers: {
                         'Access-Control-Request-Origin': 'http://localhost:8081',
                         'x-access-token': $localStorage.user.token
@@ -22,7 +22,7 @@ angular.module('app').factory('callService',['$http', '$localStorage','appSettin
             getContact:function(userId, success, error){
                 var req = {
                     method: 'GET',
-                    url: appSettings.serverUrl + '/v1/api/contacts/'+userId,
+                    url: appSettings.getServerUrl() + '/v1/api/contacts/'+userId,
                     headers: {
                         'x-access-token': $localStorage.user.token
                     }
