@@ -93,6 +93,10 @@ var Payment = require("./payment");
             return contactDetails.concat([]);
         };
 
+        hp.getAvailabilities = function(){
+            return availabilities.concat([]);
+        };
+
         hp.getDto = function(){
             return {
                 email:hp.email,
