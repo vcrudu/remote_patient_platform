@@ -22,21 +22,12 @@
                 },
                 controller: 'registerCtrl'
             })
-            .state('register.type', {
-                url: "/type",
-                templateUrl: "register.type.html",
-                controller: 'registerCtrl',
-                data: {
-                    previousState: NaN,
-                    nextState: "register.basic",
-                    order: 0
-                }
-            }).state('register.basic', {
+           .state('register.basic', {
                 url: "/basic",
                 templateUrl: "register.basic.html",
                 controller: 'registerBasicCtrl',
                 data: {
-                    previousState: "register.type",
+                    previousState: undefined,
                     nextState: "register.address",
                     order: 1
                 }
@@ -76,11 +67,14 @@
                     "mainView": {
                         templateUrl: "provider/register.html",
                         controller: 'ProviderRegisterCtrl as vm'
+                    },
+                    data: {
+                        nextState: NaN,
+                        order: 1
                     }
                 },
-            })
+            });
 
-            //Provider register
-        ;
+        //Provider register
     }]);
 })();

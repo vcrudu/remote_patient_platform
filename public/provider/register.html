@@ -92,7 +92,7 @@
 
                     <fieldset>
                         <div class="row">
-                            <section class="col col-2">
+                            <section class="col col-6">
                                 <label class="select"
                                        ng-class="{'state-error': rc.sampleWizard.submitted()  && firstForm.title.$invalid }">
                                     <select name="title" ng-model="vm.newProvider.title"
@@ -103,7 +103,9 @@
                                 <em ng-show="rc.sampleWizard.submitted()  && firstForm.title.$error.required"
                                     class="invalid">Gender is required.</em>
                             </section>
-                            <section class="col col-5">
+                        </div>
+                        <div class="row">
+                            <section class="col col-6">
                                 <label class="input"
                                        ng-class="{'state-error': (firstForm.name.$dirty || rc.sampleWizard.submitted() )  && firstForm.name.$invalid }">
                                     <input type="text" name="name" required ng-model="vm.newProvider.name"
@@ -112,7 +114,7 @@
                                 <em ng-show="rc.sampleWizard.submitted() && firstForm.name.$error.required"
                                     class="invalid">First name is required.</em>
                             </section>
-                            <section class="col col-5">
+                            <section class="col col-6">
                                 <label class="input"
                                        ng-class="{'state-error': (firstForm.surname.$dirty || rc.sampleWizard.submitted() ) && firstForm.surname.$invalid }">
                                     <input type="text" name="surname" required ng-model="vm.newProvider.surname"
@@ -296,9 +298,10 @@
                         </div>
                     </fieldset>
                 </form>
-                <form class="tab-pane smart-form  margin-top-10 " id="step3" name="thirdForm"
-                      rc-step novalidate  >
+                <form class="tab-pane smart-form  margin-top-10 " id="step3" name="thirdForm" minimum-one-required
+                      rc-step rc-submit="vm.SubmitDailySchedules()" novalidate>
                     <br>
+                    <em ng-show="!thirdForm.$pristine && !vm.isAvailabilityValid()" class="invalid">Time schedule should contain at least some time period.</em>
                     <weekday-schedule ng-model="vm.daysSchedule"></weekday-schedule>
                 </form>
                 <form class="tab-pane smart-form  margin-top-10 text-center" id="finish" name="finishForm"

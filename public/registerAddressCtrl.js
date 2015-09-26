@@ -12,7 +12,7 @@ angular.module('app').controller('registerAddressCtrl',['$scope','$log','$state'
         $scope.formAddress.postCode.$setDirty();
         $scope.formAddress.phone.$setDirty();
         $scope.formAddress.mobile.$setDirty();
-        if(fromState.data.order<toState.data.order && $scope.formAddress.$invalid){
+        if(toState&&fromState&&fromState.data.order<toState.data.order && $scope.formAddress.$invalid){
            event.preventDefault();
         }else {
             $scope.formAddress.$commitViewValue();

@@ -164,7 +164,8 @@ angular.module('app')
             return [
                 "Mr.",
                 "Mrs.",
-                "Ms."
+                "Ms.",
+                "Dr."
             ];
         };
 

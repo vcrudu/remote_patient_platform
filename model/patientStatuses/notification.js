@@ -7,7 +7,7 @@ var _ = require('underscore');
 (function(){
     module.exports = function(notificationType, text, notificationParameters){
 
-        var notificationTypes = ["Guidance","Question"];
+        var notificationTypes = ["Guidance","Question","Alert"];
         var parameterTypes = ["Scalar","Link"];
 
         var notification = {};

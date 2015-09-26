@@ -1,0 +1,17 @@
+<div class=" ">
+    <div class="row padding-5 ">
+        <div class="col-md-4 col-sm-4 daytime-schedule" ng-repeat="day in weekDays">
+            <div class="well well-light ">
+                <label class="label text-center">{{day.text}}</label>
+                <form name="scheduleForm" novalidate class="smart-form">
+                    <section>
+                        <label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
+                            <textarea  rows="4" name="schedule" placeholder="Schedule" ng-model-options="{updateOn:'blur'}" format-intervals schedule-time ng-model="day.schedule"></textarea>
+                            <b class="tooltip tooltip-top-left">Example: 08:00 - 12:00, 13:00-17:00</b>
+                        </label>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

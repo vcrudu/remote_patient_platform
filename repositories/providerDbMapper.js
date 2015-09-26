@@ -32,24 +32,24 @@
             county:{S: item.county},
             country:{S: item.country},
             postCode:{S: item.postCode},
-            longitude:buildDynamoDbString(item.longitude),
-            latitude:buildDynamoDbString(item.latitude)
+            longitude:buildDynamoDbString(item.longitude.toString()),
+            latitude:buildDynamoDbString(item.latitude.toString())
         };
     }
     function mapContactDetailsToDbEntity(item)
     {
-        return {
+        return {M:{
             contactType: {S: item.contactType},
             contact: {S: item.contact}
-        };
+        }};
     }
     function mapAvailabilitiesToDbEntity(item)
     {
-        return {
-            day: {N: item.day},
+        return {M:{
+            day: {N: item.day.toString()},
             startTime: {S: item.startTime},
             endTime: {S: item.endTime}
-        };
+        }};
     }
 
     function mapAddressFromDbEntity(item)

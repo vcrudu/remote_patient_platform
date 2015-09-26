@@ -173,6 +173,7 @@ angular.module('app')
                 },
 
                 logout: function (success) {
+                    if(window.socket)
                     window.socket.disconnect();
                     //delete window.socket;
                     delete $localStorage.user;

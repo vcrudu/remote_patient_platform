@@ -24,6 +24,17 @@ angular.module('app')
             availabilities: []
         };
 
+        vm.isAvailabilityValid = function() {
+            if(vm.daysSchedule && vm.daysSchedule.length > 0){
+                angular.forEach(vm.daysSchedule, function(scheduleItem){
+                   if(scheduleItem.length>0 && scheduleItem!='NA'){
+                       return true;
+                   }
+                });
+            }
+            return false;
+        };
+
         vm.save = function () {
 
             var toSaveObject = angular.copy(vm.newProvider);
@@ -72,24 +83,12 @@ angular.module('app')
                 Messaging.errHandle(e);
 
             });
-
-
         }
-
-
     }])
     .directive('weekdaySchedule', ['common', function (common) {
         return {
             restrict: 'AE',
-            template: '<div class=" ">' +
-            '<div class="row padding-5 "><div class="col-md-4 col-sm-4 daytime-schedule" ng-repeat="day in weekDays" > <div class="well well-light "  >' +
-            '<label class="label text-center">{{day.text}}</label><form name="scheduleForm" class="smart-form"><section>' +
-            '<label class="textarea" ng-class="{\'state-error\': scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}"' +
-            '><textarea  rows="4" name="schedule" placeholder="Schedule" schedule-time ng-model="day.schedule"></textarea>' +
-            '<b class="tooltip tooltip-top-left">Example: 08:00 - 12:00, 13:00-17:00</b>' +
-            '</label>' +
-                //'<em ng-show=" scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid" class="invalid">Time schedule format is invalid.</em>' +
-            '</section> </form> </div></div></div></div>',
+            templateUrl: 'provider/weekdaySchedule.html',
             replace: true,
             scope: {
                 weekDays: '=ngModel'

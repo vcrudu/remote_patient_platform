@@ -30,12 +30,48 @@ angular.module('app')
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl){
                 ctrl.$validators.scheduleTime = function(modelValue, viewValue){
-                    if(!modelValue) return true;
-                    var re = /((([0-1][0-9])|([2][0-3])):[0-5][0-9])(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):[0-5][0-9])/g;
-                    return re.test(modelValue);
+                   // if(!modelValue)
+                   return true;
+                   // var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
+                   // return re.test(modelValue);
                 };
             }
         };
-    });
+    }).directive('formatIntervals',function(){
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl){
 
-;
+                function toModel(value) {
+                    var re = /(((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9])))/g;
+                    var results = re.exec(value);
+
+                    var valueToReturn = '';
+
+                    while(results){
+                        var result = results[0];
+                        result = result.replace(/\s/g, '');
+                        valueToReturn = valueToReturn + result + ','
+                        results = re.exec(value);
+                    }
+
+                    if(valueToReturn.length>0){
+                        valueToReturn= valueToReturn.slice(0,valueToReturn.length-1);
+                    }
+
+                    scope.scheduleForm.schedule.$viewValue = valueToReturn;
+                    scope.scheduleForm.schedule.$render();
+                    return valueToReturn === '' ? 'NA' : valueToReturn;
+                }
+
+                ctrl.$parsers.push(toModel);
+            }
+        };
+    }).directive('scheduleTimeRequired',function(){
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl){
+                return scope.$apply(attrs.scheduleTimeRequired);
+            }
+        };
+    });

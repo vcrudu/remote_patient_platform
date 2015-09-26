@@ -13,7 +13,7 @@ angular.module('app').controller('registerBasicCtrl',['$scope','$log','$state', 
         $scope.formBasic.dateOfBirth.$setDirty();
         $scope.formBasic.password.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
         $scope.formBasic.passwordConfirm.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
-        if(fromState.data.order<toState.data.order && $scope.formBasic.$invalid){
+        if(toState&&fromState&&toState.data&&fromState.data&&fromState.data.order&&fromState.data.order<toState.data.order && $scope.formBasic.$invalid){
            event.preventDefault();
         }
     });
