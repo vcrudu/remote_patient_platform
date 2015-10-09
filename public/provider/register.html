@@ -1,4 +1,7 @@
+
 <div class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+
+    <section id="widget-grid" widget-grid>
 
     <div class="jarviswidget jarviswidget-color-darken " data-widget-editbutton="false"
          data-widget-custombutton="false">
@@ -9,13 +12,13 @@
         </header>
         <!-- widget div-->
         <div id="bootstrap-wizard-1" class="  " rc-wizard="sampleWizard"
-             rc-disabled="rc.firstForm.submitInProgress" rc-su>
+             rc-disabled="rc.firstForm.submitInProgress" >
 
 
             <div class="form-bootstrapWizard clearfix margin-top-10">
                 <ul class="bootstrapWizard form-wizard">
 
-                    <li data-target="#step1" class="active">
+                    <li data-target="#step1" >
                         <a href="#first" data-toggle="tab"> <span class="step">1</span>
                             <span class="title">User</span>
                         </a>
@@ -24,10 +27,10 @@
                         <a href="#step2" data-toggle="tab"> <span class="step">2</span> <span
                                 class="title">Additional info</span> </a>
                     </li>
-                    <li data-target="#step3" >
-                        <a href="#step3" data-toggle="tab"> <span class="step">3</span> <span
-                                class="title">Availability</span> </a>
-                    </li>
+                    <!--<li data-target="#step3" class="active">-->
+                        <!--<a href="#step3" data-toggle="tab"> <span class="step">3</span> <span-->
+                                <!--class="title">Availability</span> </a>-->
+                    <!--</li>-->
                     <li data-target="#finish">
                         <a href="#finish" data-toggle="tab"> <span class="step">4</span> <span
                                 class="title">Finish</span> </a>
@@ -40,7 +43,7 @@
             <br>
 
             <div class="tab-content ">
-                <form class="tab-pane smart-form  active" id="first" name="firstForm"
+                <form class="tab-pane smart-form  active1" id="first" name="firstForm"
                       rc-step novalidate>
                     <br>
                     <fieldset>
@@ -298,12 +301,12 @@
                         </div>
                     </fieldset>
                 </form>
-                <form class="tab-pane smart-form  margin-top-10 " id="step3" name="thirdForm" minimum-one-required
-                      rc-step rc-submit="vm.SubmitDailySchedules()" novalidate>
-                    <br>
-                    <em ng-show="!thirdForm.$pristine && !vm.isAvailabilityValid()" class="invalid">Time schedule should contain at least some time period.</em>
-                    <weekday-schedule ng-model="vm.daysSchedule"></weekday-schedule>
-                </form>
+                <!--<form class="tab-pane smart-form  margin-top-10 active" id="step3" name="thirdForm" minimum-one-required-->
+                      <!--rc-step rc-submit="vm.SubmitDailySchedules()" novalidate>-->
+                    <!--<br>-->
+                    <!--<em ng-show="!thirdForm.$pristine && !vm.isAvailabilityValid()" class="invalid">Time schedule should contain at least some time period.</em>-->
+                    <!--&lt;!&ndash;<weekday-schedule ng-model="vm.daysSchedule"></weekday-schedule>&ndash;&gt;-->
+                <!--</form>-->
                 <form class="tab-pane smart-form  margin-top-10 text-center" id="finish" name="finishForm"
                       rc-step novalidate rc-submit="vm.save()">
                     <br>
@@ -352,4 +355,5 @@
     </div>
     <!-- end widget -->
 
+    </section>
 </div>

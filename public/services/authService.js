@@ -169,7 +169,16 @@ angular.module('app')
                 },
 
                 getUserName: function () {
-                    return $localStorage.user.firstname + ' ' + $localStorage.user.surname;
+                    var result = '';
+                    if($localStorage.user){
+                        if($localStorage.user.firstname ){
+                            result += $localStorage.user.firstname;
+                        }
+                        if($localStorage.user.surname ){
+                            result += ' ' + $localStorage.user.surname;
+                        }
+                    }
+                    return result;
                 },
 
                 logout: function (success) {

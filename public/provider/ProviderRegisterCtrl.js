@@ -1,5 +1,6 @@
 angular.module('app')
-    .controller('ProviderRegisterCtrl', ['common', 'dataaccess', '$window', 'ProviderService', 'Messaging', function (common, dataaccess, $window, ProviderService, Messaging) {
+    .controller('ProviderRegisterCtrl', ['common', 'dataaccess', '$window', 'ProviderService', 'Messaging',
+        '$filter','$modal',function (common, dataaccess, $window, ProviderService, Messaging,$filter,$modal) {
 
         var vm = this;
 
@@ -14,6 +15,8 @@ angular.module('app')
             .then(function (result) {
                 vm.countries = result.data;
             });
+
+        vm.events = [];
 
 
         vm.newProvider = {
@@ -84,6 +87,9 @@ angular.module('app')
 
             });
         }
+
+
+
     }])
     .directive('weekdaySchedule', ['common', function (common) {
         return {

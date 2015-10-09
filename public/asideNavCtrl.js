@@ -6,7 +6,7 @@ angular.module('app').controller('asideNavCtrl',['$scope', '$localStorage', func
     $scope.status='closed';
     $scope.stateClass = 'fa fa-plus-square-o';
     $scope.childrenStateClass = {};
-    $scope.isProvider =  $localStorage.user.type==='provider';
+    $scope.isProvider = $localStorage.user.type==='provider';
 
     $scope.isPatient = $localStorage.user.type==='patient';
 

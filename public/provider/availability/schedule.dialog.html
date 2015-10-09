@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
+        Schedule</h4>
+</div>
+<div class="modal-body hidden-overflow ">
+
+        <form name="scheduleForm" novalidate class="smart-form" id="scheduleForm">
+            <section>
+                <label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
+                    <textarea  rows="4" name="schedule" id="schedule" placeholder="Schedule" ng-model="scheduleValue"
+                            autofocus required></textarea>
+                </label>
+                <span class="note">Example: 08:00 - 12:00, 13:00-17:00 </span>
+            </section>
+        </form>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button class="btn btn-danger" ng-click="delete()" ng-if="session.Id">Delete</button>
+
+    </div>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" ng-click="apply()" ng-disabled="scheduleForm.$invalid">Apply</button>
+</div>

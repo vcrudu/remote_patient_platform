@@ -1,0 +1,31 @@
+<section id="widget-grid" widget-grid>
+
+    <div jarvis-widget data-widget-color="darken"
+         data-widget-custombutton="false"
+         data-widget-colorbutton="false"
+         data-widget-editbutton="false"
+         data-widget-togglebutton="false"
+         data-widget-deletebutton="false"
+         >
+        <header>
+            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+            <h2>Availability</h2>
+
+        </header>
+        <div>
+
+
+            <!-- widget content -->
+            <div class="widget-body">
+
+                <div class="padding-top-10">
+                    <div id="calendar" class="calendar" ng-model="vm.eventSources"  config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+                </div>
+            </div>
+            <!-- end widget content -->
+
+        </div>
+    </div>
+
+
+</section>

@@ -367,4 +367,5 @@ angular.module('app')
             return self;
 
         }])
+
 ;
