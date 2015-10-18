@@ -129,7 +129,7 @@ angular.module('app')
         };
 
         self.save = function (provider) {
-            return dataaccess.post('/v1/api/providers/', provider)
+            return dataaccess.post('/signup', provider);
         };
 
         return self;

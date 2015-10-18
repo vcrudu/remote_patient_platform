@@ -25,15 +25,15 @@
     function mapAddressToDbEntity(item)
     {
         return {
-            id:{S: item.id},
+            id:buildDynamoDbString(item.id),
             addressLine1:{S: item.addressLine1},
             addressLine2:buildDynamoDbString(item.addressLine2),
             town:{S: item.town},
             county:{S: item.county},
             country:{S: item.country},
             postCode:{S: item.postCode},
-            longitude:buildDynamoDbString(item.longitude.toString()),
-            latitude:buildDynamoDbString(item.latitude.toString())
+            longitude:buildDynamoDbString(item.longitude),
+            latitude:buildDynamoDbString(item.latitude)
         };
     }
     function mapContactDetailsToDbEntity(item)

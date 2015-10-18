@@ -7,9 +7,10 @@
         <form name="scheduleForm" novalidate class="smart-form" id="scheduleForm">
             <section>
                 <label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
-                    <textarea  rows="4" name="schedule" id="schedule" placeholder="Schedule" ng-model="scheduleValue"
+                    <textarea  rows="4" name="schedule" id="schedule" schedule-time ime placeholder="Schedule" ng-model="scheduleValue"
                             autofocus required></textarea>
                 </label>
+                <em ng-show="scheduleForm.schedule.$dirty && scheduleForm.schedule.$error.scheduleTime" class="invalid">Invalid schedule data</em>
                 <span class="note">Example: 08:00 - 12:00, 13:00-17:00 </span>
             </section>
         </form>

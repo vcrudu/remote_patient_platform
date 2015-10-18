@@ -23,8 +23,7 @@
             if (err){
                 if(err.code=='ResourceNotFoundException'){
                     callback(null, false);
-                }
-                callback(err);
+                }else callback(err);
             }
             else
             callback(null, true, data);
@@ -64,10 +63,12 @@
     function createProviderTable(suffix, callback, readCapacity, writeCapacity) {
         if (suffix) suffix = suffix + "_";
 
+        var tableName = suffix + "Provider";
+
         var dynamoDb = getDb();
 
         var params = {
-            TableName: suffix + "Provider",
+            TableName: tableName,
             KeySchema: [
                 {AttributeName: "email", KeyType: "HASH"}
             ],
@@ -80,7 +81,40 @@
             }
         };
 
-        checkExistsTable(suffix, function (err, result, description) {
+        checkExistsTable(tableName, function (err, result, description) {
+            if (!result) {
+                dynamoDb.createTable(params, function (err, data) {
+                    callback(err, data);
+                });
+            } else {
+                callback(null, description);
+            }
+        });
+    }
+
+    function createSlotTable(suffix, callback, readCapacity, writeCapacity) {
+        if (suffix) suffix = suffix;
+
+        var tableName = suffix + "Slot";
+        var dynamoDb = getDb();
+
+        var params = {
+            TableName: tableName,
+            KeySchema: [
+                {AttributeName: "slotDateTime", KeyType: "HASH"},
+                {AttributeName: "providerId", KeyType: "RANGE"}
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "slotDateTime", AttributeType: "N"},
+                {AttributeName: "providerId", AttributeType: "S"}
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity || 1,
+                WriteCapacityUnits: writeCapacity || 1
+            }
+        };
+
+        checkExistsTable(tableName, function (err, result, description) {
             if (!result) {
                 dynamoDb.createTable(params, function (err, data) {
                     callback(err, data);
@@ -126,6 +160,7 @@
 
         checkExistsTable: checkExistsTable,
         createUserTable: createUserTable,
+        createSlotTable: createSlotTable,
         deleteTable: deleteTable
     };
 })();

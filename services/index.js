@@ -5,11 +5,13 @@
 var orderService = require('./orderService');
 var paymentService = require('./paymentService');
 var videoService = require('./videoService');
+var availabilityService = require('./availabilityService');
 
 (function(){
     module.exports={
         OrderService:orderService,
         PaymentService:paymentService,
-        VideoService:videoService
+        VideoService:videoService,
+        AvailabilityService:availabilityService
     };
 })();

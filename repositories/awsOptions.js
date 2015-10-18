@@ -10,5 +10,6 @@ module.exports = {
     secretAccessKey:commonConfig.secretAccessKey,
     region:commonConfig.region,
     sslEnabled:commonConfig.sslEnabled,
-    apiVersion: '2012-08-10'
+    apiVersion: '2012-08-10',
+    tablesSuffix:''
 };

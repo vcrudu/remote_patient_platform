@@ -7,6 +7,7 @@ var usersDetailsRepository = require('./usersDetailsRepository');
 var ordersRepository = require('./ordersRepository');
 var eventsRepository = require('./eventsRepository');
 var providersRepository = require('./providersRepository');
+var slotsRepository = require('./slotsRepository');
 
 module.exports ={
     Users:usersRepository,
@@ -14,5 +15,6 @@ module.exports ={
     Devices:devicesRepository,
     Orders:ordersRepository,
     Events:eventsRepository,
-    Providers:providersRepository
+    Providers:providersRepository,
+    Slots:slotsRepository
 };

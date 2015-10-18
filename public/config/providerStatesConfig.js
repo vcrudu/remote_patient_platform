@@ -15,5 +15,9 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "provider/availability/provider.availability.html",
         controller: 'providerAvailabilityCtrl',
         controllerAs:'vm'
-    })
+    }).state("provider.settings", {
+        url: "/provider.settings",
+        templateUrl: "provider/settings/provider.settings.html",
+        controller: 'providerSettingsCtrl'
+    });
 }]);

@@ -123,13 +123,13 @@
                 callback(null, data);
             });
         },
-        delete : function(user, callback) {
+        delete : function(userId, callback) {
 
             var dynamodb = getDb();
 
             var params = {
                 Key: {
-                    email: { S: user.email}
+                    email: { S: userId}
                 },
                 TableName: TABLE_NAME
             };

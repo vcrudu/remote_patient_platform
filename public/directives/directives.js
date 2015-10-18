@@ -30,10 +30,10 @@ angular.module('app')
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl){
                 ctrl.$validators.scheduleTime = function(modelValue, viewValue){
-                   // if(!modelValue)
-                   return true;
-                   // var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
-                   // return re.test(modelValue);
+                    if(!modelValue)
+                    return true;
+                    var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
+                    return re.test(modelValue);
                 };
             }
         };

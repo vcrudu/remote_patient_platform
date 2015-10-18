@@ -21,8 +21,7 @@
         });
 
         app.put('/v1/api/appointments/:userId', function(req, res){
-            var params = req.params;
-            res.send(400);
+
         });
     };
 })();

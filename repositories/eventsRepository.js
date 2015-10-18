@@ -52,7 +52,6 @@
             if(measureType!='All') {
                 filterExpression = '#measurementType=:measurementType';
 
-
                 params = {
                     KeyConditionExpression: 'userId=:userId AND' +
                     '#measurementDateTime>=:startTime',
@@ -61,12 +60,14 @@
                         "#measurementType": "measurementType",
                         "#measurementDateTime": "measurementDateTime"
                     },
+
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId},
                         ":measurementType": {"S": measureType},
                         ":startTime": {"N": startTime.getTime().toString()}//,
                         //":endTime":{"N": endTime.getTime().toString()}
                     },
+
                     FilterExpression: filterExpression,
                     TableName: TABLE_NAME,
                     Limit: 30

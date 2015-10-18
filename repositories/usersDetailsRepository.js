@@ -95,6 +95,28 @@
                 //console.log("The users has been retrieved successfully.");
                 callback(null, resultPatients);
             });
+        },
+        delete : function(userId, callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                Key: {
+                    email: { S: userId}
+                },
+                TableName: TABLE_NAME
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                console.log("The user details has been deleted successfully!");
+                callback(null, data);
+            });
         }
     };
 })();

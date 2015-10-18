@@ -32,7 +32,7 @@ var Payment = require("./payment");
             "psychiatry",
             "surgery"];
 
-        if(providerTypes.indexOf(args.providerType)==-1) throw new Error("Invalid Health Professional Type!");
+        if(providerTypes.indexOf(args.providerType.toLowerCase())==-1) throw new Error("Invalid Health Professional Type!");
 
         var hp = {};
 
