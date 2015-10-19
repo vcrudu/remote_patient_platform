@@ -66,6 +66,15 @@
         return result;
     }
 
+    function getAvailabilitiesFromSlots(slots){
+        var result = [];
+        if(slots.length==0) return result;
+        //var aSlot = slots[0];
+        //var dateString = aSlot.slotDateTime
+        //var anAvailability = {date:aSlot.slotDateTime,};
+        return result;
+    }
+
     module.exports = {
         cleanUser: function (userId) {
             paymentService.deleteCustomer(req, userId, function () {
@@ -86,6 +95,7 @@
         getMonth:getMonth,
         getHour:getHour,
         getMinute:getMinute,
-        getAvailabilitiesFromString:getAvailabilitiesFromString
+        getAvailabilitiesFromString:getAvailabilitiesFromString,
+        getAvailabilitiesFromSlots:getAvailabilitiesFromSlots
     }
 })();
