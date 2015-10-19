@@ -5,9 +5,9 @@
  * Created by Victor on 06/08/2015.
  */
 
-var availability     = require('../services').AvailabilityService;
+var availabilityService     = require('../services').AvailabilityService;
 var logging = require("../logging");
-
+var utils = require('../utils');
 
 (function() {
 
@@ -27,14 +27,14 @@ var logging = require("../logging");
     module.exports.init = function (router) {
         router.get('/availability', function (req, res) {
             if (req.query.sample) {
-                var providerSample = ProviderFactory.getSample();
+                var availabilitySample = [{dateString:'10.03.2015',availabilityString:'08:00-12:00,13:00-17:00'}];
                 res.send({
                     success: true,
                     count: 1,
-                    result: providerSample
+                    result: availabilitySample
                 });
             } else {
-                availability.getAvailability(function (err, data) {
+                availabilityService.getAvailability(function (err, data) {
                     if (err) {
                         var incidentTicket = logging.getIncidentTicketNumber('pr');
                         logging.getLogger().error({incidentTicket: incidentTicket}, err);
@@ -51,6 +51,33 @@ var logging = require("../logging");
                     }
                 });
             }
+        });
+
+        router.post('/availability', function (req, res) {
+            if (!req.body.availabilityString) {
+                res.status(400).json({
+                    success: false,
+                    message: "Availability string is missing!"
+                });
+            }
+
+            if (!req.body.dateString) {
+                res.status(400).json({
+                    success: false,
+                    message: "Availability string is missing!"
+                });
+            }
+
+            var userId = req.params.userId;
+            var availabilities = utils.getAvailabilitiesFromString(req.body.dateString, req.body.availabilityString);
+
+
+            availabilityService.generateSlots(req.params.userId, availabilities, function (err, date) {
+                res.json({
+                    success: true,
+                    result: date
+                });
+            });
         });
     };
 })();

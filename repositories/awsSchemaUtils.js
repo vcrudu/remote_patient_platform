@@ -108,6 +108,30 @@
                 {AttributeName: "slotDateTime", AttributeType: "N"},
                 {AttributeName: "providerId", AttributeType: "S"}
             ],
+            GlobalSecondaryIndexes: [ // optional (list of GlobalSecondaryIndex)
+                {
+                    IndexName: 'providerId-slotDateTime-index',
+                    KeySchema: [
+                        { // Required HASH type attribute
+                            AttributeName: 'providerId',
+                            KeyType: 'HASH',
+                        },
+                        { // Optional RANGE key type for HASH + RANGE secondary indexes
+                            AttributeName: 'slotDateTime',
+                            KeyType: 'RANGE',
+                        }
+                    ],
+                    Projection: { // attributes to project into the index
+                        ProjectionType: 'ALL' // (ALL | KEYS_ONLY | INCLUDE)
+
+                    },
+                    ProvisionedThroughput: { // throughput to provision to the index
+                        ReadCapacityUnits: 1,
+                        WriteCapacityUnits: 1
+                    }
+                }
+                // ... more global secondary indexes ...
+            ],
             ProvisionedThroughput: {
                 ReadCapacityUnits: readCapacity || 1,
                 WriteCapacityUnits: writeCapacity || 1

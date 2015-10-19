@@ -11,7 +11,9 @@
     var assert = require('assert');
 
     var dateRegEx = "^(([0-3][0-9]).([0-1][0-9]).([2][0][1-2][1-9]))$";
-    var timeRegEx = "((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$";
+    var timeRegEx = "^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$";
+    var timeIntervalRegEx = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
+
 
     function getDay(dateString){
         var dateRegExInstance1 = new RegExp(dateString);
@@ -49,6 +51,21 @@
         return parseInt(results[5], 10);
     }
 
+    function getAvailabilitiesFromString(dateString, availabilityString){
+        var dateRegExInstance = new RegExp(dateRegEx);
+        var dateFormated = dateRegExInstance.exec(dateString)[0];
+        var timeIntervalRegExInstance = new RegExp(timeIntervalRegEx);
+        var result = [];
+        var timeInterval = timeIntervalRegExInstance.exec(availabilityString);
+        while(timeInterval) {
+            var startTime = timeInterval[1];
+            var endTime = timeInterval[8];
+            result.push({date: dateFormated, startTime: startTime, endTime: endTime});
+            timeInterval = timeIntervalRegExInstance.exec(availabilityString);
+        }
+        return result;
+    }
+
     module.exports = {
         cleanUser: function (userId) {
             paymentService.deleteCustomer(req, userId, function () {
@@ -68,6 +85,7 @@
         getYear:getYear,
         getMonth:getMonth,
         getHour:getHour,
-        getMinute:getMinute
+        getMinute:getMinute,
+        getAvailabilitiesFromString:getAvailabilitiesFromString
     }
 })();

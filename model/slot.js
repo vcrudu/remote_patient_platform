@@ -11,7 +11,7 @@
         var self = this;
         self.providerId = args.providerId;
         self.datetime = args.date;
-        self.slot = args.slot;
+        self.startTime = args.startTime;
         self.patientId = args.patientId;
         self.getSlotId = function () {
             var dateTime = new Date(self.date.year, self.date.month, self.day);

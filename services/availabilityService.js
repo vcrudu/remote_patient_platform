@@ -63,10 +63,11 @@
     }
 
     module.exports = {
-        getAvailability: function(callback){
-
+        getAvailability: function(providerId, dateTime, callback) {
+            slotRepository.getSlots(providerId, dateTime, function (err, data) {
+                callback(err, data);
+            });
         },
-
         generateSlots: function(providerId, availabilities, callback) {
             assert.ok(providerId, "providerId should not be null!");
             assert.ok(util.isArray(availabilities), "availabilities should be array!");

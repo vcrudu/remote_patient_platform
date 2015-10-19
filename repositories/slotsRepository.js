@@ -29,8 +29,6 @@
 
     module.exports = {
         getOne : function(startTime, callback) {
-
-
             var dynamodb = getDb();
 
             function tryOne(startTime, callback) {
@@ -103,51 +101,28 @@
                     return;
                 }
 
-                console.log("The device model has been updated successfully.");
+                console.log("The slot has been updated successfully.");
                 callback(null, data);
             });
         },
-        getSchedule : function(starTime, callback){
-
+        getSlots : function(providerId, startTime, callback){
             var filterExpression='';
-            var params;
-            if(measureType!='All') {
-                filterExpression = '#measurementType=:measurementType';
-                params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
-                    '#measurementDateTime>=:startTime',
+            var params = {
+                    KeyConditionExpression: '#providerId=:providerId AND ' +
+                    '#slotDateTime>=:startTime',
 
                     ExpressionAttributeNames: {
-                        "#measurementType": "measurementType",
-                        "#measurementDateTime": "measurementDateTime"
+                        "#providerId": "providerId",
+                        "#slotDateTime": "slotDateTime"
                     },
                     ExpressionAttributeValues: {
-                        ":userId": {"S": userId},
-                        ":measurementType": {"S": measureType},
+                        ":providerId": {"S": providerId},
                         ":startTime": {"N": startTime.getTime().toString()}
                     },
-                    FilterExpression: filterExpression,
+                    IndexName:'providerId-slotDateTime-index',
                     TableName: connectionOptions.tablesSuffix + TABLE_NAME,
                     Limit: 30
                 };
-            }else{
-                params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
-                    '#measurementDateTime>=:startTime',
-
-                    ExpressionAttributeNames: {
-                        "#measurementType": "measurementType",
-                        "#measurementDateTime": "measurementDateTime"
-                    },
-                    ExpressionAttributeValues: {
-                        ":userId": {"S": userId},
-                        ":measurementType": {"S": measureType},
-                        ":startTime": {"N": startTime.getTime().toString()}
-                    },
-                    TableName: connectionOptions.tablesSuffix + TABLE_NAME,
-                    Limit: 30
-                };
-            }
             var dynamodb = getDb();
 
             dynamodb.query(params, function(err, data){

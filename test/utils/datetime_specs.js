@@ -4,6 +4,7 @@
 
 var utils = require('../../utils');
 var should = require('should');
+var _ = require('underscore');
 
 describe('datetime utils', function() {
     describe('getHour', function () {
@@ -123,5 +124,26 @@ describe('datetime utils', function() {
             }
             should(error).be.ok();
         });
+
+
+        it('should return an array of availabilities', function(){
+            var dateRegEx = "^(([0-3][0-9]).([0-1][0-9]).([2][0][1-2][1-9]))$";
+            var timeRegEx = "((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$";
+            var dateString = '07.05.2015';
+            var availabilityString = 'dfsdf 08:00 -    12:00,vxcv 13:00   - 17:00';
+            var availabilities = utils.getAvailabilitiesFromString(dateString, availabilityString);
+            should(availabilities).have.length(2);
+            _.forEach(availabilities, function (availability) {
+                availability.date.should.be.ok;
+                var dateRegExInstance = new RegExp(dateRegEx);
+                dateRegExInstance.test(availability.date).should.be.ok;
+                availability.startTime.should.be.ok;
+                var timeRegExInstance1 = new RegExp(timeRegEx);
+                timeRegExInstance1.test(availability.startTime).should.be.ok;
+                availability.endTime.should.be.ok;
+                var timeRegExInstance2 = new RegExp(timeRegEx);
+                timeRegExInstance2.test(availability.endTime).should.be.ok;
+            });
+        })
     });
 });

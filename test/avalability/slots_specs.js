@@ -91,5 +91,6 @@ describe('availabilityService', function() {
             var slots = availabilityService.generateSlots('test1',availabilities);
             should(slots.length).be.equal(9);
         });
+
     });
 });

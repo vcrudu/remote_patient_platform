@@ -10,6 +10,7 @@ var devicesController = require('./devicesController');
 var commonController = require('./commonController');
 var eventsController = require('./eventsController');
 var providersController = require('./providersController');
+var availabilityController = require('./availabilityController');
 var logging     = require('../logging');
 
 (function(controllers){
@@ -48,6 +49,7 @@ var logging     = require('../logging');
         eventsController.init(apiRoutes);
         usersController.init(apiRoutes);
         providersController.init(apiRoutes);
+        availabilityController.init(apiRoutes);
         app.use('/v1/api',apiRoutes);
 
     };

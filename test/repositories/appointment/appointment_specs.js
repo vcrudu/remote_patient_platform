@@ -19,6 +19,8 @@ describe('slotsRepository', function() {
                     should.not.exist(err);
                     should.exist(data);
                     var nowTime = new Date();
+                    var end = new Date();
+                    end.setHours(end.getHours()+4);
                     var day = nowTime.getDate();
                     if(day<10)day='0'+day;
                     var month = nowTime.getMonth();
@@ -26,7 +28,7 @@ describe('slotsRepository', function() {
                     if(month<10)month='0'+month;
                     var hours = nowTime.getHours();
                     if(hours<10)hours='0'+hours;
-                    var hoursEnd = nowTime.getHours()+4;
+                    var hoursEnd = end.getHours();
                     if(hoursEnd<10)hoursEnd='0'+hoursEnd;
                     var minutes = nowTime.getMinutes()
                     if(minutes<10)minutes='0'+minutes;
@@ -61,7 +63,15 @@ describe('slotsRepository', function() {
     describe('getOne', function () {
         it('should return a slot', function (done) {
             var nextSlot = availabilityService.getNextSlot(new Date());
-            slotsRepository.getOne(nextSlot,function(err, date){
+            slotsRepository.getOne(nextSlot, function (err, date) {
+                should.not.exist(err);
+                done();
+            });
+        });
+
+        it('should return all slots', function (done) {
+            var startTime = new Date();
+            availabilityService.getAvailability('test@test.com', startTime, function (err, date) {
                 should.not.exist(err);
                 done();
             });
