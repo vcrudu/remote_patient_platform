@@ -15,8 +15,7 @@
         self.patientId = args.patientId;
         self.getSlotId = function () {
             var dateTime = new Date(self.date.year, self.date.month, self.day);
-            return self.day.toString() + self.date.month.toSource() + self.date.year.toSource()
-                + '#' + self.hour.toSource() + '#' + self.slot.toString();
+            return self.day.toString() + self.date.month.toSource() + self.date.year.toSource() + '#' + self.hour.toSource() + '#' + self.slot.toString();
         };
-    }
+    };
 })();

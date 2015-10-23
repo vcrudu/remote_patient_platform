@@ -62,7 +62,7 @@ describe('availabilityService', function() {
             var endTime = new Date();
             startTime.setMinutes(14);
             endTime.setMinutes(14);
-            endTime.setHours(startTime.getHours()+1)
+            endTime.setHours(startTime.getHours()+1);
             var slots = availabilityService.getTimeSlotsForPeriod(startTime, endTime);
             should(slots.length).be.equal(3);
         });

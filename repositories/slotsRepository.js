@@ -135,8 +135,10 @@
                 var results=[];
                 if(data.Items) {
                     _.forEach(data.Items, function(item){
-                        var event = eventsDbMapper.mapEventFromDbEntity(item);
-                        results.push(event.getMeasurement());
+                        var time = parseInt(item.N.slotDateTime);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        results.push({providerId: item.S.providerId, slotDateTime: slotDateTime});
                     });
                     callback(null, results);
                 }else{
@@ -192,7 +194,7 @@
                         if(err){
                             console.error(err);
                             slot.err=err;
-                            slotsStatus.slots.push(slot)
+                            slotsStatus.slots.push(slot);
                             slotsStatus.errorCount++;
                             //observer.onError(err);
                         }else{

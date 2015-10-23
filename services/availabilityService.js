@@ -8,7 +8,7 @@
     var util = require('util');
     var _    = require('underscore');
     var  assert = require('assert');
-    var utils = require('../utils');
+    var utils = require('../utils/dateTimeUtils');
     var slotRepository = require('../repositories').Slots;
     var slotMinutes = [0, 15, 30, 45];
     var dateRegEx = '^([0-3][0-9].[0-1][0-9].[2][0][1-2][1-9])$';
@@ -40,8 +40,6 @@
                 break;
             }
         }
-
-
         return addMinutes(nextSlotDateTime,minuteDiff);
     }
 
@@ -62,44 +60,62 @@
         return slotsList;
     }
 
+    function generateSlotsFromAvailability(availability){
+        assert.ok(availability.date, "Availability date is not specified!");
+        var dateRegExInstance = new RegExp(dateRegEx);
+        assert.ok(dateRegExInstance.test(availability.date), "Availability date is incorrect");
+        assert.ok(availability.startTime, "Availability date is not specified!");
+        var timeRegExInstance1 = new RegExp(timeRegEx);
+        assert.ok(timeRegExInstance1.test(availability.startTime), "Availability start time is incorrect");
+        assert.ok(availability.endTime, "Availability date is not specified!");
+        var timeRegExInstance2 = new RegExp(timeRegEx);
+        assert.ok(timeRegExInstance2.test(availability.endTime), "Availability start time is incorrect");
+        var startDateTime = utils.buildDateTime(availability.date,availability.startTime);
+        var endDateTime = utils.buildDateTime(availability.date,availability.endTime);
+        var slots = getTimeSlotsForPeriod(startDateTime, endDateTime);
+        return slots;
+    }
+
     module.exports = {
         getAvailability: function(providerId, dateTime, callback) {
             slotRepository.getSlots(providerId, dateTime, function (err, data) {
-                callback(err, data);
+                if(err){
+                    callback(err, null);
+                }else {
+                    var rebuiltAvailability = utils.getAvailabilitiesFromSlots(data);
+                    callback(null, rebuiltAvailability);
+                }
             });
         },
         generateSlots: function(providerId, availabilities, callback) {
-            assert.ok(providerId, "providerId should not be null!");
-            assert.ok(util.isArray(availabilities), "availabilities should be array!");
+            try {
+                assert.ok(providerId, "providerId should not be null!");
+                assert.ok(util.isArray(availabilities), "availabilities should be array!");
+            }catch(err){
+                callback(err,null);
+                return;
+            }
             var allSlots = [];
             _.forEach(availabilities, function (availability) {
-                assert.ok(availability.date, "Availability date is not specified!");
-                var dateRegExInstance = new RegExp(dateRegEx);
-                assert.ok(dateRegExInstance.test(availability.date), "Availability date is incorrect");
-                assert.ok(availability.startTime, "Availability date is not specified!");
-                var timeRegExInstance1 = new RegExp(timeRegEx);
-                assert.ok(timeRegExInstance1.test(availability.startTime), "Availability start time is incorrect");
-                assert.ok(availability.endTime, "Availability date is not specified!");
-                var timeRegExInstance2 = new RegExp(timeRegEx);
-                assert.ok(timeRegExInstance2.test(availability.endTime), "Availability start time is incorrect");
-                var startDateTime = utils.buildDateTime(availability.date,availability.startTime);
-                var endDateTime = utils.buildDateTime(availability.date,availability.endTime);
-                var slots = getTimeSlotsForPeriod(startDateTime, endDateTime);
-
-                _.forEach(slots,function(slot){
-                    allSlots.push(slot);
-                });
+                try{
+                    var slots = generateSlotsFromAvailability(availability);
+                    _.forEach(slots,function(slot){
+                        allSlots.push(slot);
+                    });
+                }catch(err){
+                    callback(err, null);
+                }
 
                 slotRepository.saveBatch(allSlots, providerId, function(error,data){
                     callback(error, data);
                 });
             });
-
         },
 
         getTimeSlotsForPeriod:getTimeSlotsForPeriod,
-        getNextSlot:getNextSlot
-    }
+        getNextSlot:getNextSlot,
+        generateSlotsFromAvailability:generateSlotsFromAvailability
+    };
 })();
 
 

@@ -30,7 +30,7 @@ describe('slotsRepository', function() {
                     if(hours<10)hours='0'+hours;
                     var hoursEnd = end.getHours();
                     if(hoursEnd<10)hoursEnd='0'+hoursEnd;
-                    var minutes = nowTime.getMinutes()
+                    var minutes = nowTime.getMinutes();
                     if(minutes<10)minutes='0'+minutes;
                     availabilityService.generateSlots('test@test.com', [
                         {
