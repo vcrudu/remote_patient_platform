@@ -11,6 +11,7 @@
                             autofocus required></textarea>
                 </label>
                 <em ng-show="scheduleForm.schedule.$dirty && scheduleForm.schedule.$error.scheduleTime" class="invalid">Invalid schedule data</em>
+                <em ng-show="serverError" class="invalid">Server error has occurred. Try again later.</em>
                 <span class="note">Example: 08:00 - 12:00, 13:00-17:00 </span>
             </section>
         </form>

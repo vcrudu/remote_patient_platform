@@ -86,11 +86,7 @@ describe('availabilityService', function() {
             should(slots.length).be.equal(7);
         });
 
-        it('should generate 9 slots from availability', function () {
-            var availabilities = [{date:'10.10.2015',startTime:'10:15', endTime:'12:30'}];
-            var slots = availabilityService.generateSlots('test1',availabilities);
-            should(slots.length).be.equal(9);
-        });
+
 
     });
 });

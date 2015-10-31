@@ -263,6 +263,7 @@
                 }
             );
             return patient;
-        }
+        },
+        mapAddressFromDbEntity:mapAddressFromDbEntity
     };
 })();

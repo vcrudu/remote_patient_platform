@@ -91,23 +91,49 @@
             try {
                 assert.ok(providerId, "providerId should not be null!");
                 assert.ok(util.isArray(availabilities), "availabilities should be array!");
-            }catch(err){
-                callback(err,null);
+            } catch (err) {
+                callback(err, null);
                 return;
             }
-            var allSlots = [];
-            _.forEach(availabilities, function (availability) {
-                try{
-                    var slots = generateSlotsFromAvailability(availability);
-                    _.forEach(slots,function(slot){
-                        allSlots.push(slot);
-                    });
-                }catch(err){
-                    callback(err, null);
-                }
 
-                slotRepository.saveBatch(allSlots, providerId, function(error,data){
-                    callback(error, data);
+            var distinctDays = [];
+            _.forEach(availabilities, function (availability) {
+                if (!_.find(distinctDays, function (day) {
+                        return day.date === availability.date;
+                    })) {
+                    distinctDays.push(availability);
+                }
+            });
+
+            var distinctDaysDeleteStatus = [];
+            var allSlots = [];
+            _.forEach(distinctDays, function (distinctDay) {
+                var slotsToDelete = generateSlotsFromAvailability({
+                    date: distinctDay.date,
+                    startTime: "00:00",
+                    endTime: "23:59"
+                });
+                slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
+                    distinctDaysDeleteStatus.push(distinctDay);
+                    if (distinctDaysDeleteStatus.length === distinctDays.length) {
+                        var availabilitiesSaveStatus = [];
+                        _.forEach(availabilities, function (availability) {
+                            try {
+                                var slots = generateSlotsFromAvailability(availability);
+                                slotRepository.saveBatch(slots, providerId, function (error, data) {
+                                    if (error) {
+                                        console.error(error);
+                                    }
+                                    availabilitiesSaveStatus.push(availability);
+                                    allSlots = allSlots.concat(slots);
+                                    if (availabilitiesSaveStatus.length === availabilities.length) {
+                                        callback(null, allSlots);
+                                    }
+                                });
+                            } catch (err) {
+                            }
+                        });
+                    }
                 });
             });
         },

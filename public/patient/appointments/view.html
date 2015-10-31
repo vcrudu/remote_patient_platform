@@ -1,11 +1,31 @@
-<div class="tab-pane fade padding-10 no-padding-bottom active in" id="s1">
-    <div class="row no-space">
+<section id="widget-grid" widget-grid>
 
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats">
+    <div jarvis-widget data-widget-color="darken"
+         data-widget-custombutton="false"
+         data-widget-colorbutton="false"
+         data-widget-editbutton="false"
+         data-widget-togglebutton="false"
+         data-widget-deletebutton="false"
+            >
+        <header>
+            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+            <h2>Book an appointment</h2>
 
-            <div class="row">
-                <h1>No appointments booked</h1>
+        </header>
+        <div>
+
+
+            <!-- widget content -->
+            <div class="widget-body">
+
+                <div class="padding-top-10">
+                    <div id="calendar" class="calendar" ng-model="vm.eventSources"  config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+                </div>
             </div>
+            <!-- end widget content -->
+
         </div>
     </div>
-</div>
+
+
+</section>

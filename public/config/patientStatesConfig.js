@@ -85,7 +85,8 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         }).state("patient.appointments.view", {
             url: "/patient.appointments.view",
             templateUrl: "patient/appointments/view.html",
-            controller: 'patientAppointmentsViewCtrl'
+            controller: 'patientAppointmentsViewCtrl',
+            controllerAs:'vm'
         }).state("patient.settings", {
             url: "/patient.settings",
             templateUrl: "patient/settings/patient.settings.html",

@@ -28,6 +28,47 @@
     };
 
     module.exports = {
+        getProvidersForSlot:function(startTime, callback){
+            var dynamodb = getDb();
+            var filterExpression='attribute_not_exists (patientId)';
+            var params = {
+                KeyConditionExpression: '#slotDateTime=:slotDateTime AND ' +
+                '#providerId>=:providerId',
+
+                ExpressionAttributeNames: {
+                    "#providerId": "providerId",
+                    "#slotDateTime": "slotDateTime"
+                },
+                ExpressionAttributeValues: {
+                    ":providerId": {"S": '0'},
+                    ":startTime": {"N": startTime.getTime().toString()}
+                },
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 30
+            };
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+                console.log("The events has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var time = parseInt(item.slotDateTime.N);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        results.push({providerId: item.providerId.S, slotDateTime: slotDateTime});
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
         getOne : function(startTime, callback) {
             var dynamodb = getDb();
 
@@ -89,7 +130,8 @@
                 ExpressionAttributeValues: {
                     ":patientId": {"S": patientId}
                 },
-                ReturnConsumedCapacity: 'TOTAL',
+                ConditionExpression:'attribute_not_exists(patientId)',
+                    ReturnConsumedCapacity: 'TOTAL',
                 ReturnValues: 'NONE',
                 UpdateExpression: 'SET patientId=:patientId'
             };
@@ -105,7 +147,7 @@
                 callback(null, data);
             });
         },
-        getSlots : function(providerId, startTime, callback){
+        getSlotsByProvider : function(providerId, startTime, callback){
             var filterExpression='';
             var params = {
                     KeyConditionExpression: '#providerId=:providerId AND ' +
@@ -135,41 +177,15 @@
                 var results=[];
                 if(data.Items) {
                     _.forEach(data.Items, function(item){
-                        var time = parseInt(item.N.slotDateTime);
+                        var time = parseInt(item.slotDateTime.N);
                         var slotDateTime = new Date();
                         slotDateTime.setTime(time);
-                        results.push({providerId: item.S.providerId, slotDateTime: slotDateTime});
+                        results.push({providerId: item.providerId.S, slotDateTime: slotDateTime});
                     });
                     callback(null, results);
                 }else{
                     callback(null, null);
                 }
-            });
-        },
-        deleteSlots : function(providerId, date, callback) {
-            var dynamodb = getDb();
-
-            _.forEach(slots, function(slot) {
-                var params = {
-                    Item: {
-                        providerId:{S:slot.providerId},
-                        slotDateTime:{N:slot.slotDateTime.getTime().toString()}
-                    },
-                    TableName: connectionOptions.tablesSuffix + TABLE_NAME,
-                    ReturnConsumedCapacity: 'TOTAL',
-                    ReturnItemCollectionMetrics: 'SIZE',
-                    ReturnValues: 'ALL_OLD'
-                };
-
-                dynamodb.putItem(params, function(err, data) {
-                    if(err){
-                        console.error(err);
-                        callback(err, null);
-                        return;
-                    }
-                    console.log("The slot has been inserted successfully.");
-                    callback(null, data);
-                });
             });
         },
         saveBatch : function(slots, providerId, callback) {
@@ -215,6 +231,52 @@
 
             },function(err){
 
+            },function(data){
+                callback(null, slotsStatus);
+            });
+
+        },
+        deleteBatch : function(slots, providerId, callback) {
+            var dynamodb = getDb();
+
+            var slotsStatus = {slots:[],errorCount:0,successCount:0};
+
+            var source = Rx.Observable.create(function(observer){
+                _.forEach(slots, function(slot) {
+                    var params = {
+                        Key: {
+                            providerId:{S:providerId},
+                            slotDateTime:{N:slot.getTime().toString()}
+                        },
+                        TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                        ReturnConsumedCapacity: 'TOTAL',
+                        ReturnItemCollectionMetrics: 'SIZE',
+                        ReturnValues: 'ALL_OLD'
+                    };
+
+                    dynamodb.deleteItem(params, function(err, data) {
+                        if(err){
+                            console.error(err);
+                            slot.err=err;
+                            slotsStatus.slots.push(slot);
+                            slotsStatus.errorCount++;
+                            //observer.onError(err);
+                        }else{
+                            slotsStatus.successCount++;
+                            slotsStatus.slots.push(slot);
+                            if(slotsStatus.slots.length===slots.length){
+                                observer.onCompleted(slotsStatus);
+                            }else {
+                                observer.onNext(data);
+                            }
+                        }
+                    });
+                });
+            });
+
+            source.subscribe(function(data){
+
+            },function(err){
             },function(data){
                 callback(null, slotsStatus);
             });

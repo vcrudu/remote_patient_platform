@@ -1,11 +1,233 @@
-<section id="widget-grid" ng-controller="patientVitalSignsCtrl" class="">
-    <!-- row -->
-    <div class="row">
-        <!--Patient content -->
-        <h2 style="margin: auto; width: 50%; height: 50%">Vital Signs</h2>
+<div>
+
+
+    <div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-user-md txt-color-darken"></i> </span>
+
+            <h2>Patient - <strong>{{givenName}} {{familyName}}</strong></h2>
+
+            <ul class="nav nav-tabs pull-right in" id="myTab">
+                <li class="active">
+                    <a data-toggle="tab" href="#overview"><i class="fa fa-user-md"></i>
+                        <span class="hidden-xs hidden-md">Overview</span></a>
+                </li>
+
+                <!--<li>
+                    <a data-toggle="tab" href="#problems" ng-click="openProblems()">
+                        <i class="fa fa-table"></i>
+                        <span class="hidden-xs hidden-md">Conditions List</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a data-toggle="tab" href="#devices"><i class="fa fa-gears"></i>
+                        <span class="hidden-xs hidden-md">Devices</span></a>
+                </li>
+
+                 <li>
+                         <a data-toggle="tab" href="#alarmtemplates"><i class="fa fa-tasks"></i>
+                             <span class="hidden-mobile hidden-tablet">Alarm Templates</span></a>
+                     </li>
+
+                <li>
+                    <a data-toggle="tab" href="#rules"><i class="fa fa-tags"></i>
+                        <span class="hidden-xs hidden-md">Alarm Rules</span></a>
+                </li>
+
+                <li>
+                    <a data-toggle="tab" href="#scheduler"><i class="fa fa-calendar"></i>
+                        <span class="hidden-xs hidden-md">Scheduled session</span></a>
+                </li>-->
+            </ul>
+
+        </header>
+        <!-- widget div-->
+        <div>
+
+
+            <!-- widget content -->
+            <div class="widget-body ">
+
+                <div class="tab-content">
+                    <div class="tab-pane fade active  in no-padding-bottom" id="overview">
+                        <!--<div class="row">
+
+                            <button class="btn btn-default pull-left" ng-click="cancel()">
+                                Back
+                            </button>
+                            <button class="btn btn-primary pull-right" ng-click="editPatient()">
+                                Edit
+                            </button>
+
+                        </div>-->
+
+                        <div class="row ">
+                            <div class="">
+                                <img ng-src="{{avatar}}"
+                                     style="width: 150px" class="img-responsive pull-left padding-10 ">
+
+                                <div class="margin-top-10">
+                                    <div>
+                                        <h1>{{givenName}} {{familyName}}</h1>
+                                    </div>
+                                    <div>
+                                        <strong>Address</strong> : {{address1}}
+                                    </div>
+                                    <div>
+                                        <strong>Phone </strong>: {{phoneNumber}}
+                                    </div>
+                                    <div>
+                                        <strong>Mobile </strong>: {{mobileNumber}}
+                                    </div>
+                                    <div>
+                                        <strong>Email </strong>: {{email}}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Patient History</h2>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div ng-repeat="history in histories" ng-if="$even">
+                                    <div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+                                        <header>
+                                            <h2><b>{{history.deviceName}}</b></h2>
+                                            <ul class="nav nav-tabs pull-right in">
+                                                <li class="active" ng-click="raiseResizeMessage()">
+                                                    <a data-toggle="tab" href="#{{history.Id}}-chart-flot"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-xs hidden-md"> Chart View</span> </a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#{{history.Id}}-table"> <i class="fa fa-lg fa-arrow-circle-o-up"></i> <span class="hidden-xs hidden-md"> Table View </span> </a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </header>
+                                        <div>
+                                            <div class="widget-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active" id="{{history.Id}}-chart-flot">
+                                                        <google-chart dashboard="history.dashboard" chartid="history.Id"></google-chart>
+                                                    </div>
+
+                                                    <div class="tab-pane fade in" id="{{history.Id}}-table">
+                                                        <div class="table-responsive" style="height: 350px; overflow: auto;">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Time</th>
+                                                                    <th>Measurement</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="measurement in history.Measurements">
+                                                                    <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
+                                                                    <td>{{measurement.FirstValue}}</td>
+                                                                    <td>
+                                                                        <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot ng-show="history.TotalItemsOnServer > history.Measurements.length">
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <div style="width: 100px;margin: 0 auto;">
+                                                                            <button class="btn btn-info margin-top-10" ng-click="loadMoreMeasurements(history)">
+                                                                                <i class="fa fa-spinner fa-spin" ng-show="history.loadMoreMeasurementsBusy"></i>Load More
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-repeat="history in histories" ng-if="$odd">
+                                    <div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+                                        <header>
+                                            <h2><b>{{history.deviceName}}</b></h2>
+                                            <ul class="nav nav-tabs pull-right in">
+                                                <li class="active" ng-click="raiseResizeMessage()">
+                                                    <a data-toggle="tab" href="#{{history.Id}}-chart-flot"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-xs hidden-md"> Chart View</span> </a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#{{history.Id}}-table"> <i class="fa fa-lg fa-arrow-circle-o-up"></i> <span class="hidden-xs hidden-md"> Table View </span> </a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </header>
+                                        <div>
+                                            <div class="widget-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active" id="{{history.Id}}-chart-flot">
+                                                        <google-chart dashboard="history.dashboard" chartid="history.Id"></google-chart>
+                                                    </div>
+
+                                                    <div class="tab-pane fade in" id="{{history.Id}}-table">
+                                                        <div class="table-responsive" style="height: 350px; overflow: auto;">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Time</th>
+                                                                    <th>Measurement</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="measurement in history.dashboard.Measurements">
+                                                                    <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
+                                                                    <td>{{measurement.FirstValue}}</td>
+                                                                    <td>
+                                                                        <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot ng-show="history.TotalItemsOnServer > history.dashboard.Measurements.length">
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <div style="width: 100px;margin: 0 auto;">
+                                                                            <button class="btn btn-info margin-top-10" ng-click="loadMoreMeasurements(history)">
+                                                                                <i class="fa fa-spinner fa-spin" ng-show="history.loadMoreMeasurementsBusy"></i>Load More
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end overview tab pane -->
+
+                </div>
+
+
+            </div>
+            <!-- end widget content -->
+
+        </div>
+        <!-- end widget div -->
+
     </div>
+    <!-- end widget -->
 
-    <!-- end row -->
 
-
-</section>
+</div>

@@ -43,6 +43,31 @@
                 }
             });
         },
+        findPatient : function(email, callback){
+
+            var params = {
+                Key: { email: { S: email }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    console.error(err);
+                    callback(err, null);
+                    return;
+                }
+                console.log("The patient has been found successfully.");
+                if(data.Item) {
+                    var user = dynamoDbMapper.mapPatientFromUserDetailsDbEntity(data.Item)
+                    callback(null, user);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
 
         save : function(patient, callback) {
 

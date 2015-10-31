@@ -34,7 +34,35 @@ var utils = require('../utils');
                     result: availabilitySample
                 });
             } else {
-                availabilityService.getAvailability(function (err, data) {
+                availabilityService.getAvailability(req.decoded.email, new Date(), function (err, data) {
+                    if (err) {
+                        var incidentTicket = logging.getIncidentTicketNumber('pr');
+                        logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                        res.status(500).json({
+                            success: false,
+                            message: logging.getUserErrorMessage(incidentTicket)
+                        });
+                    } else {
+                        res.send({
+                            success: true,
+                            count: data.length,
+                            result: data
+                        });
+                    }
+                });
+            }
+        });
+
+        router.get('/provider_availability', function (req, res) {
+            if (req.query.sample) {
+                var availabilitySample = [{dateString:'10.03.2015',availabilityString:'08:00-12:00,13:00-17:00'}];
+                res.send({
+                    success: true,
+                    count: 1,
+                    result: availabilitySample
+                });
+            } else {
+                availabilityService.getAvailability(req.decoded.email, new Date(), function (err, data) {
                     if (err) {
                         var incidentTicket = logging.getIncidentTicketNumber('pr');
                         logging.getLogger().error({incidentTicket: incidentTicket}, err);
@@ -68,12 +96,12 @@ var utils = require('../utils');
                 });
             }
 
-            var userId = req.params.userId;
-            var availabilities = utils.getAvailabilitiesFromString(req.body.dateString, req.body.availabilityString);
+            var userId = req.decoded.email;
+            var availabilities = utils.dateTimeUtils.getAvailabilitiesFromString(req.body.dateString, req.body.availabilityString);
 
 
-            availabilityService.generateSlots(req.params.userId, availabilities, function (err, date) {
-                res.json({
+            availabilityService.generateSlots(userId, availabilities, function (err, date) {
+                res.send({
                     success: true,
                     result: date
                 });

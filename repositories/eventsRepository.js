@@ -53,7 +53,7 @@
                 filterExpression = '#measurementType=:measurementType';
 
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
+                    KeyConditionExpression: 'userId=:userId AND ' +
                     '#measurementDateTime>=:startTime',
 
                     ExpressionAttributeNames: {
@@ -74,16 +74,14 @@
                 };
             }else{
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
+                    KeyConditionExpression: 'userId=:userId AND ' +
                     '#measurementDateTime>=:startTime',
 
                     ExpressionAttributeNames: {
-                        "#measurementType": "measurementType",
                         "#measurementDateTime": "measurementDateTime"
                     },
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId},
-                        ":measurementType": {"S": measureType},
                         ":startTime": {"N": startTime.getTime().toString()}//,
                         //":endTime":{"N": endTime.getTime().toString()}
                     },
