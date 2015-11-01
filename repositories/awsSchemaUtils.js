@@ -12,11 +12,115 @@
         return dynamodb;
     };
 
+    //Verifica existenta tabelei
     function checkExistsTable(tableName, callback){
         var dynamoDb = getDb();
 
         var params = {
             TableName: tableName /* required */
+        };
+
+        dynamoDb.describeTable(params, function(err, data) {
+            if (err){
+                if(err.code=='ResourceNotFoundException'){
+                    callback(null, false);
+                }
+                callback(err);
+            }
+            else
+                callback(null, true, data);
+        });
+    }
+
+    //Sterge tabela
+    function deleteTable(name, callback) {
+        var dynamoDb = getDb();
+
+        var params = {
+            TableName: name,
+        };
+
+        /*checkExistsTable("TestAlarm", function (err, result) {
+         console.log("ok");
+         if (result) {
+         console.log("ok");
+         callback(err, null);
+         } else {
+         console.log("ok1");
+         dynamoDb.deleteTable(params, function (err,data) {
+         callback(err);
+         });
+         }
+         });*/
+        dynamoDb.deleteTable(params, function(err, data) {
+            if (err) console.log(err); // an error occurred
+            else console.log(data); // successful response
+        });
+    }
+
+
+    //crearea tabelei alarm
+    function createAlarmTable(suffix, callback, readCapacity, writeCapacity) {
+
+        var dynamoDb = getDb();
+        var tb = suffix + 'Alarm';
+
+        var params = {
+            TableName:tb,
+            KeySchema: [
+                {AttributeName: "alarmId", KeyType: "HASH"},
+                {AttributeName: "createdDateTime", KeyType: "RANGE" }
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "alarmId", AttributeType: "S"},
+                {AttributeName: "createdDateTime", AttributeType: "S" }
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity,
+                WriteCapacityUnits: writeCapacity
+            }
+        };
+
+        dynamoDb.createTable(params, function(err, data) {
+            if (err){
+                console.log(JSON.stringify(err, null, 2));
+                callback(err, null);
+            }	else {
+                console.log(JSON.stringify(data, null, 2));
+                callback(data, null);
+            }});
+    };
+
+
+
+    module.exports={
+        createAlarmTable:createAlarmTable,
+        deleteTable:deleteTable,
+        checkExistsTable:checkExistsTable,
+    }
+
+
+})();
+
+/**
+ * Created by Victor on 16/09/2015.
+
+
+(function(){
+
+    var connectionOptions = require('./awsOptions');
+    var AWS               = require('aws-sdk');
+
+    var getDb = function(){
+        var dynamodb = new AWS.DynamoDB(connectionOptions);
+        return dynamodb;
+    };
+
+    function checkExistsTable(tableName, callback){
+        var dynamoDb = getDb();
+
+        var params = {
+            TableName: tableName /* required
         };
 
         dynamoDb.describeTable(params, function(err, data) {
@@ -180,11 +284,11 @@
             deleteUserTable(suffix, readCapacity, writeCapacity, function (error, data) {
 
             });
-        },*/
+        },
 
         checkExistsTable: checkExistsTable,
         createUserTable: createUserTable,
         createSlotTable: createSlotTable,
         deleteTable: deleteTable
     };
-})();
+})();*/
