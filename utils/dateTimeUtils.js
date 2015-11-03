@@ -86,7 +86,7 @@
         }
         var day = dateTime.getDate();
         if (day < 10)day = '0' + day;
-        var month = dateTime.getMonth();
+        var month = dateTime.getMonth()+1;
         if (month < 10)month = '0' + month;
         return day + '.' + month + '.' + dateTime.getFullYear();
     }
@@ -155,8 +155,8 @@
 
     module.exports = {
         buildDateTime: function (dateString, timeString) {
-            return new Date(getYear(dateString),getMonth(dateString),getDay(dateString),
-                getHour(timeString),getMinute(timeString));
+            return new Date(getYear(dateString), getMonth(dateString)-1, getDay(dateString),
+                getHour(timeString), getMinute(timeString));
         },
         getDay:getDay,
         getYear:getYear,

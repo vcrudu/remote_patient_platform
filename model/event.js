@@ -86,54 +86,63 @@ var assert = require('assert');
         this.getMeasurement = function(){
             if(measurementType=="heartRate"){
                 return {value:this.heartRate,
+                    heartRate:this.heartRate,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             }else if(measurementType=="bloodPressure"){
                 return {value:this.bloodPressure,
+                    bloodPressure:this.bloodPressure,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             } else if( measurementType=="bloodGlucose"){
                 return {value:this.bloodGlucose,
+                    bloodGlucose:this.bloodGlucose,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             } else if(measurementType=="bloodOxygen"){
                 return {value:this.bloodOxygen,
+                    bloodOxygen:this.bloodOxygen,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             }else if(measurementType=="respiratoryRate"){
                 return {value:this.respiratoryRate,
+                    respiratoryRate:this.respiratoryRate,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             }else if(measurementType=="temperature"){
                 return {value:this.temperature,
+                    temperature:this.temperature,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             } if(measurementType=="weight"){
                 return {value:this.weight,
+                    weight:this.weight,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             } else if(measurementType=="fallDetection"){
                 return {value:this.fallDetection,
+                    fallDetection:this.fallDetection,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,
                     utcDateTime:utcDateTime};
             } else if(measurementType=="bloodInr"){
                 return {value:this.bloodInr,
+                    bloodInr:this.bloodInr,
                     userId:this.userId,
                     measurementType:measurementType,
                     measurementDateTime:measurementDateTime,

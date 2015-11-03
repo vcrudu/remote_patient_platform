@@ -22,6 +22,14 @@
         return nextSlot;
     }
 
+    function addDays(date, days) {
+        var timeInMilliseconds = date.getTime();
+        var minutesInMilliseconds = days * 24 * 60 * 60 * 1000;
+        timeInMilliseconds = timeInMilliseconds + minutesInMilliseconds;
+        var nextSlot = new Date(timeInMilliseconds);
+        return nextSlot;
+    }
+
     function getNextSlot(date){
         var nextSlotDateTime = new Date(date.getTime());
         nextSlotDateTime.setSeconds(0);
@@ -76,18 +84,94 @@
         return slots;
     }
 
+    function getProvidersAvailability(callback) {
+        var slotsForSeveralDays = getSlotsForSeveralDays(3);
+        var slotsProvidersResult = [];
+        var slotsWithExistingProviders = [];
+        _.forEach(slotsForSeveralDays, function (slot) {
+            slotRepository.getProvidersForSlot(slot, function (err, data) {
+                var countProviders = data;
+                if(data.length>0)
+                    slotsWithExistingProviders.push({slot: slot, countOfProviders: data.length});
+                slotsProvidersResult.push({slot: slot, countOfProviders: data.length});
+                if (slotsProvidersResult.length === slotsForSeveralDays.length) {
+                    slotsProvidersResult.sort(function(a, b){
+                        return a.slot.getTime()-b.slot.getTime();
+                    });
+                    callback(null, slotsProvidersResult);
+                }
+            });
+        });
+    }
+
+    function getSlotsForDay(date, fromHour) {
+        var startFromHour;
+        if(fromHour){
+            startFromHour = getFormattedTimeString(fromHour);
+        }else{
+            startFromHour = '00:00';
+        }
+        var slotsForPeriod = generateSlotsFromAvailability({
+            date: date,
+            startTime: startFromHour,
+            endTime: "23:59"
+        });
+        var lastSlot = addMinutes(slotsForPeriod[slotsForPeriod.length - 1], 15);
+        slotsForPeriod.push(lastSlot);
+        return slotsForPeriod;
+    }
+
+    function getFormattedDateString(date) {
+        var nowTime = date;
+        var day = date.getDate();
+        if (day < 10)day = '0' + day;
+        var month = date.getMonth() + 1;
+        if (month < 10)month = '0' + month;
+        return day + '.' + month + '.' + date.getFullYear();
+    }
+
+    function getFormattedTimeString(date) {
+        var hours = date.getHours();
+        if (hours < 10)hours = '0' + hours;
+        var minutes = date.getMinutes();
+        if (minutes < 10)minutes = '0' + minutes;
+
+        return hours + ':' + minutes;
+    }
+
+    function getSlotsForSeveralDays(numberOfDays) {
+        var resultSlots=[];
+        var nowDate = new Date();
+        var dateString = getFormattedDateString(nowDate);
+        var slots = getSlotsForDay(dateString, nowDate);
+
+        _.forEach(slots, function (slot) {
+            resultSlots.push(slot);
+        });
+
+        for (var i = 1; i < numberOfDays; i++) {
+            var date = addDays(nowDate, i);
+            dateString = getFormattedDateString(date);
+            slots = getSlotsForDay(dateString);
+            _.forEach(slots, function (slot) {
+                resultSlots.push(slot);
+            });
+        }
+        return resultSlots;
+    }
+
     module.exports = {
-        getAvailability: function(providerId, dateTime, callback) {
-            slotRepository.getSlots(providerId, dateTime, function (err, data) {
-                if(err){
+        getAvailability: function (providerId, dateTime, callback) {
+            slotRepository.getSlotsByProvider(providerId, dateTime, function (err, data) {
+                if (err) {
                     callback(err, null);
-                }else {
+                } else {
                     var rebuiltAvailability = utils.getAvailabilitiesFromSlots(data);
                     callback(null, rebuiltAvailability);
                 }
             });
         },
-        generateSlots: function(providerId, availabilities, callback) {
+        generateSlots: function (providerId, availabilities, callback) {
             try {
                 assert.ok(providerId, "providerId should not be null!");
                 assert.ok(util.isArray(availabilities), "availabilities should be array!");
@@ -108,11 +192,7 @@
             var distinctDaysDeleteStatus = [];
             var allSlots = [];
             _.forEach(distinctDays, function (distinctDay) {
-                var slotsToDelete = generateSlotsFromAvailability({
-                    date: distinctDay.date,
-                    startTime: "00:00",
-                    endTime: "23:59"
-                });
+                var slotsToDelete = getSlotsForDay(distinctDay.date);
                 slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
                     distinctDaysDeleteStatus.push(distinctDay);
                     if (distinctDaysDeleteStatus.length === distinctDays.length) {
@@ -138,9 +218,13 @@
             });
         },
 
-        getTimeSlotsForPeriod:getTimeSlotsForPeriod,
-        getNextSlot:getNextSlot,
-        generateSlotsFromAvailability:generateSlotsFromAvailability
+        getTimeSlotsForPeriod: getTimeSlotsForPeriod,
+        getNextSlot: getNextSlot,
+        generateSlotsFromAvailability: generateSlotsFromAvailability,
+        getProvidersAvailability: getProvidersAvailability,
+        getSlotsForDay: getSlotsForDay,
+        getSlotsForSeveralDays: getSlotsForSeveralDays,
+        getFormattedDateString:getFormattedDateString
     };
 })();
 

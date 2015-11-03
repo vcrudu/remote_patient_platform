@@ -3,6 +3,7 @@
  */
 
 var availabilityService = require('../../services').AvailabilityService;
+var slotsRepository = require('../../repositories').Slots;
 var should = require('should');
 
 describe('availabilityService', function() {
@@ -88,5 +89,35 @@ describe('availabilityService', function() {
 
 
 
+    });
+
+
+    describe('slots generator for days', function () {
+        this.timeout(80000);
+        it('should return slots for 1 day', function () {
+            var slots = availabilityService.getSlotsForDay(availabilityService.getFormattedDateString(new Date()));
+            slots.length.should.be.equal(96);
+        });
+
+        it('should return slots for 7 day', function () {
+            var slots = availabilityService.getSlotsForSeveralDays(7);
+            slots.length.should.be.greaterThan(96*6);
+        });
+
+        it('should return slots for 7 day', function (done) {
+            var slots = availabilityService.getProvidersAvailability(function(err, data){
+                var result = data;
+                done();
+            });
+
+           /* var testDate = new Date(2015,11,2,0,0,0);
+
+            var slots = slotsRepository.getSlotsByProvider('test@test.com',new Date(), function(err, data){
+                var result = data;
+                done();
+            });
+*/
+            //slots.length.should.be.equal(96*7);
+        });
     });
 });

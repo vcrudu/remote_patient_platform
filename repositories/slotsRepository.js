@@ -41,7 +41,7 @@
                 },
                 ExpressionAttributeValues: {
                     ":providerId": {"S": '0'},
-                    ":startTime": {"N": startTime.getTime().toString()}
+                    ":slotDateTime": {"N": startTime.getTime().toString()}
                 },
                 TableName: connectionOptions.tablesSuffix + TABLE_NAME,
                 Limit: 30
@@ -163,7 +163,7 @@
                     },
                     IndexName:'providerId-slotDateTime-index',
                     TableName: connectionOptions.tablesSuffix + TABLE_NAME,
-                    Limit: 30
+                    Limit: 700
                 };
             var dynamodb = getDb();
 

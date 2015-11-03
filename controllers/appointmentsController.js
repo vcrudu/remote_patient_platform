@@ -4,8 +4,10 @@
 
 (function(){
 
+    var availabilityService = require('../services/availabilityService');
+
     module.exports.init = function(app){
-        app.get('/v1/api/appointments', function(req, res){
+        app.get('/v1/api/appointments', function(req, res) {
             var params = req.params;
             res.send(400);
         });

@@ -3,19 +3,54 @@
  */
 (function() {
     angular.module('app').controller('patientVitalSignsCtrl', ['$scope', '$log', '$state', 'toastr', 'authService',
-        'historyService','$localStorage',
-        function ($scope, $log, $state, toastr, authService, historyService,$localStorage) {
+        'historyService','$localStorage','$rootScope',
+        function ($scope, $log, $state, toastr, authService, historyService,$localStorage, $rootScope) {
             $scope.bodyClass = "desktop-detected pace-done";
             $scope.gender = $localStorage.user;
 
+            if (window.socket && window.socket.connected) {
+                window.socket.on('newMeasurement', function (data) {
+                    var history = _.find($scope.histories, function (history) {
+                        return history.Id === data.measurementType;
+                    });
+
+                    var FirstValue;
+                    var SecondValue;
+                    if(data.measurementType=== "bloodPressure"){
+                        FirstValue = data.value.systolic;
+                        SecondValue = data.value.diastolic;
+                    }else{
+                        FirstValue = data.value;
+                    }
+
+                    var newMeasurement = {
+                        DateTime: new Date(data.measurementDateTime),
+                        UnixSessionDate: data.utcDateTime,
+                        FirstValue: FirstValue,
+                        SecondValue: SecondValue
+                    };
+
+                    history.dashboard.data.Measurements.push(newMeasurement);
+                    var secondValueString='';
+                    if(data.SecondValue){
+                        secondValueString = "/"+SecondValue;
+                    }
+                    var stringToToast = "Time: "+newMeasurement.DateTime +"\n"+data.measurementType+": "+FirstValue + secondValueString;
+
+                    toastr.info(stringToToast,
+                        'New measurement');
+
+                    $rootScope.$broadcast('newMeasurement', history);
+                });
+            }
 
             historyService.getHistories(function (histories) {
                     $scope.histories = histories;
                     angular.forEach($scope.histories, function (history) {
                         history.dashboard = {
                             data: history.dashboard,
-                            deviceType: history.DeviceType,
-                            deviceName: history.DeviceName
+                            deviceType: history.deviceType,
+                            deviceName: history.deviceName
                         };
                     });
                 },

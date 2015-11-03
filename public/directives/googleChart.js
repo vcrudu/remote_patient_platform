@@ -18,7 +18,7 @@ angular.module('app').directive('googleChart', [
             var chartType = '';
 
             switch (data.deviceType) {
-                case 'BloodPresure':
+                case 'bloodPressure':
                     chartType = 'AreaChart';
                     break;
                 default:
@@ -51,7 +51,7 @@ angular.module('app').directive('googleChart', [
                 case 'weight':
                     chartLabel = 'Weight';
                     break;
-                case 'bloodpresure':
+                case 'bloodPressure':
                     chartLabel = 'Blood Pressure';
                     break;
             }
@@ -118,7 +118,7 @@ angular.module('app').directive('googleChart', [
                 angular.forEach(dashboard.data.Measurements, function (value, index) {
                     var dateTime = convertUtcTimeToLocalTime(value.UnixSessionDate);
                     switch (dashboard.deviceType) {
-                        case 'bloodpresure':
+                        case 'bloodPressure':
                             chartValues.push(
                                 {
                                     "c":
@@ -151,7 +151,7 @@ angular.module('app').directive('googleChart', [
                 });
                 chartValues = window._.sortBy(chartValues,function(val){return val.c[0].v;});
                 switch (dashboard.deviceType) {
-                    case 'bloodpresure':
+                    case 'bloodPressure':
                         dataToReturn = {
                             "cols": [
                                 {
@@ -287,6 +287,8 @@ angular.module('app').directive('googleChart', [
             template: '<div id="dashboard_{{chartid}}"><div id="chart_{{chartid}}"></div><div id="control_{{chartid}}" style="height: 50px;margin-bottom:10px;"></div><div id="slider_{{chartid}}"  style="margin-right:50px;margin-left:50px;margin-bottom:10px;"></div></div>',
             link: function ($scope, element, attrs) {
 
+
+
                 $scope.$watch(function () {
                     if ($scope.dashboard.data) {
 
@@ -295,7 +297,7 @@ angular.module('app').directive('googleChart', [
                             chartOptions: getChartOptions($scope.dashboard),
                             controlOptions: getControlOptions($scope.dashboard),
                             type: getChartType($scope.dashboard),
-                        }
+                        };
 
                         return $scope.googleDashboard;
                     }
@@ -326,7 +328,6 @@ angular.module('app').directive('googleChart', [
                                 });
 
                                 $timeout(function () {
-                                    debugger;
                                     var minDate = getMinDate($scope.dashboard);
                                     var maxDate = getMaxDate($scope.dashboard);
 
@@ -392,6 +393,12 @@ angular.module('app').directive('googleChart', [
                     resizeHandler();
                 });
 
+                $scope.$on('newMeasurement', function(evt, history) {
+                    if ($scope.chartid === history.Id) {
+                        $scope.dashboard = history.dashboard;
+                        $scope.$apply();
+                    }
+                });
             }
         };
     }]);

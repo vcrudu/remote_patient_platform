@@ -81,6 +81,8 @@ var utils = require('../utils');
             }
         });
 
+
+
         router.post('/availability', function (req, res) {
             if (!req.body.availabilityString) {
                 res.status(400).json({

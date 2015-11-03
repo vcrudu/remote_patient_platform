@@ -2,7 +2,8 @@
  * Created by Victor on 27/10/2015.
  */
 (function() {
-    angular.module('app').factory('historyService', ['$http', '$localStorage', 'appSettings', '_', function ($http, $localStorage, appSettings, _) {
+    angular.module('app').factory('historyService', ['$http', '$localStorage', 'appSettings', '_',
+        function ($http, $localStorage, appSettings, _) {
         return {
             getHistories:function(success, error) {
 

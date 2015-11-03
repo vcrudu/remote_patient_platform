@@ -5,6 +5,7 @@
 var eventsRepository     = require('../repositories').Events;
 var EventFactory = require('../model').EventFactory;
 var logging = require("../logging");
+var notification = require('../notifications');
 
 
 (function(){
@@ -51,6 +52,10 @@ var logging = require("../logging");
             var eventToSave;
             req.body.userId =  req.decoded.email;
             try{
+                //Todo-here this trick is temporary fix, should be found out a good sollution
+                var dateTime = new Date();
+                dateTime.setTime(req.body.measurementDateTime);
+                req.body.measurementDateTime = dateTime;
                 eventToSave = EventFactory.buildEvent(req.body);
             }catch(error){
                 res.status(400).json({
@@ -83,7 +88,9 @@ var logging = require("../logging");
                                 message:logging.getUserErrorMessage(incidentTicket)
                             });
                         }else{
-                            res.status(200).end();
+                            res.status(200).json({
+                                success:true});
+                            notification.sendEvent(req.decoded.email,'newMeasurement',eventToSave.getMeasurement());
                         }
                     });
                 }

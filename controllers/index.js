@@ -11,6 +11,7 @@ var commonController = require('./commonController');
 var eventsController = require('./eventsController');
 var providersController = require('./providersController');
 var availabilityController = require('./availabilityController');
+var slotsController = require('./slotsController');
 var logging     = require('../logging');
 
 (function(controllers){
@@ -50,6 +51,7 @@ var logging     = require('../logging');
         usersController.init(apiRoutes);
         providersController.init(apiRoutes);
         availabilityController.init(apiRoutes);
+        slotsController.init(apiRoutes);
         app.use('/v1/api',apiRoutes);
 
     };
