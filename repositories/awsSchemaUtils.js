@@ -91,10 +91,139 @@
             }});
     };
 
+    function createDeviceModelTable(suffix, callback, readCapacity, writeCapacity) {
+
+        var dynamoDb = getDb();
+        var tb = suffix + 'DeviceModel';
+
+        var params = {
+            TableName:tb,
+            KeySchema: [
+                {AttributeName: "model", KeyType: "HASH"}
+
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "model", AttributeType: "S"}
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity,
+                WriteCapacityUnits: writeCapacity
+            }
+        };
+
+        dynamoDb.createTable(params, function(err, data) {
+            if (err){
+                console.log(JSON.stringify(err, null, 2));
+                callback(err, null);
+            }	else {
+                console.log(JSON.stringify(data, null, 2));
+                callback(data, null);
+            }});
+    };
+
+    function createAppointmentFeedbackTable(suffix, callback, readCapacity, writeCapacity) {
+
+        var dynamoDb = getDb();
+        var tb = suffix + 'AppointmentFeedback';
+
+        var params = {
+            TableName:tb,
+            KeySchema: [
+                {AttributeName: "feedbackId", KeyType: "HASH"},
+                {AttributeName: "appointmentId", KeyType: "RANGE"},
+
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "feedbackId", AttributeType: "S"},
+                {AttributeName: "appointmentId", AttributeType: "S" }
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity,
+                WriteCapacityUnits: writeCapacity
+            }
+        };
+
+        dynamoDb.createTable(params, function(err, data) {
+            if (err){
+                console.log(JSON.stringify(err, null, 2));
+                callback(err, null);
+            }	else {
+                console.log(JSON.stringify(data, null, 2));
+                callback(data, null);
+            }});
+    };
+
+    function createEventTable(suffix, callback, readCapacity, writeCapacity) {
+
+        var dynamoDb = getDb();
+        var tb = suffix + 'Event';
+
+        var params = {
+            TableName:tb,
+            KeySchema: [
+                {AttributeName: "userId", KeyType: "HASH"},
+                {AttributeName: "measurementDateTime", KeyType: "RANGE"},
+
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "userId", AttributeType: "S"},
+                {AttributeName: "measurementDateTime", AttributeType: "N" }
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity,
+                WriteCapacityUnits: writeCapacity
+            }
+        };
+
+        dynamoDb.createTable(params, function(err, data) {
+            if (err){
+                console.log(JSON.stringify(err, null, 2));
+                callback(err, null);
+            }	else {
+                console.log(JSON.stringify(data, null, 2));
+                callback(data, null);
+            }});
+    };
+
+    function createOrderTable(suffix, callback, readCapacity, writeCapacity) {
+
+        var dynamoDb = getDb();
+        var tb = suffix + 'Order';
+
+        var params = {
+            TableName:tb,
+            KeySchema: [
+                {AttributeName: "userId", KeyType: "HASH"},
+                {AttributeName: "orderId", KeyType: "RANGE"},
+
+            ],
+            AttributeDefinitions: [
+                {AttributeName: "userId", AttributeType: "S"},
+                {AttributeName: "orderId", AttributeType: "S" }
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: readCapacity,
+                WriteCapacityUnits: writeCapacity
+            }
+        };
+
+        dynamoDb.createTable(params, function(err, data) {
+            if (err){
+                console.log(JSON.stringify(err, null, 2));
+                callback(err, null);
+            }	else {
+                console.log(JSON.stringify(data, null, 2));
+                callback(data, null);
+            }});
+    };
 
 
     module.exports={
         createAlarmTable:createAlarmTable,
+        createAppointmentFeedbackTable:createAppointmentFeedbackTable,
+        createDeviceModelTable:createDeviceModelTable,
+        createEventTable:createEventTable,
+        createOrderTable:createOrderTable,
         deleteTable:deleteTable,
         checkExistsTable:checkExistsTable,
     }
