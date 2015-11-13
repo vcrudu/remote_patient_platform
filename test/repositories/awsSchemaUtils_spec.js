@@ -13,34 +13,32 @@
         return dynamodb;
     };
 
-    describe("Test awsSchemaUtils1\n", function () {
-        describe("Verific crearea tabelei\n", function () {
-            it("1 verific lipsa tabelei\n", function (done) {
+    describe("Test awsSchemaUtils", function () {
+        describe("Verific crearea tabelei Alarm", function () {
+
+            before(function (done) {
                 awsSchemaUtils.checkExistsTable("TestAlarm", function (err, result) {
-                    result.should.be.false();
+                    if (result){
+                        awsSchemaUtils.deleteTable("TestAlarm", function(err,data){});
+                    };
                     done();
                 });
             });
-            it("Creez tabela Alarme\n", function (){
+            after(function (){
+
+                awsSchemaUtils.deleteTable("TestAlarm", function(err,data){
+
+                    done();
+                });
+                console.log('functia after cu delete');
+            });
+            it("Creez tabela Alarme", function (){
 
                 awsSchemaUtils.createAlarmTable("Test", function (err, result) {
                     should.not.exist(err);
                 },1,1);
-            });
-            it("verific existenta tabela Alarme\n", function (){
-                awsSchemaUtils.checkExistsTable("TestAlarm", function (err, result,data) {
-                    should.not.exist(err);
-                    result.should.be.true();
-                });
-            });
-            it("elimin tabela Alarme\n", function (){
-                awsSchemaUtils.deleteTable("TestAlarm", function(err,data){
-                    should.not.exist(err);
-                    done();
-                });
 
             });
-
         });
 
     });
