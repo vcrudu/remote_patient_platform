@@ -4,7 +4,7 @@
 
 (function(){
 
-    var connectionOptions = require('./awsOptions');
+    var connectionOptions = require('./awsOptions1');
     var AWS               = require('aws-sdk');
 
     var getDb = function(){
@@ -39,26 +39,23 @@
         var dynamoDb = getDb();
 
         var params = {
-            TableName: name,
+            TableName:name,
         };
 
-        /*checkExistsTable("TestAlarm", function (err, result) {
-         console.log("ok");
-         if (result) {
-         console.log("ok");
-         callback(err, null);
-         } else {
-         console.log("ok1");
-         dynamoDb.deleteTable(params, function (err,data) {
-         callback(err);
-         });
-         }
-         });*/
-        dynamoDb.deleteTable(params, function(err, data) {
-            if (err) console.log(err); // an error occurred
-            else console.log(data); // successful response
+        checkExistsTable(params.TableName, function (err, result) {
+            if (err) {
+                callback(err, null);
+            } else if (result) {
+                dynamoDb.deleteTable(params, function (err) {
+                    dynamoDb.waitFor('tableNotExists', params, function(err, data) {
+                        if (err) console.log(err, err.stack); // an error occurred
+                        else     callback(err);           // successful response
+                    });
+
+                });
+            }
         });
-    }
+    };
 
 
     //crearea tabelei alarm
@@ -89,10 +86,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei DeviceModel
     function createDeviceModelTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -119,10 +117,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei AppointmentFeedback
     function createAppointmentFeedbackTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -152,10 +151,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei Event
     function createEventTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -184,10 +184,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei Order
     function createOrderTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -216,10 +217,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei PatientAppointment
     function createPatientAppointmentTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -248,10 +250,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei Provider
     function createProviderTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -278,10 +281,11 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
+    //crearea tabelei Slot
     function createSlotTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -310,11 +314,12 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
 
+    //crearea tabelei User
     function createUserTable(suffix, callback, readCapacity, writeCapacity) {
 
         var dynamoDb = getDb();
@@ -342,9 +347,10 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
+
 
     function createUserDetailsTable(suffix, callback, readCapacity, writeCapacity) {
 
@@ -373,7 +379,7 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
@@ -405,7 +411,7 @@
                 callback(err, null);
             }	else {
                 console.log(JSON.stringify(data, null, 2));
-                callback(data, null);
+                callback(null,data);
             }});
     };
 
