@@ -152,14 +152,35 @@
                 }
             };
 
+            $('#calendarBook').fullCalendar({
+                schedulerLicenseKey:'0220103998-fcs-1447110034',
+                defaultView:'timelineFourDays',
+                views: {
+                    timelineFourDays: {
+                        type: 'timeline',
+                        duration: { days: 1 },
+                        slotDuration:'00:15',
+                        slotLabelInterval:'00:15'
+                    }
+                }
+            });
+
             vm.uiConfig = {
                 calendar: {
                     editable: false,
                     header: hdr,
-                    defaultView : 'agendaDay',
+                    schedulerLicenseKey:'0220103998-fcs-1447110034',
+                    defaultView : 'timelineSlots',
                     eventDragStop: function (calEvent, jsEvent, view) {
                         saveEvent(calEvent, false);
 
+                    },
+                    views: {
+                        agendaFourDay: {
+                            type: 'agenda',
+                            duration: { days: 4 },
+                            buttonText: '4 day'
+                        }
                     },
                     eventResizeStop: function (calEvent, jsEvent, view) {
                         // saveEvent(calEvent, false);

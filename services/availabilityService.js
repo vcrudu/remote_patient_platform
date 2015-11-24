@@ -13,6 +13,7 @@
     var slotMinutes = [0, 15, 30, 45];
     var dateRegEx = '^([0-3][0-9].[0-1][0-9].[2][0][1-2][1-9])$';
     var timeRegEx = '^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$';
+    var gridCacheClient = require('../services/gridCacheClient');
 
     function addMinutes(date, minutes) {
         var timeInMilliseconds = date.getTime();
@@ -85,18 +86,18 @@
     }
 
     function getProvidersAvailability(callback) {
-        var slotsForSeveralDays = getSlotsForSeveralDays(3);
+        var slotsForSeveralDays = getSlotsForSeveralDays(7);
         var slotsProvidersResult = [];
         var slotsWithExistingProviders = [];
         _.forEach(slotsForSeveralDays, function (slot) {
             slotRepository.getProvidersForSlot(slot, function (err, data) {
-                var countProviders = data;
+                //var countProviders = data;
                 if(data.length>0)
-                    slotsWithExistingProviders.push({slot: slot, countOfProviders: data.length});
-                slotsProvidersResult.push({slot: slot, countOfProviders: data.length});
+                    slotsWithExistingProviders.push({slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
+                slotsProvidersResult.push({slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
                 if (slotsProvidersResult.length === slotsForSeveralDays.length) {
                     slotsProvidersResult.sort(function(a, b){
-                        return a.slot.getTime()-b.slot.getTime();
+                        return a.slotDateTime-b.slotDateTime;
                     });
                     callback(null, slotsProvidersResult);
                 }
@@ -194,6 +195,7 @@
             _.forEach(distinctDays, function (distinctDay) {
                 var slotsToDelete = getSlotsForDay(distinctDay.date);
                 slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
+                    gridCacheClient.sendSlotsBatchRemoved(slotsToDelete,providerId);
                     distinctDaysDeleteStatus.push(distinctDay);
                     if (distinctDaysDeleteStatus.length === distinctDays.length) {
                         var availabilitiesSaveStatus = [];
@@ -203,11 +205,13 @@
                                 slotRepository.saveBatch(slots, providerId, function (error, data) {
                                     if (error) {
                                         console.error(error);
-                                    }
-                                    availabilitiesSaveStatus.push(availability);
-                                    allSlots = allSlots.concat(slots);
-                                    if (availabilitiesSaveStatus.length === availabilities.length) {
-                                        callback(null, allSlots);
+                                    }else {
+                                        availabilitiesSaveStatus.push(availability);
+                                        gridCacheClient.sendSlotsBatchAvailable(slots, providerId);
+                                        allSlots = allSlots.concat(slots);
+                                        if (availabilitiesSaveStatus.length === availabilities.length) {
+                                            callback(null, allSlots);
+                                        }
                                     }
                                 });
                             } catch (err) {

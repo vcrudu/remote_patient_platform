@@ -6,7 +6,12 @@
     var bunyan = require('bunyan');
     var log = bunyan.createLogger({
         name: 'hcm.registration',
-        streams: [{
+        streams: [
+            {
+                level: 'info',
+                stream: process.stdout            // log INFO and above to stdout
+            },
+            {
             level: 'trace',
             type: 'rotating-file',
             path: './log/hcm.log',

@@ -21,7 +21,7 @@
     module.exports = {
         sendVitalSignMessage : function(event){
             var params = {
-                MessageBody: 'Test message', /* required */
+                MessageBody: event, /* required */
                 QueueUrl: sqsOptions.endpoint, /* required */
                 DelaySeconds: 0,
                 MessageAttributes: {
@@ -61,6 +61,7 @@
                 ReturnValues: 'ALL_OLD'
             };
 
+            sqsObject.
             dynamodb.putItem(params, function(err, data) {
                 if(err){
                     console.error(err);

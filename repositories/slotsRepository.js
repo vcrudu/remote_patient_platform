@@ -43,6 +43,7 @@
                     ":providerId": {"S": '0'},
                     ":slotDateTime": {"N": startTime.getTime().toString()}
                 },
+                FilterExpression: filterExpression,
                 TableName: connectionOptions.tablesSuffix + TABLE_NAME,
                 Limit: 30
             };
@@ -59,9 +60,7 @@
                 if(data.Items) {
                     _.forEach(data.Items, function(item){
                         var time = parseInt(item.slotDateTime.N);
-                        var slotDateTime = new Date();
-                        slotDateTime.setTime(time);
-                        results.push({providerId: item.providerId.S, slotDateTime: slotDateTime});
+                        results.push({providerId: item.providerId.S, slotDateTime: time});
                     });
                     callback(null, results);
                 }else{
@@ -119,22 +118,40 @@
 
         updateSlot:function(patientId, providerId, dateTime, callback) {
             var dynamodb = getDb();
+            var params;
 
-            var params = {
-                Key: {
-                    /* required */
-                    slotDateTime: {N: dateTime.getTime().toString()},
-                    providerId: {S: providerId}
-                },
-                TableName: connectionOptions.tablesSuffix + TABLE_NAME, /* required */
-                ExpressionAttributeValues: {
-                    ":patientId": {"S": patientId}
-                },
-                ConditionExpression:'attribute_not_exists(patientId)',
+            if(patientId){
+                params = {
+                    Key: {
+                        /* required */
+                        slotDateTime: {N: dateTime.toString()},
+                        providerId: {S: providerId}
+                    },
+                    TableName: connectionOptions.tablesSuffix + TABLE_NAME, /* required */
+                    ExpressionAttributeValues: {
+                        ":patientId": {"S": patientId}
+                    },
+                    ConditionExpression:'attribute_not_exists(patientId)',
                     ReturnConsumedCapacity: 'TOTAL',
-                ReturnValues: 'NONE',
-                UpdateExpression: 'SET patientId=:patientId'
-            };
+                    ReturnValues: 'NONE',
+                    UpdateExpression: 'SET patientId=:patientId'
+                };
+            }else {
+                params = {
+                    Key: {
+                        /* required */
+                        slotDateTime: {N: dateTime.toString()},
+                        providerId: {S: providerId}
+                    },
+                    TableName: connectionOptions.tablesSuffix + TABLE_NAME, /* required */
+                    ExpressionAttributeValues: {
+                        ":patientId": {NULL: true}
+                    },
+                    ReturnConsumedCapacity: 'TOTAL',
+                    ReturnValues: 'NONE',
+                    UpdateExpression: 'SET patientId=:patientId'
+                };
+            }
 
             dynamodb.updateItem(params, function (err, data) {
                 if (err) {
