@@ -8,7 +8,9 @@
     var connectionOptions = require('../../repositories/awsOptions1');
     var AWS               = require('aws-sdk');
     var uuid = require('node-uuid');
+    var dbstart = require ("../dblocal/startdblocal");
 
+    dbstart.dbstart(); //lansez aws db local
     var getDb = function(){
         var dynamodb = new AWS.DynamoDB(connectionOptions);
         return dynamodb;
