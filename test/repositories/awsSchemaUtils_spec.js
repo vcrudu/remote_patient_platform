@@ -5,43 +5,153 @@
 (function() {
     var should = require('should');
     var awsSchemaUtils = require("../../repositories/awsSchemaUtils");
-    var connectionOptions = require('../../repositories/awsOptions');
+    var connectionOptions = require('../../repositories/awsOptions1');
     var AWS               = require('aws-sdk');
+    var uuid = require('node-uuid');
+    var dbstart = require ("../dblocal/startdblocal");
 
+    dbstart.dbstart(); //lansez aws db local
     var getDb = function(){
         var dynamodb = new AWS.DynamoDB(connectionOptions);
         return dynamodb;
     };
+    var tablesSuffix = uuid.v4();
 
-    describe("Test awsSchemaUtils", function () {
-        describe("Verific crearea tabelei Alarm", function () {
+    after(function(done){
 
-            before(function (done) {
-                awsSchemaUtils.checkExistsTable("TestAlarm", function (err, result) {
-                    if (result){
-                        awsSchemaUtils.deleteTable("TestAlarm", function(err,data){});
-                    };
-                    done();
-                });
-            });
-            after(function (){
-
-                awsSchemaUtils.deleteTable("TestAlarm", function(err,data){
-
-                    done();
-                });
-                console.log('functia after cu delete');
-            });
-            it("Creez tabela Alarme", function (){
-
-                awsSchemaUtils.createAlarmTable("Test", function (err, result) {
-                    should.not.exist(err);
-                },1,1);
-
-            });
+       awsSchemaUtils.deleteTable(tablesSuffix+"_Alarm", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_DeviceModel", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_AppointmentFeedback", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_Event", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_Order", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_PatientAppointment", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_Provider", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_Slot", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_UserDetails", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesSuffix+"_VitalSign", function (err, data) {
+            console.log(err);
         });
+        awsSchemaUtils.deleteTable(tablesSuffix+"_User", function (err, data) {
+            console.log(err); //eroare
+            done();
+        });
+    });
+
+
+
+
+
+
+    it("Creez tabela Alarme\n", function (done){
+
+        awsSchemaUtils.createAlarmTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
 
     });
+
+    it("Creez tabela DeviceModel\n", function (done){
+
+        awsSchemaUtils.createDeviceModelTable(tablesSuffix, function (err, result) {
+            console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela AppointmentFeedbackTable\n", function (done){
+
+        awsSchemaUtils.createAppointmentFeedbackTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela EventTable\n", function (done){
+
+        awsSchemaUtils.createEventTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela OrderTable\n", function (done){
+
+        awsSchemaUtils.createOrderTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela PatientAppointmentTable\n", function (done){
+
+        awsSchemaUtils.createPatientAppointmentTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela ProviderTable\n", function (done){
+
+        awsSchemaUtils.createProviderTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela SlotTable\n", function (done){
+
+        awsSchemaUtils.createSlotTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela UserTable\n", function (done){
+
+        awsSchemaUtils.createUserTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela UserDetailsTable\n", function (done){
+
+        awsSchemaUtils.createUserDetailsTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
+    it("Creez tabela VitalSignTable\n", function (done){
+
+        awsSchemaUtils.createVitalSignTable(tablesSuffix, function (err, result) {
+            //console.log(result);
+            should.not.exist(err);
+            done();
+        },1,1);
+
+    });
+
 
 })();
 
