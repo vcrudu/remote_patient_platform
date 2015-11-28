@@ -2,7 +2,7 @@
  * Created by Victor on 14/07/2015.
  */
 (function(){
-     angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','ngStorage',
+     angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage',
     'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm',    'ui.calendar']);
 
     angular.module('app').factory('authorisationInterceptor',['$localStorage',function($localStorage){

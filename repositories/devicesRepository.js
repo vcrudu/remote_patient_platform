@@ -4,7 +4,7 @@
 
 (function(){
 
-    var logging     = require('../logging');
+    var loggerProvider     = require('../logging');
     var AWS             = require('aws-sdk');
     var UserFactory     = require('../model').UserFactory;
     var connectionOptions = require('./awsOptions');
@@ -34,7 +34,7 @@
 
             dynamodb.scan(params,function(err, data){
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
@@ -44,7 +44,7 @@
                 _.forEach(dbDeviceModels, function(deviceModel){
                     resultDeviceModels.push(deviceModelDbMapper.mapDeviceModelFromDbEntity(deviceModel));
                 });
-                console.log("The device model has been retrieved successfully.");
+                loggerProvider.getLogger().debug("The device model has been retrieved successfully.");
 
                 callback(null, resultDeviceModels);
             });
@@ -60,12 +60,12 @@
 
             dynamodb.getItem(params, function(err, data){
                 if(err) {
-                    logging.getLogger().error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                logging.getLogger().trace(model + "device has been retrieved successfully!");
+                loggerProvider.getLogger().trace(model + "device has been retrieved successfully!");
 
                 if(data.Item) {
                     var deviceModel = deviceModelDbMapper.mapDeviceModelFromDbEntity(data.Item);
@@ -88,12 +88,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The device model has been inserted successfully.");
+                loggerProvider.getLogger().debug("The device model has been inserted successfully.");
                 callback(null, data);
             });
         },
@@ -124,12 +124,12 @@
 
             dynamodb.updateItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The device model has been updated successfully.");
+                loggerProvider.getLogger().debug("The device model has been updated successfully.");
                 callback(null, data);
             });
         },
@@ -146,12 +146,12 @@
 
             dynamodb.deleteItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The device model has been deleted successfully!");
+                loggerProvider.getLogger().log("The device model has been deleted successfully!");
                 callback(null, data);
             });
         }

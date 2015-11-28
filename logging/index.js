@@ -4,15 +4,46 @@
 
 (function() {
     var bunyan = require('bunyan');
-    var log = bunyan.createLogger({
+    var createCWStream = require('./cloudwatch');
+
+    var streamCW = createCWStream({
+        accessKeyId:'AKIAI3IGUJPNNVRFFMDA',
+        secretAccessKey:'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',
+        logGroupName: 'hcm',
+        logStreamName: 'hcm.registration',
+        region: 'eu-west-1'
+    });
+
+    var defaultLogger = bunyan.createLogger({
         name: 'hcm.registration',
-        streams: [{
+        streams: [
+            {
+                level: 'debug',
+                stream: process.stdout            // log INFO and above to stdout
+            },
+            {
+                level: 'trace',
+                stream: streamCW            // log INFO and above to stdout
+            },
+            {
             level: 'trace',
             type: 'rotating-file',
             path: './log/hcm.log',
             period: '1d',   // daily rotation
             count: 3        // keep 3 back copies
         }]
+    });
+
+    var localLogger = bunyan.createLogger({
+        name: 'hcm.registration.local',
+        streams: [
+            {
+                level: 'trace',
+                type: 'rotating-file',
+                path: './log/hcm.log',
+                period: '1d',   // daily rotation
+                count: 3        // keep 3 back copies
+            }]
     });
 
     function getIncidentTicketNumber(componentCode) {
@@ -26,7 +57,12 @@
     }
 
     function getLogger() {
-        return log;
+        return defaultLogger;
+    }
+
+
+    function getLocalLogger() {
+        return localLogger;
     }
 
     function processUnhandledError(req, error, callback) {
@@ -45,6 +81,7 @@
         getIncidentTicketNumber: getIncidentTicketNumber,
         getUserErrorMessage: getUserErrorMessage,
         getLogger: getLogger,
+        getLocalLogger: getLocalLogger,
         processUnhandledError: processUnhandledError
     };
 })();

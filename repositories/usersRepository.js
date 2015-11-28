@@ -9,6 +9,7 @@
     var connectionOptions = require('./awsOptions');
     var TABLE_NAME        = 'User';
     var _             = require('underscore');
+    var loggerProvider = require('../logging');
 
        var getDb = function(){
 
@@ -32,11 +33,11 @@
 
             dynamodb.getItem(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The user has been found successfully.");
+                loggerProvider.getLogger().debug("The user has been found successfully.");
                 if(data.Item) {
                     var user = UserFactory.createUserFromDbEntity(data.Item);
                     callback(null, user);
@@ -63,11 +64,11 @@
 
             dynamodb.updateItem(params, function (err, data) {
                 if (err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The token has been updated successfully.");
+                loggerProvider.getLogger().debug("The token has been updated successfully.");
                 callback(null, data);
             });
         },
@@ -89,11 +90,11 @@
 
             dynamodb.updateItem(params, function (err, data) {
                 if (err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("Online status updated successfully.");
+                loggerProvider.getLogger().debug("Online status updated successfully.");
                 callback(null, data);
             });
         },
@@ -114,12 +115,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user has been inserted successfully.");
+                loggerProvider.getLogger().debug("The user has been inserted successfully.");
                 callback(null, data);
             });
         },
@@ -136,12 +137,12 @@
 
             dynamodb.deleteItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user has been deleted successfully!");
+                loggerProvider.getLogger().debug("The user has been deleted successfully!");
                 callback(null, data);
             });
         },
@@ -156,7 +157,7 @@
 
             dynamodb.scan(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }

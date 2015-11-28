@@ -6,6 +6,7 @@
 
     var connectionOptions = require('./awsOptions1');
     var AWS               = require('aws-sdk');
+    var loggerProvider    = require('../logging');
 
     var getDb = function(){
         var dynamodb = new AWS.DynamoDB(connectionOptions);
@@ -48,7 +49,7 @@
             } else if (result) {
                 dynamoDb.deleteTable(params, function (err) {
                     dynamoDb.waitFor('tableNotExists', params, function(err, data) {
-                        if (err) console.log(err, err.stack); // an error occurred
+                        if (err) loggerProvider.getLogger().error(err); // an error occurred
                         else     callback(err);           // successful response
                     });
 
@@ -82,10 +83,10 @@
 
         dynamoDb.createTable(params, function(err, data) {
             if (err){
-                console.log(JSON.stringify(err, null, 2));
+                loggerProvider.getLogger().error(err);
                 callback(err, null);
             }	else {
-                console.log(JSON.stringify(data, null, 2));
+                loggerProvider.getLogger().debug(data);
                 callback(null,data);
             }});
     };
@@ -113,10 +114,10 @@
 
         dynamoDb.createTable(params, function(err, data) {
             if (err){
-                console.log(JSON.stringify(err, null, 2));
+                loggerProvider.getLogger().error(err);
                 callback(err, null);
             }	else {
-                console.log(JSON.stringify(data, null, 2));
+                loggerProvider.getLogger().debug(data);
                 callback(null,data);
             }});
     };

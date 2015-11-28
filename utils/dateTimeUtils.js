@@ -4,7 +4,7 @@
 
 (function(){
 
-    var logging = require('../logging');
+    var loggerProvider = require('../logging');
     var assert = require('assert');
     var _ = require('underscore');
 
@@ -82,11 +82,11 @@
 
     function getDotDateString(dateTime) {
         if(!dateTime){
-            console.error("Pizdets");
+            loggerProvider.getLogger().error("getDotDateString: dateTime is undefined");
         }
         var day = dateTime.getDate();
         if (day < 10)day = '0' + day;
-        var month = dateTime.getMonth();
+        var month = dateTime.getMonth()+1;
         if (month < 10)month = '0' + month;
         return day + '.' + month + '.' + dateTime.getFullYear();
     }
@@ -105,7 +105,7 @@
         if (slots.length == 0) return result;
         var aSlot = slots[0];
         if(!aSlot.slotDateTime){
-            console.error("Pizdets");
+            loggerProvider.getLogger().error("getAvailabilitiesFromSlots - slotDateTime is undefined");
         }
         var availabilityDateString = getDotDateString(aSlot.slotDateTime);
         var availabilityStartTime = getTimeString(aSlot.slotDateTime);
@@ -155,8 +155,8 @@
 
     module.exports = {
         buildDateTime: function (dateString, timeString) {
-            return new Date(getYear(dateString),getMonth(dateString),getDay(dateString),
-                getHour(timeString),getMinute(timeString));
+            return new Date(getYear(dateString), getMonth(dateString)-1, getDay(dateString),
+                getHour(timeString), getMinute(timeString));
         },
         getDay:getDay,
         getYear:getYear,

@@ -10,6 +10,7 @@
     var TABLE_NAME        = "UserDetails";
     var dynamoDbMapper    = require("./dynamoDbMapper");
     var _                 = require('underscore');
+    var loggerProvider    = require('../logging');
 
        var getDb = function(){
        var dynamodb = new AWS.DynamoDB(connectionOptions);
@@ -30,13 +31,38 @@
 
             dynamodb.getItem(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The user has been found successfully.");
+                loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been found successfully.");
                 if(data.Item) {
                     var user = UserFactory.createUserDetailsFromDbEntity(data.Item);
+                    callback(null, user);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
+        findPatient : function(email, callback){
+
+            var params = {
+                Key: { email: { S: email }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The "+TABLE_NAME+"  has been found successfully.");
+                if(data.Item) {
+                    var user = dynamoDbMapper.mapPatientFromUserDetailsDbEntity(data.Item);
                     callback(null, user);
                 }else{
                     callback(null, null);
@@ -58,12 +84,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user has been inserted successfully.");
+                loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been inserted successfully.");
                 callback(null, data);
             });
         },
@@ -79,7 +105,7 @@
 
             dynamodb.scan(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
@@ -109,12 +135,12 @@
 
             dynamodb.deleteItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user details has been deleted successfully!");
+                loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been deleted successfully!");
                 callback(null, data);
             });
         }

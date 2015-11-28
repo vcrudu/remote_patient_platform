@@ -8,7 +8,7 @@ angular.module('app').factory('availabilityService',['$http', '$localStorage','a
             getAvailability: function (dateTime, success, error) {
                 var req = {
                     method:'GET',
-                    url:appSettings.getServerUrl()+'v1/api/availability/'+$localStorage.user.email,
+                    url:appSettings.getServerUrl()+'/v1/api/availability',
                     headers:{
                         'x-access-token': $localStorage.user.token
                     }
@@ -17,14 +17,15 @@ angular.module('app').factory('availabilityService',['$http', '$localStorage','a
                 $http(req).success(function(res){
                     success(res.result);
                 }).error(error);
-            },saveAvailability: function (availabilityString, success, error) {
+            },saveAvailability: function (availability, success, error) {
 
                 var req = {
-                    method:'GET',
-                    url:appSettings.getServerUrl()+'v1/api/availability/'+$localStorage.user.email,
+                    method:'POST',
+                    url:appSettings.getServerUrl()+'/v1/api/availability',
                     headers:{
                         'x-access-token': $localStorage.user.token
-                    }
+                    },
+                    data:availability
                 };
 
                 $http(req).success(function(res){

@@ -4,23 +4,43 @@
 
 (function(){
 
-    module.exports.init = function(app){
-        app.get('/v1/api/appointments', function(req, res){
+    var appointmentsService = require('../services/appointmentsService');
+
+    module.exports.init = function(router){
+        router.get('/appointments', function(req, res) {
             var params = req.params;
             res.send(400);
         });
 
-        app.get('/v1/api/appointments/:userId', function(req, res){
+        router.get('/appointments/:userId', function(req, res){
             var params = req.params;
             res.send(400);
         });
 
-        app.post('/v1/api/appointments', function(req, res){
+        router.post('/appointments', function(req, res){
             var body = req.body;
             res.send(400);
         });
 
-        app.put('/v1/api/appointments/:userId', function(req, res){
+        router.put('/appointments', function(req, res){
+            var slot = req.body;
+            if(!slot.cancel){
+                appointmentsService.bookAppointment(req.decoded.email, slot.providerId, slot.slotDateTime, function(err, data){
+                    res.json({
+                        success: true,
+                        count: 1,
+                        result: data
+                    });
+                });
+            }else {
+                appointmentsService.cancelAppointment(req.decoded.email, slot.providerId, slot.slotDateTime, function (err, data) {
+                    res.json({
+                        success: true,
+                        count: 1,
+                        result: data
+                    });
+                });
+            }
 
         });
     };

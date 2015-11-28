@@ -9,6 +9,7 @@
     var connectionOptions = require('./awsOptions');
     var TABLE_NAME        = 'Event';
     var _ = require('underscore');
+    var loggerProvider = require('../logging');
 
        var getDb = function(){
 
@@ -31,11 +32,11 @@
 
             dynamodb.getItem(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The event has been found successfully.");
+                loggerProvider.getLogger().debug("The event has been found successfully.");
                 if(data.Item) {
                     var event = eventsDbMapper.mapEventFromDbEntity(data.Item);
                     callback(null, event);
@@ -53,7 +54,7 @@
                 filterExpression = '#measurementType=:measurementType';
 
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
+                    KeyConditionExpression: 'userId=:userId AND ' +
                     '#measurementDateTime>=:startTime',
 
                     ExpressionAttributeNames: {
@@ -74,16 +75,14 @@
                 };
             }else{
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND' +
+                    KeyConditionExpression: 'userId=:userId AND ' +
                     '#measurementDateTime>=:startTime',
 
                     ExpressionAttributeNames: {
-                        "#measurementType": "measurementType",
                         "#measurementDateTime": "measurementDateTime"
                     },
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId},
-                        ":measurementType": {"S": measureType},
                         ":startTime": {"N": startTime.getTime().toString()}//,
                         //":endTime":{"N": endTime.getTime().toString()}
                     },
@@ -95,11 +94,11 @@
 
             dynamodb.query(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The events has been retrieved successfully.");
+                loggerProvider.getLogger().debug("The events has been retrieved successfully.");
                 var results=[];
                 if(data.Items) {
                     _.forEach(data.Items, function(item){
@@ -127,12 +126,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user has been inserted successfully.");
+                loggerProvider.getLogger().debug("The user has been inserted successfully.");
                 callback(null, data);
             });
         }

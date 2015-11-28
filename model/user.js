@@ -4,6 +4,7 @@
 (function(){
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
+    var userDetailsMapper = require('../repositories/dynamoDbMapper');
     module.exports  = {
       createUserFromBody : function(requestBody){
          var salt = bcrypt.genSaltSync(10);
@@ -65,7 +66,21 @@
             return {
                 email: dbEntity.email.S,
                 firstname: dbEntity.name.S,
-                surname: dbEntity.surname.S
+                surname: dbEntity.surname.S,
+                title:dbEntity.title.S,
+                dateOfBirth: dbEntity.dateOfBirth.N,
+                sex: dbEntity.sex.S,
+                gender: dbEntity.gender.S,
+                ethnicity: dbEntity.ethnicity.S,
+                nhsNumber: dbEntity.nhsNumber.S,
+                phone: dbEntity.phone.S,
+                mobile: dbEntity.mobile.S
+                /*
+                address: dbEntity.fullAddress.M,
+                avatar: buildDynamoDbString(patient.avatar),
+                externalId: buildDynamoDbString(patient.externalId),
+                devices: {L:allDevices},
+                healthProblems : {L:allHealthProblems}*/
             };
         },
         createUserDetailsFromBody : function(requestBody){

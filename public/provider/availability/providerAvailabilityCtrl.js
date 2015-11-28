@@ -1,7 +1,7 @@
 (function () {
     angular.module('app').controller('providerAvailabilityCtrl', [
-        '$scope', '$state', '$modal', '$filter',
-        function ($scope, $state, $modal, $filter) {
+        '$scope', '$state', '$modal', '$filter','availabilityService',
+        function ($scope, $state, $modal, $filter, availabilityService) {
 
 
             var vm = this;
@@ -20,6 +20,24 @@
 
             vm.events = [];
 
+            availabilityService.getAvailability(new Date(),function(data){
+                for(var i=0;i<data.length;i++){
+                   var d = data[i].date.substring(0,2);
+                    var m = data[i].date.substring(3,5);
+                    var y = data[i].date.substring(6,10);
+                    vm.events.push({
+                        title: data[i].intervals,
+                        start: y+'-'+m+'-'+d,
+                        allDay:true,
+                        icon: 'fa fa-calendar',
+                        className: ["event", 'bg-color-' + 'greenLight']});
+                }
+                vm.eventSources = [vm.events];
+
+
+            }, function(error){
+
+            });
 
             vm.eventSources = [vm.events];
 
@@ -71,8 +89,19 @@
                         templateUrl: 'provider/availability/schedule.dialog.html',
                         controller: function ($scope, $modalInstance, event) {
 
+                            function getDotDateString(dateTime) {
+                                if(!dateTime){
+                                    console.error("Pizdets");
+                                }
+                                var day = dateTime.getDate();
+                                if (day < 10)day = '0' + day;
+                                var month = dateTime.getMonth();
+                                if (month < 10)month = '0' + month;
+                                return day + '.' + month + '.' + dateTime.getFullYear();
+                            }
 
                             $scope.session = event.session;
+                            $scope.serverError = false;
 
                             if ($scope.session) {
 
@@ -87,7 +116,17 @@
                             };
 
                             $scope.apply = function () {
-                                $modalInstance.close($scope.scheduleValue);
+                                var dateString = getDotDateString($scope.session.end);
+                                var availabilityString = $scope.scheduleValue;
+                                availabilityService.saveAvailability({availabilityString:availabilityString,
+                                                                        dateString:dateString},
+
+                                function(success){
+                                    $modalInstance.close($scope.scheduleValue);
+                                }, function(error){
+                                        $scope.serverError = true;
+                                    }
+                                );
                             };
                         },
                         resolve: {
@@ -150,7 +189,8 @@
                             d.setUTCMinutes(new Date().getUTCMinutes() + 1);
                         }
                         {
-                            saveEvent({session: {end: new Date(d), SessionDateTime: new Date(d)}}, true);
+                            var today = new Date();
+                            saveEvent({session: {end: new Date(d), SessionDateTime: new Date(d)}}, date>today);
                         }
                     }
                 }
