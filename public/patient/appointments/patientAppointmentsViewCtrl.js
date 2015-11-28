@@ -7,9 +7,9 @@
             var vm = this;
 
             var hdr = {
-                left: 'title',
-                //center: 'month,agendaWeek,agendaDay',
-                right: 'prev,today,next'
+                left: 'prev,next today',
+                center: 'title',
+                right: 'nurseGrid'
             };
 
 
@@ -152,17 +152,41 @@
                 }
             };
 
+            function getCurrentTimeString() {
+                var dateTime = new Date();
+                var hours = dateTime.getHours();
+                if (hours < 10)hours = '0' + hours;
+                var minutes = dateTime.getMinutes();
+                if (minutes < 10)minutes = '0' + minutes;
+                var seconds = dateTime.getSeconds();
+                if (seconds < 10)minutes = '0' + seconds;
+                return hours + ':' + minutes+ ':' + seconds;
+            }
+
             $('#calendarBook').fullCalendar({
                 schedulerLicenseKey:'0220103998-fcs-1447110034',
-                defaultView:'timelineFourDays',
+                defaultView:'nursesGrid',
+                defaultTimedEventDuration:'00:15:00',
+                allDaySlot:false,
                 views: {
-                    timelineFourDays: {
-                        type: 'timeline',
+                    nursesGrid: {
+                        type: 'agenda',
                         duration: { days: 1 },
                         slotDuration:'00:15',
-                        slotLabelInterval:'00:15'
+                        slotLabelInterval:'00:15',
+                        scrollTime:getCurrentTimeString()
                     }
-                }
+                },
+                events: [
+                    {
+                        title  : 'event1',
+                        start  : '2015-11-28T06:00:00',
+                        backgroundColor: 'red'
+                    }
+                ],
+                resources: [
+                    { id: 'a', title: 'Nurse' }
+                ]
             });
 
             vm.uiConfig = {
@@ -170,16 +194,17 @@
                     editable: false,
                     header: hdr,
                     schedulerLicenseKey:'0220103998-fcs-1447110034',
-                    defaultView : 'timelineSlots',
+                    defaultView : 'nursesGrid',
                     eventDragStop: function (calEvent, jsEvent, view) {
                         saveEvent(calEvent, false);
 
                     },
                     views: {
-                        agendaFourDay: {
+                        nursesGrid: {
                             type: 'agenda',
-                            duration: { days: 4 },
-                            buttonText: '4 day'
+                            duration: { days: 1 },
+                            slotDuration:'00:15',
+                            slotLabelInterval:'00:15'
                         }
                     },
                     eventResizeStop: function (calEvent, jsEvent, view) {
