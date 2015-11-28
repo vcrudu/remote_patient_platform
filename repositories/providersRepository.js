@@ -11,6 +11,8 @@
     var _                   = require('underscore');
     var TABLE_NAME          = 'Provider';
 
+    var loggerProvider = require('../logging');
+
     var getDb = function(){
         return new AWS.DynamoDB(connectionOptions);
     };
@@ -28,7 +30,7 @@
 
             dynamodb.scan(params,function(err, data){
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
@@ -38,7 +40,7 @@
                 _.forEach(dbCollection, function(dbModel){
                     dbData.push(providerDbMapper.mapFromDbEntity(dbModel));
                 });
-                console.log("The " + TABLE_NAME + " data has been retrieved successfully.");
+                loggerProvider.getLogger().debug("The " + TABLE_NAME + " data has been retrieved successfully.");
 
                 callback(null, dbData);
             });
@@ -57,12 +59,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The " + TABLE_NAME + " has been inserted successfully.");
+                loggerProvider.getLogger().debug("The " + TABLE_NAME + " has been inserted successfully.");
                 callback(null, data);
             });
         },
@@ -79,11 +81,11 @@
 
             dynamodb.deleteItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The " + TABLE_NAME +  " has been deleted successfully!");
+                loggerProvider.getLogger().debug("The " + TABLE_NAME +  " has been deleted successfully!");
                 callback(null, data);
             });
         }

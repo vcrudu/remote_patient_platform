@@ -56,7 +56,7 @@ app.get('/register',function(req, res){
 },app).listen(8080);*/
 
 var PORT = process.env.port || 8081;
-logging.getLogger().trace({message:"Server started at port " + PORT} );
+logging.getLogger().debug({message:"Server started at port " + PORT} );
 var server = http.createServer(app);
 var notifications = require('./notifications');
 notifications.init(server);

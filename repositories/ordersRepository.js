@@ -10,7 +10,7 @@
     var TABLE_NAME        = 'Order';
     var orderIdIndexName = 'orderId-index';
     var _ = require('underscore');
-    var logging     = require('../logging');
+    var loggerProvider     = require('../logging');
     var devicesRepository = require('./devicesRepository');
 
     var getDb = function(){
@@ -52,11 +52,11 @@
 
         dynamodb.query(params, function(err, data){
             if(err) {
-                console.error(err);
+                loggerProvider.getLogger().error(err);
                 callback(err, null);
                 return;
             }
-            console.log("The order has been found successfully.");
+            loggerProvider.getLogger().debug("The order has been found successfully.");
             if(data.Items) {
                 if(data.Items.length>0) {
                     getValidDevices(function(error, devices){
@@ -91,7 +91,7 @@
 
         dynamodb.query(params, function (err, data) {
             if (err) {
-                console.error(err);
+                loggerProvider.getLogger().error(err);
                 callback(err, null);
                 return;
             }
@@ -127,11 +127,11 @@
 
             dynamodb.query(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The order has been found successfully.");
+                loggerProvider.getLogger().debug("The order has been found successfully.");
                 if(data.Items.length>0) {
                     callback(null, OrderDbMapper.mapOrderLightFromDbEntity(data.Items[0]));
                 }else{
@@ -154,12 +154,12 @@
 
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
                 getOrderByOrderId(order.userId, order.orderId, function(err, data){
-                    console.log("The order has been inserted successfully.");
+                    loggerProvider.getLogger().debug("The order has been inserted successfully.");
                     callback(null, data);
                 });
             });
@@ -182,11 +182,11 @@
 
             dynamodb.updateItem(params, function (err, data) {
                 if (err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The token has been updated successfully.");
+                loggerProvider.getLogger().debug("The order has been updated successfully.");
                 callback(null, data);
             });
         },
@@ -204,12 +204,12 @@
 
             dynamodb.deleteItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The order has been deleted successfully!");
+                loggerProvider.getLogger().debug("The order has been deleted successfully!");
                 callback(null, data);
             });
         }

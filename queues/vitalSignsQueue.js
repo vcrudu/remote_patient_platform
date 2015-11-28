@@ -12,6 +12,7 @@
     var eventsDbMapper     = require('./eventsDbMapper');
     var sqsOptions = require('./awsSQSOptions');
     var TABLE_NAME        = 'Event';
+    var loggerProvider = require('../logging');
 
     var getSQSObject = function(){
         var sqs = new AWS.SQS(sqsOptions);
@@ -35,11 +36,11 @@
 
             sqsObject.sendMessage(params, function(err, data){
                 if(err) {
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
-                console.log("The events has been retrieved successfully.");
+                loggerProvider.getLogger().debug("The events has been retrieved successfully.");
                 if(data.Item) {
                     var user = UserFactory.createUserFromDbEntity(data.Item);
                     callback(null, user);
@@ -64,12 +65,12 @@
             sqsObject.
             dynamodb.putItem(params, function(err, data) {
                 if(err){
-                    console.error(err);
+                    loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
 
-                console.log("The user has been inserted successfully.");
+                loggerProvider.getLogger().debug("The event has been inserted successfully.");
                 callback(null, data);
             });
         }

@@ -6,13 +6,21 @@
     var socketClient;
     var io;
     var Rx;
+    var loggerProvider = require('../logging');
+    var os = require('os');
+    var host_name = os.hostname();
     module.exports = {
         init: function () {
             socketClient = require('socket.io-client');
             Rx = require('rx');
             io = socketClient("http://localhost:8082");
             io.on('connect', function(){
-                console.log('socketClient connected');
+                loggerProvider.getLogger().debug(host_name + ' has connected to cache server!');
+                io.emit('ehlo', {host_name:host_name});
+            });
+
+            io.on('disconnect', function(){
+                loggerProvider.getLogger().debug(os.hostname() + ' disconnected from cache server!');
             });
         },
         sendSlotsBatchAvailable: function (slots, providerId) {

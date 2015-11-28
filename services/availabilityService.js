@@ -14,6 +14,7 @@
     var dateRegEx = '^([0-3][0-9].[0-1][0-9].[2][0][1-2][1-9])$';
     var timeRegEx = '^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$';
     var gridCacheClient = require('../services/gridCacheClient');
+    var loggerProvider = require('../logging');
 
     function addMinutes(date, minutes) {
         var timeInMilliseconds = date.getTime();
@@ -204,7 +205,7 @@
                                 var slots = generateSlotsFromAvailability(availability);
                                 slotRepository.saveBatch(slots, providerId, function (error, data) {
                                     if (error) {
-                                        console.error(error);
+                                        loggerProvider.getLogger().error(error);
                                     }else {
                                         availabilitiesSaveStatus.push(availability);
                                         gridCacheClient.sendSlotsBatchAvailable(slots, providerId);

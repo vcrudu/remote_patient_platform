@@ -8,8 +8,9 @@
     var videoService = require('../services/videoService');
     var jwt = require("jsonwebtoken");
     var _ = require("underscore");
+    var NS = "Notifications";
 
-    var logging = require('../logging');
+    var loggerProvider = require('../logging');
 
     var io;
 
@@ -18,17 +19,17 @@
             io = require('socket.io')(server);
 
             io.on('connection', function (socket) {
-                console.log("Client connected...");
+                loggerProvider.getLogger().debug(NS+"::"+"Client connected...");
                 socket.auth = false;
                 socket.on('authenticate', function (data) {
-                    console.log("Client authenticate...");
+                    loggerProvider.getLogger().debug(NS+"::"+"Client authenticate...");
                     if (data.token) {
                         jwt.verify(data.token, process.env.JWT_SECRET, function (err, decoded) {
                             if (!err) {
                                 socket.userId = decoded.email;
                                 usersRepository.updateOnlineStatus(decoded.email, 'online', socket.id, function (err, result) {
                                     socket.auth = true;
-                                    console.log("online status online...");
+                                    loggerProvider.getLogger().debug(NS+"::" +decoded.email+" status online...");
                                     /*_.each(io.nsps, function(nsp) {
                                      if(_.findWhere(nsp.sockets, {id: socket.id})) {
                                      console.log("restoring socket to", nsp.name);
@@ -37,7 +38,7 @@
                                      });*/
                                 });
                             } else {
-                                console.log(err);
+                                loggerProvider.getLogger().error(err);
                             }
                         });
                     }
@@ -139,10 +140,10 @@
                 });
 
                 socket.on('disconnect', function () {
-                    console.log('Disconnected!');
+                    loggerProvider.getLogger().debug(NS+"::"+'Disconnected!');
                     usersRepository.updateOnlineStatus(socket.userId, 'offline', socket.id, function (err, result) {
                         socket.auth = false;
-                        console.log("online status offline...");
+                        loggerProvider.getLogger().debug(NS+"::"+"online status offline...");
                         /* _.each(io.nsps, function(nsp) {
                          if(_.findWhere(nsp.sockets, {id: socket.id})) {
                          console.log("restoring socket to", nsp.name);
@@ -158,8 +159,8 @@
             var namespace = io.sockets;
             usersRepository.findOneByEmail(recipient, function (err, user) {
                 if (err) {
-                    var incidentTicket = logging.getIncidentTicketNumber('sc');
-                    logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                    var incidentTicket = loggerProvider.getIncidentTicketNumber('sc');
+                    loggerProvider.getLogger().error({incidentTicket: incidentTicket}, err);
                 } else if (user) {
                     var socket = _.find(namespace.sockets, function (aSocket) {
                         return aSocket.id === user.socketId;

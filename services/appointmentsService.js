@@ -21,6 +21,5 @@
                 callback(err, result);
             });
         }
-
     };
 })();

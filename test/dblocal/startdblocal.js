@@ -7,15 +7,14 @@
 
 
     var dbstart= function(){
-        child = exec('startdb.cmd', pathdb,
+        child = exec('java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb',
+            {shell:'cmd.exe', cwd:__dirname+'/'},
             function (error, stdout, stderr) {
                 console.log('stdout: ' + stdout);
                 console.log('stderr: ' + stderr);
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
-
-
             });
     }
     module.exports={
