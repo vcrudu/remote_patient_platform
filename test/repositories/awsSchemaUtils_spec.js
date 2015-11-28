@@ -23,7 +23,6 @@
         });
 
 
-
     var getDb = function(){
     var dynamodb = new AWS.DynamoDB(connectionOptions);
         return dynamodb;
