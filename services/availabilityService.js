@@ -9,7 +9,7 @@
     var _    = require('underscore');
     var  assert = require('assert');
     var utils = require('../utils/dateTimeUtils');
-    var slotRepository = require('../repositories').Slots;
+    var slotRepository = require('../repositories/slotsRepository');
     var slotMinutes = [0, 15, 30, 45];
     var dateRegEx = '^([0-3][0-9].[0-1][0-9].[2][0][1-2][1-9])$';
     var timeRegEx = '^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$';
@@ -94,14 +94,27 @@
             slotRepository.getProvidersForSlot(slot, function (err, data) {
                 //var countProviders = data;
                 if(data.length>0)
-                    slotsWithExistingProviders.push({slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
-                slotsProvidersResult.push({slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
+                    slotsWithExistingProviders.push({slotDateTimeString:slot ,slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
+                slotsProvidersResult.push({slotDateTimeString:slot ,slotDateTime: slot.getTime(), countOfProviders: data.length, providers:data});
                 if (slotsProvidersResult.length === slotsForSeveralDays.length) {
                     slotsProvidersResult.sort(function(a, b){
                         return a.slotDateTime-b.slotDateTime;
                     });
                     callback(null, slotsProvidersResult);
                 }
+            });
+        });
+    }
+
+    function getSlotWithProviders(slotDateTime, callback) {
+        var slot = new Date();
+        slot.setTime(slotDateTime);
+        slotRepository.getProvidersForSlot(slot, function (err, data) {
+            callback(null, {
+                slotDateTimeString: slot
+                , slotDateTime: slot.getTime(),
+                countOfProviders: data.length,
+                providers: data
             });
         });
     }
@@ -118,8 +131,10 @@
             startTime: startFromHour,
             endTime: "23:59"
         });
-        var lastSlot = addMinutes(slotsForPeriod[slotsForPeriod.length - 1], 15);
-        slotsForPeriod.push(lastSlot);
+        if(slotsForPeriod.length>0) {
+            var lastSlot = addMinutes(slotsForPeriod[slotsForPeriod.length - 1], 15);
+            slotsForPeriod.push(lastSlot);
+        }
         return slotsForPeriod;
     }
 
@@ -206,7 +221,7 @@
                                 slotRepository.saveBatch(slots, providerId, function (error, data) {
                                     if (error) {
                                         loggerProvider.getLogger().error(error);
-                                    }else {
+                                    } else {
                                         availabilitiesSaveStatus.push(availability);
                                         gridCacheClient.sendSlotsBatchAvailable(slots, providerId);
                                         allSlots = allSlots.concat(slots);
@@ -216,6 +231,7 @@
                                     }
                                 });
                             } catch (err) {
+                                loggerProvider.getLogger().error(err);
                             }
                         });
                     }
@@ -229,7 +245,8 @@
         getProvidersAvailability: getProvidersAvailability,
         getSlotsForDay: getSlotsForDay,
         getSlotsForSeveralDays: getSlotsForSeveralDays,
-        getFormattedDateString:getFormattedDateString
+        getFormattedDateString:getFormattedDateString,
+        getSlotWithProviders:getSlotWithProviders
     };
 })();
 

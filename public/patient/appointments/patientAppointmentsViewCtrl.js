@@ -1,8 +1,48 @@
 (function () {
     angular.module('app').controller('patientAppointmentsViewCtrl', [
-        '$scope', '$state', '$modal', '$filter','availabilityService',
-        function ($scope, $state, $modal, $filter, availabilityService) {
+        '$scope', '$state', '$modal', '$filter','_','slotsService',
+        function ($scope, $state, $modal, $filter, _, slotsService) {
 
+            function getSchedulerEvent(id) {
+                return $('#calendarBook').fullCalendar('clientEvents', id);
+            }
+
+            if (window.socket && !window.socket._callbacks.slotAvailable) {
+                window.socket.on('slotAvailable', function (slot) {
+                    var event = getSchedulerEvent(slot.slotDateTime);
+                    if(event.length>0) {
+                        event[0].slot.countOfProviders++;
+                        event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
+                        //event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                        event[0].title = event[0].slot.countOfProviders + event[0].titleText;
+                        $('#calendarBook').fullCalendar('updateEvent', event[0]);
+                    }
+                });
+                window.socket.on('slotBooked', function (slot) {
+                    var event = getSchedulerEvent(slot.slotDateTime);
+                    if(event.length>0) {
+                        if (event[0].slot.countOfProviders > 0) {
+                            event[0].slot.countOfProviders--;
+                            event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
+                           // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                            event[0].title = event[0].slot.countOfProviders + event[0].titleText;
+                            $('#calendarBook').fullCalendar('updateEvent', event[0]);
+                        }
+                    }
+                });
+                window.socket.on('slotRemoved', function (slot) {
+                    var event = getSchedulerEvent(slot.slotDateTime);
+                    if(event.length>0) {
+                        if (event[0].slot.countOfProviders > 0) {
+                            event[0].slot.countOfProviders--;
+                            event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
+                           // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                            event[0].title = event[0].slot.countOfProviders + event[0].titleText;
+                            $('#calendarBook').fullCalendar('updateEvent', event[0]);
+                        }
+                    }
+                });
+            }
 
             var vm = this;
 
@@ -20,24 +60,123 @@
 
             vm.events = [];
 
-            availabilityService.getAvailability(new Date(),function(data){
-                for(var i=0;i<data.length;i++){
-                    var d = data[i].date.substring(0,2);
-                    var m = data[i].date.substring(3,5);
-                    var y = data[i].date.substring(6,10);
+            slotsService.getSlots(new Date(),function(data) {
+                for (var i = 0; i < 100; i++) {
+                    var backgroundColor = data[i].countOfProviders>0?'rgb(153,217,234)':'red';
+                    var eventTextColor = data[i].countOfProviders>0?'rgb(0,0,0)':'rgb(255,255,255)';
+                    var dateTime = new Date();
+                    dateTime.setTime(data[i].slotDateTime);
                     vm.events.push({
-                        title: data[i].intervals,
-                        start: y+'-'+m+'-'+d,
-                        allDay:true,
-                        icon: 'fa fa-calendar',
-                        className: ["event", 'bg-color-' + 'greenLight']});
+                        id: data[i].slotDateTime,
+                        title: data[i].countOfProviders + " nurses are available.",
+                        titleText: " nurses are available.",
+                        slot:data[i],
+                        start: getCurrentTimeString(dateTime),
+                        icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
+                        backgroundColor: backgroundColor,
+                        borderColor: '#000000',
+                        textColor: eventTextColor
+                    });
                 }
                 vm.eventSources = [vm.events];
 
 
-            }, function(error){
+            }, function(error) {
 
             });
+
+            $('#calendarBook').fullCalendar({
+                schedulerLicenseKey:'0220103998-fcs-1447110034',
+                defaultView:'nursesGrid',
+                defaultTimedEventDuration:'00:15:00',
+                allDaySlot:false,
+                views: {
+                    nursesGrid: {
+                        type: 'agenda',
+                        duration: { days: 1 },
+                        slotDuration:'00:15',
+                        slotLabelInterval:'00:15'
+                    }
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    var now = new Date();
+                    if(calEvent.id<now.getTime() || calEvent.slot.countOfProviders==0) return;
+                    var modal = $modal.open({
+                        templateUrl: 'patient/appointments/book.dialog.html',
+                        controller: function ($scope, $modalInstance, event) {
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss();
+                            };
+                            $scope.delete = function () {
+                                $modalInstance.dismiss(true);
+                            };
+
+                            $scope.apply = function () {
+                                slotsService.bookAppointment({
+                                        slotDateTime: calEvent.slot.slotDateTime
+                                    },
+                                    function (success) {
+                                        $modalInstance.close($scope.scheduleValue);
+                                    }, function (error) {
+                                        $scope.serverError = true;
+                                    }
+                                );
+                            };
+                        },
+                        resolve: {
+                            event: function () {
+                                return event;
+                            }
+                        }
+                    });
+
+                    modal.result.then(function (data) {
+
+                    }, function (arg) {
+
+
+                    });
+
+                },
+                events: function(start, end, timezone, callback){
+                    var events=[];
+                    slotsService.getSlots(new Date(),function(data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if(data[i].slotDateTime>=start.valueOf()&&data[i].slotDateTime<end.valueOf()) {
+                                var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                                var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
+                                var dateTime = new Date();
+                                dateTime.setTime(data[i].slotDateTime);
+                                events.push({
+                                    id: data[i].slotDateTime,
+                                    title: data[i].countOfProviders + " nurses are available.",
+                                    titleText: " nurses are available.",
+                                    slot:data[i],
+                                    start: getCurrentTimeString(dateTime),
+                                    icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
+                                    backgroundColor: backgroundColor,
+                                    borderColor: '#000000',
+                                    textColor: eventTextColor
+                                });
+                            }
+                        }
+
+                        callback(events);
+
+                    }, function(error) {
+
+                    });
+
+
+                },
+                eventAfterAllRender:function(view){
+
+                },
+                resources: [
+                    { id: 'a', title: 'Health care providers' }
+                ]
+            });
+
 
             vm.eventSources = [vm.events];
 
@@ -70,10 +209,6 @@
                 else{
                     $('#calendar').fullCalendar('updateEvent', updateEvent);
                 }
-
-
-
-
             };
             var saveEvent = function (event, showDialog) {
 
@@ -152,53 +287,25 @@
                 }
             };
 
-            function getCurrentTimeString() {
-                var dateTime = new Date();
+            function getCurrentTimeString(dateTime) {
                 var hours = dateTime.getHours();
                 if (hours < 10)hours = '0' + hours;
                 var minutes = dateTime.getMinutes();
                 if (minutes < 10)minutes = '0' + minutes;
                 var seconds = dateTime.getSeconds();
-                if (seconds < 10)minutes = '0' + seconds;
+                if (seconds < 10)seconds = '0' + seconds;
                 return hours + ':' + minutes+ ':' + seconds;
             }
 
-            $('#calendarBook').fullCalendar({
-                schedulerLicenseKey:'0220103998-fcs-1447110034',
-                defaultView:'nursesGrid',
-                defaultTimedEventDuration:'00:15:00',
-                allDaySlot:false,
-                views: {
-                    nursesGrid: {
-                        type: 'agenda',
-                        duration: { days: 1 },
-                        slotDuration:'00:15',
-                        slotLabelInterval:'00:15',
-                        scrollTime:getCurrentTimeString()
-                    }
-                },
-                events: [
-                    {
-                        title  : 'event1',
-                        start  : '2015-11-28T06:00:00',
-                        backgroundColor: 'red'
-                    }
-                ],
-                resources: [
-                    { id: 'a', title: 'Nurse' }
-                ]
-            });
+            var dateTime = new Date();
+            var currentSlot = getCurrentTimeString(dateTime);
 
             vm.uiConfig = {
                 calendar: {
-                    editable: false,
-                    header: hdr,
                     schedulerLicenseKey:'0220103998-fcs-1447110034',
-                    defaultView : 'nursesGrid',
-                    eventDragStop: function (calEvent, jsEvent, view) {
-                        saveEvent(calEvent, false);
-
-                    },
+                    defaultView:'nursesGrid',
+                    defaultTimedEventDuration:'00:15:00',
+                    allDaySlot:false,
                     views: {
                         nursesGrid: {
                             type: 'agenda',
@@ -207,13 +314,17 @@
                             slotLabelInterval:'00:15'
                         }
                     },
+                    //events: vm.events,
+                    resources: [
+                        { id: 'a', title: 'Health care providers' }
+                    ],
                     eventResizeStop: function (calEvent, jsEvent, view) {
                         // saveEvent(calEvent, false);
 
                     },
                     eventClick: function (calEvent, jsEvent, view) {
-                        saveEvent(calEvent, true);
-                    },
+                        //saveEvent(calEvent, true);
+                    }/*,
                     eventRender: function (event, element, icon) {
                         if (!event.description == "") {
                             element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
@@ -238,7 +349,7 @@
                             var today = new Date();
                             saveEvent({session: {end: new Date(d), SessionDateTime: new Date(d)}}, date>today);
                         }
-                    }
+                    }*/
                 }
             };
         }]);

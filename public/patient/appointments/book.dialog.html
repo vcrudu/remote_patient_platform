@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
+        Book appointment</h4>
+</div>
+<div class="modal-body hidden-overflow ">
+
+        <form name="scheduleForm" novalidate class="smart-form" id="scheduleForm">
+            <section>
+                <label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
+                    <textarea  rows="4" name="schedule" id="schedule" required placeholder="Describe the reason" ng-model="scheduleValue"
+                            autofocus required></textarea>
+                </label>
+                <em ng-show="serverError" class="invalid">Server error has occurred. Try again later.</em>
+                <span class="note">Describe please the reason of the appointment.</span>
+            </section>
+        </form>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button class="btn btn-danger" ng-click="delete()" ng-if="session.Id">Delete</button>
+
+    </div>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" ng-click="apply()" ng-disabled="scheduleForm.$invalid">Book</button>
+</div>

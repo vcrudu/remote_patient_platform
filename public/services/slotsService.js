@@ -15,17 +15,17 @@ angular.module('app').factory('slotsService',['$http', '$localStorage','appSetti
                 };
 
                 $http(req).success(function(res){
-                    success(res.result);
+                    success(res);
                 }).error(error);
             },bookAppointment: function (slot, success, error) {
 
                 var req = {
-                    method:'POST',
-                    url:appSettings.getServerUrl()+'/v1/api/slots',
+                    method:'PUT',
+                    url:appSettings.getServerUrl()+'/v1/api/appointments',
                     headers:{
                         'x-access-token': $localStorage.user.token
                     },
-                    data:availability
+                    data:slot
                 };
 
                 $http(req).success(function(res){

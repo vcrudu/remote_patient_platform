@@ -59,8 +59,7 @@
                 var results=[];
                 if(data.Items) {
                     _.forEach(data.Items, function(item){
-                        var time = parseInt(item.slotDateTime.N);
-                        results.push({providerId: item.providerId.S, slotDateTime: time});
+                        results.push(item.providerId.S);
                     });
                     callback(null, results);
                 }else{

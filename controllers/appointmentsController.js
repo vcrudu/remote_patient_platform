@@ -25,7 +25,7 @@
         router.put('/appointments', function(req, res){
             var slot = req.body;
             if(!slot.cancel){
-                appointmentsService.bookAppointment(req.decoded.email, slot.providerId, slot.slotDateTime, function(err, data){
+                appointmentsService.bookAppointment(req.decoded.email, slot.slotDateTime, function(err, data){
                     res.json({
                         success: true,
                         count: 1,
@@ -33,7 +33,7 @@
                     });
                 });
             }else {
-                appointmentsService.cancelAppointment(req.decoded.email, slot.providerId, slot.slotDateTime, function (err, data) {
+                appointmentsService.cancelAppointment(req.decoded.email, slot.slotDateTime, function (err, data) {
                     res.json({
                         success: true,
                         count: 1,

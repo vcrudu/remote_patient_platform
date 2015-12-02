@@ -5,6 +5,7 @@
 (function() {
     var socketClient;
     var io;
+    var notification = require('../notifications');
     var Rx;
     var loggerProvider = require('../logging');
     var os = require('os');
@@ -14,35 +15,45 @@
             socketClient = require('socket.io-client');
             Rx = require('rx');
             io = socketClient("http://localhost:8082");
-            io.on('connect', function(){
+            io.on('connect', function () {
                 loggerProvider.getLogger().debug(host_name + ' has connected to cache server!');
-                io.emit('ehlo', {host_name:host_name});
+                io.emit('ehlo', {host_name: host_name});
             });
 
-            io.on('disconnect', function(){
+            io.on('disconnect', function () {
                 loggerProvider.getLogger().debug(os.hostname() + ' disconnected from cache server!');
             });
         },
         sendSlotsBatchAvailable: function (slots, providerId) {
             var source = Rx.Observable.fromArray(slots);
-            source.subscribe(function(slot){
-                io.emit('slotAvailable', {slotDateTime: new Date(slot).getTime(), providerId: providerId});
+            source.subscribe(function (slot) {
+                var payLoad = {slotDateTime: new Date(slot).getTime(), providerId: providerId};
+                io.emit('slotAvailable', payLoad);
+                notification.broadcastSlotChangedEvent('slotAvailable', payLoad);
             });
         },
         sendSlotAvailable: function (slot, providerId) {
-            io.emit('slotAvailable', {slotDateTime: new Date(slot).getTime(), providerId: providerId});
+            var payLoad = {slotDateTime: new Date(slot).getTime(), providerId: providerId};
+            io.emit('slotAvailable',payLoad);
+            notification.broadcastSlotChangedEvent('slotAvailable', payLoad);
         },
-        sendSlotBooked: function (slot,providerId) {
-            io.emit('slotBooked', {slotDateTime: new Date(slot).getTime(), providerId: providerId});
+        sendSlotBooked: function (slot, providerId) {
+            var payLoad = {slotDateTime: new Date(slot).getTime(), providerId: providerId};
+            io.emit('slotBooked', payLoad);
+            notification.broadcastSlotChangedEvent('slotBooked', payLoad);
         },
         sendSlotsBatchRemoved: function (slots, providerId) {
             var source = Rx.Observable.fromArray(slots);
-            source.subscribe(function(slot) {
-                io.emit('slotRemoved', {slotDateTime: new Date(slot).getTime(), providerId: providerId});
+            source.subscribe(function (slot) {
+                var payLoad = {slotDateTime: new Date(slot).getTime(), providerId: providerId};
+                io.emit('slotRemoved', payLoad);
+                notification.broadcastSlotChangedEvent('slotRemoved', payLoad);
             });
         },
         sendSlotRemoved: function (slot, providerId) {
-            io.emit('slotRemoved', {slotDateTime: new Date(slot).getTime(), providerId: providerId});
+            var payLoad = {slotDateTime: new Date(slot).getTime(), providerId: providerId};
+            io.emit('slotRemoved', payLoad);
+            notification.broadcastSlotChangedEvent('slotRemoved', payLoad);
         }
     };
 })();

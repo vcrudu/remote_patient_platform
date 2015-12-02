@@ -168,9 +168,11 @@
                     socket.emit(eventName, payLoad);
                 }
             });
+        },
+
+        broadcastSlotChangedEvent: function (eventName, slot) {
+            if(io && io.sockets)
+            io.sockets.emit(eventName, slot);
         }
     };
 })();
-
-
-
