@@ -8,11 +8,23 @@
     var connectionOptions = require('../../repositories/awsOptions1');
     var AWS               = require('aws-sdk');
     var uuid = require('node-uuid');
-    var dbstart = require ("../dblocal/startdblocal");
+    var exec = require('child_process').exec,
+        child;
 
-    dbstart.dbstart(); //lansez aws db local
+    child = exec('java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb',
+        {shell:'cmd.exe', cwd: __dirname+'../../dblocal'},
+        function (error, stdout, stderr) {
+            console.log(__dirname+'/');
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+        });
+
+
     var getDb = function(){
-        var dynamodb = new AWS.DynamoDB(connectionOptions);
+    var dynamodb = new AWS.DynamoDB(connectionOptions);
         return dynamodb;
     };
     var tablesSuffix = uuid.v4();
