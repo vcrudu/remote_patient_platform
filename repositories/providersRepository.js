@@ -46,6 +46,30 @@
             });
         },
 
+        getOne : function(email, callback){
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { email: { S: email }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            dynamodb.getItem(params,function(err, data){
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                var dbData = data.Item;
+
+                var provider =  providerDbMapper.mapFromDbEntity(dbData);
+                loggerProvider.getLogger().debug("The " + TABLE_NAME + " data has been retrieved successfully.");
+
+                callback(null, provider);
+            });
+        },
+
         save : function(obj, callback){
             var dynamodb = getDb();
 

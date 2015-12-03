@@ -20,16 +20,20 @@ angular.module('app').factory('slotsService',['$http', '$localStorage','appSetti
             },bookAppointment: function (slot, success, error) {
 
                 var req = {
-                    method:'PUT',
-                    url:appSettings.getServerUrl()+'/v1/api/appointments',
-                    headers:{
+                    method: 'PUT',
+                    url: appSettings.getServerUrl() + '/v1/api/appointments',
+                    headers: {
                         'x-access-token': $localStorage.user.token
                     },
-                    data:slot
+                    data: slot
                 };
 
-                $http(req).success(function(res){
-                    success(res.result);
+                $http(req).success(function (res) {
+                    if (res.success) {
+                        success(res.result);
+                    } else {
+                        error(res.error);
+                    }
                 }).error(error);
             }
         };

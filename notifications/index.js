@@ -165,7 +165,9 @@
                     var socket = _.find(namespace.sockets, function (aSocket) {
                         return aSocket.id === user.socketId;
                     });
-                    socket.emit(eventName, payLoad);
+                    if(socket){
+                        socket.emit(eventName, payLoad);
+                    }
                 }
             });
         },

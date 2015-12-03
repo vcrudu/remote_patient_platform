@@ -69,8 +69,8 @@
     function mapContactDetailsFromDbEntity(item)
     {
         return{
-            contactType: item.contactType.S,
-            contact: item.contact.S
+            contactType: item.M.contactType.S,
+            contact: item.M.contact.S
         };
     }
     function mapAvailabilitiesFromDbEntity(item)

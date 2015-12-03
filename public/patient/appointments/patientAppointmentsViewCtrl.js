@@ -1,7 +1,7 @@
 (function () {
     angular.module('app').controller('patientAppointmentsViewCtrl', [
-        '$scope', '$state', '$modal', '$filter','_','slotsService',
-        function ($scope, $state, $modal, $filter, _, slotsService) {
+        '$scope', '$state', '$modal', '$filter','toastr','_','slotsService',
+        function ($scope, $state, $modal, $filter,toastr, _, slotsService) {
 
             function getSchedulerEvent(id) {
                 return $('#calendarBook').fullCalendar('clientEvents', id);
@@ -10,9 +10,9 @@
             if (window.socket && !window.socket._callbacks.slotAvailable) {
                 window.socket.on('slotAvailable', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
-                    if(event.length>0) {
+                    if (event.length > 0 && !event[0].isBooked) {
                         event[0].slot.countOfProviders++;
-                        event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
+                        event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
                         //event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                         event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                         $('#calendarBook').fullCalendar('updateEvent', event[0]);
@@ -21,13 +21,23 @@
                 window.socket.on('slotBooked', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
                     if(event.length>0) {
-                        if (event[0].slot.countOfProviders > 0) {
+                        if (event[0].slot.countOfProviders > 0 && !event[0].isBooked) {
                             event[0].slot.countOfProviders--;
                             event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
                            // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                             event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                             $('#calendarBook').fullCalendar('updateEvent', event[0]);
                         }
+                    }
+                });
+                window.socket.on('slotBookedSuccessfully', function (slot) {
+                    var event = getSchedulerEvent(slot.slotDateTime);
+                    if(event.length>0) {
+                        event[0].backgroundColor = 'rgb(191,88,179)';
+                        event[0].isBooked = true;
+                        // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                        event[0].title = "You have booked the appointment at this time.";
+                        $('#calendarBook').fullCalendar('updateEvent', event[0]);
                     }
                 });
                 window.socket.on('slotRemoved', function (slot) {
@@ -112,13 +122,20 @@
                             };
 
                             $scope.apply = function () {
+                                var now = new Date();
+                                if(calEvent.slot.slotDateTime<=now.getTime()){
+                                    toastr.error("It is too late to book for that time!", 'Error');
+                                    $modalInstance.dismiss();
+                                    return;
+                                }
                                 slotsService.bookAppointment({
                                         slotDateTime: calEvent.slot.slotDateTime
                                     },
                                     function (success) {
                                         $modalInstance.close($scope.scheduleValue);
                                     }, function (error) {
-                                        $scope.serverError = true;
+                                        $modalInstance.close($scope.scheduleValue);
+                                        toastr.error(error, 'Error');
                                     }
                                 );
                             };

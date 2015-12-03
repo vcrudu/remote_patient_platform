@@ -4,6 +4,8 @@
 (function(){
     var slotsRepository = require('../repositories').Slots;
     var gridCacheClient = require('../services/gridCacheClient');
+    var clientNotification = require('../notifications');
+    var providersRepository = require('../repositories').Providers;
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
@@ -12,14 +14,29 @@
             var dateTime = new Date();
             dateTime.setTime(slotEpoch);
             slotsRepository.getProvidersForSlot(dateTime, function (err, data) {
-                if (data.length == 0) callback("Slot is not available!", null);
+                if (data.length == 0) {
+                    callback("Slot is not available!", null);
+                    return;
+                }
                 var providerIndex = getRandomInt(0, data.length);
                 var providerId = data[providerIndex];
                 slotsRepository.updateSlot(userId, providerId, slotEpoch, function (err, result) {
                     if (!err) {
                         gridCacheClient.sendSlotBooked(slotEpoch, providerId);
+                        providersRepository.getOne(providerId, function (err, data) {
+                            if (!err) {
+                                clientNotification.sendEvent(userId,
+                                    'slotBookedSuccessfully',
+                                    {
+                                        slotDateTime: slotEpoch,
+                                        providerId: providerId,
+                                        providerName: data.title + ' ' + data.name + ' ' + data.surname
+                                    }
+                                );
+                            }
+                            callback(err, data);
+                        });
                     }
-                    callback(err, result);
                 });
             });
         },

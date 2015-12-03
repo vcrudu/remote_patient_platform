@@ -26,11 +26,19 @@
             var slot = req.body;
             if(!slot.cancel){
                 appointmentsService.bookAppointment(req.decoded.email, slot.slotDateTime, function(err, data){
-                    res.json({
-                        success: true,
-                        count: 1,
-                        result: data
-                    });
+                    if(!err){
+                        res.json({
+                            success: true,
+                            count: 1,
+                            result: data
+                        });
+                    }else {
+                        res.status(500).json({
+                            success: false,
+                            error: err
+                        });
+                    }
+
                 });
             }else {
                 appointmentsService.cancelAppointment(req.decoded.email, slot.slotDateTime, function (err, data) {
