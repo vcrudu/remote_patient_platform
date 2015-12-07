@@ -10,6 +10,8 @@
     var  assert = require('assert');
     var utils = require('../utils/dateTimeUtils');
     var slotRepository = require('../repositories/slotsRepository');
+    var usersDetailsRepository = require('../repositories/usersDetailsRepository');
+    var usersRepository = require('../repositories/usersRepository');
     var slotMinutes = [0, 15, 30, 45];
     var dateRegEx = '^([0-3][0-9].[0-1][0-9].[2][0][1-2][1-9])$';
     var timeRegEx = '^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$';
@@ -186,6 +188,38 @@
                     var rebuiltAvailability = utils.getAvailabilitiesFromSlots(data);
                     callback(null, rebuiltAvailability);
                 }
+            });
+        },
+        getBookedSlots: function (providerId, dateTime, callback) {
+            slotRepository.getBookedSlotsByProvider(providerId, dateTime, function (err, data) {
+                var result=[];
+                var theError;
+                if(data.length==0) callback(null, data);
+                _.forEach(data,function(slotItem){
+                    usersDetailsRepository.findOneByEmail(slotItem.patientId, function (err, userDetails) {
+                        if (err) {
+                            result.push(err);
+                        } else {
+                            usersRepository.findOneByEmail(slotItem.patientId, function (err, user, userDetails) {
+                                var onlineStatus;
+                                if(!err) {
+                                    onlineStatus = user.onlineStatus;
+                                }
+                                result.push({
+                                    patientId: slotItem.patientId,
+                                    name: userDetails.title + ' ' + userDetails.firstname + ' ' + userDetails.surname,
+                                    slotDateTime: slotItem.slotDateTime,
+                                    slotDateTimeString: slotItem.slotDateTimeString,
+                                    onlineStatus:onlineStatus
+                                });
+                                if (result.length == data.length) {
+                                    callback(null, result);
+                                }
+                            }, userDetails);
+                        }
+                    });
+                });
+
             });
         },
         generateSlots: function (providerId, availabilities, callback) {

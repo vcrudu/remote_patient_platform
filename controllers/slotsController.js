@@ -6,21 +6,21 @@
 
 
     var availabilityService = require('../services/availabilityService');
-    var cacheUrl = 'localhost';
+    var cacheUrl = 'hcm-availability.elasticbeanstalk.com';
     var http = require('http');
+    var loggerProvider = require('../logging');
 
     module.exports.init = function(app){
         app.get('/slots', function(req, res) {
             var reqOptions = {
                 hostname: cacheUrl,
-                port: 8082,
+                port: 80,
                 path: "/availability"
             };
-
             http.get(reqOptions, function (cacheResult) {
                 cacheResult.setEncoding('utf8');
 
-                var data="";
+                var data = "";
 
                 cacheResult.on('data', function (d) {
                     data = data + d.toString('utf8');
@@ -34,6 +34,8 @@
                 cacheResult.on('error', function (e) {
                     res.status(500).json(e);
                 });
+            }).on('error', function (e) {
+                loggerProvider.getLogger().error(e);
             });
         });
     };

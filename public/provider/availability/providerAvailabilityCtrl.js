@@ -28,6 +28,7 @@
                     vm.events.push({
                         title: data[i].intervals,
                         start: y+'-'+m+'-'+d,
+                        end: y+'-'+m+'-'+d,
                         allDay:true,
                         icon: 'fa fa-calendar',
                         className: ["event", 'bg-color-' + 'greenLight']});
@@ -95,7 +96,7 @@
                                 }
                                 var day = dateTime.getDate();
                                 if (day < 10)day = '0' + day;
-                                var month = dateTime.getMonth();
+                                var month = dateTime.getMonth()+1;
                                 if (month < 10)month = '0' + month;
                                 return day + '.' + month + '.' + dateTime.getFullYear();
                             }

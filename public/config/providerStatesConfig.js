@@ -14,10 +14,19 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.availability",
         templateUrl: "provider/availability/provider.availability.html",
         controller: 'providerAvailabilityCtrl',
-        controllerAs:'vm'
+        controllerAs: 'vm'
+    }).state("provider.appointments", {
+        url: "/provider.appointments",
+        templateUrl: "provider/appointments/provider.appointments.view.html",
+        controller: 'providerAppointmentsViewCtrl',
+        controllerAs: 'vm'
     }).state("provider.settings", {
         url: "/provider.settings",
         templateUrl: "provider/settings/provider.settings.html",
         controller: 'providerSettingsCtrl'
+    }).state("provider.call", {
+        url: "/provider.call",
+        templateUrl: "provider/appointments/provider.call.html",
+        controller: 'providerCallCtrl as vm'
     });
 }]);

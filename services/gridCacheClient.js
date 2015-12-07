@@ -14,7 +14,7 @@
         init: function () {
             socketClient = require('socket.io-client');
             Rx = require('rx');
-            io = socketClient("http://localhost:8082");
+            io = socketClient("http://hcm-availability.elasticbeanstalk.com");
             io.on('connect', function () {
                 loggerProvider.getLogger().debug(host_name + ' has connected to cache server!');
                 io.emit('ehlo', {host_name: host_name});

@@ -45,6 +45,32 @@
                 callback(null, dbData);
             });
         },
+        getAllByType : function(type, callback){
+            var dynamodb = getDb();
+
+            var params = {
+                TableName: TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+
+            };
+
+            dynamodb.query(params,function(err, data){
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                var dbCollection = data.Items;
+
+                var dbData = [];
+                _.forEach(dbCollection, function(dbModel){
+                    dbData.push(providerDbMapper.mapFromDbEntity(dbModel));
+                });
+                loggerProvider.getLogger().debug("The " + TABLE_NAME + " data has been retrieved successfully.");
+
+                callback(null, dbData);
+            });
+        },
 
         getOne : function(email, callback){
             var dynamodb = getDb();

@@ -8,7 +8,7 @@ angular.module('app').factory('availabilityService',['$http', '$localStorage','a
             getAvailability: function (dateTime, success, error) {
                 var req = {
                     method:'GET',
-                    url:appSettings.getServerUrl()+'/v1/api/availability',
+                    url:appSettings.getServerUrl()+'/v1/api/provider_availability',
                     headers:{
                         'x-access-token': $localStorage.user.token
                     }

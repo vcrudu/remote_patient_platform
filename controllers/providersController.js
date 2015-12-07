@@ -35,7 +35,7 @@ var logging = require("../logging");
                     result: providerSample
                 });
             } else {
-                usersRepository.getAll(function (err, data) {
+                usersRepository.getAllByType('provider',function (err, data) {
                     if (err) {
                         var incidentTicket = logging.getIncidentTicketNumber('pr');
                         logging.getLogger().error({incidentTicket: incidentTicket}, err);

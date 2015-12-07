@@ -5,11 +5,18 @@
 (function(){
 
     var appointmentsService = require('../services/appointmentsService');
+    var availabilityService = require('../services/availabilityService');
 
     module.exports.init = function(router){
         router.get('/appointments', function(req, res) {
             var params = req.params;
-            res.send(400);
+            availabilityService.getBookedSlots(req.decoded.email,new Date(),function(err, data){
+                res.json({
+                    success: true,
+                    count: data.length,
+                    result: data
+                });
+            });
         });
 
         router.get('/appointments/:userId', function(req, res){

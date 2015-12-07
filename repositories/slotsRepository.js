@@ -204,6 +204,52 @@
                 }
             });
         },
+        getBookedSlotsByProvider : function(providerId, startTime, callback){
+            var filterExpression='attribute_exists (patientId)';
+            var params = {
+                KeyConditionExpression: '#providerId=:providerId AND ' +
+                '#slotDateTime>=:startTime',
+
+                ExpressionAttributeNames: {
+                    "#providerId": "providerId",
+                    "#slotDateTime": "slotDateTime"
+                },
+                ExpressionAttributeValues: {
+                    ":providerId": {"S": providerId},
+                    ":startTime": {"N": startTime.getTime().toString()}
+                },
+                FilterExpression: filterExpression,
+                IndexName: 'providerId-slotDateTime-index',
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 700
+            };
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The slots has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item) {
+                        var time = parseInt(item.slotDateTime.N);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        results.push({
+                            patientId: item.patientId.S,
+                            slotDateTimeString: slotDateTime,
+                            slotDateTime: item.slotDateTime.N
+                        });
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
         saveBatch : function(slots, providerId, callback) {
             var dynamodb = getDb();
 

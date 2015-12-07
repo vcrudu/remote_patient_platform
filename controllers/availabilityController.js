@@ -62,7 +62,11 @@ var utils = require('../utils');
                     result: availabilitySample
                 });
             } else {
-                availabilityService.getAvailability(req.decoded.email, new Date(), function (err, data) {
+                var today = new Date();
+                today.setHours(0);
+                today.setMinutes(0);
+                today.setSeconds(0);
+                availabilityService.getAvailability(req.decoded.email, today, function (err, data) {
                     if (err) {
                         var incidentTicket = logging.getIncidentTicketNumber('pr');
                         logging.getLogger().error({incidentTicket: incidentTicket}, err);

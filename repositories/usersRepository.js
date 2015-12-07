@@ -21,7 +21,7 @@
 
     module.exports = {
 
-        findOneByEmail : function(email, callback){
+        findOneByEmail : function(email, callback, state){
 
             var params = {
                 Key: { email: { S: email }},
@@ -34,15 +34,15 @@
             dynamodb.getItem(params, function(err, data){
                 if(err) {
                     loggerProvider.getLogger().error(err);
-                    callback(err, null);
+                    callback(err, null, state);
                     return;
                 }
                 loggerProvider.getLogger().debug("The user has been found successfully.");
                 if(data.Item) {
                     var user = UserFactory.createUserFromDbEntity(data.Item);
-                    callback(null, user);
+                    callback(null, user, state);
                 }else{
-                    callback(null, null);
+                    callback(null, null, state);
                 }
             });
         },
@@ -156,6 +156,51 @@
             };
 
             dynamodb.scan(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                var dbUsers = data.Items;
+
+                var resultUsers=[];
+
+                _.forEach(dbUsers, function(dbUser){
+                    var user = UserFactory.createUserFromDbEntity(dbUser);
+                    resultUsers.push(user);
+                });
+
+                //console.log("The users has been retrieved successfully.");
+                callback(null, resultUsers);
+            });
+        },
+        getAllByType : function(type, callback) {
+
+            var dynamodb = getDb();
+
+            var filterExpression='#onlineStatus=:onlineStatus';
+            var params = {
+                KeyConditionExpression: '#type=:type AND ' +
+                '#email>=:email',
+
+                ExpressionAttributeNames: {
+                    "#type": "type",
+                    "#email": "email",
+                    "#onlineStatus":"onlineStatus"
+                },
+                ExpressionAttributeValues: {
+                    ":type": {"S": type},
+                    ":email": {"S": '0'},
+                    ":onlineStatus":{"S": 'online'}
+                },
+                FilterExpression: filterExpression,
+                IndexName: 'type-email-index',
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 700
+            };
+
+            dynamodb.query(params, function(err, data) {
                 if(err){
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
