@@ -7,7 +7,9 @@
     angular.module('app').config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         //$urlRouterProvider.otherwise("/login");
         $urlRouterProvider.when('', '/login');
-        $stateProvider.state('login', {
+        $stateProvider
+
+          .state('login', {
             url: "/login",
             views: {
                 "headerView": {templateUrl: "loggedOutHeader.html"},
@@ -15,6 +17,14 @@
             },
             controller: 'loginCtrl'
         })
+          .state('login.username', {
+            url: "/:userName",
+            views: {
+              "headerView": {templateUrl: "loggedOutHeader.html"},
+              "mainView": {templateUrl: "login.html"}
+            },
+            controller: 'loginCtrl'
+          })
             .state('register', {
                 url: "/register",
                 views: {
