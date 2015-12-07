@@ -1,6 +1,6 @@
 angular.module('app')
     .controller('ProviderRegisterCtrl', ['common', 'dataaccess', '$window', 'ProviderService', 'Messaging',
-        '$filter','$modal',function (common, dataaccess, $window, ProviderService, Messaging,$filter,$modal) {
+        '$filter','$modal', '$state', '$timeout',function (common, dataaccess, $window, ProviderService, Messaging,$filter,$modal, $state, $timeout) {
 
         var vm = this;
 
@@ -80,6 +80,9 @@ angular.module('app')
                 .then(function (result) {
                 vm.saving = false;
                 Messaging.success('sm', 'Success', 'Provider was successfully saved');
+                $timeout(function() {
+                  $state.go('login');
+                }, 3000);
 
             }, function (e) {
                 vm.saving = false;
@@ -87,9 +90,6 @@ angular.module('app')
 
             });
         }
-
-
-
     }])
     .directive('weekdaySchedule', ['common', function (common) {
         return {
