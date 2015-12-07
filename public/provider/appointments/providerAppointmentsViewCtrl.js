@@ -95,7 +95,7 @@
                 });
 
 
-
+            var currentDate = new Date();
             $('#calendarBook').fullCalendar({
                 schedulerLicenseKey:'0220103998-fcs-1447110034',
                 defaultView:'nursesGrid',
@@ -109,6 +109,7 @@
                         slotLabelInterval:'00:15'
                     }
                 },
+                scrollTime:currentDate.getHours()+':'+currentDate.getMinutes()+':00',
                 eventClick: function(calEvent, jsEvent, view) {
                     var now = new Date();
                     if(calEvent.id<now.getTime() || calEvent.slot.countOfProviders==0) return;
