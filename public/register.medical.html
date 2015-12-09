@@ -18,8 +18,8 @@
                                 <em ng-show="formMedical.nhsNumber.$dirty && formMedical.nhsNumber.$error.nhsNumberValid" class="invalid">NHS Number is not valid.</em>
                             </section>
                             <section class="col col-6">
-                                <label class="select">
-                                    <select class="input-md" name="ethnicity" ng-init="newUser.ethnicity=0" ng-model="newUser.ethnicity">
+                                <label class="select" ng-class="formMedical.ethnicity.$dirty && formMedical.ethnicity.$error.isEthnicityValid?'state-error':''">
+                                    <select class="input-md" name="ethnicity" ng-init="newUser.ethnicity=0" ng-model="newUser.ethnicity" is-ethnicity-valid>
                                         <option value="0" selected>Choose ethnicity</option>
                                         <option value="British/Mixed British">British/Mixed British</option>
                                         <option value="Irish">Irish</option>
@@ -33,9 +33,11 @@
                                         <option value="Other Asian Background">Other Asian Background</option>
                                         <option value="Caribbean">Caribbean</option>
                                         <option value="Chinese">Chinese</option>
-                                        <option value="Other Black Bakground">Other Black Bakground</option>
+                                        <option value="Other Black Background">Other Black Background</option>
                                         <option value="Other ethnic group">Other ethnic group</option>
-                                    </select> <i></i> </label>
+                                    </select> <i></i>
+                                </label>
+                                <em ng-show="formMedical.ethnicity.$dirty && formMedical.ethnicity.$error.isEthnicityValid" class="invalid">Ethnicity is required.</em>
                             </section>
                         </div>
                         <div class="row">

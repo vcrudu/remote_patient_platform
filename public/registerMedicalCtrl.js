@@ -7,6 +7,7 @@ angular.module('app').controller('registerMedicalCtrl',['$scope','$log','$state'
         $scope.formMedical.nhsNumber.$setDirty();
         $scope.formMedical.height.$setDirty();
         $scope.formMedical.weight.$setDirty();
+        $scope.formMedical.ethnicity.$setDirty();
         if(toState&&fromState&&fromState.data.order<toState.data.order && $scope.formMedical.$invalid){
            event.preventDefault();
         }else {
