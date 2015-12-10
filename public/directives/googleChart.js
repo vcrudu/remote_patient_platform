@@ -286,12 +286,8 @@ angular.module('app').directive('googleChart', [
             },
             template: '<div id="dashboard_{{chartid}}"><div id="chart_{{chartid}}"></div><div id="control_{{chartid}}" style="height: 50px;margin-bottom:10px;"></div><div id="slider_{{chartid}}"  style="margin-right:50px;margin-left:50px;margin-bottom:10px;"></div></div>',
             link: function ($scope, element, attrs) {
-
-
-
                 $scope.$watch(function () {
                     if ($scope.dashboard.data) {
-
                         $scope.googleDashboard = {
                             data: prepareData($scope.dashboard),
                             chartOptions: getChartOptions($scope.dashboard),
@@ -301,7 +297,6 @@ angular.module('app').directive('googleChart', [
 
                         return $scope.googleDashboard;
                     }
-
                     return $scope.googleDashboard;
                 }, function() {
                     draw();
