@@ -126,7 +126,8 @@
                                                                 <tbody>
                                                                 <tr ng-repeat="measurement in history.Measurements">
                                                                     <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
-                                                                    <td>{{measurement.FirstValue}}/{{measurement.SecondValue}}</td>
+                                                                    <td ng-show="measurement.SecondValue">{{measurement.FirstValue}} / {{measurement.SecondValue}}</td>
+                                                                    <td ng-show="!measurement.SecondValue">{{measurement.FirstValue}}</td>
                                                                     <td>
                                                                         <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
                                                                     </td>
@@ -185,15 +186,16 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr ng-repeat="measurement in history.dashboard.Measurements">
+                                                                <tr ng-repeat="measurement in history.Measurements">
                                                                     <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
-                                                                    <td>{{measurement.FirstValue}}/{{measurement.SecondValue}}</td>
+                                                                    <td ng-show="measurement.SecondValue">{{measurement.FirstValue}} / {{measurement.SecondValue}}</td>
+                                                                    <td ng-show="!measurement.SecondValue">{{measurement.FirstValue}}</td>
                                                                     <td>
                                                                         <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
-                                                                <tfoot ng-show="history.TotalItemsOnServer > history.dashboard.Measurements.length">
+                                                                <tfoot ng-show="history.TotalItemsOnServer > history.Measurements.length">
                                                                 <tr>
                                                                     <td colspan="3">
                                                                         <div style="width: 100px;margin: 0 auto;">

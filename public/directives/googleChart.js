@@ -32,7 +32,7 @@ angular.module('app').directive('googleChart', [
         function getChartLabel(deviceType) {
             var chartLabel = '';
 
-            switch (deviceType) {
+            switch (deviceType.toLowerCase()) {
                 case 'bloodoxygen':
                     chartLabel = 'Blood Oxigen';
                     break;
@@ -51,7 +51,7 @@ angular.module('app').directive('googleChart', [
                 case 'weight':
                     chartLabel = 'Weight';
                     break;
-                case 'bloodPressure':
+                case 'bloodpressure':
                     chartLabel = 'Blood Pressure';
                     break;
             }
