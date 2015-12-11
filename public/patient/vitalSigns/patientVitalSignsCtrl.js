@@ -7,9 +7,11 @@
         function ($scope, $log, $state, toastr, authService, historyService,$localStorage, $rootScope) {
             $scope.bodyClass = "desktop-detected pace-done";
             $scope.gender = $localStorage.user;
+            $scope.histories = [];
 
             if (window.socket && window.socket.connected) {
                 window.socket.on('newMeasurement', function (data) {
+                    debugger;
                     var history = _.find($scope.histories, function (history) {
                         return history.Id === data.measurementType;
                     });
