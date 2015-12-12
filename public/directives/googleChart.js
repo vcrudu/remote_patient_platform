@@ -368,7 +368,6 @@ angular.module('app').directive('googleChart', [
 
                             }, 50, true);
                         }
-
                     }
                 }
 
