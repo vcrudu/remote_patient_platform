@@ -33,6 +33,7 @@
 
                     if (history) {
                       history.dashboard.data.Measurements.push(newMeasurement);
+                      history.Measurements.push(newMeasurement);
                       var secondValueString = '';
                       if (data.SecondValue) {
                         secondValueString = "/" + SecondValue;
@@ -71,6 +72,7 @@
 
                       $scope.histories.push(history);
                       history.dashboard.data.Measurements.push(newMeasurement);
+                      history.Measurements.push(newMeasurement);
                       var secondValueString = '';
                       if (data.SecondValue) {
                         secondValueString = "/" + SecondValue;
