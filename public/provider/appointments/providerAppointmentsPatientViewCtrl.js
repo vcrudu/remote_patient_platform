@@ -12,7 +12,7 @@
         $scope.email = $state.params.userName;
       }
 
-      if (window.socket && window.socket.connected) {
+      /*if (window.socket && window.socket.connected) {
         window.socket.on('newMeasurement', function (data) {
           var history = _.find($scope.histories, function (history) {
             return history.Id === data.measurementType;
@@ -87,7 +87,7 @@
             $rootScope.$broadcast('newMeasurement', history);
           }
         });
-      }
+      }*/
 
       $scope.getHistories = function () {
         historyService.getHistoriesByEmail($scope.email, function (histories) {
