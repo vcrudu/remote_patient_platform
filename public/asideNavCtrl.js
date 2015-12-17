@@ -7,6 +7,7 @@ angular.module('app').controller('asideNavCtrl',['$scope', '$localStorage', func
     $scope.stateClass = 'fa fa-plus-square-o';
     $scope.childrenStateClass = {};
     $scope.isProvider = $localStorage.user.type==='provider';
+    $scope.statusClass = "online";
 
     $scope.isPatient = $localStorage.user.type==='patient';
 
@@ -21,4 +22,21 @@ angular.module('app').controller('asideNavCtrl',['$scope', '$localStorage', func
             $scope.childrenStateClass = {display:"block"};
         }
     };
+
+    $scope.$on('socket.connect', function(evt, eventText) {
+        setTimeout(function () {
+            $scope.$apply(function(){
+                $scope.statusClass = "online";
+            });
+        },50);
+    });
+
+    $scope.$on('socket.disconnect', function(evt, eventText) {
+        setTimeout(function () {
+            $scope.$apply(function(){
+                $scope.statusClass = "offline";
+            });
+        },50);
+
+    });
 }]);

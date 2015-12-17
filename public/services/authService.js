@@ -68,6 +68,11 @@ angular.module('app')
                                 window.socket = window.io.connect(appSettings.getServerUrl());
                                 window.socket.on('connect', function () {
                                     window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                    $rootScope.$broadcast('socket.connect', 'connected');
+                                });
+
+                                window.socket.on('disconnect', function () {
+                                    $rootScope.$broadcast('socket.disconnect', 'disconnected');
                                 });
 
                                 window.socket.on('call', function (data) {
