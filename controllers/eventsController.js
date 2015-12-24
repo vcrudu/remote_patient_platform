@@ -14,6 +14,7 @@ var notification = require('../notifications');
         router.get('/events', function(req, res){
             var pageSize = req.query.pageSize;
             var pageNumber = req.query.pageNumber;
+            var userName = req.query.userName;
             var measureType = req.query.measureType || 'All';
             if(req.query.sample){
                 if(!req.query.measureType)
@@ -29,7 +30,11 @@ var notification = require('../notifications');
                 startTime.setDate(startTime.getDate() - 7);
             }
 
-            eventsRepository.getByTimeIntervalAndMeasureType(req.decoded.email, measureType, startTime,endTime,function(err,data){
+            if (!userName)
+            {
+                userName = req.decoded.email;
+            }
+            eventsRepository.getByTimeIntervalAndMeasureType(userName, measureType, startTime,endTime,function(err,data){
                 if(err){
                     var incidentTicket = logging.getIncidentTicketNumber('ev');
                     logging.getLogger().error({incidentTicket:incidentTicket},err);

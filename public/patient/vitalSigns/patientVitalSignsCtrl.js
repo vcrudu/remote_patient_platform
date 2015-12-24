@@ -11,7 +11,6 @@
 
             if (window.socket && window.socket.connected) {
                 window.socket.on('newMeasurement', function (data) {
-                    debugger;
                     var history = _.find($scope.histories, function (history) {
                         return history.Id === data.measurementType;
                     });
@@ -32,21 +31,63 @@
                         SecondValue: SecondValue
                     };
 
-                    history.dashboard.data.Measurements.push(newMeasurement);
-                    var secondValueString='';
-                    if(data.SecondValue){
-                        secondValueString = "/"+SecondValue;
-                    }
-                    var stringToToast = "Time: "+newMeasurement.DateTime +"\n"+data.measurementType+": "+FirstValue + secondValueString;
+                    if (history) {
+                      history.dashboard.data.Measurements.push(newMeasurement);
+                      history.Measurements.push(newMeasurement);
+                      var secondValueString = '';
+                      if (data.SecondValue) {
+                        secondValueString = "/" + SecondValue;
+                      }
+                      var stringToToast = "Time: " + newMeasurement.DateTime + "\n" + data.measurementType + ": " + FirstValue + secondValueString;
 
-                    toastr.info(stringToToast,
+                      toastr.info(stringToToast,
                         'New measurement');
 
-                    $rootScope.$broadcast('newMeasurement', history);
+                      $rootScope.$broadcast('newMeasurement', history);
+                    }
+                    else
+                    {
+                      var newHistory = {
+                        Id: data.measurementType,
+                        Measurements: [
+                          {
+                            DateTime: new Date(data.measurementDateTime),
+                            UnixSessionDate: data.utcDateTime,
+                            FirstValue: FirstValue,
+                            SecondValue: SecondValue
+                          }],
+                        dashboard: {
+                          data: {
+                            Measurements: [],
+                            deviceType: data.measurementType,
+                            deviceName: data.measurementType
+                          },
+                          deviceType: data.measurementType,
+                          deviceName: data.measurementType
+                        }, deviceType: data.measurementType,
+                        deviceName: data.measurementType
+                      };
+
+                      history = newHistory;
+
+                      $scope.histories.push(history);
+                      history.dashboard.data.Measurements.push(newMeasurement);
+                      history.Measurements.push(newMeasurement);
+                      var secondValueString = '';
+                      if (data.SecondValue) {
+                        secondValueString = "/" + SecondValue;
+                      }
+                      var stringToToast = "Time: " + newMeasurement.DateTime + "\n" + data.measurementType + ": " + FirstValue + secondValueString;
+
+                      toastr.info(stringToToast, 'New measurement');
+
+                      $rootScope.$broadcast('newMeasurement', history);
+                    }
                 });
             }
 
-            historyService.getHistories(function (histories) {
+            $scope.getHistories = function () {
+                historyService.getHistories(function (histories) {
                     $scope.histories = histories;
                     angular.forEach($scope.histories, function (history) {
                         history.dashboard = {
@@ -58,7 +99,10 @@
                 },
                 function (error) {
                     console.error(error);
-                });
+                })
+            };
+
+            $scope.getHistories();
 
             historyService.getPatientDetails(function (result) {
                     $scope.birthDate = result.dateOfBirth;
