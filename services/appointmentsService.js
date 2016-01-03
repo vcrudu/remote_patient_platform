@@ -6,11 +6,13 @@
     var gridCacheClient = require('../services/gridCacheClient');
     var clientNotification = require('../notifications');
     var providersRepository = require('../repositories').Providers;
+    var smsClient = require('../smsClient');
+    var loggerProvider = require('../logging');
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
     module.exports = {
-        bookAppointment: function (userId, slotEpoch, callback) {
+        bookAppointment: function (userId, slotEpoch, appointmentReason, callback) {
             var dateTime = new Date();
             dateTime.setTime(slotEpoch);
             slotsRepository.getProvidersForSlot(dateTime, function (err, data) {
@@ -20,7 +22,7 @@
                 }
                 var providerIndex = getRandomInt(0, data.length);
                 var providerId = data[providerIndex];
-                slotsRepository.updateSlot(userId, providerId, slotEpoch, function (err, result) {
+                slotsRepository.updateSlot(userId, providerId, slotEpoch, appointmentReason, function (err, result) {
                     if (!err) {
                         gridCacheClient.sendSlotBooked(slotEpoch, providerId);
                         providersRepository.getOne(providerId, function (err, data) {
@@ -33,6 +35,11 @@
                                         providerName: data.title + ' ' + data.name + ' ' + data.surname
                                     }
                                 );
+                                smsClient.sendAppointmentSms(userId, slotEpoch, function (err, data) {
+                                    if(err) {
+                                        loggerProvider.getLogger().error(err);
+                                    }
+                                });
                             }
                             callback(err, data);
                         });

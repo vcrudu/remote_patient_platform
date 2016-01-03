@@ -32,7 +32,7 @@
         router.put('/appointments', function(req, res){
             var slot = req.body;
             if(!slot.cancel){
-                appointmentsService.bookAppointment(req.decoded.email, slot.slotDateTime, function(err, data){
+                appointmentsService.bookAppointment(req.decoded.email, slot.slotDateTime, slot.appointmentReason, function(err, data){
                     if(!err){
                         res.json({
                             success: true,

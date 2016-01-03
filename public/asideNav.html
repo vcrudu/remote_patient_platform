@@ -26,19 +26,21 @@
             <a ui-sref="patient.devices.buy"><i class="fa fa-lg fa-fw fa-stethoscope"></i> <span class="menu-item-parent">Devices</span></a>
         </li>
 
-        <li>
+        <!--<li>
             <a ng-click="switchState()"><i class="fa fa-lg fa-fw fa-user-md"></i>
                 <span class="menu-item-parent">Appointments</span>
                 <b class="collapse-sign"><em ng-class="stateClass"></em></b>
             </a>
             <ul ng-style="childrenStateClass">
-                <li ui-sref-active="active">
-                    <a ui-sref="patient.appointments.view"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
-                </li>
+
                 <li ui-sref-active="active">
                     <a ui-sref="patient.call"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Urgent call</span></a>
                 </li>
             </ul>
+        </li>-->
+
+        <li ui-sref-active="active">
+            <a ui-sref="patient.appointments"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
         </li>
 
         <li ui-sref-active="active">
@@ -47,9 +49,6 @@
 
         <li ui-sref-active="active">
             <a ui-sref="patient.settings"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Settings</span></a>
-        </li>
-        <li ui-sref-active="active">
-            <a ui-sref="provider.availability"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">Availability</span></a>
         </li>
     </ul>
 

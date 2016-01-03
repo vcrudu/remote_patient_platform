@@ -74,7 +74,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             //        });
             //    }
             //}
-        }).state("patient.appointments", {
+        })/*.state("patient.appointments", {
             url: "/patient.appointments",
             templateUrl: "patient/appointments/patient.appointments.html",
             controller: 'patientAppointmentsCtrl'
@@ -82,8 +82,8 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patient.appointments.book",
             templateUrl: "patient/appointments/book.html",
             controller: 'patientAppointmentsBookCtrl'
-        }).state("patient.appointments.view", {
-            url: "/patient.appointments.view",
+        })*/.state("patient.appointments", {
+            url: "/patient.appointments",
             templateUrl: "patient/appointments/patient.appointments.view.html",
             controller: 'patientAppointmentsViewCtrl',
             controllerAs:'vm'
