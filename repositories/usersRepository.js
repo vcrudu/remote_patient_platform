@@ -47,6 +47,32 @@
             });
         },
 
+        findOneByNhsNumber : function(nhsNumber, callback, state){
+
+            var params = {
+                Key: { nhsNumber: { S: nhsNumber }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null, state);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The user has been found successfully.");
+                if(data.Item) {
+                    var user = UserFactory.createUserFromDbEntity(data.Item);
+                    callback(null, user, state);
+                }else{
+                    callback(null, null, state);
+                }
+            });
+        },
+
         updateToken : function(user, callback) {
 
             var dynamodb = getDb();
