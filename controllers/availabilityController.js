@@ -27,7 +27,7 @@ var utils = require('../utils');
     module.exports.init = function (router) {
         router.get('/availability', function (req, res) {
             if (req.query.sample) {
-                var availabilitySample = [{dateString:'10.03.2015',availabilityString:'08:00-12:00,13:00-17:00'}];
+                var availabilitySample = [{dateString: '10.03.2015', availabilityString: '08:00-12:00,13:00-17:00'}];
                 res.send({
                     success: true,
                     count: 1,
@@ -55,7 +55,7 @@ var utils = require('../utils');
 
         router.get('/provider_availability', function (req, res) {
             if (req.query.sample) {
-                var availabilitySample = [{dateString:'10.03.2015',availabilityString:'08:00-12:00,13:00-17:00'}];
+                var availabilitySample = [{dateString: '10.03.2015', availabilityString: '08:00-12:00,13:00-17:00'}];
                 res.send({
                     success: true,
                     count: 1,
@@ -85,8 +85,6 @@ var utils = require('../utils');
             }
         });
 
-
-
         router.post('/availability', function (req, res) {
             if (!req.body.availabilityString) {
                 res.status(400).json({
@@ -103,15 +101,50 @@ var utils = require('../utils');
             }
 
             var userId = req.decoded.email;
-            var availabilities = utils.dateTimeUtils.getAvailabilitiesFromString(req.body.dateString, req.body.availabilityString);
-
-
-            availabilityService.generateSlots(userId, availabilities, function (err, date) {
+            var newAvailabilities = utils.dateTimeUtils.getAvailabilitiesFromString(req.body.dateString, req.body.availabilityString);
+            availabilityService.generateNewSlots(userId, newAvailabilities, null, function (err, data) {
                 res.send({
                     success: true,
-                    result: date
+                    result: data
                 });
             });
+        });
+
+        router.put('/availability', function (req, res) {
+            if (!req.body.availabilityString) {
+                res.status(400).json({
+                    success: false,
+                    message: "Availability string is missing!"
+                });
+            }
+
+            if (!req.body.dateString) {
+                res.status(400).json({
+                    success: false,
+                    message: "Availability string is missing!"
+                });
+            }
+
+            if (!req.body.oldAvailabilityString) {
+                res.status(400).json({
+                    success: false,
+                    message: "Modified availability string is missing!"
+                });
+            }
+
+            var userId = req.decoded.email;
+            var newAvailabilities = utils.dateTimeUtils.getAvailabilitiesFromString(req.body.dateString,
+                req.body.availabilityString);
+            var oldAvailabilities = utils.dateTimeUtils.getAvailabilitiesFromString(req.body.dateString,
+                req.body.oldAvailabilityString);
+
+            availabilityService.generateNewSlots(userId, newAvailabilities, oldAvailabilities,
+                function (err, data) {
+                    res.send({
+                        success: true,
+                        result: data
+                    });
+                });
         });
     };
 })();

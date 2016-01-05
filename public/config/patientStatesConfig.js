@@ -16,9 +16,42 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "patient/home/patient.home.html",
         controller: 'patientHomeCtrl'
     }).state("patient.vitalsigns", {
-        url: "/patient.vitalsigns",
+        url: "/patient.vitalsigns?token",
         templateUrl: "patient/vitalSigns/patient.vitalsigns.html",
-        controller: 'patientVitalSignsCtrl'
+        controller: 'patientVitalSignsCtrl',
+        resolve: {
+            promiseObj2: function ($http, $stateParams,$localStorage,appSettings) {
+                if ($stateParams.token) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                        headers: {
+                            'x-access-token': $stateParams.token
+                        }
+                    };
+                    return $http(req).then(function (res) {
+                        if (!res.error) {
+                            $localStorage.user = res.data.data;
+                            if (window.socket) {
+                                window.socket.connect();
+                            } else {
+                                window.socket = window.io.connect(appSettings.getServerUrl());
+                                window.socket.on('connect', function () {
+                                    window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                    $rootScope.$broadcast('socket.connect', 'connected');
+                                });
+
+                                window.socket.on('disconnect', function () {
+                                    $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    return null;
+                }
+            }
+        }
     }).state("patient.devices", {
         url: "/patient.devices",
         templateUrl: "patient/devices/patient.devices.html",
@@ -74,7 +107,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             //        });
             //    }
             //}
-        }).state("patient.appointments", {
+        })/*.state("patient.appointments", {
             url: "/patient.appointments",
             templateUrl: "patient/appointments/patient.appointments.html",
             controller: 'patientAppointmentsCtrl'
@@ -82,12 +115,45 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patient.appointments.book",
             templateUrl: "patient/appointments/book.html",
             controller: 'patientAppointmentsBookCtrl'
-        }).state("patient.appointments.view", {
-            url: "/patient.appointments.view",
-            templateUrl: "patient/appointments/patient.appointments.view.html",
-            controller: 'patientAppointmentsViewCtrl',
-            controllerAs:'vm'
-        }).state("patient.settings", {
+        })*/.state("patient.appointments", {
+        url: "/patient.appointments?token",
+        templateUrl: "patient/appointments/patient.appointments.view.html",
+        controller: 'patientAppointmentsViewCtrl',
+        controllerAs: 'vm',
+        resolve: {
+            promiseObj2: function ($http, $stateParams, $localStorage, appSettings) {
+                if ($stateParams.token) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                        headers: {
+                            'x-access-token': $stateParams.token
+                        }
+                    };
+                    return $http(req).then(function (res) {
+                        if (!res.error) {
+                            $localStorage.user = res.data.data;
+                            if (window.socket) {
+                                window.socket.connect();
+                            } else {
+                                window.socket = window.io.connect(appSettings.getServerUrl());
+                                window.socket.on('connect', function () {
+                                    window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                    $rootScope.$broadcast('socket.connect', 'connected');
+                                });
+
+                                window.socket.on('disconnect', function () {
+                                    $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    return null;
+                }
+            }
+        }
+    }).state("patient.settings", {
             url: "/patient.settings",
             templateUrl: "patient/settings/patient.settings.html",
             controller: 'patientSettingsCtrl'

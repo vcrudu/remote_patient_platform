@@ -36,7 +36,7 @@ describe('slots', function() {
                         if(hoursEnd<10)hoursEnd='0'+hoursEnd;
                         var minutes = nowTime.getMinutes();
                         if(minutes<10)minutes='0'+minutes;
-                        availabilityService.generateSlots('test@test.com', [
+                        availabilityService.generateNewSlots('test@test.com', [
                             {
                                 date: day+'.'+month+'.'+nowTime.getFullYear(),
                                 startTime: hours+':'+minutes,
@@ -82,7 +82,7 @@ describe('slots', function() {
 
         it('should generate 9 slots from availability', function (done) {
             var availabilities = [{date:'10.10.2015',startTime:'10:15', endTime:'12:30'}];
-            var slots = availabilityService.generateSlots('test1',availabilities, function(err, data){
+            var slots = availabilityService.generateNewSlots('test1',availabilities, function(err, data){
                 should(data.slots.length).be.equal(9);
                 done();
             });
@@ -116,13 +116,13 @@ describe('slots', function() {
                             startTime: hours + ':' + minutes,
                             endTime: hoursEnd + ':' + minutes,
                         };
-                        availabilityService.generateSlots('test@test.com', [availability],
+                        availabilityService.generateNewSlots('test@test.com', [availability],
                             function (error, slotsStatus) {
                                 should(slotsStatus.successCount).be.equal(1);
-                                availabilityService.generateSlots('test1@test.com', [availability],
+                                availabilityService.generateNewSlots('test1@test.com', [availability],
                                     function (error, slotsStatus) {
                                         should(slotsStatus.successCount).be.equal(1);
-                                        availabilityService.generateSlots('test2@test.com', [availability],
+                                        availabilityService.generateNewSlots('test2@test.com', [availability],
                                             function (error, slotsStatus) {
                                                 should(slotsStatus.successCount).be.equal(1);
                                                 slotDateTime = slotsStatus.slots[0].slotDateTime;

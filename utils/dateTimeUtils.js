@@ -136,17 +136,69 @@
         });
 
         var aResult;
-
+        //// Each interval as separate item
         _.forEach(availabilities, function (availability) {
-            if (aResult && availability.date === aResult.date) {
+            /*if (aResult && availability.date === aResult.date) {
                 aResult.intervals = aResult.intervals + ',' + availability.startTime + '-' + availability.endTime;
-            } else {
+            } else {*/
                 aResult = {
                     date: availability.date,
                     intervals: availability.startTime + '-' + availability.endTime
                 };
                 result.push(aResult);
+            //}
+        });
+
+
+        return result;
+    }
+
+    function getAvailabilitiesFromSlotsAsDate(slots) {
+        var result = [];
+        var availabilities = [];
+        if (slots.length == 0) return result;
+        var aSlot = slots[0];
+        var availabilityDateString = getDotDateString(aSlot);
+        var availabilityStartTime = getTimeString(aSlot);
+        var availabilityEndTime = getTimeString(addMinutes(aSlot, 15));
+        var nextAvailability;
+        if (slots.length == 1) return [{
+            date: availabilityDateString,
+            startTime: availabilityStartTime,
+            endTime: availabilityEndTime
+        }];
+        for (var i = 1; i < slots.length; i++) {
+            if (difference(slots[i - 1], slots[i]) > 15) {
+                availabilityEndTime = getTimeString(addMinutes(slots[i - 1], 15));
+                availabilities.push({
+                    date: availabilityDateString,
+                    startTime: availabilityStartTime,
+                    endTime: availabilityEndTime
+                });
+                availabilityDateString = getDotDateString(slots[i]);
+                availabilityStartTime = getTimeString(slots[i]);
             }
+        }
+        availabilityEndTime = getTimeString(addMinutes(slots[slots.length - 1], 15));
+        availabilities.push({
+            date: availabilityDateString,
+            startTime: availabilityStartTime,
+            endTime: availabilityEndTime
+        });
+
+        var aResult;
+        //// Each interval as separate item
+        _.forEach(availabilities, function (availability) {
+            /*if (aResult && availability.date === aResult.date) {
+             aResult.intervals = aResult.intervals + ',' + availability.startTime + '-' + availability.endTime;
+             } else {*/
+            aResult = {
+                date: availability.date,
+                startTime: availability.startTime,
+                endTime: availability.endTime
+            };
+            result.push(aResult);
+            //}
         });
 
 
@@ -155,18 +207,19 @@
 
     module.exports = {
         buildDateTime: function (dateString, timeString) {
-            return new Date(getYear(dateString), getMonth(dateString)-1, getDay(dateString),
+            return new Date(getYear(dateString), getMonth(dateString) - 1, getDay(dateString),
                 getHour(timeString), getMinute(timeString));
         },
-        getDay:getDay,
-        getYear:getYear,
-        getMonth:getMonth,
-        getHour:getHour,
-        getMinute:getMinute,
-        getAvailabilitiesFromString:getAvailabilitiesFromString,
-        getAvailabilitiesFromSlots:getAvailabilitiesFromSlots,
-        getDotDateString:getDotDateString,
-        addMinutes:addMinutes,
-        difference:difference
+        getDay: getDay,
+        getYear: getYear,
+        getMonth: getMonth,
+        getHour: getHour,
+        getMinute: getMinute,
+        getAvailabilitiesFromString: getAvailabilitiesFromString,
+        getAvailabilitiesFromSlots: getAvailabilitiesFromSlots,
+        getAvailabilitiesFromSlotsAsDate: getAvailabilitiesFromSlotsAsDate,
+        getDotDateString: getDotDateString,
+        addMinutes: addMinutes,
+        difference: difference
     };
 })();

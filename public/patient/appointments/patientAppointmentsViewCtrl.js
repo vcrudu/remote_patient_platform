@@ -131,12 +131,13 @@
                                     return;
                                 }
                                 slotsService.bookAppointment({
-                                        slotDateTime: calEvent.slot.slotDateTime
+                                        slotDateTime: calEvent.slot.slotDateTime,
+                                        appointmentReason:$scope.reasonText
                                     },
                                     function (success) {
-                                        $modalInstance.close($scope.scheduleValue);
+                                        $modalInstance.close($scope.reasonText);
                                     }, function (error) {
-                                        $modalInstance.close($scope.scheduleValue);
+                                        $modalInstance.close($scope.reasonText);
                                         toastr.error(error, 'Error');
                                     }
                                 );

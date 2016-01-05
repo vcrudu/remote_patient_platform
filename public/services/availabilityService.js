@@ -7,28 +7,42 @@ angular.module('app').factory('availabilityService',['$http', '$localStorage','a
         return {
             getAvailability: function (dateTime, success, error) {
                 var req = {
-                    method:'GET',
-                    url:appSettings.getServerUrl()+'/v1/api/provider_availability',
-                    headers:{
+                    method: 'GET',
+                    url: appSettings.getServerUrl() + '/v1/api/provider_availability',
+                    headers: {
                         'x-access-token': $localStorage.user.token
                     }
                 };
 
-                $http(req).success(function(res){
+                $http(req).success(function (res) {
                     success(res.result);
                 }).error(error);
-            },saveAvailability: function (availability, success, error) {
+            }, addAvailability: function (availability, success, error) {
 
                 var req = {
-                    method:'POST',
-                    url:appSettings.getServerUrl()+'/v1/api/availability',
-                    headers:{
+                    method: 'POST',
+                    url: appSettings.getServerUrl() + '/v1/api/availability',
+                    headers: {
                         'x-access-token': $localStorage.user.token
                     },
-                    data:availability
+                    data: availability
                 };
 
-                $http(req).success(function(res){
+                $http(req).success(function (res) {
+                    success(res.result);
+                }).error(error);
+            }, editAvailability: function (availability, success, error) {
+
+                var req = {
+                    method: 'PUT',
+                    url: appSettings.getServerUrl() + '/v1/api/availability',
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    },
+                    data: availability
+                };
+
+                $http(req).success(function (res) {
                     success(res.result);
                 }).error(error);
             }

@@ -17,6 +17,7 @@
     var timeRegEx = '^((([0-1][0-9])|([2][0-3])):([0-5][0-9]))$';
     var gridCacheClient = require('../services/gridCacheClient');
     var loggerProvider = require('../logging');
+    var Rx = require('rx');
 
     function addMinutes(date, minutes) {
         var timeInMilliseconds = date.getTime();
@@ -86,6 +87,15 @@
         var endDateTime = utils.buildDateTime(availability.date,availability.endTime);
         var slots = getTimeSlotsForPeriod(startDateTime, endDateTime);
         return slots;
+    }
+
+    function generateSlotsFromMultipleAvailabilities(availabilities){
+        var allSlots = [];
+        _.forEach(availabilities, function(availability){
+            var slots = generateSlotsFromAvailability(availability);
+            allSlots = allSlots.concat(slots);
+        });
+        return allSlots;
     }
 
     function getProvidersAvailability(callback) {
@@ -179,6 +189,106 @@
         return resultSlots;
     }
 
+    function extendConstrainSlots(providerId, newAvailabilities, oldAvailabilities, callback) {
+        /*
+         *
+         * This is the method that modify slots
+         * generate old slots
+         * generate new slots
+         * get all slots in the new that are not in the old (Make difference)
+         * if nothing delete what remains
+         * if anything then add only remained slots in the new list
+         *
+         */
+
+        try {
+            assert.ok(providerId, "providerId should not be null!");
+            assert.ok(util.isArray(newAvailabilities), "availabilities should be array!");
+        } catch (err) {
+            callback(err, null);
+            return;
+        }
+
+        function GetDistinctAvailabilityDays(availabilities) {
+            var result = [];
+            _.forEach(availabilities, function (availability) {
+                if (!_.find(result, function (day) {
+                        return day.date === availability.date;
+                    })) {
+                    result.push(availability);
+                }
+            });
+            return result;
+        }
+
+        var distinctNewAvailabilitiesDays = GetDistinctAvailabilityDays(newAvailabilities);
+        var distinctOldAvailabilitiesDays = GetDistinctAvailabilityDays(oldAvailabilities);
+
+        if (distinctNewAvailabilitiesDays.length > 1 || distinctOldAvailabilitiesDays.length > 1) {
+            callback(new Error("Availability modification is possible only for one day." +
+                " Please don't specify multiple days!"), null);
+            return;
+        }
+
+        var allSlots = [];
+        var availabilitiesSaveStatus = [];
+        //todo-here this function is not implemented, don't use
+    }
+
+    function deleteSlots(providerId, oldAvailabilities, callback) {
+        /*
+        * This method delete the slots
+        * */
+        try {
+            assert.ok(providerId, "providerId should not be null!");
+            assert.ok(util.isArray(oldAvailabilities), "availabilities should be array!");
+        } catch (err) {
+            callback(err, null);
+            return;
+        }
+
+        var distinctDays = [];
+        _.forEach(oldAvailabilities, function (availability) {
+            if (!_.find(distinctDays, function (day) {
+                    return day.date === availability.date;
+                })) {
+                distinctDays.push(availability);
+            }
+        });
+
+        var distinctDaysDeleteStatus = [];
+        var allSlots = [];
+        _.forEach(distinctDays, function (distinctDay) {
+            var slotsToDelete = getSlotsForDay(distinctDay.date);
+            slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
+                gridCacheClient.sendSlotsBatchRemoved(slotsToDelete,providerId);
+                distinctDaysDeleteStatus.push(distinctDay);
+                if (distinctDaysDeleteStatus.length === distinctDays.length) {
+                    var availabilitiesSaveStatus = [];
+                    _.forEach(oldAvailabilities, function (availability) {
+                        try {
+                            var slots = generateSlotsFromAvailability(availability);
+                            slotRepository.saveBatch(slots, providerId, function (error, data) {
+                                if (error) {
+                                    loggerProvider.getLogger().error(error);
+                                } else {
+                                    availabilitiesSaveStatus.push(availability);
+                                    gridCacheClient.sendSlotsBatchAvailable(slots, providerId);
+                                    allSlots = allSlots.concat(slots);
+                                    if (availabilitiesSaveStatus.length === oldAvailabilities.length) {
+                                        callback(null, allSlots);
+                                    }
+                                }
+                            });
+                        } catch (err) {
+                            loggerProvider.getLogger().error(err);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
     module.exports = {
         getAvailability: function (providerId, dateTime, callback) {
             slotRepository.getSlotsByProvider(providerId, dateTime, function (err, data) {
@@ -191,7 +301,7 @@
             });
         },
         getBookedSlots: function (providerId, dateTime, callback) {
-            slotRepository.getBookedSlotsByProvider(providerId, dateTime, function (err, data) {
+            slotRepository.getBookedSlotsByProvider(providerId, dateTime, null, function (err, data) {
                 var result=[];
                 var theError;
                 if(data.length==0) callback(null, data);
@@ -222,17 +332,17 @@
 
             });
         },
-        generateSlots: function (providerId, availabilities, callback) {
+        generateNewSlots: function (providerId, newAvailabilities, oldAvailabilities, callback) {
             try {
                 assert.ok(providerId, "providerId should not be null!");
-                assert.ok(util.isArray(availabilities), "availabilities should be array!");
+                assert.ok(util.isArray(newAvailabilities), "availabilities should be array!");
             } catch (err) {
                 callback(err, null);
                 return;
             }
 
             var distinctDays = [];
-            _.forEach(availabilities, function (availability) {
+            _.forEach(newAvailabilities, function (availability) {
                 if (!_.find(distinctDays, function (day) {
                         return day.date === availability.date;
                     })) {
@@ -240,39 +350,119 @@
                 }
             });
 
-            var distinctDaysDeleteStatus = [];
-            var allSlots = [];
-            _.forEach(distinctDays, function (distinctDay) {
-                var slotsToDelete = getSlotsForDay(distinctDay.date);
-                slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
-                    gridCacheClient.sendSlotsBatchRemoved(slotsToDelete,providerId);
-                    distinctDaysDeleteStatus.push(distinctDay);
-                    if (distinctDaysDeleteStatus.length === distinctDays.length) {
-                        var availabilitiesSaveStatus = [];
-                        _.forEach(availabilities, function (availability) {
-                            try {
-                                var slots = generateSlotsFromAvailability(availability);
-                                slotRepository.saveBatch(slots, providerId, function (error, data) {
-                                    if (error) {
-                                        loggerProvider.getLogger().error(error);
+            if (distinctDays.length > 1) {
+                callback(new Error("Change availability for one day only!"), null);
+            } else {
+                var slotsToDelete;
+                var toAddSlots = generateSlotsFromMultipleAvailabilities(newAvailabilities);
+                var oldSlots = generateSlotsFromMultipleAvailabilities(oldAvailabilities);
+
+                var distinctToAddSlotsSource = Rx.Observable.from(toAddSlots).distinct(function(toAddSlot) {
+                    return toAddSlot.getTime();
+                });
+
+                var toAddSlotsFromDistinctSource = [];
+
+                distinctToAddSlotsSource.subscribe(function(toAddSlot){
+                    toAddSlotsFromDistinctSource.push(toAddSlot);
+                });
+
+                toAddSlots = toAddSlotsFromDistinctSource;
+
+                if (oldAvailabilities) {
+                    slotsToDelete = _.filter(oldSlots, function (oldSlot) {
+                        return !_.find(toAddSlots, function (toAddSlot) {
+                            return oldSlot.getTime() == toAddSlot.getTime();
+                        });
+                    });
+
+                    toAddSlots = _.filter(toAddSlots, function (toAddSlot) {
+                        return !_.find(oldSlots, function (oldSlot) {
+                            return oldSlot.getTime() == toAddSlot.getTime();
+                        });
+                    });
+
+                    if (slotsToDelete && slotsToDelete.length > 0) {
+                        var availabilitiesToDelete = utils.getAvailabilitiesFromSlotsAsDate(slotsToDelete);
+                        var availabilityToDeleteStatus = [];
+                        _.forEach(availabilitiesToDelete, function (availabilityToDelete) {
+                            var startTime = utils.buildDateTime(availabilityToDelete.date, availabilityToDelete.startTime);
+                            var endTime = utils.buildDateTime(availabilityToDelete.date, availabilityToDelete.endTime);
+                            slotRepository.getBookedSlotsByProvider(providerId, startTime, endTime,
+                                function (err, data) {
+                                    if (data.length > 0) {
+                                        callback(new Error("You have booked appointments for the specified intervals. Please transfer the " +
+                                            "appointments to other provider before changing the schedule!"));
+                                        return;
                                     } else {
-                                        availabilitiesSaveStatus.push(availability);
-                                        gridCacheClient.sendSlotsBatchAvailable(slots, providerId);
-                                        allSlots = allSlots.concat(slots);
-                                        if (availabilitiesSaveStatus.length === availabilities.length) {
-                                            callback(null, allSlots);
+                                        availabilityToDeleteStatus.push(availabilityToDelete);
+                                        if (availabilityToDeleteStatus.length == availabilitiesToDelete.length) {
+                                            slotRepository.deleteBatch(slotsToDelete, providerId, function (err, data) {
+                                                //todo-here if error - don't send slotsBatchRemoved
+                                                gridCacheClient.sendSlotsBatchRemoved(slotsToDelete, providerId);
+                                                try {
+                                                    if(toAddSlots.lenth>0) {
+                                                        slotRepository.saveBatch(toAddSlots, providerId, function (error, data) {
+                                                            if (error) {
+                                                                loggerProvider.getLogger().error(error);
+                                                            } else {
+                                                                gridCacheClient.sendSlotsBatchAvailable(toAddSlots, providerId);
+                                                                callback(null, toAddSlots);
+                                                            }
+                                                        });
+                                                    } else callback(null, []);
+                                                } catch (err) {
+                                                    loggerProvider.getLogger().error(err);
+                                                }
+                                            });
                                         }
                                     }
                                 });
-                            } catch (err) {
-                                loggerProvider.getLogger().error(err);
+                        });
+                    }else {
+                        try {
+                            slotRepository.saveBatch(toAddSlots, providerId, function (error, data) {
+                                if (error) {
+                                    loggerProvider.getLogger().error(error);
+                                } else {
+                                    gridCacheClient.sendSlotsBatchAvailable(toAddSlots, providerId);
+                                    callback(null, toAddSlots);
+                                }
+                            });
+                        } catch (err) {
+                            loggerProvider.getLogger().error(err);
+                        }
+                    }
+                } else {
+                    try {
+                        slotRepository.saveBatch(toAddSlots, providerId, function (error, data) {
+                            if (error) {
+                                loggerProvider.getLogger().error(error);
+                            } else {
+                                gridCacheClient.sendSlotsBatchAvailable(toAddSlots, providerId);
+                                callback(null, toAddSlots);
                             }
                         });
+                    } catch (err) {
+                        loggerProvider.getLogger().error(err);
                     }
-                });
-            });
+                }
+            }
         },
+        modifySlots: function (providerId, newAvailabilities, oldAvailabilities, operation, callback) {
+            try {
+                assert.ok(providerId, "providerId should not be null!");
+                assert.ok(util.isArray(newAvailabilities), "availabilities should be array!");
+                assert.ok(util.isArray(oldAvailabilities), "old availabilities should be array!");
+            } catch (err) {
+                callback(err, null);
+                return;
+            }
 
+            extendConstrainSlots(providerId, newAvailabilities, oldAvailabilities, callback);
+        },
+        extendSlots: extendConstrainSlots,
+        deleteSlots: deleteSlots,
         getTimeSlotsForPeriod: getTimeSlotsForPeriod,
         getNextSlot: getNextSlot,
         generateSlotsFromAvailability: generateSlotsFromAvailability,

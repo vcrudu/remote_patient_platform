@@ -1,6 +1,6 @@
 {
   "name": "registration",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Package for users signup.",
   "scripts": {
@@ -21,6 +21,7 @@
     "express-session": "^1.11.3",
     "http": "0.0.0",
     "jsonwebtoken": "^5.0.2",
+    "moment": "^2.10.6",
     "mongodb": "^2.0.34",
     "morgan": "^1.6.0",
     "node-uuid": "^1.4.3",

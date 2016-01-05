@@ -115,7 +115,7 @@
             tryOne(startTime, callback);
         },
 
-        updateSlot:function(patientId, providerId, dateTime, callback) {
+        updateSlot:function(patientId, providerId, dateTime,appointmentReason, callback) {
             var dynamodb = getDb();
             var params;
 
@@ -128,12 +128,13 @@
                     },
                     TableName: connectionOptions.tablesSuffix + TABLE_NAME, /* required */
                     ExpressionAttributeValues: {
-                        ":patientId": {"S": patientId}
+                        ":patientId": {"S": patientId},
+                        ":appointmentReason": {"S": appointmentReason}
                     },
                     ConditionExpression:'attribute_not_exists(patientId)',
                     ReturnConsumedCapacity: 'TOTAL',
                     ReturnValues: 'NONE',
-                    UpdateExpression: 'SET patientId=:patientId'
+                    UpdateExpression: 'SET patientId=:patientId, appointmentReason=:appointmentReason'
                 };
             }else {
                 params = {
@@ -144,11 +145,12 @@
                     },
                     TableName: connectionOptions.tablesSuffix + TABLE_NAME, /* required */
                     ExpressionAttributeValues: {
-                        ":patientId": {NULL: true}
+                        ":patientId": {NULL: true},
+                        ":appointmentReason": {NULL: true}
                     },
                     ReturnConsumedCapacity: 'TOTAL',
                     ReturnValues: 'NONE',
-                    UpdateExpression: 'SET patientId=:patientId'
+                    UpdateExpression: 'SET patientId=:patientId, appointmentReason=:appointmentReason'
                 };
             }
 
@@ -161,6 +163,47 @@
 
                 loggerProvider.getLogger().debug("The slot has been updated successfully.");
                 callback(null, data);
+            });
+        },
+        getBookedSlotsByPatient:function(patientId, callback){
+            var filterExpression='';
+            var params = {
+                KeyConditionExpression: '#patientId=:patientId AND ' +
+                '#slotDateTime>=:startTime',
+
+                ExpressionAttributeNames: {
+                    "#providerId": "patientId",
+                    "#slotDateTime": "slotDateTime"
+                },
+                ExpressionAttributeValues: {
+                    ":providerId": {"S": patientId},
+                    ":startTime": {"N": startTime.getTime().toString()}
+                },
+                IndexName:'patientId-slotDateTime-index',
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 700
+            };
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The slots has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var time = parseInt(item.slotDateTime.N);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        results.push({providerId: item.providerId.S, patientId: item.patientId.S, slotDateTime: slotDateTime});
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
             });
         },
         getSlotsByProvider : function(providerId, startTime, callback){
@@ -204,25 +247,49 @@
                 }
             });
         },
-        getBookedSlotsByProvider : function(providerId, startTime, callback){
+        getBookedSlotsByProvider : function(providerId, startTime, endTime, callback){
             var filterExpression='attribute_exists (patientId)';
-            var params = {
-                KeyConditionExpression: '#providerId=:providerId AND ' +
-                '#slotDateTime>=:startTime',
+            var params;
+            if(endTime) {
+                params = {
+                    KeyConditionExpression: '#providerId=:providerId AND ' +
+                    '#slotDateTime BETWEEN :startTime AND :endTime',
 
-                ExpressionAttributeNames: {
-                    "#providerId": "providerId",
-                    "#slotDateTime": "slotDateTime"
-                },
-                ExpressionAttributeValues: {
-                    ":providerId": {"S": providerId},
-                    ":startTime": {"N": startTime.getTime().toString()}
-                },
-                FilterExpression: filterExpression,
-                IndexName: 'providerId-slotDateTime-index',
-                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
-                Limit: 700
-            };
+                    ExpressionAttributeNames: {
+                        "#providerId": "providerId",
+                        "#slotDateTime": "slotDateTime"
+                    },
+                    ExpressionAttributeValues: {
+                        ":providerId": {"S": providerId},
+                        ":startTime": {"N": startTime.getTime().toString()},
+                        ":endTime": {"N": endTime.getTime().toString()}
+                    },
+                    FilterExpression: filterExpression,
+                    IndexName: 'providerId-slotDateTime-index',
+                    TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                    Limit: 700
+                };
+            }
+            else {
+                params = {
+                    KeyConditionExpression: '#providerId=:providerId AND ' +
+                    '#slotDateTime>=:startTime',
+
+                    ExpressionAttributeNames: {
+                        "#providerId": "providerId",
+                        "#slotDateTime": "slotDateTime"
+                    },
+                    ExpressionAttributeValues: {
+                        ":providerId": {"S": providerId},
+                        ":startTime": {"N": startTime.getTime().toString()}
+                    },
+                    FilterExpression: filterExpression,
+                    IndexName: 'providerId-slotDateTime-index',
+                    TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                    Limit: 700
+                };
+            }
+
             var dynamodb = getDb();
 
             dynamodb.query(params, function(err, data){

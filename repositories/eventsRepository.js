@@ -131,7 +131,7 @@
                     return;
                 }
 
-                loggerProvider.getLogger().debug("The user has been inserted successfully.");
+                loggerProvider.getLogger().debug("The event has been inserted successfully.");
                 callback(null, data);
             });
         }

@@ -21,9 +21,9 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         controller: 'providerAppointmentsViewCtrl',
         controllerAs: 'vm'
     }).state("provider.patient", {
-          url: "/patient/:userName",
-          templateUrl: "provider/appointments/provider.appointments.patient.html",
-          controller: 'providerAppointmentsPatientViewCtrl',
+        url: "/patient/:userName",
+        templateUrl: "provider/appointments/provider.appointments.patient.html",
+        controller: 'providerAppointmentsPatientViewCtrl',
     }).state("provider.settings", {
         url: "/provider.settings",
         templateUrl: "provider/settings/provider.settings.html",
