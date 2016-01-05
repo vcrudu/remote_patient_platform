@@ -8,6 +8,7 @@
 var userDetailsRepository     = require('../repositories').UsersDetails;
 var usersRepository     = require('../repositories').Users;
 var logging = require("../logging");
+var _ = require("underscore");
 
 
 (function(){
@@ -79,6 +80,33 @@ var logging = require("../logging");
                         count:data.length,
                         result:data
                     });
+                }
+            });
+        });
+
+        router.post('/token_signin', function(req, res){
+            usersRepository.findOneByEmail(req.decoded.email,function(err, user){
+                if(err){
+                    res.json({
+                        success:false,
+                        error:err
+                    });
+                }else{
+                    if(user && user.isActive) {
+                        user.token = req.headers['x-access-token'];
+                        userDetailsRepository.findOneByEmail(user.email, function (err, userDetails) {
+                            res.json({
+                                success: true,
+                                data: _.extend(user, userDetails),
+                                token: user.token
+                            });
+                        });
+                    }else{
+                        res.status(401).json({
+                            success:false,
+                            error:'The user is unauthorised!'
+                        });
+                    }
                 }
             });
         });

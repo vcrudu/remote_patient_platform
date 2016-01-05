@@ -151,6 +151,36 @@ angular.module('app')
                         }
                     }).error(error);
                 },
+                signinWithToken: function (token, success, error) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                        headers: {
+                            'x-access-token': token
+                        }
+                    };
+                    $http(req).success(function (res) {
+                        if (!res.error) {
+                            $localStorage.user = res.data;
+                            if (window.socket) {
+                                window.socket.connect();
+                            } else {
+                                window.socket = window.io.connect(appSettings.getServerUrl());
+                                window.socket.on('connect', function () {
+                                    window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                    $rootScope.$broadcast('socket.connect', 'connected');
+                                });
+
+                                window.socket.on('disconnect', function () {
+                                    $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                });
+                            }
+                            success(res.data);
+                        } else {
+                            error(res.error);
+                        }
+                    }).error(error);
+                },
 
                 signup: function (data, success, error) {
                     var req = {

@@ -5,14 +5,11 @@
      angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage',
     'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm',    'ui.calendar']);
 
-    angular.module('app').factory('authorisationInterceptor',['$localStorage',function($localStorage){
+    angular.module('app').factory('authorisationInterceptor',['$localStorage','$location',function($localStorage, $location){
         return{
             request:function(config){
                 if($localStorage.user){
                     config.headers['x-access-token'] = $localStorage.user.token;
-                }
-                else{
-                    config.headers['x-access-token'] = undefined;
                 }
                 return config;
             },
