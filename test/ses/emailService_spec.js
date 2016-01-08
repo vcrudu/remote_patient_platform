@@ -5,16 +5,18 @@
     var should = require('should');
     var AWS = require('aws-sdk');
     var emailService = require("../../services/emailService");
+    var userId = 'vladcod@yahoo.com';
 
-    it("Expediez o scrisoare\n", function (done){
+    describe('Usage SES service', function() {
+        it("Verify send email\n", function (done) {
 
-        emailService.sendSubscriptionCofirmation(userId, function (err, result) {
-            should.not.exist(err);
-            done();
-        },1,1);
+            emailService.sendSubscriptionConfirmation(userId, function (err) {
+                should.not.exist(err);
+                done();
+            });
+
+        });
+
 
     });
-
-
-
 })();
