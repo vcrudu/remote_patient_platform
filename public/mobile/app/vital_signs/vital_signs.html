@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vital Signs</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/mobile.css">
+</head>
+<body ng-app="mobileApp">
+
+<div class="container" ng-controller="VitalSignsCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header">Latest Readings <a href="javascript:void(0);">More</a></div>
+            <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures">
+                <h3>{{measure.device}}</h3>
+                <div class="well  {{measure.deviceType}}">
+                    {{measure.valueForUI}} {{measure.deviceUnit}} {{measure.time}}
+                    <a href="javascript:void(0);">More Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../scripts/jquery.min.js"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/angular.min.js"></script>
+<script src="../scripts/ngStorage.min.js"></script>
+<script src="../scripts/angular-local-storage.js"></script>
+<script src="../scripts/underscore-min.js"></script>
+<script src="../scripts/angular-underscore-module.js"></script>
+<script src="../scripts/angular-underscore.min.js"></script>
+
+<script src="../mobileApp.js"></script>
+<script src="../services/common.js"></script>
+
+<script src="vitalSignsService.js"></script>
+<script src="vitalSigns.js"></script>
+</body>
+</html>
