@@ -3,10 +3,13 @@
  */
 
 angular.module('mobileApp')
-    .factory('common',[function($location) {
+    .factory('commonService',['$localStorage', function($localStorage) {
         return {
+            getToken:function(){
+                return $localStorage.user.token;
+            },
             getServerUrl:function(){
-                return "//" + $location.host()+":"+$location.port();
+                return "http://localhost:8081"
             }
         };
-    }]
+    }]);
