@@ -3,8 +3,9 @@
  */
 angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonService', 'vitalSignsService', function($scope, commonService, vitalSignsService) {
     $scope.histories = [];
-
     $scope.measures = [];
+
+    $scope.currentHistory = null;
 
     $scope.getHistories = function () {
         vitalSignsService.getHistories(function (histories) {
@@ -32,12 +33,22 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
                 });
             },
             function (error) {
-                debugger;
                 console.error(error);
             })
     };
 
     $scope.getHistories();
+
+    $scope.viewHistory = function(deviceType)
+    {
+        angular.forEach($scope.histories, function (history) {
+            if (history.deviceType === deviceType)
+            {
+                $scope.currentHistory = history;
+                return;
+            }
+        });
+    }
 
     $scope.getDeviceTypeLabel = function(deviceType)
     {
