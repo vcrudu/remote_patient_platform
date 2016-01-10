@@ -39,6 +39,10 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
 
     $scope.getHistories();
 
+    $scope.goToLatestReadings = function() {
+        $scope.currentHistory = null;
+    }
+
     $scope.viewHistory = function(deviceType)
     {
         angular.forEach($scope.histories, function (history) {
