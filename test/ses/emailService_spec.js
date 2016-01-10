@@ -5,7 +5,13 @@
     var should = require('should');
     var AWS = require('aws-sdk');
     var emailService = require("../../services/emailService");
-    var userId = 'vladcod@yahoo.com';
+
+    var userId={
+        email:'vladcod@yahoo.com',
+        title:'Mr.',
+        name:'Vlad',
+        surname:'Codreanu',
+    };
 
     describe('Usage SES service', function() {
         it("Verify send email\n", function (done) {
