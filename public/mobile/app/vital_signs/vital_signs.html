@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vital Signs</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/mobile.css">
+
+
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="//maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization&sensor=false&language=en&v=3.16"></script>
+</head>
+<body ng-app="mobileApp">
+
+<div class="container" ng-controller="VitalSignsCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header">Latest Readings <a href="vital_signs_charts.html">More</a></div>
+
+            <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory">
+                <h3>{{measure.device}}</h3>
+                <div class="well  {{measure.deviceType}}">
+                    {{measure.valueForUI}} {{measure.deviceUnit}} {{measure.time}}
+                    <a href="javascript:void(0);" ng-click="viewHistory(measure.deviceType);">More Info</a>
+                </div>
+            </div>
+
+            <div class="chart-details" ng-show="currentHistory">
+
+                <a href="javascript:void(0);" ng-click="goToLatestReadings();">Back</a>
+
+                <google-chart dashboard="currentHistory.dashboard" chartid="currentHistory.Id"></google-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../scripts/jquery.min.js"></script>
+<script src="../scripts/jquery-ui.min.js"></script>
+<script src="../scripts/jQDateRangeSlider-min.js"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/angular.min.js"></script>
+<script src="../scripts/ngStorage.min.js"></script>
+<script src="../scripts/angular-local-storage.js"></script>
+<script src="../scripts/underscore-min.js"></script>
+<script src="../scripts/angular-underscore-module.js"></script>
+<script src="../scripts/angular-underscore.min.js"></script>
+
+<script src="../mobileApp.js"></script>
+<script src="../directives/googleChart.js"></script>
+<script src="../services/common.js"></script>
+
+<script src="vitalSignsService.js"></script>
+<script src="vitalSigns.js"></script>
+
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.1', { packages: ['corechart', 'controls'] });
+</script>
+
+</body>
+</html>
