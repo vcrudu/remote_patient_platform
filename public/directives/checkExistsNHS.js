@@ -1,30 +1,28 @@
 /**
- * Created by home on 18.07.2015.
+ * Created by home on 25/12/2015.
  */
-
-
-angular.module('app').directive('checkExistsUser',function($q,$http){
+angular.module('app').directive('checkExistsNhs',function($q,$http){
 
     return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
-            ctrl.$asyncValidators.checkExistsUser = function(modelValue, viewValue) {
+            ctrl.$asyncValidators.checkExistsNhs = function(modelValue, viewValue) {
 
                 var def = $q.defer();
                 var req = {
                     method: 'GET',
-                    url: 'http://localhost:8081/checkExistsUser?email='+modelValue,
+                    url: 'http://localhost:8081/checkExistsNhs?nhsNumber='+modelValue,
                     headers: {
                         'Access-Control-Allow-Origin':'*'
                     }
                 };
                 $http(req).
                     success(function(data, status, headers, config) {
-                       if(data.success){
-                           def.reject();
-                       }else{
-                           def.resolve();
-                       }
+                        if(data.success){
+                            def.reject();
+                        }else{
+                            def.resolve();
+                        }
                     });
 
                 return def.promise;

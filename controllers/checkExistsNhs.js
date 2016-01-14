@@ -1,19 +1,18 @@
 /**
- * Created by home on 23.07.2015.
+ * Created by home on 25/12/2015.
  */
-
 (function(){
 
-    var usersRepository     = require('../repositories').Users;
+    var usersDetailsRepository     = require('../repositories').UsersDetails;
 
     module.exports.init = function(app) {
-        app.get('/checkExistsUser', function (req, res) {
-            if(!req.query.email){
+        app.get('/checkExistsNhs', function (req, res) {
+            if(!req.query.nhsNumber){
                 res.json({
                     success: false
                 });
             }
-            usersRepository.findOneByEmail(req.query.email, function (err, user) {
+            usersDetailsRepository.getUserDetailsByNhsNumber(req.query.nhsNumber, function (err, user) {
                 if (err) {
                     res.json({
                         success: false,

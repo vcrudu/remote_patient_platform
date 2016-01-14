@@ -1,19 +1,18 @@
 /**
- * Created by home on 23.07.2015.
+ * Created by home on 25/12/2015.
  */
-
 (function(){
 
     var usersRepository     = require('../repositories').Users;
 
     module.exports.init = function(app) {
-        app.get('/checkExistsUser', function (req, res) {
-            if(!req.query.email){
+        app.post('/reset', function (req, res) {
+            if(!req.body.email){
                 res.json({
                     success: false
                 });
             }
-            usersRepository.findOneByEmail(req.query.email, function (err, user) {
+            usersRepository.findOneByEmail(req.body.email, function (err, user) {
                 if (err) {
                     res.json({
                         success: false,
@@ -21,6 +20,7 @@
                     });
                 } else {
                     if (user) {
+                        //Todo-here: De implimentat trimiterea emailului
                         res.json({
                             success: true
                         });

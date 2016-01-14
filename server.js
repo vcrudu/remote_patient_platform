@@ -11,6 +11,8 @@ var http = require('http');
 var fs = require('fs');
 var logging     = require('./logging');
 var gridCacheClient = require('./services/gridCacheClient');
+var checkExistsNhs = require("./controllers/checkExistsNhs");
+var reset = require("./controllers/reset");
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -32,8 +34,11 @@ app.use(morgan("dev"));
 
 auth.configureJwt(app);
 
+reset.init(app);
 checkExistsUserController.init(app);
+checkExistsNhs.init(app);
 controllers.init(app);
+
 
 app.get('/',function(req, res){
     var options = {

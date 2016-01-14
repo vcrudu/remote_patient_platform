@@ -17,6 +17,30 @@
             },
             controller: 'loginCtrl'
         })
+            .state('reset', {
+                url: "/reset",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "reset.html"}
+                },
+                controller: 'resetCtrl'
+            })
+            .state('resetPassword', {
+                url: "/resetPassword",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "resetPassword.html"}
+                },
+                controller: 'resetPasswordCtrl'
+            })
+            .state('confirmSubmit', {
+                url: "/confirmSubmit",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "confirmSubmit.html"}
+                },
+                controller: 'confirmSubmitCtrl'
+            })
           .state('login.username', {
             url: "/:userName",
             views: {

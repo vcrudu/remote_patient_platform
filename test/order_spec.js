@@ -37,7 +37,7 @@ var entitiesFactory      = require("@vcrudu/hcm.domainmodel");
                 var temp = orderUnderTest.getValidOrderStatuses();
                 var temp1 =orderUnderTest.getOrderStatus();
                 assert.notEqual(temp.indexOf(temp1),-1, "Invalid order status!");
-            });  
+            });
 
             it("Throw - Id is not a valid v4 uuid!",function(){
                // /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(orderUnderTest.id).should.be.true;

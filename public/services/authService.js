@@ -222,6 +222,36 @@ angular.module('app')
                     //delete window.socket;
                     delete $localStorage.user;
                     success();
+                },
+                submitReset: function (email, success, error) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/reset',
+                        data: {email : email}
+                    };
+                    $http(req).success(function (res) {
+                        if (!res.error) {
+                            success(res);
+                        }else
+                        error(res.error);
+                    }).error(function(res){
+                        error(res);
+                    });
+                },
+                submitResetPassword : function (newPassword, success, error) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/resetPassword',
+                        data: {email : email}
+                    };
+                    $http(req).success(function (res) {
+                        if (!res.error) {
+                            success(res);
+                        }else
+                            error(res.error);
+                    }).error(function(res){
+                        error(res);
+                    });
                 }
             };
 

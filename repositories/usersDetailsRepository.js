@@ -44,6 +44,42 @@
                 }
             });
         },
+        getUserDetailsByNhsNumber : function(nhsNumber, callback){
+            var filterExpression='';
+            var params = {
+                KeyConditionExpression: '#nhsNumber=:nhsNumber',
+
+                ExpressionAttributeNames: {
+                    "#nhsNumber": "nhsNumber"
+                },
+                ExpressionAttributeValues: {
+                    ":nhsNumber": {"S": nhsNumber}
+                },
+                IndexName:'nhsNumber-index',
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 700
+            };
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The user has been found successfully.");
+                var results=[];
+                if(data.Items && data.Items.length>0) {
+                    _.forEach(data.Items, function(item){
+
+                        results.push({nhsNumber: item.nhsNumber.S});
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
         findPatient : function(email, callback){
 
             var params = {
