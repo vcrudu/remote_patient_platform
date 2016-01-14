@@ -1,2 +1,4 @@
-var mobileAppModule = angular.module("mobileApp", ['LocalStorageModule', 'ngStorage', 'angular-underscore', 'underscore']);
+var mobileAppModule = angular.module("mobileApp",
+    ['LocalStorageModule', 'ngStorage',
+        'angular-underscore', 'underscore','rx']);
 

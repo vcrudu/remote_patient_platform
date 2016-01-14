@@ -58,9 +58,42 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         controller: 'patientDevicesCtrl'
     })
         .state("patient.devices.buy", {
-            url: "/patient.devices.buy",
+            url: "/patient.devices.buy?token",
             templateUrl: "patient/devices/buy.html",
-            controller: 'patientDevicesBuyCtrl as vm'
+            controller: 'patientDevicesBuyCtrl as vm',
+            resolve: {
+                promiseObj2: function ($http, $stateParams,$localStorage,appSettings) {
+                    if ($stateParams.token) {
+                        var req = {
+                            method: 'POST',
+                            url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                            headers: {
+                                'x-access-token': $stateParams.token
+                            }
+                        };
+                        return $http(req).then(function (res) {
+                            if (!res.error) {
+                                $localStorage.user = res.data.data;
+                                if (window.socket) {
+                                    window.socket.connect();
+                                } else {
+                                    window.socket = window.io.connect(appSettings.getServerUrl());
+                                    window.socket.on('connect', function () {
+                                        window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                        $rootScope.$broadcast('socket.connect', 'connected');
+                                    });
+
+                                    window.socket.on('disconnect', function () {
+                                        $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        return null;
+                    }
+                }
+            }
         })
         .state("patient.devices.details", {
             url: "/patient.devices.details/:model",

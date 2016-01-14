@@ -56,7 +56,7 @@
                 });
             }
         });
-    };
+    }
 
 
     //crearea tabelei alarm
@@ -89,7 +89,7 @@
                 loggerProvider.getLogger().debug(data);
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei DeviceModel
     function createDeviceModelTable(suffix, callback, readCapacity, writeCapacity) {
@@ -120,7 +120,7 @@
                 loggerProvider.getLogger().debug(data);
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei AppointmentFeedback
     function createAppointmentFeedbackTable(suffix, callback, readCapacity, writeCapacity) {
@@ -154,7 +154,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei Event
     function createEventTable(suffix, callback, readCapacity, writeCapacity) {
@@ -187,7 +187,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei Order
     function createOrderTable(suffix, callback, readCapacity, writeCapacity) {
@@ -220,7 +220,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei PatientAppointment
     function createPatientAppointmentTable(suffix, callback, readCapacity, writeCapacity) {
@@ -253,7 +253,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei Provider
     function createProviderTable(suffix, callback, readCapacity, writeCapacity) {
@@ -284,7 +284,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     //crearea tabelei Slot
     function createSlotTable(suffix, callback, readCapacity, writeCapacity) {
@@ -317,7 +317,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
 
     //crearea tabelei User
@@ -350,7 +350,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
 
     function createUserDetailsTable(suffix, callback, readCapacity, writeCapacity) {
@@ -382,7 +382,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     function createVitalSignTable(suffix, callback, readCapacity, writeCapacity) {
 
@@ -414,7 +414,7 @@
                 console.log(JSON.stringify(data, null, 2));
                 callback(null,data);
             }});
-    };
+    }
 
     module.exports={
         createAlarmTable:createAlarmTable,
@@ -430,7 +430,7 @@
         createVitalSignTable:createVitalSignTable,
         deleteTable:deleteTable,
         checkExistsTable:checkExistsTable,
-    }
+    };
 
 
 })();
