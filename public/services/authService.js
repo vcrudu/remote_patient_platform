@@ -238,7 +238,7 @@ angular.module('app')
                         error(res);
                     });
                 },
-                submitResetPassword : function (email, success, error) {
+                submitResetPassword : function (newPassword, success, error) {
                     var req = {
                         method: 'POST',
                         url: appSettings.getServerUrl() + '/resetPassword',
