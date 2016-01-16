@@ -247,6 +247,48 @@
                 }
             });
         },
+        getSlotsForPeriodByProvider : function(providerId, startTime, endTime, callback){
+            var filterExpression='';
+            var params = {
+                KeyConditionExpression: '#providerId=:providerId AND ' +
+                '#slotDateTime BETWEEN :startTime AND :endTime',
+
+                ExpressionAttributeNames: {
+                    "#providerId": "providerId",
+                    "#slotDateTime": "slotDateTime"
+                },
+                ExpressionAttributeValues: {
+                    ":providerId": {"S": providerId},
+                    ":startTime": {"N": startTime.getTime().toString()},
+                    ":endTime": {"N": endTime.getTime().toString()}
+                },
+                IndexName:'providerId-slotDateTime-index',
+                TableName: connectionOptions.tablesSuffix + TABLE_NAME,
+                Limit: 700
+            };
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The slots has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var time = parseInt(item.slotDateTime.N);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        results.push({providerId: item.providerId.S, slotDateTime: slotDateTime});
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
         getBookedSlotsByProvider : function(providerId, startTime, endTime, callback){
             var filterExpression='attribute_exists (patientId)';
             var params;

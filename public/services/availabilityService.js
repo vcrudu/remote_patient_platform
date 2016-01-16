@@ -5,6 +5,19 @@
 angular.module('app').factory('availabilityService',['$http', '$localStorage','appSettings',
     function($http, $localStorage, appSettings) {
         return {
+            getAvailabilityByPeriod: function (startDate, endDate, success, error) {
+                var req = {
+                    method: 'GET',
+                    url: appSettings.getServerUrl() + '/v1/api/provider_availability_period?startDate=' + startDate + '&endDate=' + endDate,
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    }
+                };
+
+                $http(req).success(function (res) {
+                    success(res.result);
+                }).error(error);
+            },
             getAvailability: function (dateTime, success, error) {
                 var req = {
                     method: 'GET',

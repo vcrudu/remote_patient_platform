@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Nurse Availability</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/fullcalendar.min.css">
+    <link rel="stylesheet" href="../styles/scheduler.min.css">
+    <link rel="stylesheet" href="../styles/mobile.css">
+</head>
+<body ng-app="mobileApp">
+
+<div class="container" ng-controller="NurseAvailabilityCtrl">
+    <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+</div>
+
+<script src="../scripts/moment.min.js" type="application/javascript"></script>
+<script src="../scripts/en-gb.js" type="application/javascript"></script>
+<script src="../scripts/moment-with-locales.min.js" type="application/javascript"></script>
+<script src="../scripts/jquery.min.js" type="application/javascript"></script>
+<script src="../scripts/jquery-ui.min.js" type="application/javascript"></script>
+<script src="../scripts/jQDateRangeSlider-min.js" type="application/javascript"></script>
+<script src="../scripts/bootstrap.min.js" type="application/javascript"></script>
+<script src="../scripts/angular.min.js" type="application/javascript"></script>
+<script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
+<script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-local-storage.js" type="application/javascript"></script>
+<script src="../scripts/underscore-min.js" type="application/javascript"></script>
+<script src="../scripts/angular-underscore-module.js" type="application/javascript"></script>
+<script src="../scripts/angular-underscore.min.js" type="application/javascript"></script>
+<script src="../scripts/rx.all.min.js" type="application/javascript"></script>
+<script src="../scripts/rx.angular.min.js" type="application/javascript"></script>
+<script src="../scripts/calendar.js" type="application/javascript"></script>
+<script src="../scripts/fullcalendar.min.js" type="application/javascript"></script>
+<script src="../scripts/scheduler.min.js" type="application/javascript"></script>
+
+<script src="../mobileApp.js" type="application/javascript"></script>
+<script src="../services/common.js" type="application/javascript"></script>
+<script src="nurseAvailabilityService.js" type="application/javascript"></script>
+<script src="nurseAvailabilityCtrl.js" type="application/javascript"></script>
+</body>
+</html>

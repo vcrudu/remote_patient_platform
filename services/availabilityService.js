@@ -290,6 +290,16 @@
     }
 
     module.exports = {
+        getAvailabilityByPeriod: function (providerId, dateTime, endDate, callback) {
+            slotRepository.getSlotsForPeriodByProvider(providerId, dateTime, endDate, function (err, data) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    var rebuiltAvailability = utils.getAvailabilitiesFromSlots(data);
+                    callback(null, rebuiltAvailability);
+                }
+            });
+        },
         getAvailability: function (providerId, dateTime, callback) {
             slotRepository.getSlotsByProvider(providerId, dateTime, function (err, data) {
                 if (err) {

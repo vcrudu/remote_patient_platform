@@ -53,6 +53,38 @@ var utils = require('../utils');
             }
         });
 
+        router.get('/provider_availability_period', function (req, res) {
+            if (req.query.sample) {
+                var availabilitySample = [{dateString: '10.03.2015', availabilityString: '08:00-12:00,13:00-17:00'}];
+                res.send({
+                    success: true,
+                    count: 1,
+                    result: availabilitySample
+                });
+            } else {
+                console.log('Start Date:' + req.query.startDate);
+                console.log('End Date:' + req.query.endDate);
+                var startDate = new Date(req.query.startDate);
+                var endDate = new Date(req.query.endDate);
+                availabilityService.getAvailabilityByPeriod(req.decoded.email, startDate, endDate, function (err, data) {
+                    if (err) {
+                        var incidentTicket = logging.getIncidentTicketNumber('pr');
+                        logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                        res.status(500).json({
+                            success: false,
+                            message: logging.getUserErrorMessage(incidentTicket)
+                        });
+                    } else {
+                        res.send({
+                            success: true,
+                            count: data.length,
+                            result: data
+                        });
+                    }
+                });
+            }
+        });
+
         router.get('/provider_availability', function (req, res) {
             if (req.query.sample) {
                 var availabilitySample = [{dateString: '10.03.2015', availabilityString: '08:00-12:00,13:00-17:00'}];
