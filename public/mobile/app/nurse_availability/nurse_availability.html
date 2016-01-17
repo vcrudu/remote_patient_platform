@@ -13,6 +13,8 @@
 
 <div class="container" ng-controller="NurseAvailabilityCtrl">
     <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+    <br/>
+    <div ng-click="changeDay()">Change Day</div>
 </div>
 
 <script src="../scripts/moment.min.js" type="application/javascript"></script>

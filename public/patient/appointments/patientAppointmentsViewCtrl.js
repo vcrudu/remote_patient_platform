@@ -167,6 +167,7 @@
                                 var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
                                 var dateTime = new Date();
                                 dateTime.setTime(data[i].slotDateTime);
+                                debugger;
                                 events.push({
                                     id: data[i].slotDateTime,
                                     title: data[i].countOfProviders + " nurses are available.",
