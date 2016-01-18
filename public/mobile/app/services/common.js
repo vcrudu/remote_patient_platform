@@ -20,12 +20,12 @@ Bridge.callBack = function(result){
     if(Bridge.resultCallback){
         if(result.token && Bridge.resultCallback){
             Bridge.resultCallback(result.token);
-            delete Bridge.resultCallback;
+           // delete Bridge.resultCallback;
             return;
         }
         if(result.url && Bridge.resultCallback){
             Bridge.resultCallback(result.url);
-            delete Bridge.resultCallback;
+         //   delete Bridge.resultCallback;
             return;
         }
     }

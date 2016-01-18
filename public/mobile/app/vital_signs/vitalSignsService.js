@@ -12,10 +12,7 @@ angular.module('mobileApp')
                     function (x) {
                         var req = {
                             method: 'GET',
-                            url: x.url + 'events',
-                            headers: {
-                                'x-access-token': x.token
-                            }
+                            url: x.url + 'events?token='+x.token
                         };
                         $http(req).success(function (res) {
                             var histories = [];
