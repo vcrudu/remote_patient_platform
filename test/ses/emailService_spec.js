@@ -9,7 +9,7 @@
     var userId='vladcod@yahoo.com';
 
     describe('Usage SES service', function() {
-        it("Verify send email\n", function (done) {
+        it("Send Subscription Confirmation email\n", function (done) {
 
             emailService.sendSubscriptionConfirmation(userId, function (err) {
                 should.not.exist(err);
@@ -17,7 +17,14 @@
             });
 
         });
+        it.only("Send Password Reset email\n", function (done) {
 
+            emailService.sendPasswordReset(userId, function (err) {
+                should.not.exist(err);
+                done();
+            });
+
+        });
 
     });
 })();
