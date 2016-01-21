@@ -102,3 +102,145 @@ input.ui-editRangeSlider-inputValue{
     vertical-align: middle;
     text-align:center;
 }
+
+/* #Tabs  */
+.mdl-tabs__tab-bar {
+    display:table;
+    width:100%;
+    border-bottom:1px solid #0F1217;
+}
+.mdl-tabs__tab {
+    border: medium none;
+    color: rgba(0, 0, 0, 0.54);
+    display: table-cell;
+    float: none;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    margin: 0;
+    padding: 0 5px;
+    text-align:center;
+    vertical-align: middle;
+}
+
+.mdl-tabs__panel {
+    padding-top:20px;
+}
+
+.mdl-tabs__tab > img {
+    width:38px;
+    height:38px;
+    margin:auto;
+    opacity: 0.75;
+}
+.mdl-tabs__tab.is-active > img {
+    opacity: 1;
+}
+
+/* #Buttons */
+.btn {
+    .text-uppercase;
+    font-size:16px;
+    padding:6px 12px;
+    border-radius:5px;
+    border-width:1px;
+    border-color:limegreen;
+    border-style:solid;
+}
+
+/* #Panel Header */
+.panel-header {
+    display:table;
+    width:100%;
+}
+
+.left-side-container {
+    display:table-cell;
+    vertical-align: middle;
+}
+
+.icon-left {
+    padding-right:15px;
+}
+
+.button-container {
+    display:table-cell;
+    vertical-align: middle;
+}
+
+/* #wells  */
+body .container .well,
+body .container-fluid .well,
+body .container .jumbotron,
+body .container-fluid .jumbotron {
+    box-shadow:0 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.well-container {
+    display:table;
+    width:100%;
+    background:#ffffff;
+    color:#ffffff;
+    height:90px;
+    border-spacing: 10px;
+}
+
+.well-container > .well-cell {
+    display:table-cell;
+    vertical-align: bottom;
+    position:relative;
+}
+
+.well-container .well-cell .category-icon {
+    position:absolute;
+    top:0;
+    left:0;
+    width:28px;
+    height:28px;
+}
+
+.well-container .well-cell .date-time {
+    font-size:12px;
+}
+
+.well-container .measure-value {
+    font-size:42px;
+    white-space: nowrap;
+}
+
+.well-container a {
+    color:#ffffff !important;
+}
+
+.well-container .btn {
+    border-color:#ffffff;
+}
+
+.well-container.bloodPressure {
+    background:#cc0033;
+}
+
+.well-container.temperature {
+    background:#88bb00;
+}
+
+.well-container.heartRate {
+     background:#dd3300;
+}
+
+.well-container.bloodGlucose {
+    background:#ff6b00;
+}
+
+.well-container.bloodOxygen {
+    background:#ff007b;
+}
+
+.well-container.respiratoryRate {
+    background:#0060ff;
+}
+
+.well-container.weight {
+    background:#008f98;
+}
