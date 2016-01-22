@@ -97,7 +97,7 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
         switch (deviceType)
         {
             case "bloodPressure":
-                label = ""
+                label = "mm Hg"
                 break;
             case "heartRate":
                 label = "BPM"
