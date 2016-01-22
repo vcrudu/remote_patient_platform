@@ -40,7 +40,6 @@ Then, run this script to get the list.
 /* Shadows (from mdl http://www.getmdl.io/) */
 body {
   background-color: #EEEEEE;
-  border:2px solid red;
 }
 body.inverse {
   background: #333333;
