@@ -212,7 +212,7 @@ body .container-fluid .jumbotron {
     font-size:42px;
     white-space: nowrap;
     margin-left:25px;
-    letter-spacing: :-1px;
+    letter-spacing: -1px;
 }
 
 .well-container a {
@@ -227,26 +227,61 @@ body .container-fluid .jumbotron {
     background:#cc0033;
 }
 
+.well-container .icon {
+    width:30px;
+    height:30px;
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
+    text-indent:-9999px;
+}
+
 .well-container.temperature {
     background:#88bb00;
+}
+.well-container.temperature .icon {
+    background:url('../images/wells/icon-temperature.png') no-repeat;
 }
 
 .well-container.heartRate {
      background:#dd3300;
 }
+.well-container.heartRate .icon {
+    background:url('../images/wells/icon-heart.png') no-repeat;
+}
 
 .well-container.bloodGlucose {
     background:#ff6b00;
+}
+.well-container.bloodGlucose .icon {
+    background:url('../images/wells/icon-blood.png') no-repeat;
+}
+
+.well-container.bloodPressure {
+    background:#ff6b00;
+}
+.well-container.bloodPressure .icon {
+    background:url('../images/wells/icon-blood.png') no-repeat;
 }
 
 .well-container.bloodOxygen {
     background:#ff007b;
 }
+.well-container.bloodOxygen .icon {
+    background:url('../images/wells/icon-blood-oxygen.png') no-repeat;
+}
 
 .well-container.respiratoryRate {
     background:#0060ff;
 }
+.well-container.respiratoryRate .icon {
+    background:url('../images/wells/icon-respiration.png') no-repeat;
+}
 
 .well-container.weight {
     background:#008f98;
+}
+.well-container.weight .icon {
+    background:url('../images/wells/icon-weight.png') no-repeat;
 }
