@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Nurse Availability</title>
+    <link rel="stylesheet" type="text/css" href="../styles/googleapi-fonts.css">
+    <link rel="stylesheet" href="../styles/googleapi-fonts-icon.css">
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
+    <link rel="stylesheet" href="../styles/ripples.min.css">
     <link rel="stylesheet" href="../styles/fullcalendar.min.css">
     <link rel="stylesheet" href="../styles/scheduler.min.css">
     <link rel="stylesheet" href="../styles/mobile.css">
@@ -13,6 +17,8 @@
 
 <div class="container" ng-controller="NurseAvailabilityCtrl">
     <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+    <br/>
+    <div ng-click="changeDay()">Change Day</div>
 </div>
 
 <script src="../scripts/moment.min.js" type="application/javascript"></script>
@@ -22,6 +28,8 @@
 <script src="../scripts/jquery-ui.min.js" type="application/javascript"></script>
 <script src="../scripts/jQDateRangeSlider-min.js" type="application/javascript"></script>
 <script src="../scripts/bootstrap.min.js" type="application/javascript"></script>
+<script src="../scripts/material.min.js" type="application/javascript"></script>
+<script src="../scripts/ripples.min.js" type="application/javascript"></script>
 <script src="../scripts/angular.min.js" type="application/javascript"></script>
 <script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
 <script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
