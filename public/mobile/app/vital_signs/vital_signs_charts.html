@@ -54,14 +54,14 @@
                     <div class="chart-dashboard">
                         <div class="chart-details" ng-repeat="chartHistory in chartHistories">
 
-                            <ul class="nav nav-tabs" role="tablist">
+                            <ul class="nav nav-tabs chart-tabs" role="tablist">
                                 <li class="active">
-                                    <a href="#chart-{{chartHistory.Id}}" role="tab" data-toggle="tab">
+                                    <a href="#chart-{{chartHistory.Id}}" class="tab-chart" role="tab" data-toggle="tab">
                                         Chart
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#table-{{chartHistory.Id}}" role="tab" data-toggle="tab">
+                                    <a href="#table-{{chartHistory.Id}}" class="tab-table" role="tab" data-toggle="tab">
                                         Table
                                     </a>
                                 </li>

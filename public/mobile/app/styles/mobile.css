@@ -300,3 +300,31 @@ body .container-fluid .jumbotron {
 .well-container.weight .icon {
     background:url('../images/wells/icon-weight.png') no-repeat;
 }
+
+/* #Carts page */
+ul.chart-tabs {
+    background:#669900;
+}
+ul.chart-tabs > li > a {
+    width:60px;
+    height:40px;
+    display:inline-block;
+    background-position:center;
+    background-repeat:no-repeat;
+    text-indent:-9999px;
+    cursor:pointer;
+    padding:0;
+    border-radius:0;
+    opacity:0.5;
+}
+ul.chart-tabs > li.active > a {
+    opacity:1;
+    border-bottom:4px solid #ffffff !important;
+}
+
+ul.chart-tabs > li > a.tab-chart {
+    background-image:url('../images/tab-chart.png');
+}
+ul.chart-tabs > li > a.tab-table {
+    background-image:url('../images/tab-table.png');
+}
