@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
     <link rel="stylesheet" href="../styles/ripples.min.css">
+    <link rel="stylesheet" href="../styles/tabs.css">
     <link rel="stylesheet" href="../styles/mobile.css">
 
     <script src="../scripts/jsapi.js"></script>
@@ -16,29 +17,94 @@
 </head>
 <body ng-app="mobileApp">
 
-<div class="container" ng-controller="VitalSignsCtrl">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="header">Latest Readings <a href="vital_signs_charts.html">More</a></div>
-
-            <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory">
-                <h3>{{measure.device}}</h3>
-                <div class="well  {{measure.deviceType}}">
-                    {{measure.valueForUI}} {{measure.deviceUnit}} {{measure.time}}
-                    <a href="javascript:void(0);" ng-click="viewHistory(measure.deviceType);">More Info</a>
-                </div>
+<div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
+    <div class="container">
+        <div class="row">
+            <div class="mdl-tabs__tab-bar">
+                <a class="mdl-tabs__tab" href="#tab1">
+                    <img src="../images/tab-icons/icon-people.png"/>
+                </a>
+                <a class="mdl-tabs__tab is-active" href="#tab2">
+                    <img src="../images/tab-icons/icon-person.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab3">
+                    <img src="../images/tab-icons/icon-alerts.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab4">
+                    <img src="../images/tab-icons/icon-reports.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab5">
+                    <img src="../images/tab-icons/icon-timer.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab6">
+                    <img src="../images/tab-icons/icon-list.png"/>
+                </a>
             </div>
+        </div>
 
-            <div class="chart-details" ng-show="currentHistory">
+    </div>
 
-                <a href="javascript:void(0);" ng-click="goToLatestReadings();">Back</a>
 
-                <google-chart dashboard="currentHistory.dashboard" chartid="currentHistory.Id"></google-chart>
+    <div id="tab1" class="mdl-tabs__panel">
+        Tab1 Content
+    </div>
+    <div id="tab2" class="mdl-tabs__panel is-active">
+        <div class="container" ng-controller="VitalSignsCtrl">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-header">
+                        <div class="left-side-container">
+                            <img src="../images/icon-latest-readings.png" class="icon-left"/>Latest Readings
+                        </div>
+                        <div class="button-container text-right">
+                            <a href="vital_signs_charts.html" class="btn">More</a>
+                        </div>
+                    </div>
+
+                    <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory">
+                        <h5>{{measure.device}}</h5>
+                        <div class="well-container {{measure.deviceType}}">
+                            <div class="well-cell">
+                                <div class="icon">icon...</div>
+                                <div class="measure-value">
+                                    <div class="value">{{measure.valueForUI}}</div>
+                                    <sup>{{measure.deviceUnit}}</sup>
+                                </div>
+                            </div>
+                            <div class="well-cell text-right">
+                                <span class="date-time">{{measure.time}}</span>
+                                <a href="javascript:void(0);" class="btn" ng-click="viewHistory(measure.deviceType);">More Info</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-details" ng-show="currentHistory">
+
+                        <a href="javascript:void(0);" ng-click="goToLatestReadings();">Back</a>
+
+                        <google-chart dashboard="currentHistory.dashboard" chartid="currentHistory.Id"></google-chart>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <div id="tab3" class="mdl-tabs__panel">
+        Tab3 Content
+    </div>
+    <div id="tab4" class="mdl-tabs__panel">
+        Tab4 Content
+    </div>
+    <div id="tab5" class="mdl-tabs__panel">
+        Tab5 Content
+    </div>
+    <div id="tab6" class="mdl-tabs__panel">
+        Tab6 Content
+    </div>
 </div>
 
+
+
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 <script src="../scripts/moment.min.js" type="application/javascript"></script>
 <script src="../scripts/en-gb.js" type="application/javascript"></script>
 <script src="../scripts/moment-with-locales.min.js" type="application/javascript"></script>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
     <link rel="stylesheet" href="../styles/ripples.min.css">
+    <link rel="stylesheet" href="../styles/tabs.css">
     <link rel="stylesheet" href="../styles/mobile.css">
 
     <script src="../scripts/jsapi.js"></script>
@@ -17,61 +18,93 @@
 </head>
 <body ng-app="mobileApp">
 
-<div class="container" ng-controller="VitalSignsChartsCtrl">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="chart-dashboard">
-                <div class="chart-details" ng-repeat="chartHistory in chartHistories">
+<div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
+    <div class="container">
+        <div class="row">
+            <div class="mdl-tabs__tab-bar">
+                <a class="mdl-tabs__tab" href="#tab1">
+                    <img src="../images/tab-icons/icon-people.png"/>
+                </a>
+                <a class="mdl-tabs__tab is-active" href="#tab2">
+                    <img src="../images/tab-icons/icon-person.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab3">
+                    <img src="../images/tab-icons/icon-alerts.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab4">
+                    <img src="../images/tab-icons/icon-reports.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab5">
+                    <img src="../images/tab-icons/icon-timer.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab6">
+                    <img src="../images/tab-icons/icon-list.png"/>
+                </a>
+            </div>
+        </div>
+    </div>
 
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active">
-                            <a href="#chart-{{chartHistory.Id}}" role="tab" data-toggle="tab">
-                                Chart
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#table-{{chartHistory.Id}}" role="tab" data-toggle="tab">
-                                Table
-                            </a>
-                        </li>
-                    </ul>
+    <div id="tab1" class="mdl-tabs__panel">
+        Tab1 Content
+    </div>
+    <div id="tab2" class="mdl-tabs__panel is-active">
+        <div class="container" ng-controller="VitalSignsChartsCtrl">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="chart-dashboard">
+                        <div class="chart-details" ng-repeat="chartHistory in chartHistories">
 
-                    <div class="tab-content">
-                        <div class="tab-pane fade active in" id="chart-{{chartHistory.Id}}">
-                            <google-chart dashboard="chartHistory.dashboard" chartid="chartHistory.Id"></google-chart>
-                        </div>
-                        <div class="tab-pane fade" id="table-{{chartHistory.Id}}">
-                            <div class="table-responsive" style="height: 350px; overflow: auto;">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Measurement</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="measurement in chartHistory.Measurements">
-                                        <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
-                                        <td ng-show="measurement.SecondValue">{{measurement.FirstValue}} / {{measurement.SecondValue}}</td>
-                                        <td ng-show="!measurement.SecondValue">{{measurement.FirstValue}}</td>
-                                        <td>
-                                            <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot ng-show="history.TotalItemsOnServer > history.Measurements.length">
-                                    <tr>
-                                        <td colspan="3">
-                                            <div style="width: 100px;margin: 0 auto;">
-                                                <button class="btn btn-info margin-top-10" ng-click="loadMoreMeasurements(history)">
-                                                    <i class="fa fa-spinner fa-spin" ng-show="history.loadMoreMeasurementsBusy"></i>Load More
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
+                            <ul class="nav nav-tabs chart-tabs" role="tablist">
+                                <li class="active">
+                                    <a href="#chart-{{chartHistory.Id}}" class="tab-chart" role="tab" data-toggle="tab">
+                                        Chart
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#table-{{chartHistory.Id}}" class="tab-table" role="tab" data-toggle="tab">
+                                        Table
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="chart-{{chartHistory.Id}}">
+                                    <google-chart dashboard="chartHistory.dashboard" chartid="chartHistory.Id"></google-chart>
+                                </div>
+                                <div class="tab-pane fade" id="table-{{chartHistory.Id}}">
+                                    <div class="table-responsive" style="height: 350px; overflow: auto;">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Time</th>
+                                                <th>Measurement</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="measurement in chartHistory.Measurements">
+                                                <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
+                                                <td ng-show="measurement.SecondValue">{{measurement.FirstValue}} / {{measurement.SecondValue}}</td>
+                                                <td ng-show="!measurement.SecondValue">{{measurement.FirstValue}}</td>
+                                                <td>
+                                                    <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot ng-show="history.TotalItemsOnServer > history.Measurements.length">
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div style="width: 100px;margin: 0 auto;">
+                                                        <button class="btn btn-info margin-top-10" ng-click="loadMoreMeasurements(history)">
+                                                            <i class="fa fa-spinner fa-spin" ng-show="history.loadMoreMeasurementsBusy"></i>Load More
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,8 +112,24 @@
             </div>
         </div>
     </div>
+    <div id="tab3" class="mdl-tabs__panel">
+        Tab3 Content
+    </div>
+    <div id="tab4" class="mdl-tabs__panel">
+        Tab4 Content
+    </div>
+    <div id="tab5" class="mdl-tabs__panel">
+        Tab5 Content
+    </div>
+    <div id="tab6" class="mdl-tabs__panel">
+        Tab6 Content
+    </div>
 </div>
 
+
+
+
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 <script src="../scripts/moment.min.js" type="application/javascript"></script>
 <script src="../scripts/en-gb.js" type="application/javascript"></script>
 <script src="../scripts/moment-with-locales.min.js" type="application/javascript"></script>

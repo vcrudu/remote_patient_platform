@@ -16,11 +16,14 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
                         deviceType: history.deviceType,
                         deviceName: history.deviceName
                     };
+
+                    var momentInstance = moment(history.Measurements.reverse()[0].DateTime);
+
                     var lastMeasure = {};
                     lastMeasure.device = $scope.getDeviceTypeLabel(history.deviceType);
                     lastMeasure.deviceType = history.deviceType;
                     lastMeasure.deviceUnit = $scope.getDeviceTypeUniLabel(history.deviceType);
-                    lastMeasure.time = history.Measurements.reverse()[0].DateTime;
+                    lastMeasure.time = momentInstance.format("YYYY-MM-DD HH:mm");
                     lastMeasure.firstValue = history.Measurements.reverse()[0].FirstValue;
                     lastMeasure.secondValue = history.Measurements.reverse()[0].SecondValue;
                     lastMeasure.valueForUI = lastMeasure.firstValue;
@@ -94,7 +97,7 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
         switch (deviceType)
         {
             case "bloodPressure":
-                label = ""
+                label = "mm Hg"
                 break;
             case "heartRate":
                 label = "BPM"
