@@ -18,26 +18,32 @@
 <body ng-app="mobileApp">
 
 <div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
-    <div class="mdl-tabs__tab-bar">
-        <a class="mdl-tabs__tab" href="#tab1">
-            <img src="../images/tab-icons/icon-people.png"/>
-        </a>
-        <a class="mdl-tabs__tab is-active" href="#tab2">
-            <img src="../images/tab-icons/icon-person.png"/>
-        </a>
-        <a class="mdl-tabs__tab" href="#tab3">
-            <img src="../images/tab-icons/icon-alerts.png"/>
-        </a>
-        <a class="mdl-tabs__tab" href="#tab4">
-            <img src="../images/tab-icons/icon-reports.png"/>
-        </a>
-        <a class="mdl-tabs__tab" href="#tab5">
-            <img src="../images/tab-icons/icon-timer.png"/>
-        </a>
-        <a class="mdl-tabs__tab" href="#tab6">
-            <img src="../images/tab-icons/icon-list.png"/>
-        </a>
+    <div class="container">
+        <div class="row">
+            <div class="mdl-tabs__tab-bar">
+                <a class="mdl-tabs__tab" href="#tab1">
+                    <img src="../images/tab-icons/icon-people.png"/>
+                </a>
+                <a class="mdl-tabs__tab is-active" href="#tab2">
+                    <img src="../images/tab-icons/icon-person.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab3">
+                    <img src="../images/tab-icons/icon-alerts.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab4">
+                    <img src="../images/tab-icons/icon-reports.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab5">
+                    <img src="../images/tab-icons/icon-timer.png"/>
+                </a>
+                <a class="mdl-tabs__tab" href="#tab6">
+                    <img src="../images/tab-icons/icon-list.png"/>
+                </a>
+            </div>
+        </div>
+
     </div>
+
 
     <div id="tab1" class="mdl-tabs__panel">
         Tab1 Content
@@ -59,10 +65,11 @@
                         <h5>{{measure.device}}</h5>
                         <div class="well-container {{measure.deviceType}}">
                             <div class="well-cell">
-                                <span class="measure-value">
-                                    <div class="icon">icon...</div>
-                                    {{measure.valueForUI}} {{measure.deviceUnit}}
-                                </span>
+                                <div class="icon">icon...</div>
+                                <div class="measure-value">
+                                    <div class="value">{{measure.valueForUI}}</div>
+                                    <sup>{{measure.deviceUnit}}</sup>
+                                </div>
                             </div>
                             <div class="well-cell text-right">
                                 <span class="date-time">{{measure.time}}</span>

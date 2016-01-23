@@ -108,6 +108,7 @@ input.ui-editRangeSlider-inputValue{
     display:table;
     width:100%;
     border-bottom:1px solid #0F1217;
+    background:#ffffff;
 }
 .mdl-tabs__tab {
     border: medium none;
@@ -209,10 +210,12 @@ body .container-fluid .jumbotron {
 }
 
 .well-container .measure-value {
-    font-size:42px;
     white-space: nowrap;
-    margin-left:25px;
+    margin-left:20px;
     letter-spacing: -1px;
+    line-height: 40px;
+    display:inline-block;
+    position: relative;
 }
 
 .well-container a {
@@ -221,6 +224,7 @@ body .container-fluid .jumbotron {
 
 .well-container .btn {
     border-color:#ffffff;
+    margin:0;
 }
 
 .well-container.bloodPressure {
@@ -235,6 +239,17 @@ body .container-fluid .jumbotron {
     left:0;
     display:block;
     text-indent:-9999px;
+}
+
+.well-container .value {
+    font-size:54px;
+    float:left;
+}
+
+.well-container sup {
+    font-size:16px;
+    vertical-align: bottom;
+    top:-0.5em;
 }
 
 .well-container.temperature {
