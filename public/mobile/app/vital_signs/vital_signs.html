@@ -15,7 +15,7 @@
     <script src="../scripts/jsapi.js"></script>
     <script src="../scripts/google-api.js"></script>
 </head>
-<body ng-app="mobileApp">
+<body ng-app="mobileApp" >
 
 <div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
     <div class="container">
@@ -49,10 +49,16 @@
         Tab1 Content
     </div>
     <div id="tab2" class="mdl-tabs__panel is-active">
-        <div class="container" ng-controller="VitalSignsCtrl">
+        <div class="container" ng-controller="VitalSignsCtrl" ng-cloak>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel-header">
+                    <!--<div class="spinner-wrapper" ng-hide="loaded">
+                        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="circle" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                    </div>-->
+
+                    <div class="panel-header" ng-show="loaded">
                         <div class="left-side-container">
                             <img src="../images/icon-latest-readings.png" class="icon-left"/>Latest Readings
                         </div>
@@ -61,14 +67,14 @@
                         </div>
                     </div>
 
-                    <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory">
+                    <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory" ng-show="loaded">
                         <h5>{{measure.device}}</h5>
                         <div class="well-container {{measure.deviceType}}">
                             <div class="well-cell">
                                 <div class="icon">icon...</div>
                                 <div class="measure-value">
                                     <div class="value">{{measure.valueForUI}}</div>
-                                    <sup>{{measure.deviceUnit}}</sup>
+                                    <sup> {{measure.deviceUnit}}</sup>
                                 </div>
                             </div>
                             <div class="well-cell text-right">

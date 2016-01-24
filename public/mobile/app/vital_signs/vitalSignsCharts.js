@@ -4,6 +4,7 @@
 
 angular.module("mobileApp").controller("VitalSignsChartsCtrl", ['$scope', 'commonService', 'vitalSignsService', function($scope, commonService, vitalSignsService) {
     $scope.chartHistories = [];
+    $scope.loaded = false;
 
     $scope.getHistories = function () {
         vitalSignsService.getHistories(function (histories) {
@@ -15,6 +16,7 @@ angular.module("mobileApp").controller("VitalSignsChartsCtrl", ['$scope', 'commo
                         deviceName: history.deviceName
                     };
                 });
+                $scope.loaded = true;
             },
             function (error) {
                 console.error(error);

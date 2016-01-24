@@ -48,11 +48,17 @@
         Tab1 Content
     </div>
     <div id="tab2" class="mdl-tabs__panel is-active">
-        <div class="container" ng-controller="VitalSignsChartsCtrl">
+        <div class="container" ng-controller="VitalSignsChartsCtrl" ng-cloak>
             <div class="row">
                 <div class="col-md-12">
+                    <!--<div class="spinner-wrapper" ng-hide="loaded">
+                        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="circle" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                    </div>-->
+
                     <div class="chart-dashboard">
-                        <div class="chart-details" ng-repeat="chartHistory in chartHistories">
+                        <div class="chart-details" ng-repeat="chartHistory in chartHistories" ng-show="loaded">
 
                             <ul class="nav nav-tabs chart-tabs" role="tablist">
                                 <li class="active">

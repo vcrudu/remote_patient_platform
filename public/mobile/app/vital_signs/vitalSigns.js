@@ -4,8 +4,8 @@
 angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonService', 'vitalSignsService', function($scope, commonService, vitalSignsService) {
     $scope.histories = [];
     $scope.measures = [];
-
     $scope.currentHistory = null;
+    $scope.loaded = false;
 
     $scope.getHistories = function () {
         vitalSignsService.getHistories(function (histories) {
@@ -29,11 +29,13 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
                     lastMeasure.valueForUI = lastMeasure.firstValue;
                     if (lastMeasure.secondValue)
                     {
-                        lastMeasure.valueForUI += " / " + lastMeasure.secondValue;
+                        lastMeasure.valueForUI += "/" + lastMeasure.secondValue;
                     }
 
                     $scope.measures.push(lastMeasure);
                 });
+
+                $scope.loaded = true;
             },
             function (error) {
                 console.error(error);
@@ -106,7 +108,7 @@ angular.module("mobileApp").controller("VitalSignsCtrl", ['$scope', 'commonServi
                 label = ""
                 break;
             case "bloodOxygen":
-                label = ""
+                label = "SO2"
                 break;
             case "respiratoryRate":
                 label = "%"
