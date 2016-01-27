@@ -181,6 +181,23 @@ input.ui-editRangeSlider-inputValue{
     color:#ffffff;
 }
 
+.btn-default:disabled, .btn-default:disabled:hover {
+    background:#3b3b1f;
+    color:#ffffff;
+    opacity:0.6;
+}
+
+.btn-remove {
+    width:32px;
+    height:32px;
+    display:inline-block;
+    border-radius:50%;
+    border:none;
+    background:url('../images/glyph-remove.png') no-repeat #cc0033 center;
+    text-indent:-9999px;
+    margin:0 0.4em;
+}
+
 
 
 
@@ -250,6 +267,10 @@ body .container-fluid .jumbotron {
     line-height: 40px;
     display:inline-block;
     position: relative;
+}
+
+.well-container .measure-unit {
+    opacity:0.65;
 }
 
 .well-container a {
@@ -362,6 +383,50 @@ ul.chart-tabs > li > a.tab-chart {
 ul.chart-tabs > li > a.tab-table {
     background-image:url('../images/tab-table.png');
 }
+
+.table-responsive {
+    border:none;
+}
+
+.tab-pane span.date {
+    color:#808080;
+    padding-right:10px;
+    font-size:0.95em;
+    line-height: 1em;
+
+}
+
+.tab-pane span.time {
+    color:#669900;
+    padding-right:10px;
+    font-size:1.5em;
+    line-height:1em;
+}
+
+.value-cell {
+    font-size:28px;
+    font-weight:300;
+    line-height:28px;
+}
+
+.actions-cell {
+    max-width:60px;
+}
+table.alt-rows thead > tr > th {
+    background:#ffffff;
+    border-bottom:3px solid #669900;
+}
+table.alt-rows tbody > tr > td {
+    border-bottom:1px solid #808080;
+}
+table.alt-rows tbody > tr:nth-child(even) > td {
+    background:#e6eff5;
+}
+
+table.alt-rows tbody > tr:nth-child(odd) > td {
+    background:#ffffff;
+}
+
 
 /* Loading spinner */
 .spinner-wrapper
@@ -519,6 +584,20 @@ svg
     padding:0 15px 15px;
 }
 
+.modal-content .modal-footer .btn-default {
+    margin-bottom:0;
+    margin-left:0.5em;
+}
+
+.textarea {
+    margin:10px 0 15px;
+    width:100%;
+}
+
+.textarea > textarea {
+    width:100%;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px)  {
     .fc-toolbar h2 {
@@ -541,6 +620,16 @@ svg
     .fc-button-group .fc-state-default.fc-corner-left,
     .fc-button-group .fc-state-default.fc-corner-right {
         width:26px;
+    }
+
+    .tab-pane span.date {
+        display:block;
+    }
+
+    .tab-pane span.time {
+        display:block;
+        font-size:20px;
+
     }
 
 }

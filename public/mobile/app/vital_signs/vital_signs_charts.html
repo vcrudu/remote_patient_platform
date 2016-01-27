@@ -79,21 +79,21 @@
                                 </div>
                                 <div class="tab-pane fade" id="table-{{chartHistory.Id}}">
                                     <div class="table-responsive" style="height: 350px; overflow: auto;">
-                                        <table class="table">
+                                        <table class="table alt-rows">
                                             <thead>
                                             <tr>
                                                 <th>Time</th>
                                                 <th>Measurement</th>
-                                                <th>Actions</th>
+                                                <th class="text-center actions-cell">Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr ng-repeat="measurement in chartHistory.Measurements">
-                                                <td>{{measurement.DateTime | date:'dd.MM.yyyy HH:mm'}}</td>
+                                                <td><span class="date">{{measurement.DateTime | date:'dd.MM.yyyy'}}</span><span class="time">{{measurement.DateTime | date:'HH:mm'}}</span></td>
                                                 <td ng-show="measurement.SecondValue">{{measurement.FirstValue}} / {{measurement.SecondValue}}</td>
-                                                <td ng-show="!measurement.SecondValue">{{measurement.FirstValue}}</td>
-                                                <td>
-                                                    <button class="btn btn-danger" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
+                                                <td ng-show="!measurement.SecondValue"><span class="value-cell">{{measurement.FirstValue}}</span></td>
+                                                <td class="text-center actions-cell">
+                                                    <button class="btn-remove" ng-click="deleteMeasurement(history.Id, measurement)">Delete</button>
                                                 </td>
                                             </tr>
                                             </tbody>
