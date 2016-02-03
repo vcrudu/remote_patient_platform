@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../styles/mobile.css">
 </head>
 <body ng-app="mobileApp">
-<div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
+<div class="appWrapper mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs" ui-view>
     <div class="container">
         <div class="row">
             <div class="mdl-tabs__tab-bar">
@@ -77,6 +77,7 @@
 <script src="../scripts/material.min.js" type="application/javascript"></script>
 <script src="../scripts/ripples.min.js" type="application/javascript"></script>
 <script src="../scripts/angular.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-ui-router.min.js" type="application/javascript"></script>
 <script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
 <script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
 <script src="../scripts/angular-local-storage.js" type="application/javascript"></script>
@@ -86,12 +87,16 @@
 <script src="../scripts/rx.all.min.js" type="application/javascript"></script>
 <script src="../scripts/rx.angular.min.js" type="application/javascript"></script>
 <script src="../scripts/calendar.js" type="application/javascript"></script>
-<script src="../scripts/fullcalendar.min.js" type="application/javascript"></script>
+<script src="../scripts/fullcalendar.js" type="application/javascript"></script>
 <script src="../scripts/scheduler.min.js" type="application/javascript"></script>
 
 <script src="../mobileApp.js" type="application/javascript"></script>
 <script src="../services/common.js" type="application/javascript"></script>
+<script src="providerStateConfig.js" type="application/javascript"></script>
 <script src="appointmentsService.js" type="application/javascript"></script>
 <script src="appointmentsCtrl.js" type="application/javascript"></script>
+<script src="patientDetailsCtrl.js" type="application/javascript"></script>
+
+
 </body>
 </html>

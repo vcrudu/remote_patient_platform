@@ -4,7 +4,7 @@
 
 angular.module("mobileApp")
     .controller("ProviderAppointmentsCtrl",
-        ['$scope', '$filter', '_', '$modal', 'providerAppointmentsService', function($scope, $filter, _, $modal, providerAppointmentsService) {
+        ['$scope', '$state', 'providerAppointmentsService', function($scope, $state, providerAppointmentsService) {
             $scope.vm = {};
 
             $scope.vm.events = [];
@@ -19,11 +19,10 @@ angular.module("mobileApp")
                     providerAppointmentsService.getAppointments($scope.getCurrentTimeString(startDate), $scope.getCurrentTimeString(endDate), function(result) {
                     var data = result;
                     for (var i = 0; i < data.length; i++) {
-                        var backgroundColor = 'yellow';
-                        var eventTextColor = 'rgb(0,0,0)';  //rgb(255,255,255)
+                        var backgroundColor = '#88bb00';
+                        var eventTextColor = '#ffffff';
                         var slotDateTime = new Date();
                         slotDateTime.setTime(data[i].slotDateTime);
-
                         $scope.vm.events.push({
                             id: data[i].slotDateTime,
                             title: "Appointment booked by: " + data[i].name,
@@ -66,6 +65,7 @@ angular.module("mobileApp")
                     eventResizeStop: function (calEvent, jsEvent, view) {
                     },
                     eventClick: function (calEvent, jsEvent, view) {
+                        $state.go('patient', {userId:calEvent.slot.patientId});
                     },
                     eventRender: function (event, element, icon) {
                     },
