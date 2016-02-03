@@ -10,7 +10,27 @@
     module.exports.init = function(router){
         router.get('/appointments', function(req, res) {
             var params = req.params;
-            availabilityService.getBookedSlots(req.decoded.email,new Date(),function(err, data){
+
+            var startDate = null;
+            var endDate = null;
+
+            if (req.query) {
+                if (req.query.startDate) {
+                    startDate = new Date(req.query.startDate);
+                }
+                else {
+                    startDate = new Date();
+                }
+
+                if (req.query.endDate) {
+                    endDate = new Date(req.query.endDate);
+                }
+            }
+            else {
+                startDate = new Date();
+            }
+
+            availabilityService.getBookedSlotsByPeriod(req.decoded.email, startDate, endDate, function(err, data){
                 res.json({
                     success: true,
                     count: data.length,
