@@ -84,6 +84,38 @@ angular.module('mobileApp')
                 }
 
                 return label;
+            },
+            getDeviceTypeUniLabel: function(deviceType)
+            {
+                var label = "";
+                switch (deviceType)
+                {
+                    case "bloodPressure":
+                        label = "mm Hg"
+                        break;
+                    case "heartRate":
+                        label = "BPM"
+                        break;
+                    case "bloodGlucose":
+                        label = ""
+                        break;
+                    case "bloodOxygen":
+                        label = "SO2"
+                        break;
+                    case "respiratoryRate":
+                        label = "%"
+                        break;
+                    case "temperature":
+                        label = "C"
+                        break;
+                    case "weight":
+                        label = ""
+                        break;
+                    case "bloodInr":
+                        label = ""
+                        break;
+                }
+                return label;
             }
         };
     }]);

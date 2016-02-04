@@ -4,7 +4,7 @@
 
 angular.module("mobileApp")
     .controller("ProviderPatientDetailsCtrl",
-        ['$scope', '$state', 'providerPatientDetailsService', function($scope, $state, providerPatientDetailsService) {
+        ['$scope', '$state', 'commonService', 'providerPatientDetailsService', function($scope, $state, commonService, providerPatientDetailsService) {
                 $scope.histories = [];
                 $scope.measures = [];
                 $scope.currentHistory = null;
@@ -30,9 +30,9 @@ angular.module("mobileApp")
                                             var momentInstance = moment(history.Measurements.reverse()[0].DateTime);
 
                                             var lastMeasure = {};
-                                            lastMeasure.device = $scope.getDeviceTypeLabel(history.deviceType);
+                                            lastMeasure.device = commonService.getDeviceTypeLabel(history.deviceType);
                                             lastMeasure.deviceType = history.deviceType;
-                                            lastMeasure.deviceUnit = $scope.getDeviceTypeUniLabel(history.deviceType);
+                                            lastMeasure.deviceUnit = commonService.getDeviceTypeUniLabel(history.deviceType);
                                             lastMeasure.time = momentInstance.format("YYYY-MM-DD HH:mm");
                                             lastMeasure.firstValue = history.Measurements.reverse()[0].FirstValue;
                                             lastMeasure.secondValue = history.Measurements.reverse()[0].SecondValue;
@@ -96,72 +96,5 @@ angular.module("mobileApp")
                 $scope.gotoCharts = function()
                 {
                     $state.go('patient_charts', {userId:$scope.userId});
-                };
-
-                $scope.getDeviceTypeLabel = function(deviceType)
-                {
-                        var label = "";
-                        switch (deviceType)
-                        {
-                                case "bloodPressure":
-                                        label = "Blood Pressure"
-                                        break;
-                                case "heartRate":
-                                        label = "Heart Rate"
-                                        break;
-                                case "bloodGlucose":
-                                        label = "Blood Glucose"
-                                        break;
-                                case "bloodOxygen":
-                                        label = "Blood Oxygen"
-                                        break;
-                                case "respiratoryRate":
-                                        label = "Respiration Rate"
-                                        break;
-                                case "temperature":
-                                        label = "Temperature"
-                                        break;
-                                case "weight":
-                                        label = "Wight"
-                                        break;
-                                case "bloodInr":
-                                        label = "Blood Inr"
-                                        break;
-                        }
-
-                        return label;
-                };
-
-                $scope.getDeviceTypeUniLabel = function(deviceType)
-                {
-                        var label = "";
-                        switch (deviceType)
-                        {
-                                case "bloodPressure":
-                                        label = "mm Hg"
-                                        break;
-                                case "heartRate":
-                                        label = "BPM"
-                                        break;
-                                case "bloodGlucose":
-                                        label = ""
-                                        break;
-                                case "bloodOxygen":
-                                        label = "SO2"
-                                        break;
-                                case "respiratoryRate":
-                                        label = "%"
-                                        break;
-                                case "temperature":
-                                        label = "C"
-                                        break;
-                                case "weight":
-                                        label = ""
-                                        break;
-                                case "bloodInr":
-                                        label = ""
-                                        break;
-                        }
-                        return label;
                 };
         }]);
