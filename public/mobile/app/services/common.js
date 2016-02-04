@@ -51,6 +51,39 @@ angular.module('mobileApp')
                         callback("http://localhost:8081/v1/api/");
                     }, 0);
                 }
+            },
+            getDeviceTypeLabel: function(deviceType)
+            {
+                var label = "";
+                switch (deviceType)
+                {
+                    case "bloodPressure":
+                        label = "Blood Pressure"
+                        break;
+                    case "heartRate":
+                        label = "Heart Rate"
+                        break;
+                    case "bloodGlucose":
+                        label = "Blood Glucose"
+                        break;
+                    case "bloodOxygen":
+                        label = "Blood Oxygen"
+                        break;
+                    case "respiratoryRate":
+                        label = "Respiration Rate"
+                        break;
+                    case "temperature":
+                        label = "Temperature"
+                        break;
+                    case "weight":
+                        label = "Wight"
+                        break;
+                    case "bloodInr":
+                        label = "Blood Inr"
+                        break;
+                }
+
+                return label;
             }
         };
     }]);

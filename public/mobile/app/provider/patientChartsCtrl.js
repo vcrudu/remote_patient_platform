@@ -4,7 +4,7 @@
 
 angular.module("mobileApp")
     .controller("ProviderPatientChartsCtrl",
-        ['$scope', '$state', 'providerPatientChartsService', function($scope, $state, providerPatientChartsService) {
+        ['$scope', '$state', 'commonService', 'providerPatientChartsService', function($scope, $state, commonService, providerPatientChartsService) {
             $scope.chartHistories = [];
             $scope.loaded = false;
 
@@ -22,7 +22,8 @@ angular.module("mobileApp")
                             history.dashboard = {
                                 data: history.dashboard,
                                 deviceType: history.deviceType,
-                                deviceName: history.deviceName
+                                deviceName: history.deviceName,
+                                labelName: commonService.getDeviceTypeLabel(history.deviceType)
                             };
                         });
                         $scope.loaded = true;

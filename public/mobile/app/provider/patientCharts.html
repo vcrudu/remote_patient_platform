@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="chart-dashboard">
                             <div class="chart-details" ng-repeat="chartHistory in chartHistories" ng-show="loaded">
-
+                                <h5>{{chartHistory.dashboard.labelName}}</h5>
                                 <ul class="nav nav-tabs chart-tabs" role="tablist">
                                     <li class="active">
                                         <a href="#chart-{{chartHistory.Id}}" class="tab-chart" role="tab" data-toggle="tab">
