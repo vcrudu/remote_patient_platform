@@ -1,49 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Provider Appointments</title>
-    <link rel="stylesheet" type="text/css" href="../styles/googleapi-fonts.css">
-    <link rel="stylesheet" href="../styles/googleapi-fonts-icon.css">
-    <link rel="stylesheet" href="../styles/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
-    <link rel="stylesheet" href="../styles/ripples.min.css">
-    <link rel="stylesheet" href="../styles/fullcalendar.min.css">
-    <link rel="stylesheet" href="../styles/scheduler.min.css">
-    <link rel="stylesheet" href="../styles/tabs.css">
-    <link rel="stylesheet" href="../styles/mobile.css">
+<div class="container" ng-controller="ProviderAppointmentsCtrl" ng-cloak>
+    <div class="row">
+        <div class="mdl-tabs__tab-bar">
+            <a class="mdl-tabs__tab  is-active" href="#tab1">
+                <img src="../images/tab-icons/icon-people.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="#tab2">
+                <img src="../images/tab-icons/icon-person.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="#tab3">
+                <img src="../images/tab-icons/icon-alerts.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="#tab4">
+                <img src="../images/tab-icons/icon-reports.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="#tab5">
+                <img src="../images/tab-icons/icon-timer.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="#tab6">
+                <img src="../images/tab-icons/icon-list.png"/>
+            </a>
+        </div>
 
-    <script src="../scripts/jsapi.js"></script>
-    <script src="../scripts/google-api.js"></script>
-</head>
-<body ng-app="mobileApp">
-<div class="appWrapper mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs" ui-view>
-    <div class="container">
-        <div class="row">
-            <div class="mdl-tabs__tab-bar">
-                <a class="mdl-tabs__tab  is-active" href="#tab1">
-                    <img src="../images/tab-icons/icon-people.png"/>
-                </a>
-                <a class="mdl-tabs__tab" href="#tab2">
-                    <img src="../images/tab-icons/icon-person.png"/>
-                </a>
-                <a class="mdl-tabs__tab" href="#tab3">
-                    <img src="../images/tab-icons/icon-alerts.png"/>
-                </a>
-                <a class="mdl-tabs__tab" href="#tab4">
-                    <img src="../images/tab-icons/icon-reports.png"/>
-                </a>
-                <a class="mdl-tabs__tab" href="#tab5">
-                    <img src="../images/tab-icons/icon-timer.png"/>
-                </a>
-                <a class="mdl-tabs__tab" href="#tab6">
-                    <img src="../images/tab-icons/icon-list.png"/>
-                </a>
-            </div>
-
-            <div id="tab1" class="mdl-tabs__panel  is-active">
-            <div class="container" ng-controller="ProviderAppointmentsCtrl" ng-cloak>
+        <div id="tab1" class="mdl-tabs__panel  is-active">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
@@ -51,60 +30,20 @@
                 </div>
             </div>
         </div>
-            <div id="tab2" class="mdl-tabs__panel">
-                Tab2 Content
-            </div>
-            <div id="tab3" class="mdl-tabs__panel">
-                Tab3 Content
-            </div>
-            <div id="tab4" class="mdl-tabs__panel">
-                Tab1 Content
-            </div>
-            <div id="tab5" class="mdl-tabs__panel">
+        <div id="tab2" class="mdl-tabs__panel">
+            Tab2 Content
+        </div>
+        <div id="tab3" class="mdl-tabs__panel">
+            Tab3 Content
+        </div>
+        <div id="tab4" class="mdl-tabs__panel">
+            Tab1 Content
+        </div>
+        <div id="tab5" class="mdl-tabs__panel">
 
-            </div>
-            <div id="tab6" class="mdl-tabs__panel">
-                Tab1 Content
-            </div>
+        </div>
+        <div id="tab6" class="mdl-tabs__panel">
+            Tab1 Content
         </div>
     </div>
 </div>
-
-<script src="../scripts/moment.min.js" type="application/javascript"></script>
-<script src="../scripts/en-gb.js" type="application/javascript"></script>
-<script src="../scripts/moment-with-locales.min.js" type="application/javascript"></script>
-<script src="../scripts/jquery.min.js" type="application/javascript"></script>
-<script src="../scripts/jquery-ui.min.js" type="application/javascript"></script>
-<script src="../scripts/jQDateRangeSlider-min.js" type="application/javascript"></script>
-<script src="../scripts/bootstrap.min.js" type="application/javascript"></script>
-<script src="../scripts/material.min.js" type="application/javascript"></script>
-<script src="../scripts/ripples.min.js" type="application/javascript"></script>
-<script src="../scripts/angular.min.js" type="application/javascript"></script>
-<script src="../scripts/angular-ui-router.min.js" type="application/javascript"></script>
-<script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
-<script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
-<script src="../scripts/angular-local-storage.js" type="application/javascript"></script>
-<script src="../scripts/underscore-min.js" type="application/javascript"></script>
-<script src="../scripts/angular-underscore-module.js" type="application/javascript"></script>
-<script src="../scripts/angular-underscore.min.js" type="application/javascript"></script>
-<script src="../scripts/rx.all.min.js" type="application/javascript"></script>
-<script src="../scripts/rx.angular.min.js" type="application/javascript"></script>
-<script src="../scripts/calendar.js" type="application/javascript"></script>
-<script src="../scripts/fullcalendar.js" type="application/javascript"></script>
-<script src="../scripts/scheduler.min.js" type="application/javascript"></script>
-
-<script src="../mobileApp.js" type="application/javascript"></script>
-<script src="../directives/googleChart.js"></script>
-<script src="../services/common.js" type="application/javascript"></script>
-<script src="providerStateConfig.js" type="application/javascript"></script>
-<script src="appointmentsService.js" type="application/javascript"></script>
-<script src="appointmentsCtrl.js" type="application/javascript"></script>
-<script src="patientDetailsService.js" type="application/javascript"></script>
-<script src="patientDetailsCtrl.js" type="application/javascript"></script>
-
-<script type="text/javascript">
-    // Load the Visualization API and the piechart package.
-    google.load('visualization', '1.1', { packages: ['corechart', 'controls'] });
-</script>
-</body>
-</html>

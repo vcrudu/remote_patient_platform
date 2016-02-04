@@ -72,7 +72,7 @@ angular.module("mobileApp")
                         function (error) {
                             console.error(error);
                         });
-                }
+                };
 
                 $scope.getPatientDetails(function() {
                     $scope.loaded = true;
@@ -80,7 +80,7 @@ angular.module("mobileApp")
 
                 $scope.goToLatestReadings = function() {
                         $scope.currentHistory = null;
-                }
+                };
 
                 $scope.viewHistory = function(deviceType)
                 {
@@ -91,7 +91,12 @@ angular.module("mobileApp")
                                         return;
                                 }
                         });
-                }
+                };
+
+                $scope.gotoCharts = function()
+                {
+                    $state.go('patient_charts', {userId:$scope.userId});
+                };
 
                 $scope.getDeviceTypeLabel = function(deviceType)
                 {
@@ -125,7 +130,7 @@ angular.module("mobileApp")
                         }
 
                         return label;
-                }
+                };
 
                 $scope.getDeviceTypeUniLabel = function(deviceType)
                 {
@@ -158,5 +163,5 @@ angular.module("mobileApp")
                                         break;
                         }
                         return label;
-                }
+                };
         }]);

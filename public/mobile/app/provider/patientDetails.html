@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="ProviderPatientDetailsCtrl" ng-cloak>
     <div class="row">
         <div class="mdl-tabs__tab-bar">
             <a class="mdl-tabs__tab  is-active" href="#tab1">
@@ -22,7 +22,7 @@
         </div>
 
         <div id="tab1" class="mdl-tabs__panel  is-active">
-            <div class="container" ng-controller="ProviderPatientDetailsCtrl" ng-cloak>
+            <div class="container">
                 <div class="row" ng-show="loaded">
                     <div class="col-md-12">
 
@@ -63,7 +63,7 @@
                                 <img src="../images/icon-latest-readings.png" class="icon-left"/>Latest Readings
                             </div>
                             <div class="button-container text-right">
-                                <a href="vital_signs_charts.html" class="btn">More</a>
+                                <a class="btn" ng-click="gotoCharts();">More</a>
                             </div>
                         </div>
 

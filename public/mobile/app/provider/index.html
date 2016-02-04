@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Provider Appointments</title>
+    <link rel="stylesheet" type="text/css" href="../styles/googleapi-fonts.css">
+    <link rel="stylesheet" href="../styles/googleapi-fonts-icon.css">
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
+    <link rel="stylesheet" href="../styles/ripples.min.css">
+    <link rel="stylesheet" href="../styles/fullcalendar.min.css">
+    <link rel="stylesheet" href="../styles/scheduler.min.css">
+    <link rel="stylesheet" href="../styles/tabs.css">
+    <link rel="stylesheet" href="../styles/mobile.css">
+
+    <script src="../scripts/jsapi.js"></script>
+    <script src="../scripts/google-api.js"></script>
+</head>
+<body ng-app="mobileApp" ng-controller="ProviderCtrl">
+<div class="appWrapper mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs" ui-view>
+
+</div>
+
+<script src="../scripts/moment.min.js" type="application/javascript"></script>
+<script src="../scripts/en-gb.js" type="application/javascript"></script>
+<script src="../scripts/moment-with-locales.min.js" type="application/javascript"></script>
+<script src="../scripts/jquery.min.js" type="application/javascript"></script>
+<script src="../scripts/jquery-ui.min.js" type="application/javascript"></script>
+<script src="../scripts/jQDateRangeSlider-min.js" type="application/javascript"></script>
+<script src="../scripts/bootstrap.min.js" type="application/javascript"></script>
+<script src="../scripts/material.min.js" type="application/javascript"></script>
+<script src="../scripts/ripples.min.js" type="application/javascript"></script>
+<script src="../scripts/angular.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-ui-router.min.js" type="application/javascript"></script>
+<script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
+<script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-local-storage.js" type="application/javascript"></script>
+<script src="../scripts/underscore-min.js" type="application/javascript"></script>
+<script src="../scripts/angular-underscore-module.js" type="application/javascript"></script>
+<script src="../scripts/angular-underscore.min.js" type="application/javascript"></script>
+<script src="../scripts/rx.all.min.js" type="application/javascript"></script>
+<script src="../scripts/rx.angular.min.js" type="application/javascript"></script>
+<script src="../scripts/calendar.js" type="application/javascript"></script>
+<script src="../scripts/fullcalendar.js" type="application/javascript"></script>
+<script src="../scripts/scheduler.min.js" type="application/javascript"></script>
+
+<script src="../mobileApp.js" type="application/javascript"></script>
+<script src="../directives/googleChart.js"></script>
+<script src="../services/common.js" type="application/javascript"></script>
+<script src="providerStateConfig.js" type="application/javascript"></script>
+<script src="providerCtrl.js" type="application/javascript"></script>
+<script src="appointmentsService.js" type="application/javascript"></script>
+<script src="appointmentsCtrl.js" type="application/javascript"></script>
+<script src="patientDetailsService.js" type="application/javascript"></script>
+<script src="patientDetailsCtrl.js" type="application/javascript"></script>
+
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.1', { packages: ['corechart', 'controls'] });
+</script>
+</body>
+</html>
