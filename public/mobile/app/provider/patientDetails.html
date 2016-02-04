@@ -23,9 +23,75 @@
 
         <div id="tab1" class="mdl-tabs__panel  is-active">
             <div class="container" ng-controller="ProviderPatientDetailsCtrl" ng-cloak>
+                <div class="row" ng-show="loaded">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img ng-src="{{patient.avatar}}"
+                                     style="width: 150px" class="img-responsive pull-left padding-10 ">
+
+                                <a href="javascript:void(0);" class="btn">Call</a>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="margin-top-10">
+                                    <div>
+                                        <h1><span ng-model="patient.givenName"></span> <span ng-model="patient.familyName"></span></h1>
+                                    </div>
+                                    <div>
+                                        <strong>Address</strong> : <span ng-model="patient.address1">{{patient.address1}}</span>
+                                    </div>
+                                    <div>
+                                        <strong>Phone </strong>: <span ng-model="patient.phoneNumber">{{patient.phoneNumber}}</span>
+                                    </div>
+                                    <div>
+                                        <strong>Mobile </strong>: <span ng-model="patient.mobileNumber">{{patient.mobileNumber}}</span>
+                                    </div>
+                                    <div>
+                                        <strong>Email </strong>: <span ng-model="patient.email">{{patient.email}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12">
-                        Patient Details
+                        <div class="panel-header" ng-show="loaded">
+                            <div class="left-side-container" ng-click="goToLatestReadings();">
+                                <img src="../images/icon-latest-readings.png" class="icon-left"/>Latest Readings
+                            </div>
+                            <div class="button-container text-right">
+                                <a href="vital_signs_charts.html" class="btn">More</a>
+                            </div>
+                        </div>
+
+                        <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory" ng-show="loaded">
+                            <h5>{{measure.device}}</h5>
+                            <div class="well-container {{measure.deviceType}}">
+                                <div class="well-cell">
+                                    <div class="icon">icon...</div>
+                                    <div class="measure-value">
+                                        <div class="value">{{measure.valueForUI}}</div>
+                                        <sup class="measure-unit"> {{measure.deviceUnit}}</sup>
+                                    </div>
+                                </div>
+                                <div class="well-cell text-right">
+                                    <span class="date-time">{{measure.time}}</span>
+                                    <a href="javascript:void(0);" class="btn" ng-click="viewHistory(measure.deviceType);">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-details" ng-show="currentHistory">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <google-chart dashboard="currentHistory.dashboard" chartid="currentHistory.Id"></google-chart>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

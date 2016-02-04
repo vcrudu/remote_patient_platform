@@ -105,7 +105,7 @@
             $scope.getHistories();
 
             historyService.getPatientDetails(function (result) {
-                    $scope.birthDate = result.dateOfBirth;
+                     $scope.birthDate = result.dateOfBirth;
                      $scope.givenName = result.name;
                      $scope.familyName = result.surname;
                      $scope.address1 = result.address.addressLine1;

@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="../styles/scheduler.min.css">
     <link rel="stylesheet" href="../styles/tabs.css">
     <link rel="stylesheet" href="../styles/mobile.css">
+
+    <script src="../scripts/jsapi.js"></script>
+    <script src="../scripts/google-api.js"></script>
 </head>
 <body ng-app="mobileApp">
 <div class="appWrapper mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs" ui-view>
@@ -91,12 +94,17 @@
 <script src="../scripts/scheduler.min.js" type="application/javascript"></script>
 
 <script src="../mobileApp.js" type="application/javascript"></script>
+<script src="../directives/googleChart.js"></script>
 <script src="../services/common.js" type="application/javascript"></script>
 <script src="providerStateConfig.js" type="application/javascript"></script>
 <script src="appointmentsService.js" type="application/javascript"></script>
 <script src="appointmentsCtrl.js" type="application/javascript"></script>
+<script src="patientDetailsService.js" type="application/javascript"></script>
 <script src="patientDetailsCtrl.js" type="application/javascript"></script>
 
-
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.1', { packages: ['corechart', 'controls'] });
+</script>
 </body>
 </html>
