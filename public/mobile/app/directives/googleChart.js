@@ -14,19 +14,18 @@ angular.module('mobileApp').directive('googleChart', [
         };
 
         function getChartType(data) {
-
-            var chartType = '';
-
+            return "google.charts.Line";
+            /*var chartType = '';
             switch (data.deviceType) {
                 case 'bloodPressure':
-                    chartType = 'AreaChart';
+                    chartType = 'google.charts.Line';
                     break;
                 default:
-                    chartType = 'AreaChart';
+                    chartType = 'google.charts.Line';
                     break;
             }
 
-            return chartType;
+            return chartType;*/
         }
 
         function getChartLabel(deviceType) {
