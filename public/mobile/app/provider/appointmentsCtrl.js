@@ -19,7 +19,7 @@ angular.module("mobileApp")
                     providerAppointmentsService.getAppointments($scope.getCurrentTimeString(startDate), $scope.getCurrentTimeString(endDate), function(result) {
                     var data = result;
                     for (var i = 0; i < data.length; i++) {
-                        var backgroundColor = '#88bb00';
+                        var backgroundColor = '#03a9f4';
                         var eventTextColor = '#ffffff';
                         var slotDateTime = new Date();
                         slotDateTime.setTime(data[i].slotDateTime);
@@ -60,6 +60,7 @@ angular.module("mobileApp")
                         left: 'title',
                         right: 'prev,today,next'
                     },
+                    bottomMarginDelta: 220,
                     eventDragStop: function (calEvent, jsEvent, view) {
                     },
                     eventResizeStop: function (calEvent, jsEvent, view) {

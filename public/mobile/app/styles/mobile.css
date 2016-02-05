@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300);
+@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:300,400,500,700);
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
@@ -169,7 +169,7 @@ input.ui-editRangeSlider-inputValue{
     border-radius:0;
     padding:10px 15px;
     border:none;
-    background:#88bb00;
+    background:#4caf50;
     color:#ffffff;
     text-transform:uppercase;
     font-size:16px;
@@ -582,7 +582,7 @@ svg
 .fc-button-group .fc-state-default.fc-corner-left,
 .fc-button-group .fc-state-default.fc-corner-right {
     width:30px;
-    background:#88bb00;
+    background:#4caf50;
     color:#ffffff;
 }
 
@@ -610,7 +610,7 @@ svg
 }
 
 .modal-content .modal-header {
-    border-bottom:1px solid #88bb00;
+    border-bottom:1px solid #009688;
     padding:10px 15px;
     font-size:18px;
 }
@@ -619,6 +619,7 @@ svg
     padding:0;
     margin:0;
     font-size:18px;
+    font-weight: bold;
 }
 
 .modal-content .modal-body {
@@ -626,6 +627,7 @@ svg
 }
 
 .modal-content .modal-footer {
+    border-top:1px solid #009688;
     padding:0 15px 15px;
 }
 

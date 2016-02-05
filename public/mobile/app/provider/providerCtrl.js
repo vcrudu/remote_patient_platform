@@ -5,5 +5,10 @@
 angular.module("mobileApp")
     .controller("ProviderCtrl",
         ['$scope', '$state', function($scope, $state) {
-            $state.go('appointments');
+            $scope.gotoState = function(state)
+            {
+                $state.go(state);
+            }
+
+            $scope.gotoState('appointments');
         }]);

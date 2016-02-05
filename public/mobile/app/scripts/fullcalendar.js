@@ -8668,7 +8668,7 @@ function Calendar_constructor(element, overrides) {
 				suggestedViewHeight = Math.round(content.width() / Math.max(options.aspectRatio, .5));
 			}
 			else {
-				suggestedViewHeight = $(window).height() - options.bottomDelta;
+				suggestedViewHeight = $(window).height() - options.bottomMarginDelta;
 			}
 		}
 	}
@@ -8934,7 +8934,7 @@ Calendar.defaults = {
 	// display
 	defaultView: 'month',
 	aspectRatio: 1.35,
-	bottomDelta: 150,
+	bottomMarginDelta: 150,
 	//aspectRatio: 1,
 	header: {
 		left: 'title',

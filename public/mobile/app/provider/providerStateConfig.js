@@ -12,5 +12,8 @@ angular.module('mobileApp').config(['$stateProvider', function ($stateProvider) 
     }).state("appointments", {
         url: "/appointments",
         templateUrl: "appointments.html"
+    }).state("availability", {
+        url: "/availability",
+        templateUrl: "availability.html"
     });
 }]);

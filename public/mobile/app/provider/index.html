@@ -8,16 +8,39 @@
     <link rel="stylesheet" href="../styles/googleapi-fonts-icon.css">
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/bootstrap-material-design.css">
+    <link rel="stylesheet" href="../styles/angular-material.min.css">
     <link rel="stylesheet" href="../styles/ripples.min.css">
     <link rel="stylesheet" href="../styles/fullcalendar.min.css">
     <link rel="stylesheet" href="../styles/scheduler.min.css">
     <link rel="stylesheet" href="../styles/tabs.css">
+    <link rel="stylesheet" href="../styles/offcanvas.min.css" />
     <link rel="stylesheet" href="../styles/mobile.css">
 
     <script src="../scripts/jsapi.js"></script>
     <script src="../scripts/google-api.js"></script>
 </head>
 <body ng-app="mobileApp" ng-controller="ProviderCtrl">
+
+<div class="overlay"></div>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed pull-left" data-toggle="offcanvas" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse sidebar-offcanvas">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:void(0);" ng-click="gotoState('appointments');">My Appointments</a></li>
+                <li><a href="javascript:void(0);" ng-click="gotoState('availability');">Availability</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="appWrapper mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs" ui-view>
 
 </div>
@@ -28,10 +51,25 @@
 <script src="../scripts/jquery.min.js" type="application/javascript"></script>
 <script src="../scripts/jquery-ui.min.js" type="application/javascript"></script>
 <script src="../scripts/jQDateRangeSlider-min.js" type="application/javascript"></script>
+<script type="text/javascript">
+    $(document).bind("mobileinit", function () {
+        $.mobile.ajaxEnabled = false;
+        $.mobile.linkBindingEnabled = false;
+        $.mobile.hashListeningEnabled = false;
+        $.mobile.pushStateEnabled = false;
+        $.mobile.autoInitializePage = false;
+    });
+</script>
+<script src="../scripts/jquery.mobile.min.js" type="application/javascript"></script>
 <script src="../scripts/bootstrap.min.js" type="application/javascript"></script>
+<script src="../scripts/offcanvas.min.js" type="application/javascript"></script>
 <script src="../scripts/material.min.js" type="application/javascript"></script>
 <script src="../scripts/ripples.min.js" type="application/javascript"></script>
 <script src="../scripts/angular.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-animate.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-aria.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-messages.min.js" type="application/javascript"></script>
+<script src="../scripts/angular-material.min.js" type="application/javascript"></script>
 <script src="../scripts/angular-ui-router.min.js" type="application/javascript"></script>
 <script src="../scripts/ui-bootstrap-tpls.js" type="application/javascript"></script>
 <script src="../scripts/ngStorage.min.js" type="application/javascript"></script>
@@ -49,6 +87,7 @@
 <script src="../directives/googleChart.js"></script>
 <script src="../services/common.js" type="application/javascript"></script>
 <script src="providerStateConfig.js" type="application/javascript"></script>
+<script src="providerService.js" type="application/javascript"></script>
 <script src="providerCtrl.js" type="application/javascript"></script>
 <script src="appointmentsService.js" type="application/javascript"></script>
 <script src="appointmentsCtrl.js" type="application/javascript"></script>
@@ -56,6 +95,8 @@
 <script src="patientDetailsCtrl.js" type="application/javascript"></script>
 <script src="patientChartsService.js" type="application/javascript"></script>
 <script src="patientChartsCtrl.js" type="application/javascript"></script>
+<script src="availabilityService.js" type="application/javascript"></script>
+<script src="availabilityCtrl.js" type="application/javascript"></script>
 
 <script type="text/javascript">
     // Load the Visualization API and the piechart package.
