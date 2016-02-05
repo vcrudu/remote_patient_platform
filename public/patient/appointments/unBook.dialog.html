@@ -1,13 +1,13 @@
 
     <div class="modal-header">
         <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
-            Book appointment</h4>
+            Booked appointment with numenurse</h4>
     </div>
     <div class="modal-body hidden-overflow ">
 
-            <form name="bookingForm" novalidate class="smart-form" id="bookingForm">
+            <form name="unBookingForm" novalidate class="smart-form" id="unBookingForm">
                 <section>
-                    <label class="textarea" ng-class="{stateError: bookingForm.reasonText.$dirty && bookingForm.reasonText.$invalid}">
+                    <label class="textarea" ng-class="{stateError: unBookingForm.reasonText.$dirty && unBookingForm.reasonText.$invalid}">
                         <textarea  rows="4" name="reasonText" id="reasonText" required placeholder="Describe the reason" ng-model="reasonText"
                                 autofocus required></textarea>
                     </label>
@@ -17,10 +17,6 @@
             </form>
     </div>
     <div class="modal-footer">
-        <div class="pull-left">
-            <button class="btn btn-danger" ng-click="delete()" ng-if="session.Id">Delete</button>
-
-        </div>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
             <button class="btn btn-primary" ng-click="apply()" ng-disabled="bookingForm.$invalid">Book</button>
     </div>

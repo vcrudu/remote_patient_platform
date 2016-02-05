@@ -6,6 +6,7 @@
     var slotsRepository = require('../repositories/slotsRepository');
     var usersDetailsRepository = require('../repositories/usersDetailsRepository');
     var usersRepository = require('../repositories/usersRepository');
+    var _ = require('underscore');
 
     function getPatientAppointments(patientId, callback) {
         slotsRepository.getBookedSlotsByPatient(patientId, function (err, data) {

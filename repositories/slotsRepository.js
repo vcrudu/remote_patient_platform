@@ -167,16 +167,17 @@
         },
         getBookedSlotsByPatient:function(patientId, callback){
             var filterExpression='';
+            var startTime = new Date();
             var params = {
                 KeyConditionExpression: '#patientId=:patientId AND ' +
                 '#slotDateTime>=:startTime',
 
                 ExpressionAttributeNames: {
-                    "#providerId": "patientId",
+                    "#patientId": "patientId",
                     "#slotDateTime": "slotDateTime"
                 },
                 ExpressionAttributeValues: {
-                    ":providerId": {"S": patientId},
+                    ":patientId": {"S": patientId},
                     ":startTime": {"N": startTime.getTime().toString()}
                 },
                 IndexName:'patientId-slotDateTime-index',
@@ -289,6 +290,7 @@
                 }
             });
         },
+        //getBookedSlotsByPatient - ToDo-Here
         getBookedSlotsByProvider : function(providerId, startTime, endTime, callback){
             var filterExpression='attribute_exists (patientId)';
             var params;

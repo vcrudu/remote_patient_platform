@@ -17,7 +17,21 @@ angular.module('app').factory('slotsService',['$http', '$localStorage','appSetti
                 $http(req).success(function(res){
                     success(res);
                 }).error(error);
-            },bookAppointment: function (slot, success, error) {
+            },
+            getPacientAppointment: function (dateTime, success, error) {
+                var req = {
+                    method:'GET',
+                    url:appSettings.getServerUrl()+'/v1/api/patientAppointments',
+                    headers:{
+                        'x-access-token': $localStorage.user.token
+                    }
+                };
+
+                $http(req).success(function(res){
+                    success(res);
+                }).error(error);
+            },
+            bookAppointment: function (slot, success, error) {
 
                 var req = {
                     method: 'PUT',
