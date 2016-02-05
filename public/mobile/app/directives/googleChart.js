@@ -14,9 +14,8 @@ angular.module('mobileApp').directive('googleChart', [
         };
 
         function getChartType(data) {
-
-            var chartType = '';
-
+            return "google.charts.Line";
+           /* var chartType = '';
             switch (data.deviceType) {
                 case 'bloodPressure':
                     chartType = 'AreaChart';
@@ -26,7 +25,7 @@ angular.module('mobileApp').directive('googleChart', [
                     break;
             }
 
-            return chartType;
+            return chartType;*/
         }
 
         function getChartLabel(deviceType) {
@@ -70,7 +69,7 @@ angular.module('mobileApp').directive('googleChart', [
             }
         }
 
-        function getChartOptions(data) {
+        function getChartOptions(data, legendPosition) {
 
             var options = {
                 /*'title': data.deviceName,*/
@@ -78,7 +77,7 @@ angular.module('mobileApp').directive('googleChart', [
                 'height': 300,
                 'pointSize': 5,
                 'curveType': 'function',
-                'legend': { position: 'right' },
+                'legend': { position: legendPosition },
                 'vAxis': getVAxis(data),
                 'hAxis': {
                     format: 'MM/dd/yyyy'
@@ -290,7 +289,7 @@ angular.module('mobileApp').directive('googleChart', [
                     if ($scope && $scope.dashboard && $scope.dashboard.data) {
                         $scope.googleDashboard = {
                             data: prepareData($scope.dashboard),
-                            chartOptions: getChartOptions($scope.dashboard),
+                            chartOptions: getChartOptions($scope.dashboard, 'right'),
                             controlOptions: getControlOptions($scope.dashboard),
                             type: getChartType($scope.dashboard),
                         };
@@ -332,13 +331,18 @@ angular.module('mobileApp').directive('googleChart', [
                                     maxDateForSlider.setDate(maxDateForSlider.getDate() + 1);
 
                                     $scope.chartDashboard = new google.visualization.Dashboard(element[0]);
-                                    $scope.chartDashboard.bind($scope.controlWrapper, $scope.chartWrapper);
-                                    $scope.chartDashboard.draw($scope.googleDashboard.data);
-                                    draw.triggered = false;
+                                    //$scope.chartDashboard.bind($scope.controlWrapper, $scope.chartWrapper);
+                                    //$scope.chartDashboard.draw($scope.googleDashboard.data);
+                                    //draw.triggered = false;
 
                                     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
                                     if (isMobile) {
+                                        $scope.chartWrapper.b.legend.position = "none";
+                                        $scope.chartDashboard.bind($scope.controlWrapper, $scope.chartWrapper);
+                                        $scope.chartDashboard.draw($scope.googleDashboard.data);
+                                        draw.triggered = false;
+
                                         jQuery('#slider_' + $scope.chartid).show();
                                         jQuery('#control_' + $scope.chartid).hide();
 
@@ -360,7 +364,13 @@ angular.module('mobileApp').directive('googleChart', [
                                             $scope.controlWrapper.setState({ range: { start: data.values.min, end: data.values.max } });
                                             $scope.controlWrapper.draw();
                                         });
+
+
                                     } else {
+                                        $scope.chartDashboard.bind($scope.controlWrapper, $scope.chartWrapper);
+                                        $scope.chartDashboard.draw($scope.googleDashboard.data);
+                                        draw.triggered = false;
+
                                         jQuery('#slider_' + $scope.chartid).hide();
                                         jQuery('#control_' + $scope.chartid).show();
                                     }
