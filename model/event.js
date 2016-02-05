@@ -57,7 +57,8 @@ var assert = require('assert');
             measurementType="respiratoryRate";
             this.respiratoryRate=args.respiratoryRate;
         }else if(args.temperature){
-            assert.ok(!isNaN(args.temperature) && args.temperature<=50 && args.temperature>=20, "Invalid temperature value!");
+            if(args.temperature>1000) args.temperature = args.temperature/100;
+            assert.ok(!isNaN(args.temperature) && args.temperature<=45 && args.temperature>=30, "Invalid temperature value!");
             measurementType="temperature";
             this.temperature=args.temperature;
         } else if(args.weight){
