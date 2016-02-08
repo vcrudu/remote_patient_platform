@@ -1,0 +1,56 @@
+<div class="container" ng-controller="PatientVitalSignsCtrl" ng-cloak>
+    <div class="row">
+        <div class="mdl-tabs__tab-bar">
+            <a class="mdl-tabs__tab is-active" href="javascript:void(0);" ng-click="gotoState('vitalsigns')">
+                <img src="../images/tab-icons/icon-people.png"/>
+            </a>
+            <a class="mdl-tabs__tab" href="javascript:void(0);" ng-click="gotoState('devices')">
+                <img src="../images/tab-icons/icon-person.png"/>
+            </a>
+        </div>
+
+        <div id="tab1" class="mdl-tabs__panel is-active" ui-view>
+            <div class="container">
+                <div class="row" ng-show="loaded">
+                    <div class="col-md-12">
+                        <div class="panel-header" ng-show="loaded">
+                            <div class="left-side-container">
+                                <img src="../images/icon-latest-readings.png" class="icon-left"/>Latest Readings
+                            </div>
+                            <div class="button-container text-right">
+                                <a href="javascript:void(0);" ng-click="gotoState('vitalsigns.charts')" class="btn">More</a>
+                            </div>
+                        </div>
+
+                        <div class="measure {{measure.deviceType}}" ng-repeat="measure in measures" ng-hide="currentHistory" ng-show="loaded">
+                            <h5>{{measure.device}}</h5>
+                            <div class="well-container {{measure.deviceType}}">
+                                <div class="well-cell">
+                                    <div class="icon">icon...</div>
+                                    <div class="measure-value">
+                                        <div class="value">{{measure.valueForUI}}</div>
+                                        <sup class="measure-unit"> {{measure.deviceUnit}}</sup>
+                                    </div>
+                                </div>
+                                <div class="well-cell text-right">
+                                    <span class="date-time">{{measure.time}}</span>
+                                    <a href="javascript:void(0);" class="btn" ng-click="viewHistory(measure.deviceType);">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-details" ng-show="currentHistory">
+
+                            <a href="javascript:void(0);" ng-click="goToLatestReadings();">Back</a>
+
+                            <google-chart dashboard="currentHistory.dashboard" chartid="currentHistory.Id"></google-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab2" class="mdl-tabs__panel">
+            Tab Content
+        </div>
+    </div>
+</div>

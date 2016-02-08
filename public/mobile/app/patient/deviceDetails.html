@@ -1,0 +1,60 @@
+<div class="container" ng-controller="PatientDeviceDetailsCtrl">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well well-light">
+                <div ng-if="device.imagesUrls && device.imagesUrls.length" style="height: 150px;">
+                    <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive "
+                         style="margin-left: auto;margin-right: auto;max-height: 150px;">
+                </div>
+                <div class="row">
+                    <div class="col-xs-8 ">
+                        <h3>{{device.model}}
+                            <small><p>({{device.deviceModelType}})</p></small>
+                        </h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h2 class="pull-right txt-color-red">
+                            {{device.price | number : 2}}&pound
+                        </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-8">
+                        <p class="note font-md">
+                            {{device.description}}
+                        </p>
+
+                        <p>
+                            <a class="txt-color-blue cursor-pointer" href="{{device.manufacturerUrl}}"
+                               target="_blank" ng-if="device.manufacturerUrl">
+                                Manufacturer
+                            </a>
+                        </p>
+
+                        <div ng-if="device.specifications ">
+                            <ul>
+                                <li ng-repeat="spec in device.specifications">{{spec}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="row padding-5">
+                            <div class="btn  btn-primary pull-right" ng-click="addToBasket(false)">
+                                <i class="fa fa-shopping-cart"></i>
+                                Add to basket
+                            </div>
+
+                        </div>
+                        <div class="row padding-5">
+                            <div class="btn btn-success pull-right " ng-click="addToBasket(true)">
+                                <i class="fa fa-money"></i>
+                                Add to basket and Proceed checkout
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

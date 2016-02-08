@@ -1,13 +1,13 @@
 /**
- * Created by Victor on 1/13/2016.
+ * Created by Victor on 2/8/2016.
  */
 
-angular.module("mobileApp").controller("VitalSignsChartsCtrl", ['$scope', 'commonService', 'vitalSignsService', function($scope, commonService, vitalSignsService) {
+angular.module("mobileApp").controller("PatientVitalSignsChartsCtrl", ['$scope', 'commonService', 'patientVitalSignsService', function($scope, commonService, patientVitalSignsService) {
     $scope.chartHistories = [];
     $scope.loaded = false;
 
     $scope.getHistories = function () {
-        vitalSignsService.getHistories(function (histories) {
+        patientVitalSignsService.getHistories(function (histories) {
                 $scope.chartHistories = histories;
                 angular.forEach($scope.chartHistories, function (history) {
                     history.dashboard = {

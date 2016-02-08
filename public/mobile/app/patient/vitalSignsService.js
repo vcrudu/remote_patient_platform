@@ -1,5 +1,9 @@
+/**
+ * Created by Victor on 2/8/2016.
+ */
+
 angular.module('mobileApp')
-    .factory('vitalSignsService',['$http','rx', 'commonService', '_', function($http, rx, commonService, _) {
+    .factory('patientVitalSignsService',['$http','rx', 'commonService', '_', function($http, rx, commonService, _) {
         return {
             getHistories:function(success, error) {
                 var tokenSource = rx.Observable.fromCallback(commonService.getToken)();
@@ -75,3 +79,4 @@ angular.module('mobileApp')
             }
         };
     }]);
+

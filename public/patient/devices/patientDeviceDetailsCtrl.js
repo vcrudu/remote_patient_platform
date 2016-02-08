@@ -7,13 +7,11 @@ angular.module('app').controller('patientDeviceDetailsCtrl', ['$scope', '$log', 
 
         var vm = this;
 
-
         if ($stateParams.model) {
             vm.device = deviceService.get($stateParams.model);
         } else {
             $window.history.back();
         }
-
 
         vm.addToBasket = function (checkout) {
 

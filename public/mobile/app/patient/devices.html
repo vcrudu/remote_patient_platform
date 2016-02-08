@@ -1,0 +1,54 @@
+<div class="container" ng-controller="PatientDevicesCtrl" ng-cloak>
+    <div class="row">
+        <div class="mdl-tabs__tab-bar">
+            <a class="mdl-tabs__tab" href="javascript:void(0);" ng-click="gotoState('vitalsigns')">
+                <img src="../images/tab-icons/icon-people.png"/>
+            </a>
+            <a class="mdl-tabs__tab is-active" href="javascript:void(0);" ng-click="gotoState('devices')">
+                <img src="../images/tab-icons/icon-person.png"/>
+            </a>
+        </div>
+
+        <div id="tab1" class="mdl-tabs__panel" ui-view>
+            Tab Content
+        </div>
+        <div id="tab2" class="mdl-tabs__panel is-active">
+            <div class="container">
+                <div class="row" ng-show="loaded">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="row">
+                                <div ng-repeat="device in devices" class="col-sm-12" ng-click="showDetails(device)">
+                                    <div class="well well-light " style="height: 300px;overflow: hidden">
+                                        <div ng-if="device.imagesUrls && device.imagesUrls.length"
+                                             style="height: 150px;">
+                                            <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive "
+                                                 style="margin-left: auto;margin-right: auto;max-height: 150px;">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-8 ">
+                                                <h3>{{device.model}}
+                                                    <small><p>({{device.deviceModelType}})</p></small>
+                                                </h3>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <h2 class="pull-right txt-color-red">
+                                                    {{device.price | number : 2}}&pound
+                                                </h2>
+                                            </div>
+                                        </div>
+
+                                        <p class="note">
+                                            {{device.description}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

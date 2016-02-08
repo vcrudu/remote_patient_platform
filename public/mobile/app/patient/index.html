@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Provider Home</title>
+    <title>Patient Home</title>
     <link rel="stylesheet" type="text/css" href="../styles/googleapi-fonts.css">
     <link rel="stylesheet" href="../styles/googleapi-fonts-icon.css">
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
@@ -19,7 +19,7 @@
     <script src="../scripts/jsapi.js"></script>
     <script src="../scripts/google-api.js"></script>
 </head>
-<body ng-app="mobileApp" ng-controller="ProviderCtrl">
+<body ng-app="mobileApp" ng-controller="PatientCtrl">
 
 <div class="overlay"></div>
 <nav class="navbar navbar-default">
@@ -34,8 +34,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse sidebar-offcanvas">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="javascript:void(0);" ng-click="gotoState('appointments');">My Appointments</a></li>
-                <li><a href="javascript:void(0);" ng-click="gotoState('availability');">Availability</a></li>
+                <li class="active"><a href="javascript:void(0);" ng-click="gotoState('vitalsigns');">Vital Signs</a></li>
+                <li><a href="javascript:void(0);" ng-click="gotoState('devices');">Devices</a></li>
             </ul>
         </div>
     </div>
@@ -86,17 +86,14 @@
 <script src="../mobileApp.js" type="application/javascript"></script>
 <script src="../directives/googleChart.js"></script>
 <script src="../services/common.js" type="application/javascript"></script>
-<script src="providerStateConfig.js" type="application/javascript"></script>
-<script src="providerService.js" type="application/javascript"></script>
-<script src="providerCtrl.js" type="application/javascript"></script>
-<script src="appointmentsService.js" type="application/javascript"></script>
-<script src="appointmentsCtrl.js" type="application/javascript"></script>
-<script src="patientDetailsService.js" type="application/javascript"></script>
-<script src="patientDetailsCtrl.js" type="application/javascript"></script>
-<script src="patientChartsService.js" type="application/javascript"></script>
-<script src="patientChartsCtrl.js" type="application/javascript"></script>
-<script src="availabilityService.js" type="application/javascript"></script>
-<script src="availabilityCtrl.js" type="application/javascript"></script>
+<script src="patientStateConfig.js" type="application/javascript"></script>
+<script src="patientCtrl.js" type="application/javascript"></script>
+<script src="deviceService.js" type="application/javascript"></script>
+<script src="devicesCtrl.js" type="application/javascript"></script>
+<script src="deviceDetailsCtrl.js" type="application/javascript"></script>
+<script src="vitalSignsService.js" type="application/javascript"></script>
+<script src="vitalSigns.js" type="application/javascript"></script>
+<script src="vitalSignsCharts.js" type="application/javascript"></script>
 
 <script type="text/javascript">
     // Load the Visualization API and the piechart package.

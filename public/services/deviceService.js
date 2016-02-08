@@ -7,7 +7,6 @@ angular.module('app')
 
         var apiEndpoint = '/v1/api/devices';
 
-
         self.get = function (model) {
             return $filter('filter')(cached, function (d) {
                 return d.model === model;
@@ -15,14 +14,10 @@ angular.module('app')
         };
 
         self.search = function () {
-
-
             var d = $q.defer();
-
 
             dataaccess.get(apiEndpoint)
                 .success(function (res) {
-
                     if (res && res.items) {
                         cached = res.items;
                         d.resolve(res);
