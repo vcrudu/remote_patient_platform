@@ -1,0 +1,105 @@
+<html lang="en" >
+<head>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="fullcalendar.min.css">
+    <link rel="stylesheet" href="scheduler.min.css">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+</head>
+<body ng-app="BlankApp" ng-cloak>
+
+<div id="calendarBook" class="fc fc-ltr fc-unthemed" ></div>
+
+<!--
+  Your HTML content here
+-->
+
+<script src="moment.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="fullcalendar.min.js"></script>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+<!-- Your application bootstrap  -->
+<script type="text/javascript">
+    //angular.module('BlankApp', ['ngMaterial']); // the issue
+    angular.module('BlankApp', []); // all good
+
+    $(document).ready(function() {
+        $('#calendarBook').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            defaultDate: '2016-01-12',
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: '2016-01-01'
+                },
+                {
+                    title: 'Long Event',
+                    start: '2016-01-07',
+                    end: '2016-01-10'
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: '2016-01-09T16:00:00'
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: '2016-01-16T16:00:00'
+                },
+                {
+                    title: 'Conference',
+                    start: '2016-01-11',
+                    end: '2016-01-13'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2016-01-12T10:30:00',
+                    end: '2016-01-12T12:30:00'
+                },
+                {
+                    title: 'Lunch',
+                    start: '2016-01-12T12:00:00'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2016-01-12T14:30:00'
+                },
+                {
+                    title: 'Happy Hour',
+                    start: '2016-01-12T17:30:00'
+                },
+                {
+                    title: 'Dinner',
+                    start: '2016-01-12T20:00:00'
+                },
+                {
+                    title: 'Birthday Party',
+                    start: '2016-01-13T07:00:00'
+                },
+                {
+                    title: 'Click for Google',
+                    url: 'http://google.com/',
+                    start: '2016-01-28'
+                }
+            ]
+        });
+    });
+</script>
+
+</body>
+</html>
