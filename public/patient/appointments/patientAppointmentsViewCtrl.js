@@ -1,7 +1,7 @@
 (function () {
     angular.module('app').controller('patientAppointmentsViewCtrl', [
-        '$scope', '$state', '$modal', '$filter','toastr','_','slotsService',
-        function ($scope, $state, $modal, $filter,toastr, _, slotsService) {
+        '$scope', '$state', '$modal', '$filter', 'toastr', '_', 'slotsService',
+        function ($scope, $state, $modal, $filter, toastr, _, slotsService) {
 
             function getSchedulerEvent(id) {
                 return $('#calendarBook').fullCalendar('clientEvents', id);
@@ -20,11 +20,11 @@
                 });
                 window.socket.on('slotBooked', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
-                    if(event.length>0) {
+                    if (event.length > 0) {
                         if (event[0].slot.countOfProviders > 0 && !event[0].isBooked) {
                             event[0].slot.countOfProviders--;
-                            event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
-                           // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                            // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                             event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                             $('#calendarBook').fullCalendar('updateEvent', event[0]);
                         }
@@ -32,7 +32,7 @@
                 });
                 window.socket.on('slotBookedSuccessfully', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
-                    if(event.length>0) {
+                    if (event.length > 0) {
                         event[0].backgroundColor = 'rgb(191,88,179)';
                         event[0].isBooked = true;
                         // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
@@ -42,11 +42,11 @@
                 });
                 window.socket.on('slotRemoved', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
-                    if(event.length>0) {
+                    if (event.length > 0) {
                         if (event[0].slot.countOfProviders > 0) {
                             event[0].slot.countOfProviders--;
-                            event[0].backgroundColor = event[0].slot.countOfProviders>0 ? 'rgb(153,217,234)' : 'red';
-                           // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
+                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                            // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                             event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                             $('#calendarBook').fullCalendar('updateEvent', event[0]);
                         }
@@ -70,50 +70,50 @@
 
             vm.events = [];
 
-            slotsService.getSlots(new Date(),function(data) {
-                    slotsService.getPacientAppointment(new Date(), function(patientData) {
-                        for (var i = 0; i < 100; i++) {
-                            var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
-                            var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
-                            var dateTime = new Date();
-                            dateTime.setTime(data[i].slotDateTime);
-                            vm.events.push({
-                                id: data[i].slotDateTime,
-                                title: data[i].countOfProviders + " nurses are available.",
-                                titleText: " nurses are available.",
-                                slot: data[i],
-                                start: getCurrentTimeString(dateTime),
-                                icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
-                                backgroundColor: backgroundColor,
-                                borderColor: '#000000',
-                                textColor: eventTextColor
-                            });
-                        }
-                        vm.eventSources = [vm.events];
-                    }, function(error) {
+            slotsService.getSlots(new Date(), function (data) {
+                slotsService.getPacientAppointment(new Date(), function (patientData) {
+                    for (var i = 0; i < 100; i++) {
+                        var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                        var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
+                        var dateTime = new Date();
+                        dateTime.setTime(data[i].slotDateTime);
+                        vm.events.push({
+                            id: data[i].slotDateTime,
+                            title: data[i].countOfProviders + " nurses are available.",
+                            titleText: " nurses are available.",
+                            slot: data[i],
+                            start: getCurrentTimeString(dateTime),
+                            icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
+                            backgroundColor: backgroundColor,
+                            borderColor: '#000000',
+                            textColor: eventTextColor
+                        });
+                    }
+                    vm.eventSources = [vm.events];
+                }, function (error) {
 
-                    });
+                });
 
-            }, function(error) {
+            }, function (error) {
 
             });
 
             var currentDate = new Date();
             $('#calendarBook').fullCalendar({
-                schedulerLicenseKey:'0220103998-fcs-1447110034',
-                defaultView:'nursesGrid',
-                defaultTimedEventDuration:'00:15:00',
-                allDaySlot:false,
+                schedulerLicenseKey: '0220103998-fcs-1447110034',
+                defaultView: 'nursesGrid',
+                defaultTimedEventDuration: '00:15:00',
+                allDaySlot: false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
-                        duration: { days: 1 },
-                        slotDuration:'00:15',
-                        slotLabelInterval:'00:15'
+                        duration: {days: 1},
+                        slotDuration: '00:15',
+                        slotLabelInterval: '00:15'
                     }
                 },
-                scrollTime:currentDate.getHours()+':'+currentDate.getMinutes()+':00',
-                eventClick: function(calEvent, jsEvent, view) {
+                scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
+                eventClick: function (calEvent, jsEvent, view) {
                     var now = new Date();
                     if (calEvent.id < now.getTime() || calEvent.slot.countOfProviders == 0) return;
                     var modal = $modal.open({
@@ -161,7 +161,7 @@
                     });
 
                 },
-                events: function(start, end, timezone, callback) {
+                events: function (start, end, timezone, callback) {
                     var events = [];
                     slotsService.getSlots(new Date(), function (data) {
                         slotsService.getPacientAppointment(new Date(), function (patientData) {
@@ -171,7 +171,6 @@
                                     var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
                                     var dateTime = new Date();
                                     dateTime.setTime(data[i].slotDateTime);
-                                    debugger;
                                     events.push({
                                         id: data[i].slotDateTime,
                                         title: data[i].countOfProviders + " nurses are available.",
@@ -186,29 +185,30 @@
                                 }
                             }
                             callback(events);
+                        }, function (error) {
                         });
                     }, function (error) {
                     });
                 },
-                eventAfterAllRender:function(view){
+                eventAfterAllRender: function (view) {
 
                 },
                 resources: [
-                    { id: 'a', title: 'Health care providers' }
+                    {id: 'a', title: 'Health care providers'}
                 ]
             });
 
 
             vm.eventSources = [vm.events];
 
-            var removeEvent = function(session){
+            var removeEvent = function (session) {
                 var i = $filter('filter')(vm.events, function (e) {
                     return e.session && e.session.Id == session.Id;
                 })[0];
                 vm.events.splice(vm.events.indexOf(i), 1);
             };
 
-            var applyEvent = function (session, date,updateEvent) {
+            var applyEvent = function (session, date, updateEvent) {
 
                 var isNew = !session.Id;
                 if (isNew) {
@@ -227,7 +227,7 @@
                     vm.events.push(event);
 
                 }
-                else{
+                else {
                     $('#calendar').fullCalendar('updateEvent', updateEvent);
                 }
             };
@@ -246,7 +246,7 @@
                         controller: function ($scope, $modalInstance, event) {
 
                             function getDotDateString(dateTime) {
-                                if(!dateTime){
+                                if (!dateTime) {
                                     console.error("Pizdets");
                                 }
                                 var day = dateTime.getDate();
@@ -275,12 +275,14 @@
                             $scope.apply = function () {
                                 var dateString = getDotDateString($scope.session.end);
                                 var availabilityString = $scope.scheduleValue;
-                                availabilityService.saveAvailability({availabilityString:availabilityString,
-                                        dateString:dateString},
+                                availabilityService.saveAvailability({
+                                        availabilityString: availabilityString,
+                                        dateString: dateString
+                                    },
 
-                                    function(success){
+                                    function (success) {
                                         $modalInstance.close($scope.scheduleValue);
-                                    }, function(error){
+                                    }, function (error) {
                                         $scope.serverError = true;
                                     }
                                 );
@@ -296,7 +298,7 @@
                     modal.result.then(function (data) {
                         vm.session.Description = data;
                         event.title = data;
-                        applyEvent(vm.session, event.session.end,event);
+                        applyEvent(vm.session, event.session.end, event);
                     }, function (arg) {
                         if (arg === true) {
                             removeEvent(event.session);
@@ -316,7 +318,7 @@
                 if (minutes < 10)minutes = '0' + minutes;
                 var seconds = dateTime.getSeconds();
                 if (seconds < 10)seconds = '0' + seconds;
-                return hours + ':' + minutes+ ':' + seconds;
+                return hours + ':' + minutes + ':' + seconds;
             }
 
             var dateTime = new Date();
@@ -324,21 +326,21 @@
 
             vm.uiConfig = {
                 calendar: {
-                    schedulerLicenseKey:'0220103998-fcs-1447110034',
-                    defaultView:'nursesGrid',
-                    defaultTimedEventDuration:'00:15:00',
-                    allDaySlot:false,
+                    schedulerLicenseKey: '0220103998-fcs-1447110034',
+                    defaultView: 'nursesGrid',
+                    defaultTimedEventDuration: '00:15:00',
+                    allDaySlot: false,
                     views: {
                         nursesGrid: {
                             type: 'agenda',
-                            duration: { days: 1 },
-                            slotDuration:'00:15',
-                            slotLabelInterval:'00:15'
+                            duration: {days: 1},
+                            slotDuration: '00:15',
+                            slotLabelInterval: '00:15'
                         }
                     },
                     //events: vm.events,
                     resources: [
-                        { id: 'a', title: 'Health care providers' }
+                        {id: 'a', title: 'Health care providers'}
                     ],
                     eventResizeStop: function (calEvent, jsEvent, view) {
                         // saveEvent(calEvent, false);
@@ -347,31 +349,31 @@
                     eventClick: function (calEvent, jsEvent, view) {
                         //saveEvent(calEvent, true);
                     }/*,
-                    eventRender: function (event, element, icon) {
-                        if (!event.description == "") {
-                            element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
-                                "</span>");
-                        }
-                        //if (!event.icon == "") {
-                        //    element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon +
-                        //    " '></i>");
-                        //}
-                    },
-                    buttonText: {
-                        prev: '<',
-                        next: '>'
-                    },
-                    dayClick: function (date, jsEvent, view) {
-                        var d = date._d;
-                        if (d.getUTCHours() == 0 && d.getUTCMinutes() == 0) {
-                            d.setUTCHours(new Date().getUTCHours());
-                            d.setUTCMinutes(new Date().getUTCMinutes() + 1);
-                        }
-                        {
-                            var today = new Date();
-                            saveEvent({session: {end: new Date(d), SessionDateTime: new Date(d)}}, date>today);
-                        }
-                    }*/
+                     eventRender: function (event, element, icon) {
+                     if (!event.description == "") {
+                     element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
+                     "</span>");
+                     }
+                     //if (!event.icon == "") {
+                     //    element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon +
+                     //    " '></i>");
+                     //}
+                     },
+                     buttonText: {
+                     prev: '<',
+                     next: '>'
+                     },
+                     dayClick: function (date, jsEvent, view) {
+                     var d = date._d;
+                     if (d.getUTCHours() == 0 && d.getUTCMinutes() == 0) {
+                     d.setUTCHours(new Date().getUTCHours());
+                     d.setUTCMinutes(new Date().getUTCMinutes() + 1);
+                     }
+                     {
+                     var today = new Date();
+                     saveEvent({session: {end: new Date(d), SessionDateTime: new Date(d)}}, date>today);
+                     }
+                     }*/
                 }
             };
         }]);
