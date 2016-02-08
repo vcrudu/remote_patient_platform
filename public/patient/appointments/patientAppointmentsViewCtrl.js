@@ -71,7 +71,7 @@
             vm.events = [];
 
             slotsService.getSlots(new Date(),function(data) {
-                    slotsService.getBookesSlots(new Date(), function(patientData) {
+                    slotsService.getPacientAppointment(new Date(), function(patientData) {
                         for (var i = 0; i < 100; i++) {
                             var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
                             var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
@@ -115,7 +115,7 @@
                 scrollTime:currentDate.getHours()+':'+currentDate.getMinutes()+':00',
                 eventClick: function(calEvent, jsEvent, view) {
                     var now = new Date();
-                    if(calEvent.id<now.getTime() || calEvent.slot.countOfProviders==0) return;
+                    if (calEvent.id < now.getTime() || calEvent.slot.countOfProviders == 0) return;
                     var modal = $modal.open({
                         templateUrl: 'patient/appointments/book.dialog.html',
                         controller: function ($scope, $modalInstance, event) {
@@ -128,14 +128,14 @@
 
                             $scope.apply = function () {
                                 var now = new Date();
-                                if(calEvent.slot.slotDateTime<=now.getTime()){
+                                if (calEvent.slot.slotDateTime <= now.getTime()) {
                                     toastr.error("It is too late to book for that time!", 'Error');
                                     $modalInstance.dismiss();
                                     return;
                                 }
                                 slotsService.bookAppointment({
                                         slotDateTime: calEvent.slot.slotDateTime,
-                                        appointmentReason:$scope.reasonText
+                                        appointmentReason: $scope.reasonText
                                     },
                                     function (success) {
                                         $modalInstance.close($scope.reasonText);
@@ -161,12 +161,12 @@
                     });
 
                 },
-                events: function(start, end, timezone, callback){
-                    var events=[];
-                    slotsService.getSlots(new Date(),function(data) {
-                        slotsService.getBookesSlots(new Date(), function(patientData){
+                events: function(start, end, timezone, callback) {
+                    var events = [];
+                    slotsService.getSlots(new Date(), function (data) {
+                        slotsService.getPacientAppointment(new Date(), function (patientData) {
                             for (var i = 0; i < data.length; i++) {
-                                if(data[i].slotDateTime>=start.valueOf()&&data[i].slotDateTime<end.valueOf()) {
+                                if (data[i].slotDateTime >= start.valueOf() && data[i].slotDateTime < end.valueOf()) {
                                     var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
                                     var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
                                     var dateTime = new Date();
@@ -176,7 +176,7 @@
                                         id: data[i].slotDateTime,
                                         title: data[i].countOfProviders + " nurses are available.",
                                         titleText: " nurses are available.",
-                                        slot:data[i],
+                                        slot: data[i],
                                         start: getCurrentTimeString(dateTime),
                                         icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
                                         backgroundColor: backgroundColor,
@@ -187,7 +187,7 @@
                             }
                             callback(events);
                         });
-                    }, function(error) {
+                    }, function (error) {
                     });
                 },
                 eventAfterAllRender:function(view){
@@ -258,6 +258,7 @@
 
                             $scope.session = event.session;
                             $scope.serverError = false;
+                            $scope.bookState = true;
 
                             if ($scope.session) {
 

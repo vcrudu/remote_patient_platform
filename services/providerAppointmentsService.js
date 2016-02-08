@@ -8,8 +8,8 @@
     var usersRepository = require('../repositories/usersRepository');
     var _ = require('underscore');
 
-    function getPatientAppointments(patientId, callback) {
-        slotsRepository.getBookedSlotsByPatient(patientId, function (err, data) {
+    function getProviderAppointments(patientId, callback) {
+        slotsRepository.getBookedSlotsByProvider(patientId, function (err, data) {
             var result = [];
             var theError;
             if (data.length == 0) callback(null, data);
@@ -18,16 +18,17 @@
                     if (err) {
                         result.push(err);
                     } else {
-                        usersRepository.findOneByEmail(slotItem.providerId, function (err, user, userDetails) {
+                        usersRepository.findOneByEmail(slotItem.patientId, function (err, user, userDetails) {
                             var onlineStatus;
                             if (!err) {
                                 onlineStatus = user.onlineStatus;
                             }
                             result.push({
-                                providerId: slotItem.providerId,
-                                providerName: userDetails.title + ' ' + userDetails.firstname + ' ' + userDetails.surname,
+                                patientId: slotItem.patientId,
+                                name: userDetails.title + ' ' + userDetails.firstname + ' ' + userDetails.surname,
                                 slotDateTime: slotItem.slotDateTime,
-                                slotDateTimeString: slotItem.slotDateTimeString
+                                slotDateTimeString: slotItem.slotDateTimeString,
+                                onlineStatus: onlineStatus
                             });
                             if (result.length == data.length) {
                                 callback(null, result);
@@ -40,6 +41,6 @@
     }
 
     module.exports = {
-        getPatientAppointments:getPatientAppointments
+        getProviderAppointments:getProviderAppointments
     }
 })();

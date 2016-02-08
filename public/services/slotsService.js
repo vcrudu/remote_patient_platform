@@ -18,7 +18,7 @@ angular.module('app').factory('slotsService',['$http', '$localStorage','appSetti
                     success(res);
                 }).error(error);
             },
-            getBookesSlots: function (dateTime, success, error) {
+            getPacientAppointment: function (dateTime, success, error) {
                 var req = {
                     method:'GET',
                     url:appSettings.getServerUrl()+'/v1/api/patientAppointments',

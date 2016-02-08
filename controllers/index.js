@@ -14,6 +14,7 @@ var availabilityController = require('./availabilityController');
 var appointmentsController = require('./appointmentsController');
 var slotsController = require('./slotsController');
 
+var providerAppointmentsController = require('./providerAppointmentsController');
 var patientAppointmentsController = require('./patientAppointmentsController');
 
 var logging     = require('../logging');
@@ -60,6 +61,7 @@ var logging     = require('../logging');
         slotsController.init(apiRoutes);
 
         patientAppointmentsController.init(apiRoutes);
+        providerAppointmentsController.init(apiRoutes);
         app.use('/v1/api', apiRoutes);
 
     };
