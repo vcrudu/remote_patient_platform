@@ -1,7 +1,7 @@
 (function () {
     angular.module('app').controller('patientAppointmentsViewCtrl', [
-        '$scope', '$state', '$modal', '$filter', 'toastr', '_', 'slotsService',
-        function ($scope, $state, $modal, $filter, toastr, _, slotsService) {
+        '$scope', '$state', '$modal', '$filter', 'toastr', '_', 'slotsService','calendarFactory',
+        function ($scope, $state, $modal, $filter, toastr, _, slotsService, calendarFactory) {
 
             function getSchedulerEvent(id) {
                 return $('#calendarBook').fullCalendar('clientEvents', id);
@@ -73,21 +73,8 @@
             slotsService.getSlots(new Date(), function (data) {
                 slotsService.getPacientAppointment(new Date(), function (patientData) {
                     for (var i = 0; i < 100; i++) {
-                        var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
-                        var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
-                        var dateTime = new Date();
-                        dateTime.setTime(data[i].slotDateTime);
-                        vm.events.push({
-                            id: data[i].slotDateTime,
-                            title: data[i].countOfProviders + " nurses are available.",
-                            titleText: " nurses are available.",
-                            slot: data[i],
-                            start: getCurrentTimeString(dateTime),
-                            icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
-                            backgroundColor: backgroundColor,
-                            borderColor: '#000000',
-                            textColor: eventTextColor
-                        });
+                        var event = calendarFactory.getEvent(data[i], patientData);
+                        vm.events.push(event);
                     }
                     vm.eventSources = [vm.events];
                 }, function (error) {
@@ -167,27 +154,16 @@
                         slotsService.getPacientAppointment(new Date(), function (patientData) {
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].slotDateTime >= start.valueOf() && data[i].slotDateTime < end.valueOf()) {
-                                    var backgroundColor = data[i].countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
-                                    var eventTextColor = data[i].countOfProviders > 0 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
-                                    var dateTime = new Date();
-                                    dateTime.setTime(data[i].slotDateTime);
-                                    events.push({
-                                        id: data[i].slotDateTime,
-                                        title: data[i].countOfProviders + " nurses are available.",
-                                        titleText: " nurses are available.",
-                                        slot: data[i],
-                                        start: getCurrentTimeString(dateTime),
-                                        icon: 'fa fa-calendar', //className: ["event", 'bg-color-' + 'greenLight']
-                                        backgroundColor: backgroundColor,
-                                        borderColor: '#000000',
-                                        textColor: eventTextColor
-                                    });
+                                    var event = calendarFactory.getEvent(data[i], patientData);
+                                    events.push(event);
                                 }
                             }
                             callback(events);
                         }, function (error) {
+
                         });
                     }, function (error) {
+
                     });
                 },
                 eventAfterAllRender: function (view) {
@@ -311,18 +287,10 @@
                 }
             };
 
-            function getCurrentTimeString(dateTime) {
-                var hours = dateTime.getHours();
-                if (hours < 10)hours = '0' + hours;
-                var minutes = dateTime.getMinutes();
-                if (minutes < 10)minutes = '0' + minutes;
-                var seconds = dateTime.getSeconds();
-                if (seconds < 10)seconds = '0' + seconds;
-                return hours + ':' + minutes + ':' + seconds;
-            }
+
 
             var dateTime = new Date();
-            var currentSlot = getCurrentTimeString(dateTime);
+            var currentSlot = calendarFactory.getCurrentTimeString(dateTime);
 
             vm.uiConfig = {
                 calendar: {

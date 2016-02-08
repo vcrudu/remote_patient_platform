@@ -6,6 +6,7 @@
     var slotsRepository = require('../repositories/slotsRepository');
     var usersDetailsRepository = require('../repositories/usersDetailsRepository');
     var usersRepository = require('../repositories/usersRepository');
+    var providersRepository = require('../repositories/providersRepository');
     var _ = require('underscore');
 
     function getPatientAppointments(patientId, callback) {
@@ -14,25 +15,19 @@
             var theError;
             if (data.length == 0) callback(null, data);
             _.forEach(data, function (slotItem) {
-                usersDetailsRepository.findOneByEmail(slotItem.patientId, function (err, userDetails) {
+                providersRepository.getOne(slotItem.providerId, function (err, userDetails) {
                     if (err) {
                         result.push(err);
                     } else {
-                        usersRepository.findOneByEmail(slotItem.providerId, function (err, user, userDetails) {
-                            var onlineStatus;
-                            if (!err) {
-                                onlineStatus = user.onlineStatus;
-                            }
-                            result.push({
-                                providerId: slotItem.providerId,
-                                providerName: userDetails.title + ' ' + userDetails.firstname + ' ' + userDetails.surname,
-                                slotDateTime: slotItem.slotDateTime,
-                                slotDateTimeString: slotItem.slotDateTimeString
-                            });
-                            if (result.length == data.length) {
-                                callback(null, result);
-                            }
-                        }, userDetails);
+                        result.push({
+                            providerId: slotItem.providerId,
+                            providerName: userDetails.title + ' ' + userDetails.name + ' ' + userDetails.surname,
+                            slotDateTime: slotItem.slotDateTime.getTime(),
+                            slotDateTimeString: slotItem.slotDateTimeString
+                        });
+                        if (result.length == data.length) {
+                            callback(null, result);
+                        }
                     }
                 });
             });
