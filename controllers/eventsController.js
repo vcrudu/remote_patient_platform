@@ -57,7 +57,7 @@ var notification = require('../notifications');
             var eventToSave;
             req.body.userId =  req.decoded.email;
             try{
-                //Todo-here this trick is temporary fix, should be found out a good sollution
+                //Todo-here this trick is temporary fix, should be found out a good solution
                 var dateTime = new Date();
                 dateTime.setTime(req.body.measurementDateTime);
                 req.body.measurementDateTime = dateTime;
