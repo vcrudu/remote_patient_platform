@@ -4,6 +4,8 @@
 
 angular.module("mobileApp").controller("PatientVitalSignsCtrl", ['$scope', '$state', 'commonService', 'patientVitalSignsService',
     function ($scope, $state, commonService, patientVitalSignsService) {
+
+
         $scope.histories = [];
         $scope.measures = [];
         $scope.currentHistory = null;
@@ -39,7 +41,6 @@ angular.module("mobileApp").controller("PatientVitalSignsCtrl", ['$scope', '$sta
                     $scope.loaded = true;
                 },
                 function (error) {
-                    console.error(error);
                 })
         };
 
@@ -61,4 +62,17 @@ angular.module("mobileApp").controller("PatientVitalSignsCtrl", ['$scope', '$sta
         $scope.gotoState = function (state) {
             $state.go(state);
         }
+
+        var subscriber2 = {
+            name: 'event-subscriber-2',
+            handler: function (data) {
+                $scope.result = data;
+            }
+        };
+
+        window.messageBus.register('sample-event', subscriber2);
+
+        $scope.$on("$destroy", function() {
+            window.messageBus.unregister('sample-event', 'event-subscriber-2');
+        });
     }]);

@@ -48,7 +48,7 @@ angular.module('mobileApp')
                     Bridge.getUrl(callback);
                 } else {
                     setTimeout(function () {
-                        callback("http://localhost:8081/v1/api/");
+                        callback("http://192.168.0.12:8081/v1/api/");
                     }, 0);
                 }
             },

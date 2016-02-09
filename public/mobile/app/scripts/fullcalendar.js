@@ -256,6 +256,8 @@ function matchCellWidths(els) {
 
 	maxInnerWidth++; // sometimes not accurate of width the text needs to stay on one line. insurance
 
+	maxInnerWidth = maxInnerWidth <= 1 ? 57 : maxInnerWidth;
+
 	els.width(maxInnerWidth);
 
 	return maxInnerWidth;
@@ -7289,6 +7291,7 @@ var View = FC.View = Class.extend({
 
 		return this.clear().then(function() { // clear the content first (async)
 			return (
+
 				_this.displaying =
 					$.when(_this.displayView(date)) // displayView might return a promise
 						.then(function() {
@@ -8552,7 +8555,7 @@ function Calendar_constructor(element, overrides) {
 	
 	
 	function elementVisible() {
-		return element.is(':visible');
+		return element.css('display') != 'none'
 	}
 	
 	
@@ -11066,7 +11069,6 @@ var AgendaView = FC.AgendaView = View.extend({
 
 	// Renders the view into `this.el`, which has already been assigned
 	renderDates: function() {
-
 		this.el.addClass('fc-agenda-view').html(this.renderSkeletonHtml());
 		this.renderHead();
 
