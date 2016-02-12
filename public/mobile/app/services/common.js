@@ -32,7 +32,7 @@ Bridge.callBack = function(result){
 }
 
 angular.module('mobileApp')
-    .factory('commonService',['$localStorage','$location', function($localStorage, $location) {
+    .factory('commonService',['$localStorage', function($localStorage) {
         return {
             getToken: function (callback) {
                 if ((/android/gi).test(navigator.userAgent)) {

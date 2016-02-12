@@ -100,7 +100,6 @@
         },
 
         updateOnlineStatus : function(userId, onlineStatus, socketId, callback) {
-
             var dynamodb = getDb();
 
             var params = {

@@ -5,6 +5,26 @@
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
     var userDetailsMapper = require('../repositories/dynamoDbMapper');
+
+    // helper methods
+    function tryGetStringProperty (property) {
+        try {
+            return property.S;
+        }
+        catch(e) {
+            return ""
+        }
+    }
+
+    function tryGetNumberProperty (property) {
+        try {
+            return property.N;
+        }
+        catch(e) {
+            return -1;
+        }
+    }
+
     module.exports  = {
       createUserFromBody : function(requestBody){
          var salt = bcrypt.genSaltSync(10);
@@ -64,19 +84,18 @@
         createUserDetailsFromDbEntity : function(dbEntity){
             //Todo-here to clarify what's up with this method
             return {
-                email: dbEntity.email.S,
-                firstname: dbEntity.name.S,
-                surname: dbEntity.surname.S,
-                title:dbEntity.title.S,
-                dateOfBirth: dbEntity.dateOfBirth.N,
-                sex: dbEntity.sex.S,
-                gender: dbEntity.gender.S,
-                ethnicity: dbEntity.ethnicity.S,
-                nhsNumber: dbEntity.nhsNumber.S,
-                phone: dbEntity.phone.S,
-                mobile: dbEntity.mobile.S
-                /*
-                address: dbEntity.fullAddress.M,
+                firstname: tryGetStringProperty(dbEntity.name),
+                surname: tryGetStringProperty(dbEntity.surname),
+                title:tryGetStringProperty(dbEntity.title),
+                dateOfBirth: tryGetNumberProperty(dbEntity.dateOfBirth),
+                sex: tryGetStringProperty(dbEntity.sex),
+                gender: tryGetStringProperty(dbEntity.gender),
+                ethnicity: tryGetStringProperty(dbEntity.ethnicity),
+                nhsNumber: tryGetStringProperty(dbEntity.nhsNumber),
+                phone: tryGetStringProperty(dbEntity.phone),
+                mobile: tryGetStringProperty(dbEntity.mobile)
+
+                /* address: dbEntity.fullAddress.M,
                 avatar: buildDynamoDbString(patient.avatar),
                 externalId: buildDynamoDbString(patient.externalId),
                 devices: {L:allDevices},

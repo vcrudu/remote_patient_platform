@@ -1,0 +1,67 @@
+<div class="applicationWrapper" ui-view>
+    <div class="container" ng-controller="PatientSignUpCtrl" ng-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <md-content layout-padding>
+                    <form name="patientSignUpForm" ng-submit="signUp();">
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input required type="email" name="patientEmail" ng-model="patient.email"
+                                   minlength="10" maxlength="100" ng-pattern="/^[a-zA-Z0-9._\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$/" />
+                            <div ng-messages="patientSignUpForm.patientEmail.$error" role="alert">
+                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                    Your email must look like an e-mail address.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <input required type="password" name="patientPassword" ng-model="patient.password"
+                                   minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/" />
+                            <div ng-messages="patientSignUpForm.patientPassword.$error" role="alert">
+                                <div ng-message-exp="['required', 'minlength', 'pattern']">
+                                    At least one number, one lowercase, one uppercase letter and at least six characters.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Confirm Password</label>
+                            <input required type="password" name="patientConfirmPassword" ng-model="patient.confirmPassword" compare-to="patient.password"/>
+                            <div ng-messages="patientSignUpForm.patientConfirmPassword.$error" role="alert">
+                                <div ng-message="required">
+                                    Must match password from previous entry.
+                                </div>
+                                <div ng-message="compareTo">
+                                    Must match password from previous entry.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>First Name</label>
+                            <input maxlength="100" required type="text" name="patientFirstName" ng-model="patient.surname"/>
+                            <div ng-messages="patientSignUpForm.patientFirstName.$error" role="alert">
+                                <div ng-message="required">
+                                    Please enter first name.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Last Name</label>
+                            <input maxlength="100" required type="text" name="patientLasttName" ng-model="patient.name"/>
+                            <div ng-messages="patientSignUpForm.patientLasttName.$error" role="alert">
+                                <div ng-message="required">
+                                    Please enter last name.
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                            <md-button ng-disabled="patientSignUpForm.$invalid" type="submit" class="md-raised md-primary">Register</md-button>
+                        </section>
+                    </form>
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>
+

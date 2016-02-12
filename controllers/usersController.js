@@ -95,10 +95,24 @@ var _ = require("underscore");
                     if(user && user.isActive) {
                         user.token = req.headers['x-access-token'];
                         userDetailsRepository.findOneByEmail(user.email, function (err, userDetails) {
-                            res.json({
-                                success: true,
-                                data: _.extend(user, userDetails),
-                                token: user.token
+                            //TODO: pass socketId
+                            usersRepository.updateOnlineStatus(user.email, "onlineStatus", "fa_socket", function(err, status) {
+                                if (err) {
+                                    res.json({
+                                        success:false,
+                                        error:err
+                                    });
+                                }
+                                else {
+                                    //TODO: revise fields values
+                                    user.onlineStatus = "online";
+                                    user.socketId = "fa_socket";
+                                    res.json({
+                                        success: true,
+                                        data: _.extend(user, userDetails),
+                                        token: user.token
+                                    });
+                                }
                             });
                         });
                     }else{

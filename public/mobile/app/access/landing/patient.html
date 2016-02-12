@@ -1,0 +1,26 @@
+<div class="container" ng-controller="PatientLandingCtrl" ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <uib-carousel interval="0" id="landingCarousel" class="patient-landing-carousel">
+                <uib-slide active="true" index="slide.id" >
+                    <!--<img ng-src="{{slide.image}}" style="margin:auto;">-->
+                    <div style="background-color:#8699a4;" class="slideWrapper"></div>
+                    <div class="carousel-caption">
+                        <h4>Book an appointment</h4>
+                        <p>Would you like to book an appointment just for 1 pound per week?</p>
+                        <md-button class="md-raised md-primary">Book an Appointment</md-button>
+                    </div>
+                </uib-slide>
+                <uib-slide active="false" index="slide.id" >
+                    <!--<img ng-src="{{slide.image}}" style="margin:auto;">-->
+                    <div style="background-color:#00bfa5;" class="slideWrapper"></div>
+                    <div class="carousel-caption">
+                        <h4>Buy a Device!</h4>
+                        <p>Would you like to buy a device and we'll monitor you for free?</p>
+                        <md-button class="md-raised md-primary" ng-click="buyDevice()">Buy a Device</md-button>
+                    </div>
+                </uib-slide>
+            </uib-carousel>
+        </div>
+    </div>
+</div>
