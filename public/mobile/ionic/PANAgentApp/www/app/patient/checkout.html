@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<ion-view view-title="Check Out" padding="true" ng-controller="PatientCheckoutCtrl">
+  <ion-content>
+    <div class="list list-inset">
+      <div class="item item-divider">
+        Personal Info
+      </div>
+      <label class="item item-input">
+        <i class="icon ion-person placeholder-icon"></i>
+        <input type="text" placeholder="First Name">
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-person placeholder-icon"></i>
+        <input type="text" placeholder="Last Name">
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+        <input type="text" placeholder="Phone">
+      </label>
+      <div class="item item-divider">
+        Address Info
+      </div>
+      <label class="item item-input">
+        <button class="button button-clear button-positive" ng-click="listPopup();">
+          <i class="icon ion-flag placeholder-icon"></i> SELECT COUNTRY</button>
+      </label>
+    </div>
+  </ion-content>
+</ion-view>

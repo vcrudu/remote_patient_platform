@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<ion-view view-title="Device Details" padding="true" ng-controller="PatientDeviceDetailsCtrl">
+  <ion-content>
+    <div class="row">
+      <div class="col">
+        <img ng-src="{{device.imagesUrls[0]}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-67">
+        <h3>{{device.model}}
+          <small><p>({{device.deviceModelType}})</p></small>
+        </h3>
+      </div>
+      <div class="col col-33">
+        <h2>
+          {{device.price | number : 2}}&pound
+        </h2>
+      </div>
 
-</body>
-</html>
+    </div>
+    <div>
+      <button class="button button-full" ng-click="addToCart(device)">
+        <i class="icon ion-bag push-left"></i> Add to Cart <i class="icon ion-bag push-right"></i>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>
+          {{device.description}}
+        </p>
+
+        <p>
+          <a class="button button-clear button-positive" href="{{device.manufacturerUrl}}" ng-if="device.manufacturerUrl">
+            Manufacturer
+          </a>
+        </p>
+
+        <div ng-if="device.specifications ">
+          <ul>
+            <li ng-repeat="spec in device.specifications">{{spec}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

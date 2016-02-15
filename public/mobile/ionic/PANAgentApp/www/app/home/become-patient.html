@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<ion-content padding="true"  ng-controller="BecomePatientCtrl" >
+  <form name="patientSignUpForm" ng-submit="signUp();">
+    <div class="list">
+      <label class="item item-input">
+        <!--<span class="input-label">Email</span>-->
+        <input placeholder="Email" type="email" name="username" minlength="10" maxlength="100"  ng-model="patient.email" required ng-pattern="/^[a-zA-Z0-9._\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$/">
+      </label>
+      <div class="padding">
+        <!--<p ng-show="patientSignUpForm.username.$error.required">* Username is required</p>-->
+        <p ng-show="patientSignUpForm.username.$error.pattern || myForm.username.$error.minlength || myForm.username.$error.maxlength">* Your email must look like an e-mail address</p>
+      </div>
+      <label class="item item-input">
+        <!--<span class="input-label">Password</span>-->
+        <input placeholder="Password" required type="password" name="patientPassword" ng-model="patient.password"
+               minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/">
+      </label>
+      <div class="padding">
+        <!--<p ng-show="patientSignUpForm.patientPassword.$error.required">* Password is required</p>-->
+        <p ng-show="patientSignUpForm.patientPassword.$error.pattern || myForm.patientPassword.$error.minlength || myForm.patientPassword.$error.maxlength">
+          * At least one number, one lowercase, one uppercase letter and at least six characters.
+        </p>
+      </div>
+      <label class="item item-input">
+        <!--<span class="input-label">Confirm</span>-->
+        <input placeholder="Confirm Password" required type="password" name="patientConfirmPassword" ng-model="patient.confirmPassword" compare-to="patient.password">
+      </label>
+      <div class="padding">
+        <p ng-show="patientSignUpForm.patientConfirmPassword.$error.compareTo">* Must match password from previous entry</p>
+      </div>
+      <label class="item item-input">
+        <!--<span class="input-label">Confirm</span>-->
+        <input placeholder="Surname" maxlength="100" required type="text" name="patientSurname" ng-model="patient.surname">
+      </label>
+      <div class="padding">
+        <!--<p ng-show="patientSignUpForm.patientSurname.$error.required">* Surname is required</p>-->
+      </div>
+      <label class="item item-input">
+        <!--<span class="input-label">Confirm</span>-->
+        <input placeholder="Given Name" maxlength="100" required type="text" name="patientGivenName" ng-model="patient.name">
+      </label>
+      <div class="padding">
+        <!--<p ng-show="patientSignUpForm.patientGivenName.$error.required">* Given Name is required</p>-->
+      </div>
+    </div>
+    <div class="padding">
+      <button type="submit" class="button button-block button-positive" ng-disabled="patientSignUpForm.$invalid">Register</button>
+    </div>
+  </form>
+</ion-content>
