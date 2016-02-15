@@ -12,6 +12,7 @@ angular.module('mobileApp').factory('accessService', ['$http', 'rx', '$localStor
 
             source.subscribe(
                 function (x) {
+                    debugger;
                     var req = {
                         method: 'POST',
                         url: x.url + "signup",
@@ -46,7 +47,7 @@ angular.module('mobileApp').factory('accessService', ['$http', 'rx', '$localStor
 
                     $http(req).success(function (res) {
                         if (!res.error) {
-                            //TODO: use bridge for android
+                            //TODO-here-bridge: use bridge for android
                             $localStorage.user = res.data;
                             success($localStorage.user);
                         } else {

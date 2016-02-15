@@ -1,0 +1,12 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.4"
+  },
+  "dependencies": {
+    "angular-messages": "^1.5.0",
+    "ngstorage": "^0.3.10",
+    "rx-angular": "angular-rx#^1.1.3"
+  }
+}
