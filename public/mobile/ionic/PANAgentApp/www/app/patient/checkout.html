@@ -1,28 +1,99 @@
 <ion-view view-title="Check Out" padding="true" ng-controller="PatientCheckoutCtrl">
   <ion-content>
-    <div class="list list-inset">
-      <div class="item item-divider">
-        Personal Info
+    <form name="paymentForm">
+      <div class="list list-inset">
+        <div class="item item-divider">
+          Personal Info
+        </div>
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" placeholder="First Name" ng-model="paymentInfo.firstName">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" placeholder="Last Name" ng-model="paymentInfo.lastName">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+          <input type="text" placeholder="Phone">
+        </label>
+        <div class="item item-divider">
+          Address Info
+        </div>
+        <label class="item item-input">
+          <button class="button button-clear button-positive" ng-click="showCountriesPopup();"><i class="icon ion-flag placeholder-icon"></i> {{selectCountryLabel}}</button>
+          &nbsp;<span class="flag-icon flag-icon-{{selectedCountry.code | lowercase}}"></span>&nbsp;{{selectedCountry.name}}
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-home placeholder-icon"></i>
+          <input type="text" placeholder="County">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-outlet placeholder-icon"></i>
+          <input type="text" placeholder="Town">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-paper-airplane placeholder-icon"></i>
+          <input type="text" placeholder="Post Code">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-home placeholder-icon"></i>
+          <input type="text" placeholder="Address">
+        </label>
+        <div class="item item-divider">
+          Card Info
+        </div>
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" placeholder="Card Owner">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-card placeholder-icon"></i>
+          <input type="text"
+                 placeholder="Card Number"
+                 name="creditCard"
+                 ng-model="ccInfo.number"
+                 data-credit-card-type
+                 data-ng-pattern="/^[0-9]+$/"
+                 data-ng-minlength="15"
+                 maxlength="19">
+        </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.creditCard.$error.invalid">Credit card must be a valid Visa or Master Card</li>
+        </ul>
+        <label class="item item-input">
+          <i class="icon ion-lock-combination placeholder-icon"></i>
+          <input type="text"
+                 name="securityCode"
+                 ng-model="ccInfo.securityCode"
+                 placeholder="CCV"
+                 required
+                 data-ng-pattern="/^[0-9]+$/"
+                 data-ng-minlength="3"
+                 maxlength="4">
+        </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.securityCode.$error.pattern">Security code must contain only numbers</li>
+          <li ng-show="paymentForm.securityCode.$error.minlength">Security code must be 3-4 digits</li>
+        </ul>
+        <label class="item item-input">
+          <i class="icon ion-calendar placeholder-icon"></i>
+          <input type="text" placeholder="Expiration Month">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-calendar placeholder-icon"></i>
+          <input type="text" placeholder="Expiration Year">
+        </label>
       </div>
-      <label class="item item-input">
-        <i class="icon ion-person placeholder-icon"></i>
-        <input type="text" placeholder="First Name">
-      </label>
-      <label class="item item-input">
-        <i class="icon ion-person placeholder-icon"></i>
-        <input type="text" placeholder="Last Name">
-      </label>
-      <label class="item item-input">
-        <i class="icon ion-android-phone-portrait placeholder-icon"></i>
-        <input type="text" placeholder="Phone">
-      </label>
-      <div class="item item-divider">
-        Address Info
+
+      <div class="row">
+        <div class="col col-100">
+          <button class="button button-full">
+            PAY {{subtotal}}&pound;
+          </button>
+        </div>
       </div>
-      <label class="item item-input">
-        <button class="button button-clear button-positive" ng-click="listPopup();">
-          <i class="icon ion-flag placeholder-icon"></i> SELECT COUNTRY</button>
-      </label>
-    </div>
+    </form>
+
   </ion-content>
 </ion-view>

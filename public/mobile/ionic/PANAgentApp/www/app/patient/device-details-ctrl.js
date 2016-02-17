@@ -15,6 +15,10 @@ angular.module("panAgentApp")
       {
         shoppingCartService.addToCart(device, 1);
         $scope.showProductAdded();
+        if ($scope.$parent && $scope.$parent.refreshCartSubtotalVisibility)
+        {
+          $scope.$parent.refreshCartSubtotalVisibility();
+        }
       };
 
       $scope.showProductAdded = function() {

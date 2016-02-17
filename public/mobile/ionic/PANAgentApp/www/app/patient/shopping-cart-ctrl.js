@@ -15,6 +15,11 @@ angular.module('panAgentApp').controller("PatientShoppingCartCtrl", ['$scope', '
       shoppingCartService.removeItem(device);
       $scope.subtotal = shoppingCartService.getTotal();
       $scope.productRemovedFromCard();
+
+      if ($scope.$parent && $scope.$parent.refreshCartSubtotalVisibility)
+      {
+        $scope.$parent.refreshCartSubtotalVisibility();
+      }
     }
 
     $scope.productRemovedFromCard = function() {

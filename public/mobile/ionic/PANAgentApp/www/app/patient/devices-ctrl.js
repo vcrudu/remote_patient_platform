@@ -25,6 +25,10 @@ angular.module('panAgentApp').controller("PatientDevicesCtrl", ['$scope', '$stat
   {
     shoppingCartService.addToCart(device, 1);
     $scope.showProductAdded();
+    if ($scope.$parent && $scope.$parent.refreshCartSubtotalVisibility)
+    {
+      $scope.$parent.refreshCartSubtotalVisibility();
+    }
   };
 
   $scope.showProductAdded = function() {

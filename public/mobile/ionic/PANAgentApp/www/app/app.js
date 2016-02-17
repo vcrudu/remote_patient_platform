@@ -4,26 +4,26 @@
 
 var Bridge = {};
 
-Bridge.getToken = function(callBack){
+Bridge.getToken = function (callBack) {
   Bridge.resultCallback = callBack;
-  var message = {method:"getToken"};
+  var message = {method: "getToken"};
   prompt("bridge_key", JSON.stringify(message));
 }
 
-Bridge.getUrl = function(callBack){
+Bridge.getUrl = function (callBack) {
   Bridge.resultCallback = callBack;
-  var message = {method:"getUrl"};
+  var message = {method: "getUrl"};
   prompt("bridge_key", JSON.stringify(message));
 }
 
-Bridge.callBack = function(result){
-  if(Bridge.resultCallback){
-    if(result.token && Bridge.resultCallback){
+Bridge.callBack = function (result) {
+  if (Bridge.resultCallback) {
+    if (result.token && Bridge.resultCallback) {
       Bridge.resultCallback(result.token);
       // delete Bridge.resultCallback;
       return;
     }
-    if(result.url && Bridge.resultCallback){
+    if (result.url && Bridge.resultCallback) {
       Bridge.resultCallback(result.url);
       //   delete Bridge.resultCallback;
       return;
@@ -52,8 +52,50 @@ angular.module("panAgentApp", ["ionic", 'ngMessages', 'ngStorage', 'rx'])
     };
   })
 
-  .run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
+  .directive("creditCardType", function () {
+    var directive =
+    {
+      require: "ngModel",
+      link: function (scope, elm, attrs, ctrl) {
+              ctrl.$parsers.unshift(function (value) {
+                if (scope.ccInfo) {
+                  scope.ccInfo.type =
+                    (/^(?:5[1-5][0-9]{14})$/.test(value)) ? "mastercard"
+                      : (/^(?:4[0-9]{12}(?:[0-9]{3})?)$/.test(value)) ? "visa"
+                      : undefined;
+                  ctrl.$setValidity("invalid", !!scope.ccInfo.type);
+
+                  return value;
+                }
+                else {
+                  return true;
+                }
+              })
+            }
+    }
+    return directive;
+  })
+
+  .directive("cardExpiration", function () {
+    var directive =
+    {
+      require: "ngModel",
+      link: function(scope, elm, attrs, ctrl){
+                scope.$watch("[ccInfo.month,ccInfo.year]", function(value){
+                  ctrl.$setValidity("invalid",true);
+                  if ( scope.ccInfo.year == scope.currentYear && scope.ccInfo.month <= scope.currentMonth) {
+                    ctrl.$setValidity("invalid",false);
+                  }
+
+                  return value
+                },true);
+              }
+    }
+    return directive;
+  })
+
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -66,65 +108,71 @@ angular.module("panAgentApp", ["ionic", 'ngMessages', 'ngStorage', 'rx'])
     });
   })
 
-  .factory('commonService',['$localStorage', function($localStorage) {
+  .factory('commonService', ['$http', '$localStorage', function ($http, $localStorage) {
     return {
       getToken: function (callback) {
         /*if ((/android/gi).test(navigator.userAgent)) {
-          Bridge.getToken(callback);
-        } else {*/
-          setTimeout(function () {
-            callback($localStorage.user.token);
-          }, 0);
+         Bridge.getToken(callback);
+         } else {*/
+        setTimeout(function () {
+          callback($localStorage.user.token);
+        }, 0);
         /*}*/
       },
       getServerUrl: function (callback) {
         /*if ((/android/gi).test(navigator.userAgent)) {
-          Bridge.getUrl(callback);
-        } else {*/
-          setTimeout(function () {
-            callback("http://192.168.0.12:8081/v1/api/");
-          }, 0);
+         Bridge.getUrl(callback);
+         } else {*/
+        setTimeout(function () {
+          callback("http://192.168.0.12:8081/v1/api/");
+        }, 0);
         /*}*/
       },
       getPublicServerUrl: function (callback) {
         /*if ((/android/gi).test(navigator.userAgent)) {
-          Bridge.getUrl(callback);
-        } else {*/
-          setTimeout(function () {
-            callback("http://192.168.0.12:8081/");
-          }, 0);
+         Bridge.getUrl(callback);
+         } else {*/
+        setTimeout(function () {
+          callback("http://192.168.0.12:8081/");
+        }, 0);
         /*}*/
       },
-      setContextUser: function(user, callback)
-      {
+      setContextUser: function (user, callback) {
         setTimeout(function () {
           $localStorage.user = user;
           callback($localStorage.user);
         }, 0);
       },
-      getContextUser: function(callback)
-      {
+      getContextUser: function (callback) {
         setTimeout(function () {
           callback($localStorage.user);
         }, 0);
       },
-      setContextShoppingCart: function(cart, callback)
-      {
+      setContextShoppingCart: function (cart, callback) {
         setTimeout(function () {
           $localStorage.cart = cart;
           callback($localStorage.cart);
         }, 0);
       },
-      getContextShoppingCart: function(callback)
-      {
+      getContextShoppingCart: function (callback) {
         setTimeout(function () {
           callback($localStorage.cart);
+        }, 0);
+      },
+      getCountries: function (callback) {
+        setTimeout(function () {
+
+          $http.get('app/resources/countries.json').then(function (res) {
+            callback(res.data);
+          }, function (err) {
+          });
+
         }, 0);
       }
     };
   }])
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
 
       .state('home', {
