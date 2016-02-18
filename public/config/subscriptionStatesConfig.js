@@ -9,14 +9,14 @@
         $urlRouterProvider.when('', '/login');
         $stateProvider
 
-          .state('login', {
-            url: "/login",
-            views: {
-                "headerView": {templateUrl: "loggedOutHeader.html"},
-                "mainView": {templateUrl: "login.html"}
-            },
-            controller: 'loginCtrl'
-        })
+            .state('login', {
+                url: "/login",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "login.html"}
+                },
+                controller: 'loginCtrl'
+            })
             .state('reset', {
                 url: "/reset",
                 views: {
@@ -26,7 +26,7 @@
                 controller: 'resetCtrl'
             })
             .state('resetPassword', {
-                url: "/resetPassword",
+                url: "/resetPassword?token",
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
                     "mainView": {templateUrl: "resetPassword.html"}
@@ -38,17 +38,16 @@
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
                     "mainView": {templateUrl: "confirmSubmit.html"}
-                },
-                controller: 'confirmSubmitCtrl'
+                }
             })
-          .state('login.username', {
-            url: "/:userName",
-            views: {
-              "headerView": {templateUrl: "loggedOutHeader.html"},
-              "mainView": {templateUrl: "login.html"}
-            },
-            controller: 'loginCtrl'
-          })
+            .state('login.username', {
+                url: "/:userName",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "login.html"}
+                },
+                controller: 'loginCtrl'
+            })
             .state('register', {
                 url: "/register",
                 views: {
@@ -57,7 +56,7 @@
                 },
                 controller: 'registerCtrl'
             })
-           .state('register.basic', {
+            .state('register.basic', {
                 url: "/basic",
                 templateUrl: "register.basic.html",
                 controller: 'registerBasicCtrl',
@@ -67,24 +66,24 @@
                     order: 1
                 }
             }).state('register.address', {
-                url: "/address",
-                templateUrl: "register.address.html",
-                controller: 'registerAddressCtrl',
-                data: {
-                    previousState: "register.basic",
-                    nextState: "register.medical",
-                    order: 2
-                }
-            }).state('register.medical', {
-                url: "/medical",
-                templateUrl: "register.medical.html",
-                controller: 'registerMedicalCtrl',
-                data: {
-                    previousState: "register.address",
-                    nextState: "register.save",
-                    order: 3
-                }
-            }).state('register.save', {
+            url: "/address",
+            templateUrl: "register.address.html",
+            controller: 'registerAddressCtrl',
+            data: {
+                previousState: "register.basic",
+                nextState: "register.medical",
+                order: 2
+            }
+        }).state('register.medical', {
+            url: "/medical",
+            templateUrl: "register.medical.html",
+            controller: 'registerMedicalCtrl',
+            data: {
+                previousState: "register.address",
+                nextState: "register.save",
+                order: 3
+            }
+        }).state('register.save', {
                 url: "/save",
                 templateUrl: "register.save.html",
                 controller: 'registerCtrl',

@@ -4,6 +4,7 @@
 (function(){
 
     var usersRepository     = require('../repositories').Users;
+    var sendResetLink =require ('../services/emailService').sendPasswordReset;
 
     module.exports.init = function(app) {
         app.post('/reset', function (req, res) {
@@ -21,6 +22,11 @@
                 } else {
                     if (user) {
                         //Todo-here: De implimentat trimiterea emailului
+
+                        sendResetLink(user.email,function(){
+                            console.log('send email1 '+user.email);
+                        });
+
                         res.json({
                             success: true
                         });
