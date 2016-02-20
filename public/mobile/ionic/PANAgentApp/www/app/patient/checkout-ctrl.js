@@ -16,11 +16,25 @@ angular.module('panAgentApp').controller("PatientCheckoutCtrl", ['$scope', '$sta
 
     $scope.subtotal = shoppingCartService.getTotal();
 
-    $scope.ccInfo = {type:undefined}
+    $scope.ccInfo = {
+      type:undefined,
+      number:undefined,
+      cardOwner: undefined,
+      year:undefined,
+      month:undefined
+    };
 
-    $scope.paymentInfo = {
+    $scope.personalInfo = {
       firstName: "",
-      lastName: ""
+      lastName: "",
+      phone: ""
+    };
+
+    $scope.addressInfo = {
+      county: "",
+      cityTown: "",
+      postCode: "",
+      address: ""
     };
 
     $scope.countries = [];
@@ -29,8 +43,8 @@ angular.module('panAgentApp').controller("PatientCheckoutCtrl", ['$scope', '$sta
     })
 
     commonService.getContextUser(function(user) {
-      $scope.paymentInfo.firstName = user.name;
-      $scope.paymentInfo.lastName = user.surname;
+      $scope.personalInfo.firstName = user.name;
+      $scope.personalInfo.lastName = user.surname;
     });
 
     $scope.countriesPopup = null;

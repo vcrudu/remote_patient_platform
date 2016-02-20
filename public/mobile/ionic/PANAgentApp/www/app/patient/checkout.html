@@ -7,16 +7,40 @@
         </div>
         <label class="item item-input">
           <i class="icon ion-person placeholder-icon"></i>
-          <input type="text" placeholder="First Name" ng-model="paymentInfo.firstName">
+          <input
+            type="text"
+            placeholder="First Name"
+            ng-model="personalInfo.firstName"
+            name="firstName"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.firstName.$error.required">* First Name is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-person placeholder-icon"></i>
-          <input type="text" placeholder="Last Name" ng-model="paymentInfo.lastName">
+          <input
+            type="text"
+            placeholder="Last Name"
+            ng-model="personalInfo.lastName"
+            name="lastName"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.lastName.$error.required">* Last Name is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-android-phone-portrait placeholder-icon"></i>
-          <input type="text" placeholder="Phone">
+          <input
+            type="text"
+            placeholder="Phone"
+            ng-model="personalInfo.lastName"
+            name="phone"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.phone.$error.required">* Phone is required</li>
+        </ul>
         <div class="item item-divider">
           Address Info
         </div>
@@ -26,40 +50,78 @@
         </label>
         <label class="item item-input">
           <i class="icon ion-home placeholder-icon"></i>
-          <input type="text" placeholder="County">
+          <input
+            type="text"
+            placeholder="County"
+            ng-model="addressInfo.county"
+            name="county">
         </label>
         <label class="item item-input">
           <i class="icon ion-outlet placeholder-icon"></i>
-          <input type="text" placeholder="Town">
+          <input
+            type="text"
+            placeholder="City / Town"
+            ng-model="addressInfo.cityTown"
+            name="cityTown"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.cityTown.$error.required">* City / Town is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-paper-airplane placeholder-icon"></i>
-          <input type="text" placeholder="Post Code">
+          <input
+            type="text"
+            placeholder="Post Code"
+            ng-model="addressInfo.postCode"
+            name="postCode"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.postCode.$error.required">* Post Code is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-home placeholder-icon"></i>
-          <input type="text" placeholder="Address">
+          <input
+            type="text"
+            placeholder="Address"
+            ng-model="addressInfo.address"
+            name="address"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.address.$error.required">* Address is required</li>
+        </ul>
         <div class="item item-divider">
           Card Info
         </div>
         <label class="item item-input">
           <i class="icon ion-person placeholder-icon"></i>
-          <input type="text" placeholder="Card Owner">
+          <input
+            type="text"
+            placeholder="Card Owner"
+            ng-model="ccInfo.cardOwner"
+            name="cardOwner"
+            required>
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.cardOwner.$error.required">* Card Owner is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-card placeholder-icon"></i>
           <input type="text"
                  placeholder="Card Number"
                  name="creditCard"
                  ng-model="ccInfo.number"
+                 required
                  data-credit-card-type
                  data-ng-pattern="/^[0-9]+$/"
                  data-ng-minlength="15"
                  maxlength="19">
         </label>
         <ul ng-show="!paymentForm.$valid">
-          <li ng-show="paymentForm.creditCard.$error.invalid">Credit card must be a valid Visa or Master Card</li>
+          <li ng-show="paymentForm.creditCard.$error.required">* Credit Card is required</li>
+          <li ng-show="paymentForm.creditCard.$error.invalid">* Credit Card must be a valid Visa or Master Card</li>
         </ul>
         <label class="item item-input">
           <i class="icon ion-lock-combination placeholder-icon"></i>
@@ -73,22 +135,45 @@
                  maxlength="4">
         </label>
         <ul ng-show="!paymentForm.$valid">
-          <li ng-show="paymentForm.securityCode.$error.pattern">Security code must contain only numbers</li>
-          <li ng-show="paymentForm.securityCode.$error.minlength">Security code must be 3-4 digits</li>
+          <li ng-show="paymentForm.securityCode.$error.required">* Security Code is required</li>
+          <li ng-show="paymentForm.securityCode.$error.pattern">* Security Code must contain only numbers</li>
+          <li ng-show="paymentForm.securityCode.$error.minlength">* Security Code must be 3-4 digits</li>
         </ul>
         <label class="item item-input">
           <i class="icon ion-calendar placeholder-icon"></i>
-          <input type="text" placeholder="Expiration Month">
+          <input
+            type="text"
+            placeholder="Expiration Month"
+            ng-model="ccInfo.month"
+            name="month"
+            required
+            data-ng-pattern="/^[0-9]+$/"
+            data-ng-minlength="1"
+            maxlength="2">
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.month.$error.required">* Expiration Month is required</li>
+        </ul>
         <label class="item item-input">
           <i class="icon ion-calendar placeholder-icon"></i>
-          <input type="text" placeholder="Expiration Year">
+          <input
+            type="text"
+            placeholder="Expiration Year"
+            ng-model="ccInfo.year"
+            name="year"
+            required
+            data-ng-pattern="/^[0-9]+$/"
+            data-ng-minlength="4"
+            maxlength="4">
         </label>
+        <ul ng-show="!paymentForm.$valid">
+          <li ng-show="paymentForm.year.$error.required">* Expiration Month is required</li>
+        </ul>
       </div>
 
       <div class="row">
         <div class="col col-100">
-          <button class="button button-full">
+          <button type="submit" class="button button-full">
             PAY {{subtotal}}&pound;
           </button>
         </div>

@@ -1,0 +1,10 @@
+{
+  "name": "PANAgent-React",
+  "version": "0.0.1",
+  "dependencies": {
+    "react": "^0.14.7",
+    "babel": "*",
+    "bootstrap": "^3.3.6",
+    "bootstrap-material-design": "^0.5.8"
+  }
+}

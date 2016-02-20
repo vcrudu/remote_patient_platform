@@ -1,3 +1,8 @@
+.form-actions {
+  margin: 0;
+  background-color: transparent;
+  text-align: center;
+}
 .push-right {
   float: right;
 }
