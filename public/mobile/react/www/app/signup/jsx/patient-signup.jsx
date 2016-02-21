@@ -194,7 +194,7 @@
         },
         render: function () {
             return <form name="signUpForm">
-                <ValidationInput inputLabel="Email"
+                <ValidationInput inputLabel="Email 6546546   "
                                  inputType="email"
                                  inputName="userEmail"
                                  inputId="userEmail"
