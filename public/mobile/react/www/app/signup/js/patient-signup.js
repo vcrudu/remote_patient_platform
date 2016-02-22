@@ -202,7 +202,7 @@
             return React.createElement(
                 "form",
                 { name: "signUpForm" },
-                React.createElement(ValidationInput, { inputLabel: "Email 6546546   ",
+                React.createElement(ValidationInput, { inputLabel: "Email",
                     inputType: "email",
                     inputName: "userEmail",
                     inputId: "userEmail",

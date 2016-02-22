@@ -5,6 +5,7 @@
     "react": "^0.14.7",
     "babel": "*",
     "bootstrap": "^3.3.6",
-    "bootstrap-material-design": "^0.5.8"
+    "bootstrap-material-design": "^0.5.8",
+    "moment": "^2.11.2"
   }
 }
