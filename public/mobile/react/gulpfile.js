@@ -7,6 +7,19 @@ var gulp = require("gulp"),
     babel = require("gulp-babel"),
     browserSync = require('browser-sync').create();
 
+gulp.task("babel-landing", function () {
+    return gulp.src("www/app/landing/jsx/*")
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/landing/js"));
+});
+
+gulp.task("babel-watch-landing", function () {
+    return gulp.src("www/app/landing/jsx/*")
+        .pipe(watch("www/app/landing/jsx/*"))
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/landing/js"));
+});
+
 gulp.task("babel-signup", function () {
     return gulp.src("www/app/signup/jsx/*")
         .pipe(babel())
@@ -34,13 +47,13 @@ gulp.task("babel-watch-appointments", function () {
 });
 
 // use default task to launch Browsersync and watch JS files
-gulp.task('serve', ['babel-signup', 'babel-appointments'], function () {
+gulp.task('serve', ['babel-landing', 'babel-signup', 'babel-appointments'], function () {
     // Serve files from the root of this project
     browserSync.init({
         server: {
             baseDir: "./www/app"
         },
-        files: ["www/app/styles/*.css", "www/app/signup/js/*.js", "www/app/appointments/js/*.js"],
+        files: ["www/app/styles/*.css", "www/app/landing/js/*.js", "www/app/signup/js/*.js", "www/app/appointments/js/*.js"],
         port: 3030
     });
 });
