@@ -13,13 +13,15 @@
         handleSignUpClick: function (e) {
             Bridge.Redirect.redirectToPatientSignUp();
         },
-        handleRegisterClick: function (e) {},
+        handleSignIn: function (e) {
+            Bridge.Redirect.redirectToSignIn();
+        },
         render: function () {
             return React.createElement(
                 "div",
-                null,
-                React.createElement("input", { type: "button", className: "btn btn-raised btn-primary", value: "Sign Up", onClick: this.handleSignUpClick }),
-                React.createElement("input", { type: "button", className: "btn btn-raised btn-info", value: "Register", onClick: this.handleRegisterClick })
+                { className: "buttonsContainer" },
+                React.createElement("input", { type: "button", className: "btn btn-default red", value: "Sign Up", onClick: this.handleSignUpClick }),
+                React.createElement("input", { type: "button", className: "btn btn-default green", value: "Sign In", onClick: this.handleSignIn })
             );
         }
     });

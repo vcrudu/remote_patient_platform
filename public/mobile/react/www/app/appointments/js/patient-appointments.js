@@ -14,6 +14,7 @@
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var slotId = parseInt(appointmentModalDiv.attr("data-slot-id"));
+            var reasonText = $(this.refs.reasonText);
 
             var slotDateTime = moment(slotId);
             var now = new Date();
@@ -22,14 +23,13 @@
                 return;
             } else {
                 Bridge.patientBookAnAppointment({
+                    cancel: false,
                     slotDateTime: slotId,
-                    appointmentReason: "Routine Check Out"
+                    appointmentReason: reasonText.val()
                 }, function (result) {
                     var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
                     if (event) {
-                        var refreshedEvent = Bridge.CalendarFactory.getBookedEvent(event, result.data);
-                        appointmentsCalendarDiv.fullCalendar("removeEvents", [slotId]);
-                        appointmentsCalendarDiv.fullCalendar("renderEvent", refreshedEvent, true);
+                        appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
                     }
 
                     appointmentModalDiv.modal('hide');

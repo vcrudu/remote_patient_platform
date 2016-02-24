@@ -1,0 +1,54 @@
+body {
+    background:#ffffff;
+}
+
+.image-container  {
+    padding-left:0 !important;
+    padding-right:0 !important;
+}
+
+.call-to-action-container {
+    padding:30px 20px;
+}
+
+.logo {
+    max-width:240px;
+    margin-bottom:30px;
+}
+
+.red {
+    background:#ec403a;
+    color:#ffffff !important;
+}
+
+.green {
+    background:#97b845;
+    color:#ffffff !important;
+}
+
+.btn-default {
+    width:100%;
+    padding:15px;
+    text-align:center;
+    margin-bottom:5px;
+    font-size:18px;
+}
+
+
+
+@media (orientation: landscape) {
+    .image-container {
+        width:60%;
+        float:left;
+    }
+
+
+    .logo {
+        max-width:180px;
+    }
+
+    .call-to-action-container {
+        width:40%;
+        float:right;
+    }
+}

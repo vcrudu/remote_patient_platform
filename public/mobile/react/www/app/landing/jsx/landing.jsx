@@ -2,6 +2,7 @@
  * Created by Victor on 2/23/2016.
  */
 
+
 (function() {
     "use strict";
 
@@ -11,13 +12,13 @@
         handleSignUpClick: function(e){
             Bridge.Redirect.redirectToPatientSignUp();
         },
-        handleRegisterClick: function(e){
-
+        handleSignIn: function(e){
+            Bridge.Redirect.redirectToSignIn();
         },
         render: function() {
-            return <div>
-                <input type="button" className="btn btn-raised btn-primary" value="Sign Up" onClick={this.handleSignUpClick}></input>
-                <input type="button" className="btn btn-raised btn-info" value="Register" onClick={this.handleRegisterClick}></input>
+            return <div className="buttonsContainer">
+                <input type="button" className="btn btn-default red" value="Sign Up" onClick={this.handleSignUpClick}></input>
+                <input type="button" className="btn btn-default green" value="Sign In" onClick={this.handleSignIn}></input>
             </div>
         }
     });

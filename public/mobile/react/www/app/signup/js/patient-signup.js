@@ -197,11 +197,24 @@
 
             return canSubmit;
         },
+        handleSubmit: function (component) {
+            var signUpFormData = {
+                email: this.state.email.value,
+                password: this.state.password.value,
+                confirmPassword: this.state.confirmPassword.value,
+                type: "patient",
+                name: this.state.surname.value,
+                surname: this.state.givenName.value,
+                agent: "mobile"
+            };
+
+            Bridge.signUp(signUpFormData, function () {});
+        },
         componentDidUpdate: function () {},
         render: function () {
             return React.createElement(
                 "form",
-                { name: "signUpForm" },
+                { name: "signUpForm", onSubmit: this.handleSubmit },
                 React.createElement(ValidationInput, { inputLabel: "Email",
                     inputType: "email",
                     inputName: "userEmail",
