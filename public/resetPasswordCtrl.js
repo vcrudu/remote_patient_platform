@@ -16,10 +16,11 @@ angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams', 
 
 
 
-        $scope.newUser = {};
+       // $scope.newUser = {};
         $scope.submitResetPassword = function(){
             if($scope.resetPasswordForm.$valid){
-                authService.submitResetPassword($scope.newUser.password,
+                console.log($scope.content.email);
+                authService.submitResetPassword($scope.content.email,
                     function(success){
 
                         $state.go('login');
