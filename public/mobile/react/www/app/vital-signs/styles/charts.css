@@ -1,0 +1,49 @@
+/* chart */
+.graphic { width: 100%; }
+.graphic img {
+    max-width: 100%;
+    height: auto;
+}
+.graphic svg { margin-bottom: 1em; }
+.graphic .axis {
+    font-size: 12px;
+    fill: #666;
+}
+.graphic .axis path,
+.graphic .axis line {
+    fill: none;
+    stroke: #666;
+    shape-rendering: crispEdges;
+}
+.graphic .axis.y path { display: none; }
+.graphic .axis.y .tick line { display: none; }
+.graphic .grid path { display: none; }
+.graphic .grid .tick {
+    stroke: #ccc;
+    stroke-dasharray: 1px 3px;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+.graphic .line {
+    fill: none;
+    stroke-width: 3px;
+    stroke: #11605E;
+}
+
+.graphic .area {
+    fill: lightgray;
+    clip-path: url(#clip);
+}
+
+.graphic rect.pane {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+}
+
+.graphic .brush .extent {
+    stroke: #fff;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+    clip-path: url(#clip);
+}

@@ -38,7 +38,6 @@
             }
         },
         componentDidMount: function () {
-
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentModal = $(this.refs.appointmentModal).modal('hide');
             var reasonText = $(this.refs.reasonText);
