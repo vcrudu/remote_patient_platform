@@ -14,6 +14,7 @@
     fill: none;
     stroke: #666;
     shape-rendering: crispEdges;
+    clip-path: url(#clip);
 }
 .graphic .axis.y path { display: none; }
 .graphic .axis.y .tick line { display: none; }
@@ -28,6 +29,7 @@
     fill: none;
     stroke-width: 3px;
     stroke: #11605E;
+    clip-path: url(#clip);
 }
 
 .graphic .area {
@@ -35,8 +37,13 @@
     clip-path: url(#clip);
 }
 
+.graphic .circle {
+    fill: blue;
+    clip-path: url(#clip);
+}
+
 .graphic rect.pane {
-    cursor: move;
+    //cursor: move;
     fill: none;
     pointer-events: all;
 }

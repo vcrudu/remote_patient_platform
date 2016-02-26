@@ -33,22 +33,3 @@ body {
     margin-bottom:5px;
     font-size:18px;
 }
-
-
-
-@media (orientation: landscape) {
-    .image-container {
-        width:60%;
-        float:left;
-    }
-
-
-    .logo {
-        max-width:180px;
-    }
-
-    .call-to-action-container {
-        width:40%;
-        float:right;
-    }
-}
