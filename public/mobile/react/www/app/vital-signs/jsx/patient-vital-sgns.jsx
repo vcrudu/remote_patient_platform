@@ -284,8 +284,7 @@
                                 aspectHeight={9}
                                 ticks={10}
                                 mobileThreshold={500}
-                                mobileTicks={5}
-                                />
+                                mobileTicks={5} />
             </div>
         }
     });
