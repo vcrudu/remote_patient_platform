@@ -244,7 +244,32 @@
                 //console.log("The users has been retrieved successfully.");
                 callback(null, resultUsers);
             });
-        }
+        },
+        resetUserPassword:function (userData,callback){
 
+
+                var dynamodb = getDb();
+
+                var params = {
+                    Key: { email: { S: userData.email }},
+                    TableName:TABLE_NAME,
+                    ExpressionAttributeValues: {
+                        ":passwordHash": {"S":userData.passwordHash  },
+                    },
+                    ReturnConsumedCapacity: 'TOTAL',
+                    UpdateExpression: 'SET passwordHash=:passwordHash'
+                };
+
+
+                dynamodb.updateItem(params, function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                        return;
+                    }
+
+                    callback(null, data);
+                });
+
+        }
     };
 })();

@@ -242,7 +242,7 @@ angular.module('app')
                     var req = {
                         method: 'POST',
                         url: appSettings.getServerUrl() + '/resetPassword',
-                        data: {email : email}
+                        data: {new : newPassword}
                     };
                     $http(req).success(function (res) {
                         if (!res.error) {

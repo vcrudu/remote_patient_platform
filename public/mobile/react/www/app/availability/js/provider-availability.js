@@ -10,11 +10,18 @@
     var ProviderAvailabilityCalendar = React.createClass({
         displayName: "ProviderAvailabilityCalendar",
 
+        componentDidMount: function () {
+            return React.createElement(
+                "p",
+                null,
+                "Hello"
+            );
+        },
         render: function () {
             return React.createElement(
                 "div",
                 null,
-                "Provider Availability"
+                "Provider Availability test"
             );
         }
     });

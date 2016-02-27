@@ -8,8 +8,11 @@
     $.material.init();
 
     var ProviderAvailabilityCalendar = React.createClass({
+        componentDidMount: function() {
+            return <p>Hello</p>
+        },
         render: function() {
-            return <div>Provider Availability</div>
+            return <div>Provider Availability test</div>
         }
     });
 
