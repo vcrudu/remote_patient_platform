@@ -11,20 +11,26 @@
         displayName: "ProviderAvailabilityCalendar",
 
         componentDidMount: function () {
+
             return React.createElement(
                 "p",
                 null,
-                "Hello"
+                "Hello1"
             );
         },
         render: function () {
             return React.createElement(
                 "div",
-                null,
-                "Provider Availability test"
+                { className: "comment" },
+                React.createElement(
+                    "h2",
+                    { className: "commentAuthor" },
+                    this.props.author
+                ),
+                this.props.children
             );
         }
     });
 
-    ReactDOM.render(React.createElement(ProviderAvailabilityCalendar, null), document.getElementById("provider-availability"));
+    ReactDOM.render(React.createElement(ProviderAvailabilityCalendar, { author: "vasea", children: "its okey" }), document.getElementById("provider-availability"));
 })();
