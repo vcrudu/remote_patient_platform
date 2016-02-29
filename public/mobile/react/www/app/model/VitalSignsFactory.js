@@ -9,7 +9,7 @@ VitalSignsFactory.createEmptyVitalSings = function() {
         temperatureVitalSignsDef: {
             label: "Temperature",
             measurementType:"temperature",
-            unit: "C",
+            unit: "&#176;C",
             minValue: 30,
             maxValue: 43,
             values: []
@@ -51,7 +51,7 @@ VitalSignsFactory.createVitalSings = function(data) {
                             systolic: item.value.systolic,
                             diastolic: item.value.diastolic
                         },
-                        dateTime: item.utcDateTime
+                        time: item.utcDateTime
                     });
                     break;
             }

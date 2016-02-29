@@ -20,7 +20,12 @@
                 aspectHeight: 9,
                 mobileThreshold: 500,
                 ticks: 10,
-                mobileTicks: 5
+                mobileTicks: 5,
+                type: undefined,
+                minValue: 0,
+                yDelta: 0,
+                label: "",
+                unit: ""
             };
         },
         getInitialState: function () {
@@ -50,7 +55,7 @@
             var margin = { top: 10, right: 15, bottom: 25, left: 35 };
             var width = chartRef.width() - margin.left - margin.right;
             var height = Math.ceil(width * props.aspectHeight / props.aspectWidth) - margin.top - margin.bottom;
-            var height2 = Math.ceil(width * 2 / props.aspectWidth) - margin.top - margin.bottom;
+            var height2 = Math.ceil(width * 2.5 / props.aspectWidth) - margin.top - margin.bottom;
 
             var num_ticks = props.ticks;
 
@@ -111,23 +116,21 @@
 
             var focus = svg.append("g").attr("class", "focus").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            var focus1 = svg.append("g").attr("class", "focus").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
             var focus2 = svg.append("g").attr("class", "focus").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            var svg1 = d3.select(chartContextRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
+            var svg1 = d3.select(chartContextRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height2 + margin.top + margin.bottom);
 
             var context = svg1.append("g").attr("class", "context").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             var brush = d3.svg.brush().x(x2).on("brush", function () {
                 x.domain(brush.empty() ? x2.domain() : brush.extent());
                 focus.select(".area").attr("d", area);
-                focus1.select(".line").attr("d", line);
-                focus2.selectAll('circle').attr('cx', function (d) {
+                focus.select(".line").attr("d", line);
+                focus.selectAll('circle').attr('cx', function (d) {
                     return x(d.dateTime);
                 }).attr('cy', function (d) {
                     return y(d.value);
-                }).attr('class', 'circle');
+                });
                 focus.select(".x.axis").call(xAxis);
 
                 // Reset zoom scale's domain
@@ -135,13 +138,14 @@
             });
 
             var zoom = d3.behavior.zoom().on("zoom", function () {
+                debugger;
                 focus.select(".area").attr("d", area);
-                focus1.select(".line").attr("d", line);
-                focus2.selectAll('circle').attr('cx', function (d) {
+                focus.select(".line").attr("d", line);
+                focus.selectAll('circle').attr('cx', function (d) {
                     return x(d.dateTime);
                 }).attr('cy', function (d) {
                     return y(d.value);
-                }).attr('class', 'circle');
+                });
                 focus.select(".x.axis").call(xAxis);
 
                 // Force changing brush range
@@ -149,21 +153,56 @@
                 svg.select(".brush").call(brush);
             });
 
-            var rect = svg.append("svg:rect").attr("class", "pane").attr("width", width).attr("height", height).attr("transform", "translate(" + margin.left + "," + margin.top + ")").call(zoom);
+            var data = [];
+            if (props.type != "blood_pressure") {
+                var tempArray1 = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
 
-            var data = props.dataSource.values.map(function (d) {
-                return {
-                    dateTime: moment(d.time),
-                    value: d.value
-                };
-            });
+                    tempArray1.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value,
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+                }
+                data = tempArray1;
+            } else {
+                var tempArray = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
+
+                    if (i == 0) {
+                        tempArray.push({
+                            dateTime: moment(props.dataSource.values[i].time).add(-1, 'days'),
+                            value: props.dataSource.values[i].value.systolic,
+                            color: "blue",
+                            label: props.dataSource.label
+                        });
+                    }
+
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.systolic,
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.diastolic,
+                        color: "red",
+                        label: props.dataSource.label
+                    });
+                }
+                data = tempArray;
+            }
 
             x.domain(d3.extent(data, function (d) {
                 return d.dateTime;
             }));
-            y.domain([34, d3.max(data, function (d) {
+
+            y.domain([props.minValue, d3.max(data, function (d) {
                 var n = d.value;
-                return Math.ceil(n);
+                return Math.ceil(n) + props.yDelta;
             })]);
 
             x2.domain(x.domain());
@@ -171,25 +210,54 @@
 
             zoom.x(x);
 
-            focus.append("path").datum(data).attr("class", "area").attr("d", area);
+            if (props.type != "blood_pressure") {
+                focus.append("path").datum(data).attr("class", "area").attr("d", area);
 
-            focus1.append("path").datum(data).attr("class", "line").attr("width", width).attr("d", line);
+                focus.append("path").datum(data).attr("class", "line").attr("width", width).attr("d", line);
+            }
 
-            focus2.selectAll('circle').data(data).enter().append('circle').attr('cx', function (d) {
+            var tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function (d) {
+                return d.value + " " + props.unit;
+            });
+
+            svg.call(tip);
+
+            var circles = focus.selectAll('circle').data(data).enter().append("circle").attr("cx", function (d) {
                 return x(d.dateTime);
-            }).attr('cy', function (d) {
+            }).attr("cy", function (d) {
                 return y(d.value);
-            }).attr('r', 5).attr('class', 'circle');
+            }).attr("r", 5).attr("class", 'circle').attr("data-legend", function (d) {
+                return d.label;
+            }).style("fill", function (d) {
+                return d.color;
+            }).on("click", tip.show).on("mouseover", tip.show).on("mouseout", tip.hide);
 
             focus.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
 
             focus.append("g").attr("class", "y axis").call(yAxis);
 
-            context.append("path").datum(data).attr("class", "area").attr("d", area2);
+            if (props.type != "blood_pressure") {
+                context.append("path").datum(data).attr("class", "area").attr("d", area2);
+            } else {
+                context.selectAll('circle').data(data).enter().append("circle").attr("cx", function (d) {
+                    return x2(d.dateTime);
+                }).attr("cy", function (d) {
+                    return y2(d.value);
+                }).attr("r", 3).style("fill", function (d) {
+                    return d.color;
+                });
+            }
 
             context.append("g").attr("class", "x axis").attr("transform", "translate(0," + height2 + ")").call(xAxis2);
 
             context.append("g").attr("class", "x brush").call(brush).selectAll("rect").attr("y", -6).attr("height", height2 + 7);
+
+            /*var rect = focus.append("svg:rect")
+                .attr("class", "pane")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                .call(zoom);*/
         },
         componentDidMount: function () {
             var component = this;
@@ -207,6 +275,11 @@
             return React.createElement(
                 "div",
                 { className: "graphicWrapper", ref: "graphicWrapper" },
+                React.createElement(
+                    "h1",
+                    null,
+                    this.props.label
+                ),
                 React.createElement("div", { className: "graphic", id: "graphic", ref: "graphic" }),
                 React.createElement("div", { className: "graphic", id: "graphicContext", ref: "graphicContext" })
             );
@@ -219,7 +292,8 @@
         getInitialState: function () {
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
             return {
-                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef
+                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef
             };
         },
         componentDidMount: function () {
@@ -230,7 +304,10 @@
                 var vitalSigns = Bridge.getPatientVitalSigns(function (result) {
                     if (result.success) {
                         var newDataSource = VitalSignsFactory.createVitalSings(result.data);
-                        component.setState({ temperatureVitalSignsDef: newDataSource.temperatureVitalSignsDef });
+                        component.setState({
+                            temperatureVitalSignsDef: newDataSource.temperatureVitalSignsDef,
+                            bloodPressureDef: newDataSource.bloodPressureDef
+                        });
                     }
                 });
             }
@@ -239,13 +316,28 @@
             return React.createElement(
                 "div",
                 null,
-                React.createElement(VitalSingChart, { dataSource: this.state.temperatureVitalSignsDef,
-                    dataUrl: "data/data.csv",
+                React.createElement(VitalSingChart, { dataSource: this.state.bloodPressureDef,
                     aspectWidth: 16,
                     aspectHeight: 9,
                     ticks: 10,
                     mobileThreshold: 500,
-                    mobileTicks: 5 })
+                    mobileTicks: 5,
+                    type: "blood_pressure",
+                    minValue: 40,
+                    yDelta: 50,
+                    label: this.state.bloodPressureDef.label,
+                    unit: this.state.bloodPressureDef.unit }),
+                React.createElement(VitalSingChart, { dataSource: this.state.temperatureVitalSignsDef,
+                    aspectWidth: 16,
+                    aspectHeight: 9,
+                    ticks: 10,
+                    mobileThreshold: 500,
+                    mobileTicks: 5,
+                    type: "temperature",
+                    minValue: 34,
+                    yDelta: 1,
+                    label: this.state.temperatureVitalSignsDef.label,
+                    unit: this.state.temperatureVitalSignsDef.unit })
             );
         }
     });
