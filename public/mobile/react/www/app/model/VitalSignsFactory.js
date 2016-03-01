@@ -8,7 +8,7 @@ VitalSignsFactory.createEmptyVitalSings = function() {
     var objectToReturn = {
         temperatureVitalSignsDef: {
             label: "Temperature",
-            measurementType:"temperature",
+            measurementType: "temperature",
             unit: "&#176;C",
             minValue: 30,
             maxValue: 43,
@@ -16,12 +16,28 @@ VitalSignsFactory.createEmptyVitalSings = function() {
         },
         bloodPressureDef: {
             label: "Blood Pressure",
-            measurementType:"bloodPressure",
+            measurementType: "bloodPressure",
             unit: "mmHg",
             minValue: 50,
             maxValue: 150,
             values: []
-        }
+        },
+        bloodOxygenDef: {
+            label: "Blood Oxygen",
+            measurementType: "bloodOxygen",
+            unit: "SO<sub>2</sub>",
+            minValue: 90,
+            maxValue: 100,
+            values: []
+        },
+        weightDef: {
+            label: "Weight",
+            measurementType: "weight",
+            unit: "kg",
+            minValue: 0,
+            maxValue: 150,
+            values: []
+        },
     };
 
     return objectToReturn;
@@ -41,6 +57,18 @@ VitalSignsFactory.createVitalSings = function(data) {
             {
                 case "temperature":
                     objectToReturn.temperatureVitalSignsDef.values.push({
+                        value: item.value,
+                        time: item.utcDateTime
+                    });
+                    break;
+                case "bloodOxygen":
+                    objectToReturn.bloodOxygenDef.values.push({
+                        value: item.value,
+                        time: item.utcDateTime
+                    });
+                    break;
+                case "weight":
+                    objectToReturn.weightDef.values.push({
                         value: item.value,
                         time: item.utcDateTime
                     });

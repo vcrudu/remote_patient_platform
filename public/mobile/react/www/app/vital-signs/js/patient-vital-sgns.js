@@ -58,7 +58,7 @@
                 return x(d.dateTime);
             }).attr("cy", function (d) {
                 return y(d.value);
-            }).attr("r", 5).attr("class", 'circle').attr("data-legend", function (d) {
+            }).attr("r", 7).attr("class", 'circle').attr("data-legend", function (d) {
                 return d.label;
             }).style("fill", function (d) {
                 return d.color;
@@ -158,11 +158,12 @@
             svg.call(tip);
 
             var brush = d3.svg.brush().x(x2).on("brush", function () {
+                tip.hide();
                 x.domain(brush.empty() ? x2.domain() : brush.extent());
                 focus.select(".area").attr("d", area);
                 focus.select(".line").attr("d", line);
 
-                if (props.type == "blood_pressure") {
+                if (props.type == "bloodPressure") {
                     component.fillLines(focus, data, x, y);
                 }
 
@@ -193,7 +194,7 @@
             });
 
             var data = [];
-            if (props.type != "blood_pressure") {
+            if (props.type != "bloodPressure") {
                 var tempArray1 = [];
                 for (var i = 0; i < props.dataSource.values.length; i++) {
                     tempArray1.push({
@@ -246,13 +247,13 @@
 
             zoom.x(x);
 
-            if (props.type != "blood_pressure") {
+            if (props.type != "bloodPressure") {
                 focus.append("path").datum(data).attr("class", "area").attr("d", area);
 
                 focus.append("path").datum(data).attr("class", "line").attr("width", width).attr("d", line);
             }
 
-            if (props.type == "blood_pressure") {
+            if (props.type == "bloodPressure") {
                 component.fillLines(focus, data, x, y);
             }
 
@@ -262,7 +263,7 @@
 
             focus.append("g").attr("class", "y axis").call(yAxis);
 
-            if (props.type != "blood_pressure") {
+            if (props.type != "bloodPressure") {
                 context.append("path").datum(data).attr("class", "area").attr("d", area2);
             } else {
                 context.selectAll('circle').data(data).enter().append("circle").attr("cx", function (d) {
@@ -319,7 +320,9 @@
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
             return {
                 temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
-                bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef
+                bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                weightDef: emptyVitalSigns.weightDef
             };
         },
         componentDidMount: function () {
@@ -332,7 +335,9 @@
                         var newDataSource = VitalSignsFactory.createVitalSings(result.data);
                         component.setState({
                             temperatureVitalSignsDef: newDataSource.temperatureVitalSignsDef,
-                            bloodPressureDef: newDataSource.bloodPressureDef
+                            bloodPressureDef: newDataSource.bloodPressureDef,
+                            bloodOxygenDef: newDataSource.bloodOxygenDef,
+                            weightDef: newDataSource.weightDef
                         });
                     }
                 });
@@ -348,8 +353,8 @@
                     ticks: 10,
                     mobileThreshold: 500,
                     mobileTicks: 5,
-                    type: "blood_pressure",
-                    minValue: 40,
+                    type: this.state.bloodPressureDef.measurementType,
+                    minValue: this.state.bloodPressureDef.minValue,
                     yDelta: 50,
                     label: this.state.bloodPressureDef.label,
                     unit: this.state.bloodPressureDef.unit }),
@@ -359,11 +364,33 @@
                     ticks: 10,
                     mobileThreshold: 500,
                     mobileTicks: 5,
-                    type: "temperature",
-                    minValue: 34,
+                    type: this.state.temperatureVitalSignsDef.measurementType,
+                    minValue: this.state.temperatureVitalSignsDef.minValue,
                     yDelta: 1,
                     label: this.state.temperatureVitalSignsDef.label,
-                    unit: this.state.temperatureVitalSignsDef.unit })
+                    unit: this.state.temperatureVitalSignsDef.unit }),
+                React.createElement(VitalSingChart, { dataSource: this.state.bloodOxygenDef,
+                    aspectWidth: 16,
+                    aspectHeight: 9,
+                    ticks: 10,
+                    mobileThreshold: 500,
+                    mobileTicks: 5,
+                    type: this.state.bloodOxygenDef.measurementType,
+                    minValue: this.state.bloodOxygenDef.minValue,
+                    yDelta: 5,
+                    label: this.state.bloodOxygenDef.label,
+                    unit: this.state.bloodOxygenDef.unit }),
+                React.createElement(VitalSingChart, { dataSource: this.state.weightDef,
+                    aspectWidth: 16,
+                    aspectHeight: 9,
+                    ticks: 10,
+                    mobileThreshold: 500,
+                    mobileTicks: 5,
+                    type: this.state.weightDef.measurementType,
+                    minValue: this.state.weightDef.minValue,
+                    yDelta: 0,
+                    label: this.state.weightDef.label,
+                    unit: this.state.weightDef.unit })
             );
         }
     });
