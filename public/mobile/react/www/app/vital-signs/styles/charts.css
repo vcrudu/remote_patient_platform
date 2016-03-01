@@ -41,6 +41,10 @@
     fill: blue;
     clip-path: url(#clip);
 }
+.graphic .circles-line {
+    stroke: green;
+    clip-path: url(#clip);
+}
 
 .graphic rect.pane {
     //cursor: move;
