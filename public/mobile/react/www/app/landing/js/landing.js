@@ -19,9 +19,17 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "buttonsContainer" },
-                React.createElement("input", { type: "button", className: "btn btn-default red", value: "Sign Up", onClick: this.handleSignUpClick }),
-                React.createElement("input", { type: "button", className: "btn btn-default green", value: "Sign In", onClick: this.handleSignIn })
+                { className: "row buttonsContainer" },
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    React.createElement("input", { type: "button", className: "btn btn-default red", value: "Sign Up", onClick: this.handleSignUpClick })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    React.createElement("input", { type: "button", className: "btn btn-default green", value: "Sign In", onClick: this.handleSignIn })
+                )
             );
         }
     });
