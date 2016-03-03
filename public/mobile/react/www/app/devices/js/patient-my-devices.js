@@ -7,6 +7,44 @@
 
     $.material.init();
 
+    var PairedDevice = React.createClass({
+        displayName: "PairedDevice",
+
+        handleDeviceItemClick: function (e) {
+            e.stopPropagation();
+            e.nativeEvent.stopImmediatePropagation();
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "list-group-item", onClick: this.handleDeviceItemClick },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-8" },
+                        React.createElement(
+                            "h3",
+                            null,
+                            this.props.model
+                        ),
+                        React.createElement(
+                            "p",
+                            null,
+                            this.props.description
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-4" },
+                        React.createElement("img", { src: "images/" + this.props.model + ".png", className: "img-responsive device-image" })
+                    )
+                )
+            );
+        }
+    });
+
     var Device = React.createClass({
         displayName: "Device",
 
@@ -14,18 +52,7 @@
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
 
-            var paths = window.location.pathname.split("/");
-            var pathToRedirect = "";
-            if (paths.length > 0) {
-                for (var i = 0; i < paths.length - 1; i++) {
-                    if (paths[i] != "") {
-                        pathToRedirect += "/" + paths[i];
-                    }
-                }
-            }
-
-            pathToRedirect += "/" + this.props.model + ".html";
-            Bridge.Redirect.redirectTo(pathToRedirect);
+            Bridge.Redirect.redirectTo(this.props.model + ".html");
         },
         render: function () {
             return React.createElement(
@@ -61,19 +88,6 @@
     var AddDeviceOverlay = React.createClass({
         displayName: "AddDeviceOverlay",
 
-        getInitialState: function () {
-            return {
-                devices: []
-            };
-        },
-        componentDidMount: function () {
-            var availableDevices = [];
-            var component = this;
-            Bridge.getPatientDevices(function (devicesResult) {
-                if (!devicesResult.success) return;
-                component.setState({ devices: devicesResult.data });
-            });
-        },
         showAddDeviceOverlay: function () {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
             appointmentModalDiv.slideDown();
@@ -83,7 +97,6 @@
             appointmentModalDiv.slideUp();
         },
         render: function () {
-            var devices = this.state.devices;
             return React.createElement(
                 "div",
                 { ref: "addDeviceOverlay", className: "addDeviceOverlay", onClick: this.hideAddDeviceOverlay },
@@ -99,8 +112,8 @@
                             React.createElement(
                                 "div",
                                 { className: "list-group" },
-                                devices.map(function (device) {
-                                    return React.createElement(Device, { key: device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description });
+                                this.props.devices.map(function (device) {
+                                    return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description });
                                 })
                             )
                         )
@@ -110,11 +123,48 @@
         }
     });
 
+    var PairedDevices = React.createClass({
+        displayName: "PairedDevices",
+
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "list-group" },
+                this.props.devices.map(function (device) {
+                    return React.createElement(PairedDevice, { key: "paired-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description });
+                })
+            );
+        }
+    });
+
     var MyDevices = React.createClass({
         displayName: "MyDevices",
 
+        getInitialState: function () {
+            return {
+                pairedDevices: [],
+                devices: []
+            };
+        },
         handleAddDevice: function () {
             this.refs["addDeviceOverlay"].showAddDeviceOverlay();
+        },
+        componentDidMount: function () {
+            var component = this;
+
+            Bridge.getPatientDevices(function (devicesResult) {
+                if (!devicesResult.success) {
+                    return;
+                } else {
+                    Bridge.DeviceInstaller.getDevicesFromToLocalStorage(function (pairedResult) {
+                        if (!pairedResult.success) {
+                            component.setState({ devices: devicesResult.data });
+                            return;
+                        }
+                        component.setState({ pairedDevices: pairedResult.data, devices: devicesResult.data });
+                    });
+                }
+            });
         },
         render: function () {
             return React.createElement(
@@ -123,7 +173,7 @@
                 React.createElement(
                     "div",
                     { className: "row fill" },
-                    React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay" }),
+                    React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay", devices: this.state.devices }),
                     React.createElement(
                         "div",
                         { className: "col-xs-12" },
@@ -139,6 +189,15 @@
                                     "+",
                                     React.createElement("div", { className: "ripple-container" })
                                 )
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "row" },
+                            React.createElement(
+                                "div",
+                                { className: "col-xs-12" },
+                                React.createElement(PairedDevices, { devices: this.state.pairedDevices })
                             )
                         )
                     )

@@ -11,12 +11,13 @@
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
 
     <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="styles/wizard.css">
     <link rel="stylesheet" href="styles/JPD-FR100+.css">
 </head>
 <body>
 
 <!-- Full Page Image Background Carousel Header -->
-<header id="myCarousel" class="carousel slide">
+<header id="wizard" class="carousel slide">
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
         <div class="item active">
@@ -28,9 +29,14 @@
             <div class="fill" style="background-image:url('images/JPD-FR100+Slide%20Two.png');"></div>
         </div>
     </div>
+
+    <div id="jdp-fr100-plus" class="container">
+    </div>
 </header>
 
+<script type="text/javascript" src="../model/EventBus.js"></script>
 <script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
 <script type="text/javascript" src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -38,6 +44,8 @@
 <script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/ripples.min.js"></script>
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
+
+<script type="text/javascript" src="js/JPD-FR100+.js"></script>
 
 <script>
     $(document).ready(function() {
