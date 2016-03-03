@@ -6,6 +6,7 @@
 
     var usersRepository = require('../repositories').Users;
     var videoService = require('../services/videoService');
+    var patientAppointmentsService = require('../services/patientAppointmentsService');
     var jwt = require("jsonwebtoken");
     var _ = require("underscore");
     var NS = "Notifications";
@@ -17,6 +18,36 @@
     module.exports = {
         init: function (server) {
             io = require('socket.io')(server);
+            function notifyProvidersAboutPatientOnlineStatus(onlineStatus, socketUser) {
+                usersRepository.findOneByEmail(socketUser.email, function (err, user) {
+                    if (!err && user && user.type === "patient") {
+                        patientAppointmentsService.getPatientAppointments(user.email, function (err, appointmentsResult) {
+                            if (appointmentsResult.length > 0) {
+                                _.forEach(appointmentsResult, function (appointment) {
+                                    usersRepository.findOneByEmail(appointment.providerId, function (err, providerUser) {
+                                        if (!err && providerUser && providerUser.socketIds) {
+                                            var namespace = io.sockets;
+                                            var onlineSockets = _.filter(providerUser.socketIds, function (socketId) {
+                                                return !!_.find(namespace.sockets, function (socket) {
+                                                    return socketId === socket.id;
+                                                });
+                                            });
+                                            _.forEach(onlineSockets, function (onlineSocket) {
+                                                if (onlineSocket.connected) {
+                                                    onlineSocket.emit('onlineStatus', {
+                                                        recipientId: user.email,
+                                                        onlineStatus: onlineStatus
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
 
             io.on('connection', function (socket) {
                 loggerProvider.getLogger().debug(NS+"::"+"Client connected...");
@@ -27,15 +58,29 @@
                         jwt.verify(data.token, process.env.JWT_SECRET, function (err, decoded) {
                             if (!err) {
                                 socket.userId = decoded.email;
-                                usersRepository.updateOnlineStatus(decoded.email, 'online', socket.id, function (err, result) {
-                                    socket.auth = true;
-                                    loggerProvider.getLogger().debug(NS+"::" +decoded.email+" status online...");
-                                    /*_.each(io.nsps, function(nsp) {
-                                     if(_.findWhere(nsp.sockets, {id: socket.id})) {
-                                     console.log("restoring socket to", nsp.name);
-                                     nsp.connected[socket.id] = socket;
-                                     }
-                                     });*/
+                                usersRepository.findOneByEmail(decoded.email, function (err, socketsData) {
+                                    var namespace = io.sockets;
+                                    var onlineSockets = _.filter(socketsData.socketIds,function(oldSocketId) {
+                                        return !!_.find(namespace.sockets, function (activeSocket) {
+                                            return oldSocketId === activeSocket.id;
+                                        });
+                                    });
+
+                                    onlineSockets = onlineSockets.concat([socket.id]);
+
+                                    usersRepository.updateOnlineStatus(decoded.email, 'online', onlineSockets, function (err, result) {
+                                        if (!err) {
+                                            notifyProvidersAboutPatientOnlineStatus('online', decoded);
+                                        }
+                                        socket.auth = true;
+                                        loggerProvider.getLogger().debug(NS + "::" + decoded.email + " status online...");
+                                        /*_.each(io.nsps, function(nsp) {
+                                         if(_.findWhere(nsp.sockets, {id: socket.id})) {
+                                         console.log("restoring socket to", nsp.name);
+                                         nsp.connected[socket.id] = socket;
+                                         }
+                                         });*/
+                                    });
                                 });
                             } else {
                                 loggerProvider.getLogger().error(err);
@@ -141,15 +186,32 @@
 
                 socket.on('disconnect', function () {
                     loggerProvider.getLogger().debug(NS+"::"+'Disconnected!');
-                    usersRepository.updateOnlineStatus(socket.userId, 'offline', socket.id, function (err, result) {
-                        socket.auth = false;
-                        loggerProvider.getLogger().debug(NS+"::"+"online status offline...");
-                        /* _.each(io.nsps, function(nsp) {
-                         if(_.findWhere(nsp.sockets, {id: socket.id})) {
-                         console.log("restoring socket to", nsp.name);
-                         nsp.connected[socket.id] = socket;
-                         }
-                         });*/
+                    usersRepository.findOneByEmail(socket.userId, function (err, socketsData) {
+                        var namespace = io.sockets;
+                        var onlineSockets = _.filter(socketsData.socketIds, function (oldSocketId) {
+                            return !!_.find(namespace.sockets, function (activeSocket) {
+                                return oldSocketId === activeSocket.id;
+                            });
+                        });
+
+                        var currentSocketIndex = _.indexOf(onlineSockets,socket.id);
+
+                        if(currentSocketIndex!=-1)
+                        onlineSockets.splice(currentSocketIndex, 1);
+                        var onlineStatus = onlineSockets.length==0?'offline':'online';
+                        usersRepository.updateOnlineStatus(socket.userId, onlineStatus, onlineSockets, function (err, result) {
+                            if (!err) {
+                                notifyProvidersAboutPatientOnlineStatus('onlineStatus', {email: socket.userId});
+                            }
+                            socket.auth = false;
+                            loggerProvider.getLogger().debug(NS + "::" + "status offline...");
+                            /* _.each(io.nsps, function(nsp) {
+                             if(_.findWhere(nsp.sockets, {id: socket.id})) {
+                             console.log("restoring socket to", nsp.name);
+                             nsp.connected[socket.id] = socket;
+                             }
+                             });*/
+                        });
                     });
                 });
             });

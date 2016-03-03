@@ -99,18 +99,22 @@
             });
         },
 
-        updateOnlineStatus : function(userId, onlineStatus, socketId, callback) {
+        updateOnlineStatus : function(userId, onlineStatus, socketIds, callback) {
             var dynamodb = getDb();
+
+            var mappedSocketIds = _.map(socketIds, function(socketId){
+                return {"S":socketId};
+            });
 
             var params = {
                 Key: { email: { S: userId }},
                 TableName:TABLE_NAME,
                 ExpressionAttributeValues: {
                     ":onlineStatus": {"S":onlineStatus  },
-                    ":socketId": {"S":socketId  },
+                    ":socketIds": {"L":mappedSocketIds  },
                 },
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET onlineStatus=:onlineStatus, socketId=:socketId'
+                UpdateExpression: 'SET onlineStatus=:onlineStatus, socketIds=:socketIds'
             };
 
             dynamodb.updateItem(params, function (err, data) {
