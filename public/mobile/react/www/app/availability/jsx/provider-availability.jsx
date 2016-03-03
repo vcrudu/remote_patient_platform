@@ -8,10 +8,22 @@
     $.material.init();
 
     var ProviderAvailabilityCalendar = React.createClass({
-        render: function() {
-            return <div>Provider Availability</div>
+        componentDidMount: function() {
+
+            return <p>Hello1</p>;
+        },
+        render : function (){
+            return (
+                <div className="comment">
+                <h2 className="commentAuthor">
+                    {this.props.author}
+                </h2>
+                    {this.props.children}
+            </div>
+            );
         }
     });
 
-    ReactDOM.render(<ProviderAvailabilityCalendar/>, document.getElementById("provider-availability"));
+
+    ReactDOM.render(<ProviderAvailabilityCalendar author="vasea" children="its okey"/>, document.getElementById("provider-availability"));
 })();

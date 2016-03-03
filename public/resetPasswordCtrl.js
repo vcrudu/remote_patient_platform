@@ -2,8 +2,8 @@
  * Created by home on 05/01/2016.
  */
 
-angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams', '$http','authService',
-    function($scope, $stateParams, $http, authService){
+angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams','$state', '$http','authService',
+    function($scope, $stateParams,$state, $http, authService){
             var link="/resetPassword?token="+$stateParams.token;
            $scope.mmm = $http.get(link)
                 .then(function(response) {
@@ -16,19 +16,23 @@ angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams', 
 
 
 
-       // $scope.newUser = {};
+        $scope.newUser = {};
         $scope.submitResetPassword = function(){
             if($scope.resetPasswordForm.$valid){
-                console.log($scope.content.email);
-                authService.submitResetPassword($scope.content.email,
+                var dataReset={
+                token:$scope.content.token,
+                pass:$scope.newUser.password};
+                authService.submitResetPassword(dataReset,
                     function(success){
-
-                        $state.go('login');
-
+                        if (success){
+                            $state.go('login');
+                        } else {
+                            $state.go('reset');
+                        }
                     },function(error){
 
-                        toastr.error(error, 'Error');
-
+                        $state.go('reset');
+                        //toastr.error(error, 'Error');
                     }
                 );
             }

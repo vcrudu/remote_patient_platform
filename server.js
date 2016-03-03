@@ -13,7 +13,7 @@ var logging     = require('./logging');
 var gridCacheClient = require('./services/gridCacheClient');
 var checkExistsNhs = require("./controllers/checkExistsNhs");
 var reset = require("./controllers/reset");
-//var resetPasswordController = require("./controllers/resetPasswordController");
+var resetPasswordController = require("./controllers/resetPasswordController");
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -36,7 +36,7 @@ app.use(morgan("dev"));
 auth.configureJwt(app);
 
 reset.init(app);
-//resetPasswordController.init(app);
+resetPasswordController.init(app);
 checkExistsUserController.init(app);
 checkExistsNhs.init(app);
 controllers.init(app);
@@ -68,4 +68,4 @@ var server = http.createServer(app);
 var notifications = require('./notifications');
 notifications.init(server);
 gridCacheClient.init();
-server.listen(PORT);
+server.listen(PORT, "192.168.8.100");
