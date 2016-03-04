@@ -16,7 +16,7 @@
         },
         componentDidMount: function() {
             var component = this;
-            Bridge.DeviceInstaller.connectThermometerDevice(function(result) {
+            Bridge.DeviceInstaller.connectDevice(component.props.deviceModel, function(result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "connected":
@@ -79,12 +79,12 @@
                 <div className="col-xs-8">
                 </div>
                 <div className="col-xs-4">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Next" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
+                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Next" onClick={this.handleNext}></input> : null }
+                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
                 </div>
             </div>
         }
     });
 
-    ReactDOM.render(<M110 carouselWizard="#thermometerWizard" deviceModel="M110"/>, document.getElementById("jdp-fr100-plus"));
+    ReactDOM.render(<M110 carouselWizard="#wizard" deviceModel="M110"/>, document.getElementById("m110"));
 })();

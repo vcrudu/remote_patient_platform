@@ -18,7 +18,7 @@
         },
         componentDidMount: function () {
             var component = this;
-            Bridge.DeviceInstaller.connectThermometerDevice(function (result) {
+            Bridge.DeviceInstaller.connectDevice(component.props.deviceModel, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "connected":
@@ -84,8 +84,8 @@
                 React.createElement(
                     "div",
                     { className: "col-xs-4" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
                 )
             );
         }

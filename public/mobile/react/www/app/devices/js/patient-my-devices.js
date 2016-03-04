@@ -88,6 +88,9 @@
     var AddDeviceOverlay = React.createClass({
         displayName: "AddDeviceOverlay",
 
+        getDefaultProps: function () {
+            devices: [];
+        },
         showAddDeviceOverlay: function () {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
             appointmentModalDiv.slideDown();
@@ -126,6 +129,9 @@
     var PairedDevices = React.createClass({
         displayName: "PairedDevices",
 
+        getDefaultProps: function () {
+            devices: [];
+        },
         render: function () {
             return React.createElement(
                 "div",
