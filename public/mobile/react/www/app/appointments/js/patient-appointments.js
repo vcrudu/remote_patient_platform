@@ -7,6 +7,47 @@
 
     $.material.init();
 
+    var DateSelector = React.createClass({
+        displayName: "DateSelector",
+
+        setDate: function (date) {
+            var changeDayPicker = $(this.refs.changeDayPicker);
+            changeDayPicker.mobiscroll("setVal", date);
+            changeDayPicker.mobiscroll("setDate", date, true);
+        },
+        handleShow: function () {
+            var changeDayPicker = $(this.refs.changeDayPicker);
+            changeDayPicker.mobiscroll('show');
+            return false;
+        },
+        componentDidMount: function () {
+            var changeDayPicker = $(this.refs.changeDayPicker);
+            var component = this;
+
+            changeDayPicker.mobiscroll().calendar({
+                theme: "material",
+                display: "bottom",
+                dateFormat: "yyyy-mm-dd",
+                minDate: new Date(),
+                onSelect: function (valueText, inst) {
+                    component.props.onSelectDateCallback(valueText, inst);
+                }
+            }).mobiscroll("setDate", new Date(), true);
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement("input", { id: "changeDayPicker", ref: "changeDayPicker", className: "hide" }),
+                React.createElement(
+                    "button",
+                    { id: "show", ref: "show", onClick: this.handleShow, className: "btn btn-raised btn-info" },
+                    "Change Day"
+                )
+            );
+        }
+    });
+
     var AppointmentsCalendar = React.createClass({
         displayName: "AppointmentsCalendar",
 
@@ -37,10 +78,15 @@
                 });
             }
         },
+        onDateChanged: function (valueText, inst) {
+            var date = moment(valueText);
+            $(this.refs.appointmentsCalendar).fullCalendar("gotoDate", date);
+        },
         componentDidMount: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentModal = $(this.refs.appointmentModal).modal('hide');
             var reasonText = $(this.refs.reasonText);
+            var component = this;
 
             var currentDate = new Date();
             $(this.refs.appointmentsCalendar).fullCalendar({
@@ -71,6 +117,7 @@
                     reasonText.val("");
                 },
                 events: function (start, end, timezone, callback) {
+
                     var events = [];
                     Bridge.getSlots(function (slotsResult) {
                         if (!slotsResult.success) return;
@@ -86,6 +133,8 @@
                             callback(events);
                         });
                     });
+
+                    component.refs["dateSelector"].setDate(start._d);
                 },
                 eventAfterAllRender: function (view) {},
                 resources: [{ id: 'a', title: 'Health care providers' }]
@@ -151,7 +200,8 @@
                             )
                         )
                     )
-                )
+                ),
+                React.createElement(DateSelector, { ref: "dateSelector", onSelectDateCallback: this.onDateChanged })
             );
         }
     });
