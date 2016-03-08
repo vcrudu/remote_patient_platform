@@ -13,6 +13,9 @@
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
+
+            var redirectUrl = this.props.model + "-measure.html";
+            Bridge.Redirect.redirectTo(redirectUrl);
         },
         render: function () {
             return React.createElement(
