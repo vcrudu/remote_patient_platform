@@ -55,7 +55,11 @@
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
 
-            Bridge.Redirect.redirectTo(this.props.model + ".html");
+            switch (this.props.modelType) {
+                case "Temperature":
+                    Bridge.Redirect.redirectTo("Thermometer.html");
+                    break;
+            }
         },
         render: function () {
             return React.createElement(
@@ -119,7 +123,7 @@
                                 "div",
                                 { className: "list-group" },
                                 this.props.devices.map(function (device) {
-                                    return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description });
+                                    return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
                                 })
                             )
                         )

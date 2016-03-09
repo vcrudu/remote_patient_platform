@@ -2,21 +2,23 @@
  * Created by Victor on 3/2/2016.
  */
 
-(function() {
+(function () {
     "use strict";
 
     $.material.init();
 
     var JDP_FR100_PLUS = React.createClass({
-        getInitialState: function() {
+        displayName: "JDP_FR100_PLUS",
+
+        getInitialState: function () {
             return {
                 nextButtonVisibility: false,
                 doneButtonVisibility: false
-            }
+            };
         },
-        componentDidMount: function() {
+        componentDidMount: function () {
             var component = this;
-            Bridge.DeviceInstaller.connectDevice(component.props.deviceModel, function(result) {
+            Bridge.DeviceInstaller.connectDevice(component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "connected":
@@ -28,7 +30,7 @@
                 }
             });
         },
-        handleNext: function() {
+        handleNext: function () {
             var component = this;
 
             $(this.props.carouselWizard).carousel("next");
@@ -36,7 +38,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceInstaller.pairDevice(component.props.deviceModel, function(result) {
+            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
@@ -48,14 +50,14 @@
                 }
             });
         },
-        handleDone: function() {
+        handleDone: function () {
             var availableDevices = [];
             var component = this;
             Bridge.getPatientDevices(function (devicesResult) {
                 if (!devicesResult.success) return;
 
-                var devices = _.filter(devicesResult.data,function(device) {
-                    return device.model === component.props.deviceModel;
+                var devices = _.filter(devicesResult.data, function (device) {
+                    return device.deviceModelType === component.props.deviceModelType;
                 });
 
                 if (devices && devices.length > 0) {
@@ -74,17 +76,20 @@
                 }
             });
         },
-        render: function() {
-            return <div className="row buttonsContainer">
-                <div className="col-xs-8">
-                </div>
-                <div className="col-xs-4">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Next" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
-                </div>
-            </div>
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "row buttonsContainer" },
+                React.createElement("div", { className: "col-xs-8" }),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-4" },
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
+                )
+            );
         }
     });
 
-    ReactDOM.render(<JDP_FR100_PLUS carouselWizard="#wizard" deviceModel="JPD-FR100+"/>, document.getElementById("jdp-fr100-plus"));
+    ReactDOM.render(React.createElement(JDP_FR100_PLUS, { carouselWizard: "#wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer"));
 })();

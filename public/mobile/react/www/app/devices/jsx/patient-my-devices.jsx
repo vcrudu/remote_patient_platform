@@ -35,7 +35,12 @@
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
 
-            Bridge.Redirect.redirectTo(this.props.model  + ".html");
+            switch (this.props.modelType)
+            {
+                case "Temperature":
+                    Bridge.Redirect.redirectTo("Thermometer.html");
+                    break;
+            }
         },
         render: function() {
             return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
@@ -71,7 +76,7 @@
                         <div className="col-xs-12">
                             <div className="list-group">
                                 {this.props.devices.map(function(device) {
-                                    return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description}/>;
+                                    return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
                                 })}
                             </div>
                         </div>
