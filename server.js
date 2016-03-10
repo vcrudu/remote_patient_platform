@@ -68,8 +68,5 @@ var server = http.createServer(app);
 var notifications = require('./notifications');
 notifications.init(server);
 gridCacheClient.init();
-<<<<<<< Updated upstream
+
 server.listen(PORT, "192.168.0.12");
-=======
-server.listen(PORT);
->>>>>>> Stashed changes

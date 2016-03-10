@@ -54,10 +54,13 @@
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-
+            debugger;
             switch (this.props.modelType) {
                 case "Temperature":
                     Bridge.Redirect.redirectTo("Thermometer.html");
+                    break;
+                case "BloodOxygen":
+                    Bridge.Redirect.redirectTo("BloodOxygen.html");
                     break;
             }
         },

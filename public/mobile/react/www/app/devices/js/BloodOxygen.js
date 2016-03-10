@@ -18,7 +18,7 @@
         },
         componentDidMount: function () {
             var component = this;
-            Bridge.DeviceInstaller.connectDevice(component.props.deviceModel, function (result) {
+            Bridge.DeviceInstaller.connectDevice(component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "connected":
@@ -38,7 +38,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceInstaller.pairDevice(component.props.deviceModel, function (result) {
+            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
@@ -57,7 +57,7 @@
                 if (!devicesResult.success) return;
 
                 var devices = _.filter(devicesResult.data, function (device) {
-                    return device.model === component.props.deviceModel;
+                    return device.deviceModelType === component.props.deviceModelType;
                 });
 
                 if (devices && devices.length > 0) {
@@ -91,5 +91,5 @@
         }
     });
 
-    ReactDOM.render(React.createElement(M110, { carouselWizard: "#wizard", deviceModel: "M110" }), document.getElementById("m110"));
+    ReactDOM.render(React.createElement(M110, { carouselWizard: "#wizard", deviceModelType: "BloodOxygen" }), document.getElementById("blood-oxygen"));
 })();
