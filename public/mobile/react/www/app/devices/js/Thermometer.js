@@ -7,13 +7,14 @@
 
     $.material.init();
 
-    var JDP_FR100_PLUS = React.createClass({
-        displayName: "JDP_FR100_PLUS",
+    var THERMOMETER = React.createClass({
+        displayName: "THERMOMETER",
 
         getInitialState: function () {
             return {
                 nextButtonVisibility: false,
-                doneButtonVisibility: false
+                doneButtonVisibility: false,
+                deviceAddress: undefined
             };
         },
         componentDidMount: function () {
@@ -43,7 +44,8 @@
                     switch (result.data.status) {
                         case "paired":
                             component.setState({
-                                doneButtonVisibility: true
+                                doneButtonVisibility: true,
+                                deviceAddress: result.data.address
                             });
                             break;
                     }
@@ -63,6 +65,7 @@
                 if (devices && devices.length > 0) {
                     var device = devices[0];
                     if (device) {
+                        device.address = component.state.deviceAddress;
                         Bridge.DeviceInstaller.addDeviceToLocalStorage(device, function (result) {
                             if (result.success) {
                                 switch (result.data.status) {
@@ -91,5 +94,5 @@
         }
     });
 
-    ReactDOM.render(React.createElement(JDP_FR100_PLUS, { carouselWizard: "#wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer"));
+    ReactDOM.render(React.createElement(THERMOMETER, { carouselWizard: "#wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer"));
 })();

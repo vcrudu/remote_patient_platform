@@ -13,9 +13,15 @@
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-
-            var redirectUrl = this.props.model + "-measure.html";
-            Bridge.Redirect.redirectTo(redirectUrl);
+            debugger;
+            switch (this.props.modelType) {
+                case "Temperature":
+                    Bridge.Redirect.redirectTo("Thermometer-measure.html");
+                    break;
+                case "BloodOxygen":
+                    Bridge.Redirect.redirectTo("BloodOxygen-measure.html");
+                    break;
+            }
         },
         render: function () {
             return React.createElement(
@@ -54,7 +60,6 @@
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-            debugger;
             switch (this.props.modelType) {
                 case "Temperature":
                     Bridge.Redirect.redirectTo("Thermometer.html");
@@ -147,7 +152,7 @@
                 "div",
                 { className: "list-group" },
                 this.props.devices.map(function (device) {
-                    return React.createElement(PairedDevice, { key: "paired-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description });
+                    return React.createElement(PairedDevice, { key: "paired-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
                 })
             );
         }

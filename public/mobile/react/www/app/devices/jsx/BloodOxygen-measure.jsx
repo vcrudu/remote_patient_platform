@@ -7,7 +7,7 @@
 
     $.material.init();
 
-    var M110_Measure = React.createClass({
+    var BLOOD_OXYGEN_MEASURE = React.createClass({
         getInitialState: function() {
             return {
                 nextButtonVisibility: false,
@@ -21,6 +21,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
+                            debugger;
                             component.setState({
                                 nextButtonVisibility: true,
                                 value: result.data.value
@@ -38,7 +39,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModel, function(result) {
+            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModelType, function(result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-confirmed":
@@ -54,16 +55,24 @@
             Bridge.Redirect.redirectTo("patient-my-devices.html");
         },
         render: function() {
-            return <div className="row buttonsContainer">
-                <div className="col-xs-8">
+            return <div className="container">
+                <div className="row">
+                    <div className="col-xs-6">
+                        { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }
+                    </div>
+                    <div className="col-xs-6">
+                        { this.state.value ? "Pulse: " +  this.state.value.pr : null }
+                    </div>
                 </div>
-                <div className="col-xs-4">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Confirm" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                <div className="row buttonsContainer">
+                    <div className="col-xs-12">
+                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Confirm" onClick={this.handleNext}></input> : null }
+                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                    </div>
                 </div>
             </div>
         }
     });
 
-    ReactDOM.render(<M110_Measure carouselWizard="#measure-wizard" deviceModel="M110" deviceModelType="BloodOxygen"/>, document.getElementById("m110-measure"));
+    ReactDOM.render(<BLOOD_OXYGEN_MEASURE carouselWizard="#measure-wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen-measure"));
 })();

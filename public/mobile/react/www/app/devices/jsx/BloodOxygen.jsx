@@ -7,11 +7,14 @@
 
     $.material.init();
 
-    var M110 = React.createClass({
+    var BLOOD_OXYGEN = React.createClass({
         getInitialState: function() {
             return {
                 nextButtonVisibility: false,
-                doneButtonVisibility: false
+                doneButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false,
+                deviceAddress: undefined
             }
         },
         componentDidMount: function() {
@@ -28,12 +31,13 @@
                 }
             });
         },
-        handleNext: function() {
+        handleRetry: function() {
             var component = this;
 
-            $(this.props.carouselWizard).carousel("next");
             component.setState({
-                nextButtonVisibility: false
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false,
             });
 
             Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function(result) {
@@ -41,12 +45,57 @@
                     switch (result.data.status) {
                         case "paired":
                             component.setState({
-                                doneButtonVisibility: true
+                                doneButtonVisibility: true,
+                                cancelButtonVisibility: false,
+                                retryButtonVisibility: false,
+                                deviceAddress: result.data.address
                             });
                             break;
                     }
                 }
+                else {
+                    component.setState({
+                        doneButtonVisibility: false,
+                        cancelButtonVisibility: true,
+                        retryButtonVisibility: true,
+                    });
+                }
             });
+        },
+        handleNext: function() {
+            var component = this;
+
+            $(this.props.carouselWizard).carousel("next");
+            component.setState({
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false,
+            });
+
+            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function(result) {
+                if (result.success) {
+                    switch (result.data.status) {
+                        case "paired":
+                            component.setState({
+                                doneButtonVisibility: true,
+                                cancelButtonVisibility: false,
+                                retryButtonVisibility: false,
+                                deviceAddress: result.data.address
+                            });
+                            break;
+                    }
+                }
+                else {
+                    component.setState({
+                        doneButtonVisibility: false,
+                        cancelButtonVisibility: true,
+                        retryButtonVisibility: true,
+                    });
+                }
+            });
+        },
+        handleCancel: function() {
+            Bridge.Redirect.redirectTo("patient-my-devices.html");
         },
         handleDone: function() {
             var availableDevices = [];
@@ -61,6 +110,7 @@
                 if (devices && devices.length > 0) {
                     var device = devices[0];
                     if (device) {
+                        device.address = component.state.deviceAddress;
                         Bridge.DeviceInstaller.addDeviceToLocalStorage(device, function (result) {
                             if (result.success) {
                                 switch (result.data.status) {
@@ -76,15 +126,15 @@
         },
         render: function() {
             return <div className="row buttonsContainer">
-                <div className="col-xs-8">
-                </div>
-                <div className="col-xs-4">
+                <div className="col-xs-12">
                     { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Next" onClick={this.handleNext}></input> : null }
                     { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                    { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default" value="Cancel" onClick={this.handleCancel}></input> : null }
+                    { this.state.retryButtonVisibility ? <input type="button" className="btn btn-default" value="Retry" onClick={this.handleRetry}></input> : null }
                 </div>
             </div>
         }
     });
 
-    ReactDOM.render(<M110 carouselWizard="#wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen"));
+    ReactDOM.render(<BLOOD_OXYGEN carouselWizard="#wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen"));
 })();
