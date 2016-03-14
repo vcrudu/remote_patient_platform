@@ -1,5 +1,5 @@
 /**
- * Created by Victor on 3/8/2016.
+ * Created by Victor on 3/14/2016.
  */
 
 (function () {
@@ -7,8 +7,8 @@
 
     $.material.init();
 
-    var BLOOD_OXYGEN_MEASURE = React.createClass({
-        displayName: "BLOOD_OXYGEN_MEASURE",
+    var M110_Measure = React.createClass({
+        displayName: "M110_Measure",
 
         getInitialState: function () {
             return {
@@ -40,7 +40,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModelType, function (result) {
+            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModel, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-confirmed":
@@ -65,12 +65,7 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-6" },
-                        this.state.value ? "SPO2: " + this.state.value.spo2 : null
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-6" },
-                        this.state.value ? "Pulse: " + this.state.value.pr : null
+                        this.state.value ? "Temperature: " + this.state.value.value : null
                     )
                 ),
                 React.createElement(
@@ -87,5 +82,5 @@
         }
     });
 
-    ReactDOM.render(React.createElement(BLOOD_OXYGEN_MEASURE, { carouselWizard: "#measure-wizard", deviceModelType: "BloodOxygen" }), document.getElementById("blood-oxygen-measure"));
+    ReactDOM.render(React.createElement(M110_Measure, { carouselWizard: "#measure-wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer-measure"));
 })();

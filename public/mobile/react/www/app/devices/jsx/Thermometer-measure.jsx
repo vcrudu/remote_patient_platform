@@ -1,13 +1,14 @@
 /**
- * Created by Victor on 3/8/2016.
+ * Created by Victor on 3/14/2016.
  */
+
 
 (function() {
     "use strict";
 
     $.material.init();
 
-    var BLOOD_OXYGEN_MEASURE = React.createClass({
+    var M110_Measure = React.createClass({
         getInitialState: function() {
             return {
                 nextButtonVisibility: false,
@@ -57,10 +58,7 @@
             return <div className="container">
                 <div className="row">
                     <div className="col-xs-6">
-                        { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }
-                    </div>
-                    <div className="col-xs-6">
-                        { this.state.value ? "Pulse: " +  this.state.value.pr : null }
+                        { this.state.value ? "Temperature: " +  this.state.value : null }
                     </div>
                 </div>
                 <div className="row buttonsContainer">
@@ -73,5 +71,5 @@
         }
     });
 
-    ReactDOM.render(<BLOOD_OXYGEN_MEASURE carouselWizard="#measure-wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen-measure"));
+    ReactDOM.render(<M110_Measure carouselWizard="#measure-wizard" deviceModelType="Temperature"/>, document.getElementById("thermometer-measure"));
 })();

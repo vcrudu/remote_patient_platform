@@ -11,7 +11,6 @@
         handleDeviceItemClick: function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
-debugger;
             switch (this.props.modelType)
             {
                 case "Temperature":
