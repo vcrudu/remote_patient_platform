@@ -48,6 +48,9 @@
                 case "BloodOxygen":
                     Bridge.Redirect.redirectTo("BloodOxygen.html");
                     break;
+                case "BloodPressure":
+                    Bridge.Redirect.redirectTo("BloodPressure.html");
+                    break;
             }
         },
         render: function() {

@@ -40,7 +40,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModel, function (result) {
+            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-confirmed":
@@ -65,7 +65,7 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-6" },
-                        this.state.value ? "Temperature: " + this.state.value.value : null
+                        this.state.value ? "Temperature: " + this.state.value : null
                     )
                 ),
                 React.createElement(
