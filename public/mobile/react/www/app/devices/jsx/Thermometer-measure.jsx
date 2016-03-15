@@ -58,7 +58,7 @@
             return <div className="container">
                 <div className="row">
                     <div className="col-xs-6">
-                        { this.state.value ? "Temperature: " +  this.state.value : null }
+                        { this.state.value ? "Temperature: " +  this.state.value.temperature : null }
                     </div>
                 </div>
                 <div className="row buttonsContainer">

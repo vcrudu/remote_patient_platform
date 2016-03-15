@@ -7,8 +7,8 @@
 
     $.material.init();
 
-    var M110_Measure = React.createClass({
-        displayName: "M110_Measure",
+    var BLOOD_PRESSURE_MEASURE = React.createClass({
+        displayName: "BLOOD_PRESSURE_MEASURE",
 
         getInitialState: function () {
             return {
@@ -23,6 +23,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
+                            debugger;
                             component.setState({
                                 nextButtonVisibility: true,
                                 value: result.data.value
@@ -40,7 +41,7 @@
                 nextButtonVisibility: false
             });
 
-            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModel, function (result) {
+            Bridge.DeviceReceiver.confirmMeasure(component.state.value, component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-confirmed":
@@ -58,17 +59,34 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "row buttonsContainer" },
-                React.createElement("div", { className: "col-xs-8" }),
+                { className: "container" },
                 React.createElement(
                     "div",
-                    { className: "col-xs-4" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Confirm", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-6" },
+                        this.state.value ? "Systolic: " + this.state.value.value.systolic : null
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-6" },
+                        this.state.value ? "Diastolic: " + this.state.value.value.diastolic : null
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "row buttonsContainer" },
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-12" },
+                        this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Confirm", onClick: this.handleNext }) : null,
+                        this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
+                    )
                 )
             );
         }
     });
 
-    ReactDOM.render(React.createElement(M110_Measure, { carouselWizard: "#measure-wizard", deviceModel: "UA-767PBT-Ci", deviceModelType: "BloodPressure" }), document.getElementById("ua-767pbt-ci-measure"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE_MEASURE, { carouselWizard: "#measure-wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure-measure"));
 })();

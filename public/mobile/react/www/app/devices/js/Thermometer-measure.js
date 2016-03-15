@@ -65,7 +65,7 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-6" },
-                        this.state.value ? "Temperature: " + this.state.value : null
+                        this.state.value ? "Temperature: " + this.state.value.temperature : null
                     )
                 ),
                 React.createElement(
