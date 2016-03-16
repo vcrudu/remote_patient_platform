@@ -38,8 +38,9 @@
                 svg: undefined,
             }
         },
-        fillLines: function(g, data, x, y) {
+        fillLines: function(g, data, x, y, numticks, width) {
             g.selectAll("line").remove();
+
             g.selectAll("line").data(data).enter().append("line")
                 .attr("class", "circles-line")
                 .attr("x1", function (d) {
@@ -54,6 +55,17 @@
                 .attr("y2", function (d) {
                     return y(d.line.y2);
                 });
+
+            var yAxisGrid = d3.svg.axis().scale(y)
+             .orient("right")
+             .ticks(numticks)
+             .tickSize(width, 0)
+             .tickFormat("");
+
+             g.append("g")
+             .classed('y', true)
+             .classed('grid', true)
+             .call(yAxisGrid);
         },
         fillCircles: function(g, tip, data, x, y) {
             g.selectAll('circle').remove();
@@ -83,7 +95,7 @@
             }
 
             var margin = { top: 10, right: 15, bottom: 25, left: 35 };
-            var width = chartRef.width() - margin.left - margin.right;
+            var width = (chartRef.width() - margin.left - margin.right);
             var height = Math.ceil((width * props.aspectHeight) / props.aspectWidth) - margin.top - margin.bottom;
             var height2 = Math.ceil((width * 2) / props.aspectWidth) - margin.top - margin.bottom;
 
@@ -99,8 +111,8 @@
             chartRef.empty();
             chartContextRef.empty();
 
-            var x = d3.time.scale().range([0, width]),
-                x2 = d3.time.scale().range([0, width]),
+            var x = d3.time.scale().range([10, width-10]),
+                x2 = d3.time.scale().range([10, width-10]),
                 y = d3.scale.linear().range([height, 0]),
                 y2 = d3.scale.linear().range([height2, 0]);
 
@@ -122,6 +134,7 @@
                         return fmt(d);
                     }
                 });
+
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
             var line = d3.svg.line()
@@ -167,7 +180,7 @@
                 .attr('class', 'd3-tip')
                 .offset([-10, 0])
                 .html(function(d) {
-                    return d.value + " " + props.unit;
+                    return d.value + " " + props.unit + " on " + moment(d.dateTime).format("MM/DD hh:mm");
                 });
 
             svg.call(tip);
@@ -181,7 +194,7 @@
                     focus.select(".line").attr("d", line);
 
                     if (props.type == "bloodPressure") {
-                        component.fillLines(focus, data, x, y);
+                        component.fillLines(focus, data, x, y, num_ticks, width);
                     }
 
                     component.fillCircles(focus, tip, data, x, y);
@@ -200,7 +213,9 @@
                     .attr('cx', function(d) { return x(d.dateTime); })
                     .attr('cy', function(d) { return y(d.value); });
 
-                focus.select(".x.axis").call(xAxis);
+                focus.select(".line").attr("d", line);
+
+                focus.select(".x.grid").call(xAxis);
 
                 // Force changing brush range
                 brush.extent(x.domain());
@@ -264,7 +279,19 @@
 
             zoom.x(x);
 
+
             if (props.type != "bloodPressure") {
+                var yAxisGrid = d3.svg.axis().scale(y)
+                    .orient("right")
+                    .ticks(num_ticks)
+                    .tickSize(width, 0)
+                    .tickFormat("");
+
+                focus.append("g")
+                    .classed('y', true)
+                    .classed('grid', true)
+                    .call(yAxisGrid);
+
                  focus.append("path")
                  .datum(data)
                  .attr("class", "area")
@@ -277,12 +304,13 @@
                  .attr("d", line);
             }
 
-
             if (props.type == "bloodPressure") {
-                component.fillLines(focus, data, x, y);
+                component.fillLines(focus, data, x, y, num_ticks, width);
             }
 
             component.fillCircles(focus, tip, data, x, y);
+
+
 
             focus.append("g")
                 .attr("class", "x axis")
@@ -306,7 +334,6 @@
                     .attr("r", 3)
                     .style("stroke", function(d) {return d.color;}).style("fill", "none").style("stroke-width", 2);
             }
-
             context.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height2 + ")")
@@ -356,6 +383,7 @@
                 temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
                 bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef,
                 bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                heartRateDef: emptyVitalSigns.heartRateDef,
                 weightDef: emptyVitalSigns.weightDef
             }
         },
@@ -371,6 +399,7 @@
                                 temperatureVitalSignsDef: newDataSource.temperatureVitalSignsDef,
                                 bloodPressureDef: newDataSource.bloodPressureDef,
                                 bloodOxygenDef: newDataSource.bloodOxygenDef,
+                                heartRateDef: newDataSource.heartRateDef,
                                 weightDef: newDataSource.weightDef
                             });
                     }
@@ -412,6 +441,17 @@
                                 yDelta={5}
                                 label={this.state.bloodOxygenDef.label}
                                 unit={this.state.bloodOxygenDef.unit} />
+                <VitalSingChart dataSource={this.state.heartRateDef}
+                                aspectWidth={16}
+                                aspectHeight={9}
+                                ticks={10}
+                                mobileThreshold={500}
+                                mobileTicks={5}
+                                type={this.state.heartRateDef.measurementType}
+                                minValue={this.state.heartRateDef.minValue}
+                                yDelta={5}
+                                label={this.state.heartRateDef.label}
+                                unit={this.state.heartRateDef.unit} />
                 <VitalSingChart dataSource={this.state.weightDef}
                                 aspectWidth={16}
                                 aspectHeight={9}
