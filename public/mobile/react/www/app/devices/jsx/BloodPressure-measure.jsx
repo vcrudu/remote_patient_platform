@@ -58,10 +58,10 @@
             return <div className="container">
                 <div className="row">
                     <div className="col-xs-6">
-                        { this.state.value ? "Systolic: " +  this.state.value.value.systolic : null }
+                        { this.state.value ? "Systolic: " +  this.state.value.systolic : null }
                     </div>
                     <div className="col-xs-6">
-                        { this.state.value ? "Diastolic: " +  this.state.value.value.diastolic : null }
+                        { this.state.value ? "Diastolic: " +  this.state.value.diastolic : null }
                     </div>
                 </div>
                 <div className="row buttonsContainer">

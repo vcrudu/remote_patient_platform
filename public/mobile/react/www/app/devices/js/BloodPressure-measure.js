@@ -66,12 +66,12 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-6" },
-                        this.state.value ? "Systolic: " + this.state.value.value.systolic : null
+                        this.state.value ? "Systolic: " + this.state.value.systolic : null
                     ),
                     React.createElement(
                         "div",
                         { className: "col-xs-6" },
-                        this.state.value ? "Diastolic: " + this.state.value.value.diastolic : null
+                        this.state.value ? "Diastolic: " + this.state.value.diastolic : null
                     )
                 ),
                 React.createElement(
