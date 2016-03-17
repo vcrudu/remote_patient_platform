@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Patient Appointments</title>
+    <title>Provider Appointments</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
-    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
-    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
-    <link rel="stylesheet" href="../resources/js/mobiscroll/mobiscroll.custom-2.17.1.min.css">
     <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="styles/provider-appointments.css">
     <style>
         .hide {
             display: none;
@@ -18,15 +16,11 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="patient-appointments"></div>
-        </div>
-    </div>
+<div class="container" id="provider-appointments">
 </div>
 
 <script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../model/Bridge.Provider.js"></script>
 <script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
@@ -36,10 +30,7 @@
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
 <script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
-<script type="text/javascript" src="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.js"></script>
-<script type="text/javascript" src="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.js"></script>
-<script type="text/javascript" src="../resources/js/mobiscroll/mobiscroll.custom-2.17.1.min.js"></script>
 
-<script type="text/javascript" src="js/patient-appointments.js"></script>
+<script type="text/javascript" src="js/provider-appointments.js"></script>
 </body>
 </html>
