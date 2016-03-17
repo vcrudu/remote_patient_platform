@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'NotoSansRegular';
+    src: url('../styles/Fonts/NotoSans/NotoSans-Regular.eot');
+    src: local('☺'), url('../styles/Fonts/NotoSans/NotoSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../styles/Fonts/NotoSans/NotoSans-Regular.woff') format('woff'),
+    url('../styles/Fonts/NotoSans/NotoSans-Regular.ttf') format('truetype'),
+    url('../styles/Fonts/NotoSans/NotoSans-Regular.svg#ProximaNova/ProximaNovaSbold') format('svg');
+}

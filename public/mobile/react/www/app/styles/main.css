@@ -3,3 +3,8 @@
     background-color: transparent;
     text-align: center;
 }
+@import "fonts.css";
+
+body {
+    font-family:"NotoSansRegular";
+}
