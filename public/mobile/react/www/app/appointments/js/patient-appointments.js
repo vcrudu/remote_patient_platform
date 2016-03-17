@@ -60,9 +60,11 @@
             var slotDateTime = moment(slotId);
             var now = new Date();
             if (slotDateTime <= now.getTime()) {
+                //de prisos
                 appointmentModalDiv.modal('hide');
                 return;
             } else {
+                console.log(reasonText.val());
                 Bridge.patientBookAnAppointment({
                     cancel: false,
                     slotDateTime: slotId,
@@ -121,15 +123,19 @@
                     var events = [];
                     Bridge.getSlots(function (slotsResult) {
                         if (!slotsResult.success) return;
-
+                        // console.log(slotsResult);
                         Bridge.getPatientAppointment(function (appointmentsResult) {
                             if (!appointmentsResult.success) return;
+                            // console.log(appointmentsResult);
                             for (var i = 0; i < slotsResult.data.length; i++) {
                                 if (slotsResult.data[i].slotDateTime >= start.valueOf() && slotsResult.data[i].slotDateTime < end.valueOf()) {
+                                    console.log(slotsResult.data[i]);
                                     var event = Bridge.CalendarFactory.getEvent(slotsResult.data[i], appointmentsResult.data);
+
                                     events.push(event);
                                 }
                             }
+                            console.log(events);
                             callback(events);
                         });
                     });

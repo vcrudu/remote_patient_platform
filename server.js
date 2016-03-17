@@ -69,4 +69,9 @@ var notifications = require('./notifications');
 notifications.init(server);
 gridCacheClient.init();
 
-server.listen(PORT, "192.168.0.12");
+
+//server.listen(PORT, "192.168.0.12");
+
+server.listen(PORT);
+
+

@@ -12,3 +12,4 @@ log/*
 
 !.elasticbeanstalk/*.global.yml
 
+*.log

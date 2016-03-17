@@ -8,7 +8,34 @@
     $.material.init();
 
     var ProviderAvailabilityCalendar = React.createClass({
+        validateTimeString: function() {
+            var reasonText = $(this.refs.reasonText);
+            var scheduleValue=reasonText.val();
+            var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
+            var match = re.exec(scheduleValue);
+            if(match){
+                $( "#modal-submit" ).prop( "disabled", false );
+            } else {
+                $( "#modal-submit" ).prop( "disabled", true );
+            }
+
+        },
         handleProviderAvailability: function() {
+            var appointmentModalDiv = $(this.refs.appointmentModal);
+            var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
+            var reasonText = $(this.refs.reasonText);
+            var availabilityString=reasonText.val();
+            var dateString=moment(appointmentsCalendarDiv.fullCalendar('getDate')).format("DD[.]MM[.]YYYY");
+
+           Bridge.providerSetAvailability({
+               availabilityString: availabilityString,
+               dateString: dateString
+                }, function(result) {
+                        console.log('ok s-a inscris');
+                    appointmentModalDiv.modal('hide');
+                    return;
+                })
+
 
         },
 
@@ -40,23 +67,38 @@
                             return;
                         }
 
+                        var dateTitle=moment(calEvent).format("DD[/]MM[/]YYYY");//formattedDate(calEvent);
 
-                    var dateTitle=calEvent;
-                    console.log(dateTitle);
                     $("span#modal-title-data").text(dateTitle);
                    // appointmentModalDiv.attr("data-slot-id", calEvent.id);
                         appointmentModal.modal('show');
 
 
+                    $( "#modal-submit" ).prop( "disabled", true );
+
                 },
                 events: function (start, end, timezone, callback) {
                     var events = [];
-                    Bridge.getProviderSlots(start,end,function (slotsResult) {
-                        if (!slotsResult.success) return;
-                        console.log(slotsResult);
-                        //aici va fi popularea calendarului cu evenimente
-                    });
-                },
+                    Bridge.getProviderSlots(start,end,function (result) {
+                        if (result.success) {
+
+                            for (var i = 0; i < result.data.length; i++) {
+                                var intervals = result.data[i].intervals.split("-");
+                                events.push({
+                                    availability: result.data[i],
+                                    title: result.data[i].intervals,
+                                    start: intervals[0]+':00',
+                                    end: intervals[1]+':00',
+                                    allDay:true,
+                                    icon: 'fa fa-calendar',
+                                    className: ["event", 'bg-color-' + 'greenLight']
+                                });
+                            }
+                            console.log(events);
+                            callback(events);
+                        }
+
+                    })},
                 eventAfterAllRender: function (view) {
                 },
                 resources: [
@@ -77,14 +119,14 @@
                             <div className="modal-body">
                                 <div className="form-group is-empty">
                                     <label htmlFor="reasonText" className="control-label">Availability</label>
-                                    <textarea className="form-control" rows="3" id="reasonText" ref="reasonText"></textarea>
-                                    <span className="note">Example: 08:00 - 12:00, 13:00-17:00 </span>
+                                    <textarea className="form-control" rows="3" id="reasonText" ref="reasonText" onChange={this.validateTimeString}></textarea>
+                                    <span className="note">Example: 08:00-12:00, 13:00-17:00 </span>
                                     <input type="hidden" id="slotId"/>
                                 </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={this.handleProviderAvailability}>Submit<div className="ripple-container"></div></button>
+                                <button type="button" className="btn btn-primary" id="modal-submit" onClick={this.handleProviderAvailability}>Submit<div className="ripple-container"></div></button>
                             </div>
                         </div>
 

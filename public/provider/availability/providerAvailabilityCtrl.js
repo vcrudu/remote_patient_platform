@@ -24,6 +24,7 @@
 
             $scope.getAvailability = function(startDate, endDate){
                 availabilityService.getAvailabilityByPeriod(getCurrentTimeString(startDate), getCurrentTimeString(endDate), function(data){
+                    console.log(data);
                     for(var i=0;i<data.length;i++){
                         var d = data[i].date.substring(0,2);
                         var m = data[i].date.substring(3,5);
@@ -154,7 +155,7 @@
                             $scope.apply = function () {
 
                                 var dateString = getDotDateString(event.date);
-
+console.log(event.date);
                                 var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
 
                                 var match = re.exec($scope.scheduleValue);
