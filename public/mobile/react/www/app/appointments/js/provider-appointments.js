@@ -10,6 +10,9 @@
     var ProviderAppointment = React.createClass({
         displayName: "ProviderAppointment",
 
+        handleClickDashboard: function () {
+            Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId + "&appointmentTime=" + this.props.model.slotDateTimeString + "&name=" + this.props.model.name + "&onlineStatus=" + this.props.model.onlineStatus);
+        },
         formatDate: function (dateString) {
             var date = moment(dateString);
             return date.calendar();
@@ -27,7 +30,7 @@
                         React.createElement(
                             "h3",
                             { className: "panel-title" },
-                            this.props.model.name
+                            this.props.model ? this.props.model.name : ""
                         ),
                         React.createElement(
                             "p",
@@ -60,7 +63,7 @@
                             React.createElement(
                                 "div",
                                 { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
-                                React.createElement("img", { className: "img-responsive pull-left", src: "images/dashboard-icon.png", width: "100" })
+                                React.createElement("img", { className: "img-responsive pull-left", src: "images/dashboard-icon.png", width: "100", onClick: this.handleClickDashboard })
                             )
                         )
                     )
