@@ -8,11 +8,21 @@
     $.material.init();
 
     var ProviderAppointment = React.createClass({
+        getInitialState: function(){
+            return {
+                onlineStatus: this.props.model.onlineStatus,
+            }
+        },
         handleClickDashboard: function(){
             Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId
                 + "&appointmentTime=" + this.props.model.slotDateTimeString
                 + "&name=" + this.props.model.name
                 + "&onlineStatus=" + this.props.model.onlineStatus);
+        },
+        changeOnlineStatus: function(status) {
+            this.setState({
+                onlineStatus: status
+            });
         },
         formatDate: function(dateString) {
             var date = moment(dateString);
@@ -28,7 +38,7 @@
                     <div className="panel-image hide-panel-body">
                         <img src="images/user.png" className="img-responsive"/>
                     </div>
-                    <div className={this.props.model.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online"}></div>
+                    <div className={this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online"}></div>
                     <div className="panel-footer text-center">
                         <div className="row">
                             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img className="img-responsive pull-right" src="images/call-icon.png" width="100"/></div>
@@ -46,9 +56,20 @@
                 appointments: [],
             }
         },
+        socketCallback: function(message) {
+            var event = message.data.event;
+            var userId = message.data.user;
+            var provider = this.refs[userId];
+
+            if (event == "onlineStatus") {
+                if (provider) {
+                    provider.changeOnlineStatus(message.data.status);
+                }
+            }
+        },
         componentDidMount: function() {
             var component = this;
-
+            Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function(apiResult) {
                 if (apiResult.success && apiResult.data && apiResult.data.length > 0) {
                     component.setState({
@@ -61,7 +82,7 @@
             return <div className="list-group">
                 {
                     this.state.appointments.map(function (appointment) {
-                        return <ProviderAppointment key={appointment.patientId} model={appointment}/>;
+                        return <ProviderAppointment ref={appointment.patientId} key={appointment.patientId} model={appointment}/>;
                     })
                 }
             </div>

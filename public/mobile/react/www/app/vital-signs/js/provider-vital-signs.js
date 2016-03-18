@@ -40,6 +40,10 @@
             return date.calendar();
         },
         render: function () {
+            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
+            var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
+
             return React.createElement(
                 "div",
                 { className: "panel panel-default" },
@@ -49,7 +53,7 @@
                     React.createElement(
                         "h3",
                         { className: "panel-title" },
-                        this.state.name ? this.state.name : ""
+                        this.state.name ? this.state.name : name
                     ),
                     React.createElement(
                         "p",
@@ -58,7 +62,7 @@
                         React.createElement(
                             "strong",
                             null,
-                            this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : ""
+                            this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : appointmentTime
                         )
                     )
                 ),
@@ -67,7 +71,7 @@
                     { className: "panel-image hide-panel-body" },
                     React.createElement("img", { src: "images/user.png", className: "img-responsive" })
                 ),
-                React.createElement("div", { className: this.state.onlineStatus ? this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online" : "statusBorder offline" }),
+                React.createElement("div", { className: this.state.onlineStatus ? this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online" : "statusBorder " + onlineStatus }),
                 React.createElement(
                     "div",
                     { className: "panel-footer text-center" },

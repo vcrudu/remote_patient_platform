@@ -35,7 +35,7 @@ Bridge.Provider = {
         Bridge.resultCallback = callBack;
 
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Provider.getPatientVitalSigns"};
+            var message = {method:"Bridge.Provider.getPatientVitalSigns", data: {userId: userId}};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = Bridge.serverApiUrl + "events";
@@ -63,7 +63,7 @@ Bridge.Provider = {
         Bridge.resultCallback = callBack;
 
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Provider.getPatientDetails"};
+            var message = {method:"Bridge.Provider.getPatientDetails", data: {userId: userId}};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = Bridge.serverApiUrl + "patients/" + userId;
@@ -85,6 +85,14 @@ Bridge.Provider = {
                     Bridge.resultCallback({success: false, data: undefined, error: "error"});
                 });
             });
+        }
+    },
+    socketCallBack: function(socketMessage){
+        if(Bridge.Provider.socketCallback){
+            if(socketMessage){
+                Bridge.Provider.socketCallback(socketMessage);
+                return;
+            }
         }
     }
 }

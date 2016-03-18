@@ -40,15 +40,19 @@
             return date.calendar();
         },
         render: function() {
-           return <div className="panel panel-default">
+            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
+            var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
+
+            return <div className="panel panel-default">
                <div className="panel-heading">
-                   <h3 className="panel-title">{this.state.name ? this.state.name : ""}</h3>
-                   <p>Appointment Time: <strong>{this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : ""}</strong></p>
+                   <h3 className="panel-title">{this.state.name ? this.state.name : name}</h3>
+                   <p>Appointment Time: <strong>{this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : appointmentTime}</strong></p>
                </div>
                <div className="panel-image hide-panel-body">
                    <img src="images/user.png" className="img-responsive"/>
                </div>
-               <div className={this.state.onlineStatus ? (this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online") : "statusBorder offline"}></div>
+               <div className={this.state.onlineStatus ? (this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online") : "statusBorder " + onlineStatus}></div>
                <div className="panel-footer text-center">
                    <div className="row">
                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img className="img-responsive center-block call" src="images/call-icon.png" width="100"/></div>
