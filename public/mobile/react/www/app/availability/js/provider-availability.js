@@ -47,25 +47,25 @@
                     console.log('update');
                 });
             }
-            $("#calendar").fullCalendar('refetchEvents');
+
             appointmentModalDiv.modal('hide');
 
-            console.log(reasonText.val);
-
-            var now = new Date();
-
-            Bridge.patientBookAnAppointment({
-                cancel: false,
-                appointmentReason: reasonText.val()
-            }, function (result) {
-                var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
-                if (event) {
-                    appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
-                }
-
-                appointmentModalDiv.modal('hide');
-                return;
-            });
+            /*
+                        var now = new Date();
+            
+                            Bridge.patientBookAnAppointment({
+                                cancel:false,
+                                appointmentReason: reasonText.val()
+                            }, function(result) {
+                                var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
+                                if (event) {
+                                    appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
+                                }
+            
+                                appointmentModalDiv.modal('hide');
+                                return;
+                            })
+            */
         },
 
         componentDidMount: function () {
@@ -99,7 +99,7 @@
                     appointmentModal.modal('show');
                 },
                 dayClick: function (calEvent, jsEvent, view) {
-                    console.log(calEvent);
+
                     var now = new Date();
                     if (calEvent < now.getTime()) {
                         return;

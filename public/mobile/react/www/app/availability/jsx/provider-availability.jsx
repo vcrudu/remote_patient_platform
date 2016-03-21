@@ -25,6 +25,7 @@
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var reasonText = $(this.refs.reasonText);
 
+
             var modalTitle = $(".modal-title").html();
             var oldAvailability=$("span#currentSchedule").html();
             var availabilityString=reasonText.val();
@@ -51,11 +52,12 @@
             })
 
         }
-            $("#calendar").fullCalendar('refetchEvents');
+
             appointmentModalDiv.modal('hide');
 
-            console.log(reasonText.val);
 
+
+/*
             var now = new Date();
 
                 Bridge.patientBookAnAppointment({
@@ -70,6 +72,7 @@
                     appointmentModalDiv.modal('hide');
                     return;
                 })
+*/
 
         },
 
@@ -105,7 +108,7 @@
                     appointmentModal.modal('show');
                 },
                 dayClick: function (calEvent, jsEvent, view) {
-                    console.log(calEvent);
+
                     var now = new Date();
                     if (calEvent < now.getTime()) {
                         return;
@@ -113,8 +116,10 @@
 
                     var dateTitle="Set availability "+moment(calEvent._d).format("DD[/]MM[/]YYYY");//formattedDate(calEvent);
 
+
                     $(".modal-title").text(dateTitle);
                     $("#modal-body-header").hide();
+
 
                     function formattedDate(date) {//to-do de trecut functia in alt fisier
                         var d = new Date(date || Date.now()),
