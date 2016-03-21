@@ -25,22 +25,35 @@
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var reasonText = $(this.refs.reasonText);
+            var modalTitle = $(".modal-title").html();
+            var oldAvailability = $("span#currentSchedule").html();
             var availabilityString = reasonText.val();
             var dateString = moment(appointmentsCalendarDiv.fullCalendar('getDate')).format("DD[.]MM[.]YYYY");
-
-            Bridge.providerSetAvailability({
-                availabilityString: availabilityString,
-                dateString: dateString
-            }, function (result) {
-                console.log('ok s-a inscris');
-                appointmentModalDiv.modal('hide');
-                return;
-            });
+            var submitMode = modalTitle.split(" ");
+            if (submitMode[0] == "Set") {
+                Bridge.providerSetAvailability({
+                    availabilityString: availabilityString,
+                    dateString: dateString
+                }, function (result) {
+                    console.log('ok s-a inscris');
+                });
+            } else {
+                Bridge.providerUpdateAvailability({
+                    availabilityString: availabilityString,
+                    dateString: dateString,
+                    oldAvailabilityString: oldAvailability
+                }, function (result) {
+                    console.log('update');
+                });
+            }
+            $("#calendar").fullCalendar('refetchEvents');
+            appointmentModalDiv.modal('hide');
         },
 
         componentDidMount: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentModal = $(this.refs.appointmentModal).modal('hide');
+            var reasonText = $(this.refs.reasonText);
 
             var currentDate = new Date();
             $(this.refs.appointmentsCalendar).fullCalendar({
@@ -48,6 +61,7 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '00:15:00',
                 allDaySlot: false,
+                allDay: false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -57,19 +71,31 @@
                     }
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
+                eventClick: function (calEvent, jsEvent, view) {
+                    console.log(calEvent);
+                    reasonText.html(calEvent.title);
+                    var dateTitle = "Edit availability " + moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
+                    $(".modal-title").text(dateTitle);
+                    $("span#currentSchedule").html(calEvent.title);
+                    $("#modal-body-header").show();
+                    appointmentModal.modal('show');
+                },
                 dayClick: function (calEvent, jsEvent, view) {
-
+                    console.log(calEvent);
                     var now = new Date();
                     if (calEvent < now.getTime()) {
                         return;
                     }
 
-                    var dateTitle = moment(calEvent).format("DD[/]MM[/]YYYY"); //formattedDate(calEvent);
+                    var dateTitle = "Set availability " + moment(calEvent._d).format("DD[/]MM[/]YYYY"); //formattedDate(calEvent);
 
-                    $("span#modal-title-data").text(dateTitle);
+                    $(".modal-title").text(dateTitle);
+                    $("#modal-body-header").hide();
                     // appointmentModalDiv.attr("data-slot-id", calEvent.id);
                     appointmentModal.modal('show');
 
+                    var insertedText = '';
+                    reasonText.html(insertedText);
                     $("#modal-submit").prop("disabled", true);
                 },
                 events: function (start, end, timezone, callback) {
@@ -86,13 +112,18 @@
                                     end: intervals[1] + ':00',
                                     allDay: true,
                                     icon: 'fa fa-calendar',
-                                    className: ["event", 'bg-color-' + 'greenLight']
+                                    className: ["event", 'bg-color-' + 'greenLight'],
+                                    backgroundColor: 'green'
                                 });
                             }
                             console.log(events);
                             callback(events);
                         }
                     });
+                },
+                eventRender: function (event, element) {
+                    element.find('.fc-event-title').append("<br/>" + event.location);
+                    element.find('.fc-time').hide();
                 },
                 eventAfterAllRender: function (view) {},
                 resources: [{ id: 'a', title: 'Availability' }]
@@ -102,7 +133,7 @@
             return React.createElement(
                 "div",
                 null,
-                React.createElement("div", { ref: "appointmentsCalendar" }),
+                React.createElement("div", { ref: "appointmentsCalendar", id: "calendar" }),
                 React.createElement(
                     "div",
                     { ref: "appointmentModal", id: "appointmentModal", className: "modal fade", role: "dialog" },
@@ -120,13 +151,7 @@
                                     { type: "button", className: "close", "data-dismiss": "modal" },
                                     "×"
                                 ),
-                                React.createElement(
-                                    "h4",
-                                    { className: "modal-title" },
-                                    "Set availability ",
-                                    React.createElement("span", { id: "modal-title-data" }),
-                                    " "
-                                )
+                                React.createElement("h4", { className: "modal-title" })
                             ),
                             React.createElement(
                                 "div",
@@ -134,6 +159,12 @@
                                 React.createElement(
                                     "div",
                                     { className: "form-group is-empty" },
+                                    React.createElement(
+                                        "header",
+                                        { id: "modal-body-header" },
+                                        "Current schedule:",
+                                        React.createElement("span", { id: "currentSchedule" })
+                                    ),
                                     React.createElement(
                                         "label",
                                         { htmlFor: "reasonText", className: "control-label" },
