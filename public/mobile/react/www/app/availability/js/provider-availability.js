@@ -25,6 +25,7 @@
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var reasonText = $(this.refs.reasonText);
+
             var modalTitle = $(".modal-title").html();
             var oldAvailability = $("span#currentSchedule").html();
             var availabilityString = reasonText.val();
@@ -48,6 +49,23 @@
             }
             $("#calendar").fullCalendar('refetchEvents');
             appointmentModalDiv.modal('hide');
+
+            console.log(reasonText.val);
+
+            var now = new Date();
+
+            Bridge.patientBookAnAppointment({
+                cancel: false,
+                appointmentReason: reasonText.val()
+            }, function (result) {
+                var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
+                if (event) {
+                    appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
+                }
+
+                appointmentModalDiv.modal('hide');
+                return;
+            });
         },
 
         componentDidMount: function () {
@@ -91,6 +109,24 @@
 
                     $(".modal-title").text(dateTitle);
                     $("#modal-body-header").hide();
+
+                    function formattedDate(date) {
+                        //to-do de trecut functia in alt fisier
+                        var d = new Date(date || Date.now()),
+                            month = '' + (d.getMonth() + 1),
+                            day = '' + d.getDate(),
+                            year = d.getFullYear();
+
+                        if (month.length < 2) month = '0' + month;
+                        if (day.length < 2) day = '0' + day;
+
+                        return [day, month, year].join('/');
+                    }
+
+                    var dateTitle = formattedDate(calEvent);
+
+                    $("span#modal-title-data").text(dateTitle);
+
                     // appointmentModalDiv.attr("data-slot-id", calEvent.id);
                     appointmentModal.modal('show');
 
