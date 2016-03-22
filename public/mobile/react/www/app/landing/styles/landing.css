@@ -86,8 +86,6 @@ body {
     background-color:#ff5252;
 }
 
-
-
 .carousel-indicators {
     position:absolute;
     bottom:80px;
@@ -112,11 +110,6 @@ body {
     display:none;
 }
 
-
-/* Buttons Container */
-.buttonsContainer [class*="col-"] {
-    padding:2px !important;
-}
 
 /* Landing Header */
 .landing-header {
@@ -156,6 +149,8 @@ body {
     max-width:80px;
 }
 
+
+
     /* Background images are set within the HTML using inline CSS, not here */
 
 .fill {
@@ -192,16 +187,45 @@ body {
     color:#ffffff !important;
 }
 
+/* Bottom Buttons */
+.buttonsContainer [class*="col-"] {
+    padding:8px 0px !important;
+}
+
+.bottom-buttons-continer {
+    background:#ffffff;
+    position:absolute;
+    bottom:0;
+    margin:0;
+    width:100%;
+    border-top:1px solid #cdc3b7;
+}
+
+.btn-sign-up, .btn-login {
+    background:none;
+    border:none;
+    border-radius:0;
+    padding:5px !important;
+}
+
+.btn-sign-up {
+
+    color:#03a9f4 !important;
+    border-right:1px solid #d8d8d8;
+
+}
+
+.btn-login {
+    color:#8bc34a !important;
+}
+
+
 .btn-default {
     width:100%;
     padding:15px;
     text-align:center;
     margin-bottom:5px;
     font-size:18px;
-}
-
-#landing{
-    margin-top: -80px;
 }
 
 /*---------------------------------------*\

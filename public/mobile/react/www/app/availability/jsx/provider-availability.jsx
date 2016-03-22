@@ -56,23 +56,9 @@
             appointmentModalDiv.modal('hide');
 
 
+            appointmentsCalendarDiv.fullCalendar('refetchEvents' );
 
-/*
-            var now = new Date();
 
-                Bridge.patientBookAnAppointment({
-                    cancel:false,
-                    appointmentReason: reasonText.val()
-                }, function(result) {
-                    var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
-                    if (event) {
-                        appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
-                    }
-
-                    appointmentModalDiv.modal('hide');
-                    return;
-                })
-*/
 
         },
 
