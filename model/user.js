@@ -51,11 +51,11 @@
             var avatar = 'https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png';
             if (dbEntity.onlineStatus) onlineStatus = dbEntity.onlineStatus.S;
             if (dbEntity.avatar) avatar = dbEntity.avatar.S;
-            if (dbEntity.socketId) socketId = dbEntity.socketId.S;
+
             if (dbEntity.socketIds) socketIds = dbEntity.socketIds ? _.map(dbEntity.socketIds.L, function(mappedSocketId){
                 return mappedSocketId.S;
-            }) : null;
-
+            }) : [];
+            if (socketIds&&socketIds.length>0) socketId = socketIds[0];
             if (dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,

@@ -84,13 +84,14 @@ angular.module('app').controller('providerCallCtrl', ['$scope', '$log', '$state'
             $localStorage.callerModal.result.then(function () {
             }, function (arg) {
                 if (arg.send && window.socket && window.socket.connected) {
-                    window.socket.emit('cancel', $localStorage.callData);
+                    $localStorage.callData.recipient = provider.patientId;
+                    window.socket.emit('cancelByCaller', $localStorage.callData);
                     StopCallSound();
                 }
             });
 
-            if (provider && provider.email && window.socket && window.socket.connected) {
-                window.socket.emit('call', {recipient: provider.email, caller: $localStorage.user.email});
+            if (provider && provider.patientId && window.socket && window.socket.connected) {
+                window.socket.emit('call', {recipient: provider.patientId, caller: $localStorage.user.email});
             }
         };
 

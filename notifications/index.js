@@ -27,9 +27,9 @@
                                     usersRepository.findOneByEmail(appointment.providerId, function (err, providerUser) {
                                         if (!err && providerUser && providerUser.socketIds) {
                                             var namespace = io.sockets;
-                                            var onlineSockets = _.filter(providerUser.socketIds, function (socketId) {
-                                                return !!_.find(namespace.sockets, function (socket) {
-                                                    return socketId === socket.id;
+                                            var onlineSockets = _.filter(namespace.sockets, function (webSocket) {
+                                                return !!_.find(providerUser.socketIds, function (providerSocketId) {
+                                                    return providerSocketId === webSocket.id;
                                                 });
                                             });
                                             _.forEach(onlineSockets, function (onlineSocket) {
@@ -126,7 +126,8 @@
                     });
                 });
 
-                socket.on('cancel', function (data) {
+                //Todo-here cancel event from caller should be different event
+                socket.on('cancelByRecipient', function (data) {
                     var namespace = io.sockets;
                     usersRepository.findOneByEmail(data.recipient, function (err, user) {
                         if (err) {
@@ -141,10 +142,31 @@
                                         var callerSocket = _.find(namespace.sockets, function (aCallerSocket) {
                                             return aCallerSocket.id === callerUser.socketId;
                                         });
-                                        callerSocket.emit('cancel', data);
+                                        if(callerSocket)
+                                        callerSocket.emit('cancelByRecipient', data);
                                     }
                                 });
-                                recipientSocket.emit('cancel', data);
+                                //recipientSocket.emit('cancel', data);
+                            } else {
+                                socket.emit('recipientOffline', data);
+                            }
+                        } else {
+                            socket.emit('invalidRecipient', data);
+                        }
+                    });
+                });
+
+                socket.on('cancelByCaller', function (data) {
+                    var namespace = io.sockets;
+                    usersRepository.findOneByEmail(data.recipient, function (err, user) {
+                        if (err) {
+                            socket.emit('errorRetrieveUser', data);
+                        } else if (user) {
+                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                return aSocket.id === user.socketId;
+                            });
+                            if (recipientSocket && recipientSocket.connected) {
+                                recipientSocket.emit('cancelByCaller', data);
                             } else {
                                 socket.emit('recipientOffline', data);
                             }
@@ -171,8 +193,8 @@
                                     } else {
                                         callerSocket.emit('answer', _.extend(data, meeting));
                                         setTimeout(function () {
-                                            socket.emit('meetingData', {joinUrl: meeting.join_url});
-                                        }, 5000);
+                                            socket.emit('meetingData', {joinUrl: meeting.join_url, meetingNo:meeting.id});
+                                        }, 0);
                                     }
                                 });
                             } else {
@@ -187,6 +209,7 @@
                 socket.on('disconnect', function () {
                     loggerProvider.getLogger().debug(NS+"::"+'Disconnected!');
                     usersRepository.findOneByEmail(socket.userId, function (err, socketsData) {
+                        if(!socketsData) return;
                         var namespace = io.sockets;
                         var onlineSockets = _.filter(socketsData.socketIds, function (oldSocketId) {
                             return !!_.find(namespace.sockets, function (activeSocket) {
@@ -201,7 +224,7 @@
                         var onlineStatus = onlineSockets.length==0?'offline':'online';
                         usersRepository.updateOnlineStatus(socket.userId, onlineStatus, onlineSockets, function (err, result) {
                             if (!err) {
-                                notifyProvidersAboutPatientOnlineStatus('onlineStatus', {email: socket.userId});
+                                notifyProvidersAboutPatientOnlineStatus(onlineStatus, {email: socket.userId});
                             }
                             socket.auth = false;
                             loggerProvider.getLogger().debug(NS + "::" + "status offline...");

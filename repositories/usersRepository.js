@@ -42,7 +42,7 @@
                     var user = UserFactory.createUserFromDbEntity(data.Item);
                     callback(null, user, state);
                 }else{
-                    callback(null, null, state);
+                    callback(null, [], state);
                 }
             });
         },
