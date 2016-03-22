@@ -27,6 +27,15 @@
             var date = moment(dateString);
             return date.calendar();
         },
+        handleCallClick: function () {
+            var patientId = this.props.model.patientId;
+            if (this.props.onCall) {
+                if (this.state.onlineStatus == "offline") {
+                    return;
+                }
+                this.props.onCall(patientId);
+            }
+        },
         render: function () {
             return React.createElement(
                 "div",
@@ -68,7 +77,7 @@
                             React.createElement(
                                 "div",
                                 { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
-                                React.createElement("img", { className: "img-responsive pull-right", src: "images/call-icon.png", width: "100" })
+                                React.createElement("img", { className: "img-responsive pull-right", src: "images/call-icon.png", width: "100", onClick: this.handleCallClick })
                             ),
                             React.createElement(
                                 "div",
@@ -112,12 +121,16 @@
                 }
             });
         },
+        handleCall: function (patientId) {
+            Bridge.Provider.callPatient(patientId, function (callResult) {});
+        },
         render: function () {
+            var component = this;
             return React.createElement(
                 "div",
                 { className: "list-group" },
-                this.state.appointments.map(function (appointment) {
-                    return React.createElement(ProviderAppointment, { ref: appointment.patientId, key: appointment.patientId, model: appointment });
+                component.state.appointments.map(function (appointment) {
+                    return React.createElement(ProviderAppointment, { ref: appointment.patientId, key: appointment.patientId, model: appointment, onCall: component.handleCall });
                 })
             );
         }

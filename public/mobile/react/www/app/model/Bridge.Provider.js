@@ -87,6 +87,14 @@ Bridge.Provider = {
             });
         }
     },
+    callPatient: function(patientId, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Provider.callPatient", data: {userId: patientId}};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+        }
+    },
     socketCallBack: function(socketMessage){
         if(Bridge.Provider.socketCallback){
             if(socketMessage){

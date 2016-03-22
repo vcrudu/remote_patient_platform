@@ -28,6 +28,15 @@
             var date = moment(dateString);
             return date.calendar();
         },
+        handleCallClick: function() {
+            var patientId = this.props.model.patientId;
+            if (this.props.onCall) {
+                if (this.state.onlineStatus == "offline") {
+                    return;
+                }
+                this.props.onCall(patientId);
+            }
+        },
         render: function() {
             return <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div className="panel panel-default">
@@ -41,7 +50,7 @@
                     <div className={this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online"}></div>
                     <div className="panel-footer text-center">
                         <div className="row">
-                            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img className="img-responsive pull-right" src="images/call-icon.png" width="100"/></div>
+                            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img className="img-responsive pull-right" src="images/call-icon.png" width="100" onClick={this.handleCallClick}/></div>
                             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img className="img-responsive pull-left" src="images/dashboard-icon.png" width="100" onClick={this.handleClickDashboard}/></div>
                         </div>
                     </div>
@@ -78,11 +87,17 @@
                 }
             });
         },
+        handleCall: function(patientId) {
+            Bridge.Provider.callPatient(patientId, function(callResult) {
+
+            });
+        },
         render: function() {
+            var component = this;
             return <div className="list-group">
                 {
-                    this.state.appointments.map(function (appointment) {
-                        return <ProviderAppointment ref={appointment.patientId} key={appointment.patientId} model={appointment}/>;
+                    component.state.appointments.map(function (appointment) {
+                        return <ProviderAppointment ref={appointment.patientId} key={appointment.patientId} model={appointment} onCall={component.handleCall}/>;
                     })
                 }
             </div>
