@@ -156,6 +156,30 @@
                 tip.hide(d);d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 0);
             });
         },
+        removeDuplicate: function (arrayOfStrings) {
+            var uniqueArray = _.uniq(arrayOfStrings, function (item) {
+                return moment(item).format("YYYY-MM-DD");
+            });
+            if (uniqueArray && uniqueArray.length > 0) {
+                var itemFirst = uniqueArray[0];
+                var itemLast = uniqueArray[uniqueArray.length - 1];
+
+                var uniqueArrayOfDates = [];
+
+                for (var i = 0; i < uniqueArray.length; i++) {
+
+                    uniqueArrayOfDates.push(moment(new Date(uniqueArray[i])).startOf('day')._d);
+
+                    if (i == uniqueArray.length - 1) {
+                        var date = moment(new Date(uniqueArray[i])).startOf('day').add(24, "hours");
+                        uniqueArrayOfDates.push(date._d);
+                    }
+                }
+                return uniqueArrayOfDates;
+            }
+
+            return [];
+        },
         drawGraphic: function (props) {
             var component = this;
             var chartRef = $(this.refs.graphic);
@@ -186,12 +210,61 @@
             chartRef.empty();
             chartContextRef.empty();
 
+            var data = [];
+            var dataXTickValues = [];
+            if (props.type != "bloodPressure") {
+                var tempArray1 = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
+                    tempArray1.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value,
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+                    dataXTickValues.push(moment(props.dataSource.values[i].time).format("YYYY-MM-DDThh:mm:ss"));
+                }
+            } else {
+                var tempArray = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.systolic,
+                        line: {
+                            y1: props.dataSource.values[i].value.systolic,
+                            y2: props.dataSource.values[i].value.diastolic
+                        },
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.diastolic,
+                        line: {
+                            y1: props.dataSource.values[i].value.systolic,
+                            y2: props.dataSource.values[i].value.diastolic
+                        },
+                        color: "red",
+                        label: props.dataSource.label
+                    });
+
+                    dataXTickValues.push(moment(props.dataSource.values[i].time).format("YYYY-MM-DDThh:mm:ss"));
+                }
+                data = tempArray;
+            }
+
+            var uniqueArray = this.removeDuplicate(dataXTickValues);
+
             var x = d3.time.scale().range([10, width - 10]),
                 x2 = d3.time.scale().range([10, width - 10]),
                 y = d3.scale.linear().range([height, 0]),
                 y2 = d3.scale.linear().range([height2, 0]);
 
             var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(function (d, i) {
+                if (i == 0 || i == uniqueArray.length - 1) {
+                    return "";
+                }
+
                 if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
@@ -201,6 +274,10 @@
                 }
             }),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function (d, i) {
+                if (i == 0 || i == uniqueArray.length - 1) {
+                    return "";
+                }
+
                 if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
@@ -284,49 +361,13 @@
                 svg.select(".brush").call(brush);
             });
 
-            var data = [];
-            if (props.type != "bloodPressure") {
-                var tempArray1 = [];
-                for (var i = 0; i < props.dataSource.values.length; i++) {
-                    tempArray1.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value,
-                        color: "blue",
-                        label: props.dataSource.label
-                    });
-                }
-                data = tempArray1;
-            } else {
-                var tempArray = [];
-                for (var i = 0; i < props.dataSource.values.length; i++) {
-                    tempArray.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value.systolic,
-                        line: {
-                            y1: props.dataSource.values[i].value.systolic,
-                            y2: props.dataSource.values[i].value.diastolic
-                        },
-                        color: "blue",
-                        label: props.dataSource.label
-                    });
+            //x.domain(d3.extent(data, function(d) { return d.dateTime; }));
 
-                    tempArray.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value.diastolic,
-                        line: {
-                            y1: props.dataSource.values[i].value.systolic,
-                            y2: props.dataSource.values[i].value.diastolic
-                        },
-                        color: "red",
-                        label: props.dataSource.label
-                    });
-                }
-                data = tempArray;
-            }
-
-            x.domain(d3.extent(data, function (d) {
-                return d.dateTime;
-            }));
+            x.domain([d3.min(uniqueArray, function (d) {
+                return d;
+            }), d3.max(uniqueArray, function (d) {
+                return d;
+            })]);
 
             y.domain([props.minValue, d3.max(data, function (d) {
                 var n = d.value;
