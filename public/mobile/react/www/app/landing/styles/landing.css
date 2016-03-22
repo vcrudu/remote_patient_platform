@@ -87,8 +87,8 @@ body {
 }
 
 .carousel-indicators {
-    position:absolute;
-    bottom:80px;
+    position:relative;
+    bottom:60px;
 }
 .carousel-indicators > li, .carousel-indicators > li.active {
     width:30px;
@@ -208,6 +208,12 @@ body {
     padding:5px !important;
 }
 
+.btn-sign-up:hover, .btn-login:hover,
+.btn-sign-up:focus, .btn-login:focus {
+    background:none;
+    outline:none;
+}
+
 .btn-sign-up {
 
     color:#03a9f4 !important;
@@ -226,6 +232,19 @@ body {
     text-align:center;
     margin-bottom:5px;
     font-size:18px;
+}
+
+/* -------------------------------------- *\
+    #Landscape Orientation Only
+\* -------------------------------------- */
+@media all and (orientation:landscape) {
+    .bottom-buttons-continer {
+        position:static;
+    }
+
+    .generic-image-container > img {
+        max-height:120px;
+    }
 }
 
 /*---------------------------------------*\
