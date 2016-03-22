@@ -30,6 +30,14 @@ VitalSignsFactory.createEmptyVitalSings = function() {
             maxValue: 100,
             values: []
         },
+        heartRateDef: {
+            label: "Heart Rate",
+            measurementType: "heartRate",
+            unit: "Bpm",
+            minValue: 30,
+            maxValue: 200,
+            values: []
+        },
         weightDef: {
             label: "Weight",
             measurementType: "weight",
@@ -63,6 +71,12 @@ VitalSignsFactory.createVitalSings = function(data) {
                     break;
                 case "bloodOxygen":
                     objectToReturn.bloodOxygenDef.values.push({
+                        value: item.value,
+                        time: item.utcDateTime
+                    });
+                    break;
+                case "heartRate":
+                    objectToReturn.heartRateDef.values.push({
                         value: item.value,
                         time: item.utcDateTime
                     });

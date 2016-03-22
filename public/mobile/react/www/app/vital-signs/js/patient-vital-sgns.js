@@ -40,8 +40,9 @@
                 svg: undefined
             };
         },
-        fillLines: function (g, data, x, y) {
+        fillLines: function (g, data, x, y, numticks, width) {
             g.selectAll("line").remove();
+
             g.selectAll("line").data(data).enter().append("line").attr("class", "circles-line").attr("x1", function (d) {
                 return x(d.dateTime);
             }).attr("y1", function (d) {
@@ -51,6 +52,10 @@
             }).attr("y2", function (d) {
                 return y(d.line.y2);
             });
+
+            var yAxisGrid = d3.svg.axis().scale(y).orient("right").ticks(numticks).tickSize(width, 0).tickFormat("");
+
+            g.append("g").classed('y', true).classed('grid', true).call(yAxisGrid);
         },
         fillCircles: function (g, tip, data, x, y) {
             g.selectAll('circle').remove();
@@ -67,6 +72,30 @@
             }).on("mouseout", function (d) {
                 tip.hide(d);d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 0);
             });
+        },
+        removeDuplicate: function (arrayOfStrings) {
+            var uniqueArray = _.uniq(arrayOfStrings, function (item) {
+                return moment(item).format("YYYY-MM-DD");
+            });
+            if (uniqueArray && uniqueArray.length > 0) {
+                var itemFirst = uniqueArray[0];
+                var itemLast = uniqueArray[uniqueArray.length - 1];
+
+                var uniqueArrayOfDates = [];
+
+                for (var i = 0; i < uniqueArray.length; i++) {
+
+                    uniqueArrayOfDates.push(moment(new Date(uniqueArray[i])).startOf('day')._d);
+
+                    if (i == uniqueArray.length - 1) {
+                        var date = moment(new Date(uniqueArray[i])).startOf('day').add(24, "hours");
+                        uniqueArrayOfDates.push(date._d);
+                    }
+                }
+                return uniqueArrayOfDates;
+            }
+
+            return [];
         },
         drawGraphic: function (props) {
             var component = this;
@@ -98,12 +127,64 @@
             chartRef.empty();
             chartContextRef.empty();
 
+            var data = [];
+            var dataXTickValues = [];
+
+            if (props.type != "bloodPressure") {
+                var tempArray1 = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
+                    tempArray1.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value,
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+
+                    dataXTickValues.push(moment(props.dataSource.values[i].time).format("YYYY-MM-DDThh:mm:ss"));
+                }
+                data = tempArray1;
+            } else {
+                var tempArray = [];
+                for (var i = 0; i < props.dataSource.values.length; i++) {
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.systolic,
+                        line: {
+                            y1: props.dataSource.values[i].value.systolic,
+                            y2: props.dataSource.values[i].value.diastolic
+                        },
+                        color: "blue",
+                        label: props.dataSource.label
+                    });
+
+                    tempArray.push({
+                        dateTime: moment(props.dataSource.values[i].time),
+                        value: props.dataSource.values[i].value.diastolic,
+                        line: {
+                            y1: props.dataSource.values[i].value.systolic,
+                            y2: props.dataSource.values[i].value.diastolic
+                        },
+                        color: "red",
+                        label: props.dataSource.label
+                    });
+
+                    dataXTickValues.push(moment(props.dataSource.values[i].time).format("YYYY-MM-DDThh:mm:ss"));
+                }
+                data = tempArray;
+            }
+
+            var uniqueArray = this.removeDuplicate(dataXTickValues);
+
             var x = d3.time.scale().range([0, width]),
                 x2 = d3.time.scale().range([0, width]),
                 y = d3.scale.linear().range([height, 0]),
                 y2 = d3.scale.linear().range([height2, 0]);
 
             var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(function (d, i) {
+                if (i == 0 || i == uniqueArray.length - 1) {
+                    return "";
+                }
+
                 if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
@@ -111,8 +192,12 @@
                     var fmt = d3.time.format('%b-%d');
                     return fmt(d);
                 }
-            }),
+            }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function (d, i) {
+                if (i == 0 || i == uniqueArray.length - 1) {
+                    return "";
+                }
+
                 if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
@@ -120,7 +205,8 @@
                     var fmt = d3.time.format('%b-%d');
                     return fmt(d);
                 }
-            });
+            }).tickValues(uniqueArray);
+
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
             var line = d3.svg.line().interpolate("monotone").x(function (d) {
@@ -152,7 +238,7 @@
             var context = svg1.append("g").attr("class", "context").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             var tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function (d) {
-                return d.value + " " + props.unit;
+                return d.value + " " + props.unit + " on " + moment(d.dateTime).format("MM/DD hh:mm");
             });
 
             svg.call(tip);
@@ -164,7 +250,7 @@
                 focus.select(".line").attr("d", line);
 
                 if (props.type == "bloodPressure") {
-                    component.fillLines(focus, data, x, y);
+                    component.fillLines(focus, data, x, y, num_ticks, width);
                 }
 
                 component.fillCircles(focus, tip, data, x, y);
@@ -185,7 +271,9 @@
                     return y(d.value);
                 });
 
-                focus.select(".x.axis").call(xAxis);
+                focus.select(".line").attr("d", line);
+
+                focus.select(".x.grid").call(xAxis);
 
                 // Force changing brush range
                 brush.extent(x.domain());
@@ -193,49 +281,13 @@
                 svg.select(".brush").call(brush);
             });
 
-            var data = [];
-            if (props.type != "bloodPressure") {
-                var tempArray1 = [];
-                for (var i = 0; i < props.dataSource.values.length; i++) {
-                    tempArray1.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value,
-                        color: "blue",
-                        label: props.dataSource.label
-                    });
-                }
-                data = tempArray1;
-            } else {
-                var tempArray = [];
-                for (var i = 0; i < props.dataSource.values.length; i++) {
-                    tempArray.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value.systolic,
-                        line: {
-                            y1: props.dataSource.values[i].value.systolic,
-                            y2: props.dataSource.values[i].value.diastolic
-                        },
-                        color: "blue",
-                        label: props.dataSource.label
-                    });
+            //x.domain(d3.extent(data, function(d) { return d.dateTime; }));
 
-                    tempArray.push({
-                        dateTime: moment(props.dataSource.values[i].time),
-                        value: props.dataSource.values[i].value.diastolic,
-                        line: {
-                            y1: props.dataSource.values[i].value.systolic,
-                            y2: props.dataSource.values[i].value.diastolic
-                        },
-                        color: "red",
-                        label: props.dataSource.label
-                    });
-                }
-                data = tempArray;
-            }
-
-            x.domain(d3.extent(data, function (d) {
-                return d.dateTime;
-            }));
+            x.domain([d3.min(uniqueArray, function (d) {
+                return d;
+            }), d3.max(uniqueArray, function (d) {
+                return d;
+            })]);
 
             y.domain([props.minValue, d3.max(data, function (d) {
                 var n = d.value;
@@ -248,13 +300,17 @@
             zoom.x(x);
 
             if (props.type != "bloodPressure") {
+                var yAxisGrid = d3.svg.axis().scale(y).orient("right").ticks(num_ticks).tickSize(width, 0).tickFormat("");
+
+                focus.append("g").classed('y', true).classed('grid', true).call(yAxisGrid);
+
                 focus.append("path").datum(data).attr("class", "area").attr("d", area);
 
                 focus.append("path").datum(data).attr("class", "line").attr("width", width).attr("d", line);
             }
 
             if (props.type == "bloodPressure") {
-                component.fillLines(focus, data, x, y);
+                component.fillLines(focus, data, x, y, num_ticks, width);
             }
 
             component.fillCircles(focus, tip, data, x, y);
@@ -274,7 +330,6 @@
                     return d.color;
                 }).style("fill", "none").style("stroke-width", 2);
             }
-
             context.append("g").attr("class", "x axis").attr("transform", "translate(0," + height2 + ")").call(xAxis2);
 
             context.append("g").attr("class", "x brush").call(brush).selectAll("rect").attr("y", -6).attr("height", height2 + 7);
@@ -322,6 +377,7 @@
                 temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
                 bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef,
                 bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                heartRateDef: emptyVitalSigns.heartRateDef,
                 weightDef: emptyVitalSigns.weightDef
             };
         },
@@ -337,6 +393,7 @@
                             temperatureVitalSignsDef: newDataSource.temperatureVitalSignsDef,
                             bloodPressureDef: newDataSource.bloodPressureDef,
                             bloodOxygenDef: newDataSource.bloodOxygenDef,
+                            heartRateDef: newDataSource.heartRateDef,
                             weightDef: newDataSource.weightDef
                         });
                     }
@@ -380,6 +437,17 @@
                     yDelta: 5,
                     label: this.state.bloodOxygenDef.label,
                     unit: this.state.bloodOxygenDef.unit }),
+                React.createElement(VitalSingChart, { dataSource: this.state.heartRateDef,
+                    aspectWidth: 16,
+                    aspectHeight: 9,
+                    ticks: 10,
+                    mobileThreshold: 500,
+                    mobileTicks: 5,
+                    type: this.state.heartRateDef.measurementType,
+                    minValue: this.state.heartRateDef.minValue,
+                    yDelta: 5,
+                    label: this.state.heartRateDef.label,
+                    unit: this.state.heartRateDef.unit }),
                 React.createElement(VitalSingChart, { dataSource: this.state.weightDef,
                     aspectWidth: 16,
                     aspectHeight: 9,

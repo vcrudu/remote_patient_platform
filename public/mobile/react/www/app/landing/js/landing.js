@@ -1,7 +1,6 @@
 /**
  * Created by Victor on 2/23/2016.
  */
-
 (function () {
     "use strict";
 
@@ -23,12 +22,12 @@
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
-                    React.createElement("input", { type: "button", className: "btn btn-default red", value: "Sign Up", onClick: this.handleSignUpClick })
+                    React.createElement("input", { type: "button", className: "btn btn-default btn-sign-up", value: "Sign Up", onClick: this.handleSignUpClick })
                 ),
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
-                    React.createElement("input", { type: "button", className: "btn btn-default green", value: "Sign In", onClick: this.handleSignIn })
+                    React.createElement("input", { type: "button", className: "btn btn-default btn-login", value: "Sign In", onClick: this.handleSignIn })
                 )
             );
         }
