@@ -36,7 +36,8 @@
                     availabilityString: availabilityString,
                     dateString: dateString
                 }, function (result) {
-                    console.log('ok s-a inscris');
+                    appointmentsCalendarDiv.fullCalendar('refetchEvents');
+                    appointmentModalDiv.modal('hide');
                 });
             } else {
                 Bridge.providerUpdateAvailability({
@@ -44,47 +45,10 @@
                     dateString: dateString,
                     oldAvailabilityString: oldAvailability
                 }, function (result) {
-                    console.log('update');
+                    appointmentsCalendarDiv.fullCalendar('refetchEvents');
+                    appointmentModalDiv.modal('hide');
                 });
             }
-            var start = moment(submitMode[2], "DD[/]MM[/]YYYY");
-            var end = moment(start).endOf('day');
-            $(this.refs.appointmentsCalendar).fullCalendar({
-                events: function (start, end, timezone, callback) {
-                    var events = [];
-                    Bridge.getProviderSlots(start, end, function (result) {
-                        if (result.success) {
-
-                            for (var i = 0; i < result.data.length; i++) {
-                                var intervals = result.data[i].intervals.split("-");
-                                events.push({
-                                    availability: result.data[i],
-                                    title: result.data[i].intervals,
-                                    start: intervals[0] + ':00',
-                                    end: intervals[1] + ':00',
-                                    allDay: true,
-                                    icon: 'fa fa-calendar',
-                                    className: ["event", 'bg-color-' + 'greenLight'],
-                                    backgroundColor: 'green'
-                                });
-                            }
-                            console.log(events);
-
-                            callback(events);
-                        }
-                    });
-                }
-            });
-            appointmentsCalendarDiv.fullCalendar('refetchEvents');
-            // appointmentsCalendarDiv.fullCalendar('removeEvents');
-            // appointmentsCalendarDiv.fullCalendar('refetchEvents');
-            appointmentModalDiv.modal('hide');
-            /*    var event =[{
-                    title:'mmm',
-                    start:"07:00:00",
-                    end:"08:00:00"
-                }];
-                 appointmentsCalendarDiv.fullCalendar('updateEvent',event );*/
         },
 
         componentDidMount: function () {
@@ -129,28 +93,12 @@
                     $(".modal-title").text(dateTitle);
                     $("#modal-body-header").hide();
 
-                    function formattedDate(date) {
-                        //to-do de trecut functia in alt fisier
-                        var d = new Date(date || Date.now()),
-                            month = '' + (d.getMonth() + 1),
-                            day = '' + d.getDate(),
-                            year = d.getFullYear();
-
-                        if (month.length < 2) month = '0' + month;
-                        if (day.length < 2) day = '0' + day;
-
-                        return [day, month, year].join('/');
-                    }
-
-                    var dateTitle = formattedDate(calEvent);
-
+                    var dateTitle = "Set availability " + moment(calEvent._d).format("DD[/]MM[/]YYYY");
                     $("span#modal-title-data").text(dateTitle);
 
-                    // appointmentModalDiv.attr("data-slot-id", calEvent.id);
                     appointmentModal.modal('show');
 
-                    var insertedText = '';
-                    reasonText.html(insertedText);
+                    reasonText.html(''); //to do nu se sterge reason text dupa edit
                     $("#modal-submit").prop("disabled", true);
                 },
                 events: function (start, end, timezone, callback) {
@@ -171,7 +119,7 @@
                                     backgroundColor: 'green'
                                 });
                             }
-                            console.log(events);
+
                             callback(events);
                         }
                     });
