@@ -84,7 +84,7 @@
                     start:"07:00:00",
                     end:"08:00:00"
                 }];
-                  appointmentsCalendarDiv.fullCalendar('updateEvent',event );*/
+                 appointmentsCalendarDiv.fullCalendar('updateEvent',event );*/
         },
 
         componentDidMount: function () {
