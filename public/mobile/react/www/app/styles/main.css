@@ -46,3 +46,31 @@ body {
 .img-logo {
     max-width:80px;
 }
+
+.header .btn-back {
+    margin-right:20px;
+    display:inline-block;
+    height:48px;
+    width:48px;
+    float:left;
+}
+
+.header .page-title {
+    color:rgba(0,0,0,0.8);
+    float:left;
+    display:inline;
+    line-height:48px;
+    margin:0;
+    font-size:24px;
+}
+
+    /* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-64 { font-size: 64px; }
+
+.material-icons, a .material-icons {
+    color:rgba(0,0,0,0.5);
+}
