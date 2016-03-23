@@ -237,13 +237,22 @@ body {
 /* -------------------------------------- *\
     #Landscape Orientation Only
 \* -------------------------------------- */
-@media all and (orientation:landscape) {
+@media (min-width: 436px) and (orientation:landscape) {
     .bottom-buttons-continer {
         position:static;
     }
 
     .generic-image-container > img {
         max-height:120px;
+    }
+
+    .carousel-indicators {
+        position: relative;
+        bottom: 50px;
+    }
+
+    .carousel-inner {
+        height: 500px;
     }
 }
 
@@ -257,6 +266,9 @@ body {
 /*---------------------------------------*\
    #Mobile
 \*---------------------------------------*/
-@media (max-width: 767px) {
-
+@media (max-width: 435px) {
+    .carousel-indicators {
+        position: relative;
+        bottom: 115px;
+    }
 }
