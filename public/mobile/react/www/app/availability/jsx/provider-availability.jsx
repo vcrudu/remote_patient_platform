@@ -31,7 +31,7 @@
             var availabilityString=reasonText.val();
             var dateString=moment(appointmentsCalendarDiv.fullCalendar('getDate')).format("DD[.]MM[.]YYYY");
             var submitMode=modalTitle.split(" ");
-        if(submitMode[0]=="Set"){
+    if(submitMode[0]=="Set"){
            Bridge.providerSetAvailability({
                availabilityString: availabilityString,
                dateString: dateString
@@ -52,11 +52,46 @@
             })
 
         }
+            var start=moment(submitMode[2], "DD[/]MM[/]YYYY");
+            var end=moment(start).endOf('day');
+            $(this.refs.appointmentsCalendar).fullCalendar({
+                    events:function(start, end, timezone, callback){
+                        var events = [];
+                        Bridge.getProviderSlots(start,end,function (result) {
+                            if (result.success) {
 
-            appointmentModalDiv.modal('hide');
+                                for (var i = 0; i < result.data.length; i++) {
+                                    var intervals = result.data[i].intervals.split("-");
+                                    events.push({
+                                        availability: result.data[i],
+                                        title: result.data[i].intervals,
+                                        start: intervals[0]+':00',
+                                        end: intervals[1]+':00',
+                                        allDay:true,
+                                        icon: 'fa fa-calendar',
+                                        className: ["event", 'bg-color-' + 'greenLight'],
+                                        backgroundColor:'green'
+                                    });
+                                }
+                                console.log(events);
 
+                               callback(events);
+                            }
 
+                        })
+                    }
+            });
             appointmentsCalendarDiv.fullCalendar('refetchEvents' );
+           // appointmentsCalendarDiv.fullCalendar('removeEvents');
+           // appointmentsCalendarDiv.fullCalendar('refetchEvents');
+            appointmentModalDiv.modal('hide');
+        /*    var event =[{
+                title:'mmm',
+                start:"07:00:00",
+                end:"08:00:00"
+            }];
+
+            appointmentsCalendarDiv.fullCalendar('updateEvent',event );*/
 
 
 
