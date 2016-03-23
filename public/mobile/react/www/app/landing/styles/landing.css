@@ -111,45 +111,6 @@ body {
 }
 
 
-/* Landing Header */
-.landing-header {
-    position:absolute;
-    left:0;
-    right:0;
-    z-index:100;
-    top:0;
-}
-
-.landing-header .header-inner {
-    background:#ffffff;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
-    display:table;
-    width:100%;
-    padding:15px 20px;
-}
-
-.landing-header .header-inner .col-left {
-    display:table-cell;
-    vertical-align:middle;
-}
-
-.landing-header .header-inner .col-right {
-    display:table-cell;
-    vertical-align:middle;
-    text-align:right;
-}
-
-.img-header {
-    max-width:160px;
-}
-
-.img-logo {
-    max-width:80px;
-}
-
-
 
     /* Background images are set within the HTML using inline CSS, not here */
 
@@ -197,7 +158,7 @@ body {
     position:absolute;
     bottom:0;
     margin:0;
-    width:100%;
+    width:99.94%;
     border-top:1px solid #cdc3b7;
 }
 
