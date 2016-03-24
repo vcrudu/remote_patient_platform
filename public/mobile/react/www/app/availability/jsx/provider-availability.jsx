@@ -13,7 +13,7 @@
             var scheduleValue=reasonText.val();
             var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
             var match = re.exec(scheduleValue);
-            
+
             if(match){
                 $( "#modal-submit" ).prop( "disabled", false );
             } else {
