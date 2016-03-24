@@ -277,7 +277,7 @@
                     { className: "form-actions" },
                     React.createElement(
                         "button",
-                        { type: "submit", href: "javascript:void(0);", className: "btn btn-raised btn-info", disabled: !this.state.canSubmitForm },
+                        { type: "submit", href: "javascript:void(0);", className: "btn btn-raised btn-next", disabled: !this.state.canSubmitForm },
                         "Register"
                     )
                 )

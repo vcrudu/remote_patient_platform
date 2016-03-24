@@ -57,10 +57,12 @@ body {
     height:180px;
     margin:auto;
     max-height:380px;
+
 }
 
 .generic-image-container > img {
     max-height:300px;
+    width:100%;
 }
 
 .carousel-caption h2 {
@@ -148,52 +150,7 @@ body {
     color:#ffffff !important;
 }
 
-/* Bottom Buttons */
-.buttonsContainer [class*="col-"] {
-    padding:8px 0px !important;
-}
 
-.bottom-buttons-continer {
-    background:#ffffff;
-    position:absolute;
-    bottom:0;
-    margin:0;
-    width:99.94%;
-    border-top:1px solid #cdc3b7;
-}
-
-.btn-sign-up, .btn-login {
-    background:none;
-    border:none;
-    border-radius:0;
-    padding:5px !important;
-}
-
-.btn-sign-up:hover, .btn-login:hover,
-.btn-sign-up:focus, .btn-login:focus {
-    background:none;
-    outline:none;
-}
-
-.btn-sign-up {
-
-    color:#03a9f4 !important;
-    border-right:1px solid #d8d8d8;
-
-}
-
-.btn-login {
-    color:#8bc34a !important;
-}
-
-
-.btn-default {
-    width:100%;
-    padding:15px;
-    text-align:center;
-    margin-bottom:5px;
-    font-size:18px;
-}
 
 /* -------------------------------------- *\
     #Landscape Orientation Only

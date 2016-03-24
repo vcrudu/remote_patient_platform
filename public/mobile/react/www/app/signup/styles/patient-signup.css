@@ -4,6 +4,10 @@ body {
     background:#fafafa;
 }
 
+.header {
+    position:static;
+}
+
 .form-group {
     position:relative;
     margin-left:70px;
@@ -13,6 +17,10 @@ body {
     position:absolute;
     left:-70px;
     width:40px;
+}
+
+.form-group > i.active {
+    color:#00bdd4;
 }
 
 .form-group.is-focused .form-control {
