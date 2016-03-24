@@ -108,7 +108,7 @@
                 { className: this.state.defaultFormGroupClassName },
                 React.createElement(
                     "i",
-                    { className: "material-icons md-36" },
+                    { className: "material-icons md-36 " },
                     this.props.inputIconName
                 ),
                 React.createElement(
@@ -277,7 +277,7 @@
                     { className: "form-actions" },
                     React.createElement(
                         "button",
-                        { type: "submit", href: "javascript:void(0);", className: "btn btn-raised btn-info", disabled: !this.state.canSubmitForm },
+                        { type: "submit", href: "javascript:void(0);", className: "btn btn-raised btn-next", disabled: !this.state.canSubmitForm },
                         "Register"
                     )
                 )
