@@ -36,33 +36,10 @@ body {
 }
 
 .generic-image-container {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: flex-end;
-    -ms-flex-align: end;
-    align-items: flex-end;
-    height:180px;
-    margin:auto;
-    max-height:380px;
-
-}
-
-.generic-image-container > img {
-    max-height:300px;
-    width:100%;
+    background-repeat:no-repeat;
+    background-position:bottom;
+    background-size:contain;
+    height:200px;
 }
 
 .carousel-caption h2 {
@@ -112,7 +89,9 @@ body {
     display:none;
 }
 
-
+.has-separator [class*="col-"]:first-child {
+    border-right:1px solid #cdcdcd;
+}
 
     /* Background images are set within the HTML using inline CSS, not here */
 
@@ -155,9 +134,9 @@ body {
 /* -------------------------------------- *\
     #Landscape Orientation Only
 \* -------------------------------------- */
-@media (min-width: 436px) and (orientation:landscape) {
+@media screen and (orientation:landscape) {
     .bottom-buttons-continer {
-        position:static;
+        position:relative !important;
     }
 
     .generic-image-container > img {
@@ -170,7 +149,12 @@ body {
     }
 
     .carousel-inner {
-        height: 500px;
+        /*height: 500px;*/
+        height:100%;
+    }
+
+    .header {
+        position:static !important;
     }
 }
 

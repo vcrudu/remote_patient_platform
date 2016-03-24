@@ -18,7 +18,7 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "row buttonsContainer" },
+                { className: "row-no-padding has-separator" },
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },

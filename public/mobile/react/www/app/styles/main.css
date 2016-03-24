@@ -9,6 +9,11 @@ body {
     font-family:"NotoSansRegular";
 }
 
+.row-no-padding [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 /* Landing Header */
 .header {
     position:absolute;
@@ -76,28 +81,30 @@ body {
 }
 
 /* Bottom Buttons */
-.buttonsContainer [class*="col-"] {
-    padding:8px 0px !important;
-}
-
-.buttonsContainer .btn:first-child {
-    border-right:1px solid #d8d8d8;
-}
 
 .bottom-buttons-continer {
     background:#ffffff;
     position:absolute;
     bottom:0;
+    left:0;
+    right:0;
     margin:0;
-    width:99.94%;
     border-top:1px solid #cdc3b7;
+    padding:15px 0;
+    width:100%;
+    margin:auto;
+    overflow:hidden;
+}
+
+.bottom-buttons-continer .btn {
+    padding:5px 0;
+    display:inline-block;
 }
 
 .btn-sign-up, .btn-login {
     background:none;
     border:none;
     border-radius:0;
-    padding:5px !important;
 }
 
 .btn:hover, .btn:focus {

@@ -14,7 +14,7 @@
             Bridge.Redirect.redirectToSignIn();
         },
         render: function() {
-            return <div className="row buttonsContainer">
+            return <div className="row-no-padding has-separator">
                 <div className="col-xs-6">
                     <input type="button" className="btn btn-default btn-sign-up" value="Sign Up" onClick={this.handleSignUpClick}></input>
                 </div>
