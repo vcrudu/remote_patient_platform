@@ -262,7 +262,7 @@
                                  validators={["required"]}
                                  validatorMessages={["Given Name is required."]} />
                 <div className="form-actions">
-                    <button type="submit" href="javascript:void(0);" className="btn btn-raised btn-next" disabled={!this.state.canSubmitForm}>Register</button>
+                    <button type="submit" href="javascript:void(0);" className="btn btn-next" disabled={!this.state.canSubmitForm}>Register</button>
                 </div>
             </form>
         }
