@@ -97,7 +97,7 @@
 
                     $("#currentSchedule").html(availabilityText);
                     if (!availabilityText || availabilityText == "") {
-                        $("#modal-body-header").show();
+                        $("#modal-body-header").hide();
                     } else {
                         $("#modal-body-header").show();
                     }
@@ -125,7 +125,7 @@
                     if (!availabilityText || availabilityText == "") {
                         $("#modal-body-header").hide();
                     } else {
-                        $("#modal-body-header").shpw();
+                        $("#modal-body-header").show();
                     }
 
                     availabilityModal.modal('show');
