@@ -108,7 +108,7 @@
                 { className: this.state.defaultFormGroupClassName },
                 React.createElement(
                     "i",
-                    { className: "material-icons md-36" },
+                    { className: "material-icons md-36 " },
                     this.props.inputIconName
                 ),
                 React.createElement(

@@ -88,9 +88,7 @@
             });
         },
         handleCall: function(patientId) {
-            Bridge.Provider.callPatient(patientId, function(callResult) {
-
-            });
+            Bridge.Provider.callPatient(patientId, function(callResult) {});
         },
         render: function() {
             var component = this;

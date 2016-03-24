@@ -39,6 +39,16 @@
             var date = moment(dateString);
             return date.calendar();
         },
+        handleCallClick: function() {
+            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
+            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            if (this.props.onCall) {
+                if (onlineStatus == "offline") {
+                    return;
+                }
+                this.props.onCall(patientId);
+            }
+        },
         render: function() {
             var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
             var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
@@ -55,7 +65,7 @@
                <div className={this.state.onlineStatus ? (this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online") : "statusBorder " + onlineStatus}></div>
                <div className="panel-footer text-center">
                    <div className="row">
-                       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img className="img-responsive center-block call" src="images/call-icon.png" width="100"/></div>
+                       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img className="img-responsive center-block call" src="images/call-icon.png" width="100" onClick={this.handleCallClick}/></div>
                    </div>
                </div>
            </div>
@@ -193,6 +203,7 @@
 
             var data = [];
             var dataXTickValues = [];
+
             if (props.type != "bloodPressure") {
                 var tempArray1 = [];
                 for(var i=0; i<props.dataSource.values.length;i++) {
@@ -202,8 +213,10 @@
                         color:"blue",
                         label: props.dataSource.label
                     });
+
                     dataXTickValues.push(moment(props.dataSource.values[i].time).format("YYYY-MM-DDThh:mm:ss"));
                 }
+                data = tempArray1;
             }
             else {
                 var tempArray = [];
@@ -237,8 +250,8 @@
 
             var uniqueArray = this.removeDuplicate(dataXTickValues);
 
-            var x = d3.time.scale().range([10, width-10]),
-                x2 = d3.time.scale().range([10, width-10]),
+            var x = d3.time.scale().range([0, width]),
+                x2 = d3.time.scale().range([0, width]),
                 y = d3.scale.linear().range([height, 0]),
                 y2 = d3.scale.linear().range([height2, 0]);
 
@@ -254,7 +267,7 @@
                         var fmt = d3.time.format('%b-%d');
                         return fmt(d);
                     }
-                }),
+                }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function(d,i) {
                     if (i == 0 || i == uniqueArray.length - 1) {
                         return "";
@@ -267,7 +280,7 @@
                         var fmt = d3.time.format('%b-%d');
                         return fmt(d);
                     }
-                });
+                }).tickValues(uniqueArray);
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
@@ -360,9 +373,9 @@
             //x.domain(d3.extent(data, function(d) { return d.dateTime; }));
 
             x.domain([d3.min(uniqueArray, function(d) {
-                        return d;
-                    }
-                ),
+                    return d;
+                }
+            ),
                 d3.max(uniqueArray, function(d) {
                         return d;
                     }
@@ -411,8 +424,6 @@
             }
 
             component.fillCircles(focus, tip, data, x, y);
-
-
 
             focus.append("g")
                 .attr("class", "x axis")
@@ -514,9 +525,13 @@
                 });
             }
         },
+        handleCall: function(patientId) {
+            Bridge.Provider.callPatient(patientId, function(callResult) {});
+        },
         render: function() {
+            var component = this;
             return <div>
-                <PatientDetails user={this.state.user}/>
+                <PatientDetails user={this.state.user} onCall={component.handleCall}/>
                 <div className="card">
                     <ul className="nav nav-tabs" role="tablist">
                         <li role="presentation" className="active">
