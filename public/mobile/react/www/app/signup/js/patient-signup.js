@@ -107,6 +107,11 @@
                 "div",
                 { className: this.state.defaultFormGroupClassName },
                 React.createElement(
+                    "i",
+                    { className: "material-icons md-36" },
+                    this.props.inputIconName
+                ),
+                React.createElement(
                     "label",
                     { htmlFor: this.props.inputName, className: "control-label" },
                     this.props.inputLabel
@@ -216,6 +221,7 @@
                 "form",
                 { name: "signUpForm", onSubmit: this.handleSubmit },
                 React.createElement(ValidationInput, { inputLabel: "Email",
+                    inputIconName: "email",
                     inputType: "email",
                     inputName: "userEmail",
                     inputId: "userEmail",
@@ -226,6 +232,7 @@
                     validators: ["required", "pattern"],
                     validatorMessages: ["Email is required.", "Your email must look like an e-mail address."] }),
                 React.createElement(ValidationInput, { inputLabel: "Password",
+                    inputIconName: "https",
                     inputType: "password",
                     inputName: "userPassword",
                     inputId: "userPassword",
@@ -236,6 +243,7 @@
                     validators: ["required", "pattern"],
                     validatorMessages: ["Password is required.", "At least one number, one lowercase, one uppercase letter and at least six characters."] }),
                 React.createElement(ValidationInput, { inputLabel: "Confirm Password",
+                    inputIconName: "https",
                     inputType: "password",
                     inputName: "userConfirmPassword",
                     inputId: "userConfirmPassword",
@@ -247,6 +255,7 @@
                     validators: ["required", "compare", "pattern"],
                     validatorMessages: ["Confirm Password is required.", "Must match password from previous entry.", "At least one number, one lowercase, one uppercase letter and at least six characters."] }),
                 React.createElement(ValidationInput, { inputLabel: "Surname",
+                    inputIconName: "person",
                     inputType: "text",
                     inputName: "userSurname",
                     inputId: "userSurname",
@@ -255,6 +264,7 @@
                     validators: ["required"],
                     validatorMessages: ["Surname is required."] }),
                 React.createElement(ValidationInput, { inputLabel: "Given name",
+                    inputIconName: "person outline",
                     inputType: "text",
                     inputName: "givenNameSurname",
                     inputId: "givenNameSurname",
