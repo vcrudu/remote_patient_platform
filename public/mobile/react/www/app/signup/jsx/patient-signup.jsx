@@ -104,20 +104,20 @@
             this.props.lostFocusCallBack(component, isValid);
         },
         render: function () {
-                return <div className={this.state.defaultFormGroupClassName}>
-                    <i className="material-icons md-36 ">{this.props.inputIconName}</i>
-                    <label htmlFor={this.props.inputName} className="control-label">{this.props.inputLabel}</label>
-                    <input type={this.props.inputType}
-                           className="form-control"
-                           id={this.props.inputId}
-                           name={this.props.inputName}
-                           pattern={this.props.regexString}
-                           required={this.props.inputRequired}
-                           onChange={this.onChange}
-                           onBlur={this.onBlur}/>
-                    <span className="help-block">{this.state.validationMessage}</span>
-                    <span className="material-input"></span>
-                </div>
+            return <div className={this.state.defaultFormGroupClassName}>
+                <i className="material-icons md-36 ">{this.props.inputIconName}</i>
+                <label htmlFor={this.props.inputName} className="control-label">{this.props.inputLabel}</label>
+                <input type={this.props.inputType}
+                       className="form-control"
+                       id={this.props.inputId}
+                       name={this.props.inputName}
+                       pattern={this.props.regexString}
+                       required={this.props.inputRequired}
+                       onChange={this.onChange}
+                       onBlur={this.onBlur}/>
+                <span className="help-block">{this.state.validationMessage}</span>
+                <span className="material-input"></span>
+            </div>
         }
     });
 
@@ -191,7 +191,8 @@
 
             return canSubmit;
         },
-        handleSubmit: function(component) {
+        handleSubmit: function(event) {
+            event.preventDefault();
             var signUpFormData = {
                 email: this.state.email.value,
                 password: this.state.password.value,
@@ -202,7 +203,13 @@
                 agent: "mobile"
             };
 
-            Bridge.signUp(signUpFormData, function() {
+            Bridge.signUp(signUpFormData, function(result) {
+                if (result.success) {
+                    Bridge.Redirect.redirectToSignIn(result.data.email);
+                }
+                else {
+                    Bridge.error(result, function() {});
+                }
             });
         },
         componentDidUpdate: function() {

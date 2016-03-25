@@ -13,7 +13,7 @@
             Bridge.Redirect.redirectToPatientSignUp();
         },
         handleSignIn: function (e) {
-            Bridge.Redirect.redirectToSignIn();
+            Bridge.Redirect.redirectToSignIn("");
         },
         render: function () {
             return React.createElement(

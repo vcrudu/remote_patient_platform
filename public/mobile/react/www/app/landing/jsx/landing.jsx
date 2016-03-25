@@ -11,7 +11,7 @@
             Bridge.Redirect.redirectToPatientSignUp();
         },
         handleSignIn: function(e){
-            Bridge.Redirect.redirectToSignIn();
+            Bridge.Redirect.redirectToSignIn("");
         },
         render: function() {
             return <div className="row-no-padding has-separator">

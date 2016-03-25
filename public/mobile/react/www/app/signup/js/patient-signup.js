@@ -202,7 +202,8 @@
 
             return canSubmit;
         },
-        handleSubmit: function (component) {
+        handleSubmit: function (event) {
+            event.preventDefault();
             var signUpFormData = {
                 email: this.state.email.value,
                 password: this.state.password.value,
@@ -213,7 +214,13 @@
                 agent: "mobile"
             };
 
-            Bridge.signUp(signUpFormData, function () {});
+            Bridge.signUp(signUpFormData, function (result) {
+                if (result.success) {
+                    Bridge.Redirect.redirectToSignIn(result.data.email);
+                } else {
+                    Bridge.error(result, function () {});
+                }
+            });
         },
         componentDidUpdate: function () {},
         render: function () {
