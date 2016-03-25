@@ -14,10 +14,12 @@
     <link rel="stylesheet" href="../styles/main.css">
 
 </head>
-<body>
+<body style="visibility: hidden">
+
 
 <!-- Full Page Image Background Carousel Header -->
-<div class="header">
+<header id="myCarousel" class="carousel slide">
+    <div class="header">
         <div class="header-inner">
             <div class="col-left">
                 <img src="images/trichrome-healthcare.png" alt="Trichrome Healthcare" class="img-responsive img-header"/>
@@ -28,8 +30,7 @@
                 </a>
             </div>
         </div>
-</div>
-<header id="myCarousel" class="carousel slide">
+    </div>
 
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
@@ -98,7 +99,7 @@
 
 
 
-    <div id="landing" class="container bottom-buttons-continer">
+    <div id="landing" class="container landing bottom-buttons-continer">
     </div>
 </header>
 
@@ -115,8 +116,16 @@
 <script type="text/javascript" src="js/landing.js"></script>
 
 <script>
-    $(document).ready(function() {
+    $(window).load(function() {
         $("body").height($(window).height());
+
+        var header = $(".header").outerHeight(true);
+        var bottomButtonsContainer = $(".bottom-buttons-continer").outerHeight(true);
+
+        if ($(window).width() < $(window).height()) {
+            $(".carousel-inner").height($("body").height() - (header + bottomButtonsContainer));
+        }
+
         $(".carousel").carousel({
             interval: 3000 //changes the speed
         });
@@ -126,6 +135,7 @@
         $(".carousel").swipeleft(function() {
             $(this).carousel('next');
         });
+        $("body").css({visibility: "visible"});
     });
 
 </script>
