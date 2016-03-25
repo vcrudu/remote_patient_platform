@@ -1,0 +1,18 @@
+<ion-view ng-controller="PatientHomeCtrl">
+
+  <ion-nav-bar align-title="center">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-clear" ui-sref="patient.cart" ng-show="isCartVisible">
+        <i class="icon ion-android-cart"></i>
+      </button>
+      <span ng-show="cartSubtotalVisible">{{cartSubtotal}}&pound;</span>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-nav-view name="content">
+
+  </ion-nav-view>
+
+</ion-view>

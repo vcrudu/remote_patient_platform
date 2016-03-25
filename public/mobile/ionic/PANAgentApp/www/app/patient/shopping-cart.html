@@ -1,0 +1,33 @@
+<ion-view view-title="Shopping Cart" padding="true" ng-controller="PatientShoppingCartCtrl">
+  <ion-content>
+    <div class="list">
+      <div class="item row" ng-repeat="cartItem in cart.Items">
+        <div class="col col-33" ui-sref="patient.device({model:cartItem.Device.model})">
+          <img style="width: 100px;" ng-src="{{cartItem.Device.imagesUrls[0]}}" >
+        </div>
+        <div class="col col-33" ui-sref="patient.device({model:cartItem.Device.model})">
+          <h3>{{cartItem.Device.model}}</h3>
+          <p>{{cartItem.Device.description}}</p>
+        </div>
+        <div class="col col-33">
+          <h3 class="push-right">{{cartItem.Quantity}} X {{cartItem.Price}}&pound = {{cartItem.Quantity * cartItem.Price}}&pound</h3>
+          <button class="button button-clear push-right button-assertive" ng-click="deleteProduct(cartItem)">DELETE</button>
+        </div>
+      </div>
+      <div class="item row">
+        <div class="col">
+          <h2 class="push-right">Subtotal: {{subtotal}}&pound</h2>
+        </div>
+      </div>
+      <div class="item row">
+        <div class="col">
+          <button class="button button-full" ui-sref="patient.checkout">
+            <i class="icon ion-card push-left"></i>
+            Proceed with Check Out
+            <i class="icon ion-card push-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

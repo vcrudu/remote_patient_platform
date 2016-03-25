@@ -2,21 +2,37 @@
  * Created by home on 05/01/2016.
  */
 
-angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams', 'authService',
-    function($scope, $stateParams, authService){
+angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams','$state', '$http','authService',
+    function($scope, $stateParams,$state, $http, authService){
+            var link="/resetPassword?token="+$stateParams.token;
+           $scope.mmm = $http.get(link)
+                .then(function(response) {
+
+                    $scope.content = response.data;
+                }, function(response) {
+
+                    $scope.content = "Something went wrong";
+                });
+
+
 
         $scope.newUser = {};
         $scope.submitResetPassword = function(){
             if($scope.resetPasswordForm.$valid){
-                authService.submitResetPassword($scope.newUser.password,
+                var dataReset={
+                token:$scope.content.token,
+                pass:$scope.newUser.password};
+                authService.submitResetPassword(dataReset,
                     function(success){
-
-                        $state.go('login');
-
+                        if (success){
+                            $state.go('login');
+                        } else {
+                            $state.go('reset');
+                        }
                     },function(error){
 
-                        toastr.error(error, 'Error');
-
+                        $state.go('reset');
+                        //toastr.error(error, 'Error');
                     }
                 );
             }

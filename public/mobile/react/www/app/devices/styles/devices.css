@@ -1,0 +1,27 @@
+html,body{
+    height:100%;
+}
+
+.container {
+    height:100%;
+}
+
+.fill{
+    height:100%;
+    min-height:100%;
+}
+
+#my-devices {
+    height: 100%;
+}
+
+.addDeviceOverlay {
+    height: 100%;
+    width: 100%;
+    display: none;
+    background-color:#ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}

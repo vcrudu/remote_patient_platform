@@ -95,13 +95,21 @@ var _ = require("underscore");
                     if(user && user.isActive) {
                         user.token = req.headers['x-access-token'];
                         userDetailsRepository.findOneByEmail(user.email, function (err, userDetails) {
-                            res.json({
-                                success: true,
-                                data: _.extend(user, userDetails),
-                                token: user.token
-                            });
+                            if (err) {
+                                res.json({
+                                    success:false,
+                                    error:err
+                                });
+                            }
+                            else {
+                                res.json({
+                                    success: true,
+                                    data: _.extend(user, userDetails),
+                                    token: user.token
+                                });
+                            }
                         });
-                    }else{
+                    } else{
                         res.status(401).json({
                             success:false,
                             error:'The user is unauthorised!'

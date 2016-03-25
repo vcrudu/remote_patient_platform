@@ -84,7 +84,7 @@ angular.module('app').controller('patientCallCtrl', ['$scope', '$log', '$state',
             $localStorage.callerModal.result.then(function () {
             }, function (arg) {
                 if (arg.send && window.socket && window.socket.connected) {
-                    window.socket.emit('cancel', $localStorage.callData);
+                    window.socket.emit('cancelByRecipient', $localStorage.callData);
                     StopCallSound();
                 }
             });

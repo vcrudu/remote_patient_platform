@@ -18,7 +18,7 @@ angular.module("mobileApp")
             };
 
             $scope.showDetails = function(device){
-                $state.go('devices.details', {model:device.model});
+                $state.$parent.go('devices.details', {model:device.model});
             };
 
             $scope.searchDevices();

@@ -4,9 +4,13 @@
 
 angular.module("mobileApp")
     .controller("ProviderAvailabilityCtrl",
-        ['$scope', '$filter', '_', '$modal', 'providerAvailabilityService', function($scope, $filter, _, $modal, providerAvailabilityService) {
+        ['$scope', '$filter', '_', '$modal', '$mdpDatePicker', 'providerAvailabilityService', function($scope, $filter, _, $modal, $mdpDatePicker, providerAvailabilityService) {
 
-                $scope.myDate = new Date();
+                $scope.showDatePicker = function(ev) {
+                        $mdpDatePicker(ev, $scope.currentDate).then(function(selectedDate) {
+                                $scope.currentDate = selectedDate;
+                        });;
+                };
 
                 $scope.vm = {};
 
@@ -327,6 +331,8 @@ angular.module("mobileApp")
                                         var currentDay = $('#calendar').fullCalendar('getDate')._d;
                                         var startDate = moment(currentDay).startOf("day");
                                         var endDate = moment(currentDay).endOf("day");
+
+                                        $scope.currentDate = currentDay;
 
                                         $scope.getAvailability(startDate, endDate);
                                 },

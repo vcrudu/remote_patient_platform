@@ -1,0 +1,15 @@
+{
+  "name": "PANAgent-React",
+  "version": "0.0.1",
+  "dependencies": {
+    "react": "^0.14.7",
+    "babel": "*",
+    "bootstrap": "^3.3.6",
+    "bootstrap-material-design": "^0.5.8",
+    "moment": "^2.11.2",
+    "underscore": "^1.8.3",
+    "JSON-js": "json2-bower#^1.0.1",
+    "d3": "^3.5.16",
+    "bootstrap-material-design-icons": "bootstrap-material-icons#^2.2.0"
+  }
+}

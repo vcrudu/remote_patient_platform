@@ -1,0 +1,11 @@
+.statusBorder {
+    height: 10px;
+}
+
+.offline {
+    background-color: red;
+}
+
+.online {
+    background-color: green;
+}

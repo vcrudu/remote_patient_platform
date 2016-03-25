@@ -1,0 +1,31 @@
+
+<ion-view view-title="Devices" padding="true" ng-controller="PatientDevicesCtrl">
+  <ion-content>
+
+    <div class="list card" ng-repeat="device in devices">
+
+      <div class="item" ui-sref="patient.device({model:device.model})">
+        <h2>{{device.model}}<small><p>({{device.deviceModelType}})</p></small></h2>
+        <p>{{device.description}}</p>
+      </div>
+
+      <div class="item item-image" ui-sref="patient.device({model:device.model})">
+        <img ng-src="{{device.imagesUrls[0]}}">
+      </div>
+
+      <div class="item">
+        <div class="item-icon-left" href="#">
+          <i class="icon ion-card"></i>
+          {{device.price | number : 2}}&pound
+        </div>
+
+        <div class="item-icon-right" ng-click="addToCart(device); $event.preventDefault()">
+          <i class="icon ion-bag"></i>
+        </div>
+
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>
+

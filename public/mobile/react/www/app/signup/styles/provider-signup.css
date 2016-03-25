@@ -1,0 +1,8 @@
+@import "../../styles/fonts.css";
+
+body {
+    background:#fafafa;
+}
+.container{
+    margin-top: 93px;
+}

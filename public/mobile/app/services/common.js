@@ -32,7 +32,7 @@ Bridge.callBack = function(result){
 }
 
 angular.module('mobileApp')
-    .factory('commonService',['$localStorage','$location', function($localStorage, $location) {
+    .factory('commonService',['$localStorage', function($localStorage) {
         return {
             getToken: function (callback) {
                 if ((/android/gi).test(navigator.userAgent)) {
@@ -48,7 +48,7 @@ angular.module('mobileApp')
                     Bridge.getUrl(callback);
                 } else {
                     setTimeout(function () {
-                        callback("http://localhost:8081/v1/api/");
+                        callback("http://192.168.1.2:8081/v1/api/");
                     }, 0);
                 }
             },

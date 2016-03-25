@@ -3,8 +3,6 @@
  */
 
 (function(){
-
-
     var availabilityService = require('../services/availabilityService');
     var cacheUrl = 'hcm-availability.elasticbeanstalk.com';
     var http = require('http');

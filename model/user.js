@@ -5,6 +5,27 @@
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
     var userDetailsMapper = require('../repositories/dynamoDbMapper');
+    var _ = require('underscore');
+
+    // helper methods
+    function tryGetStringProperty (property) {
+        try {
+            return property.S;
+        }
+        catch(e) {
+            return ""
+        }
+    }
+
+    function tryGetNumberProperty (property) {
+        try {
+            return property.N;
+        }
+        catch(e) {
+            return -1;
+        }
+    }
+
     module.exports  = {
       createUserFromBody : function(requestBody){
          var salt = bcrypt.genSaltSync(10);
@@ -20,29 +41,35 @@
               onlineStatus: "offline"
           };
       },
-        createUserFromDbEntity : function(dbEntity){
+        createUserFromDbEntity : function(dbEntity) {
             var createdDateTime = new Date();
             var onlineStatus = 'offline';
             var socketId;
+            var socketIds;
             //Todo-here to put this in config
             //Todo-here to define the gender of the user
-            var avatar='https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png';
-            if(dbEntity.onlineStatus) onlineStatus=dbEntity.onlineStatus.S;
-            if(dbEntity.avatar) avatar=dbEntity.avatar.S;
-            if(dbEntity.socketId) socketId=dbEntity.socketId.S;
-            if(dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
+            var avatar = 'https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png';
+            if (dbEntity.onlineStatus) onlineStatus = dbEntity.onlineStatus.S;
+            if (dbEntity.avatar) avatar = dbEntity.avatar.S;
+
+            if (dbEntity.socketIds) socketIds = dbEntity.socketIds ? _.map(dbEntity.socketIds.L, function(mappedSocketId){
+                return mappedSocketId.S;
+            }) : [];
+            if (socketIds&&socketIds.length>0) socketId = socketIds[0];
+            if (dbEntity.createdDateTime) createdDateTime.setTime(parseInt(dbEntity.createdDateTime.N));
             return {
                 email: dbEntity.email.S,
-                name:dbEntity.name.S,
-                surname:dbEntity.surname.S,
+                name: dbEntity.name.S,
+                surname: dbEntity.surname.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.tokenString.S,
-                isActive:dbEntity.isActive.BOOL,
+                isActive: dbEntity.isActive.BOOL,
                 type: dbEntity.type.S,
                 onlineStatus: onlineStatus,
-                socketId:socketId,
-                avatar:avatar,
-                createdDateTime:createdDateTime
+                socketId: socketId,
+                socketIds: socketIds,
+                avatar: avatar,
+                createdDateTime: createdDateTime
             };
         },
         createUserDtoFromDbEntity : function(dbEntity){
@@ -64,19 +91,18 @@
         createUserDetailsFromDbEntity : function(dbEntity){
             //Todo-here to clarify what's up with this method
             return {
-                email: dbEntity.email.S,
-                firstname: dbEntity.name.S,
-                surname: dbEntity.surname.S,
-                title:dbEntity.title.S,
-                dateOfBirth: dbEntity.dateOfBirth.N,
-                sex: dbEntity.sex.S,
-                gender: dbEntity.gender.S,
-                ethnicity: dbEntity.ethnicity.S,
-                nhsNumber: dbEntity.nhsNumber.S,
-                phone: dbEntity.phone.S,
-                mobile: dbEntity.mobile.S
-                /*
-                address: dbEntity.fullAddress.M,
+                firstname: tryGetStringProperty(dbEntity.name),
+                surname: tryGetStringProperty(dbEntity.surname),
+                title:tryGetStringProperty(dbEntity.title),
+                dateOfBirth: tryGetNumberProperty(dbEntity.dateOfBirth),
+                sex: tryGetStringProperty(dbEntity.sex),
+                gender: tryGetStringProperty(dbEntity.gender),
+                ethnicity: tryGetStringProperty(dbEntity.ethnicity),
+                nhsNumber: tryGetStringProperty(dbEntity.nhsNumber),
+                phone: tryGetStringProperty(dbEntity.phone),
+                mobile: tryGetStringProperty(dbEntity.mobile)
+
+                /* address: dbEntity.fullAddress.M,
                 avatar: buildDynamoDbString(patient.avatar),
                 externalId: buildDynamoDbString(patient.externalId),
                 devices: {L:allDevices},

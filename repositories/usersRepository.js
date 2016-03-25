@@ -99,19 +99,22 @@
             });
         },
 
-        updateOnlineStatus : function(userId, onlineStatus, socketId, callback) {
-
+        updateOnlineStatus : function(userId, onlineStatus, socketIds, callback) {
             var dynamodb = getDb();
+
+            var mappedSocketIds = _.map(socketIds, function(socketId){
+                return {"S":socketId};
+            });
 
             var params = {
                 Key: { email: { S: userId }},
                 TableName:TABLE_NAME,
                 ExpressionAttributeValues: {
                     ":onlineStatus": {"S":onlineStatus  },
-                    ":socketId": {"S":socketId  },
+                    ":socketIds": {"L":mappedSocketIds  },
                 },
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET onlineStatus=:onlineStatus, socketId=:socketId'
+                UpdateExpression: 'SET onlineStatus=:onlineStatus, socketIds=:socketIds'
             };
 
             dynamodb.updateItem(params, function (err, data) {
@@ -245,7 +248,32 @@
                 //console.log("The users has been retrieved successfully.");
                 callback(null, resultUsers);
             });
-        }
+        },
+        resetUserPassword:function (userData,callback){
 
+
+                var dynamodb = getDb();
+
+                var params = {
+                    Key: { email: { S: userData.email }},
+                    TableName:TABLE_NAME,
+                    ExpressionAttributeValues: {
+                        ":passwordHash": {"S":userData.passwordHash  },
+                    },
+                    ReturnConsumedCapacity: 'TOTAL',
+                    UpdateExpression: 'SET passwordHash=:passwordHash'
+                };
+
+
+                dynamodb.updateItem(params, function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                        return;
+                    }
+
+                    callback(null, data);
+                });
+
+        }
     };
 })();

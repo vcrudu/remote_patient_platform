@@ -113,7 +113,11 @@ angular.module('app')
                                         }, function (arg) {
                                             if (arg.send && window.socket && window.socket.connected) {
                                                 //Todo-here recipient and caller is inverted:We should somehow solve describe this better.
-                                                window.socket.emit('cancel', $localStorage.callData);
+                                                StopCallSound();
+                                                if($localStorage.user.type=="patient")
+                                                window.socket.emit('cancelByRecipient', $localStorage.callData);
+                                                else
+                                                    window.socket.emit('cancelByCaller', $localStorage.callData);
                                             }
                                         });
 
@@ -130,7 +134,16 @@ angular.module('app')
                                     $window.open(url);
                                 });
 
-                                window.socket.on('cancel', function (data) {
+                                window.socket.on('cancelByRecipient', function (data) {
+                                    $localStorage.callData = data;
+                                    StopCallSound();
+                                    if ($localStorage.recipientModal && $localStorage.recipientModal.dismiss)
+                                        $localStorage.recipientModal.dismiss({send: false});
+                                    if ($localStorage.callerModal && $localStorage.callerModal.dismiss)
+                                        $localStorage.callerModal.dismiss({send: false});
+                                });
+
+                                window.socket.on('cancelByCaller', function (data) {
                                     $localStorage.callData = data;
                                     StopCallSound();
                                     if ($localStorage.recipientModal && $localStorage.recipientModal.dismiss)
@@ -242,7 +255,7 @@ angular.module('app')
                     var req = {
                         method: 'POST',
                         url: appSettings.getServerUrl() + '/resetPassword',
-                        data: {email : email}
+                        data: {new : newPassword}
                     };
                     $http(req).success(function (res) {
                         if (!res.error) {

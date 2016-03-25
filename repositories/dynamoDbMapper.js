@@ -190,36 +190,74 @@
         },
 
         createUserDetailsDbEntityFromPatient : function(patient){
+            var patientDbEntity = {
+                id: {S:patient.id},
+                name:{S:patient.name},
+                surname: {S:patient.surname},
+                email: {S:patient.email}
+            }
 
-            var fullAddress = mapAddressToDbEntity(patient.address);
-            var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
-            var allOtherIdentifiers = buildArray(patient.otherIdentifiers, mapOtherIdentifiersToDbEntity);
-            var allRelevantContacts = buildArray(patient.relevantContacts, mapRelevantContactsToDbEntity);
-            var allDevices = buildArray(patient.devices, mapDevicesToDbEntity);
-            var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
-            return {
-                    id: {S:patient.id},
-                    name:{S:patient.name},
-                    surname: {S:patient.surname},
-                    title: {S:patient.title},
-                    dateOfBirth: {N:dateOfBirthNumber},
-                    sex: {S:patient.sex},
-                    gender: {S:patient.gender},
-                    ethnicity: {S:patient.ethnicity},
-                    nhsNumber: {S:patient.nhsNumber},
-                    otherIdentifiers: {L:allOtherIdentifiers},
-                    phone: buildDynamoDbString(patient.phone),
-                    mobile: buildDynamoDbString(patient.mobile),
-                    fax: buildDynamoDbString(patient.fax),
-                    email: {S:patient.email},
-                    relevantContacts: {L:allRelevantContacts},
-                    communicationPreference:buildDynamoDbString(patient.communicationPreference),
-                    address: {M:fullAddress},
-                    avatar: buildDynamoDbString(patient.avatar),
-                    externalId: buildDynamoDbString(patient.externalId),
-                    devices: {L:allDevices},
-                    healthProblems : {L:allHealthProblems}
-            };
+            if (patient.title) { patientDbEntity.title = {S:patient.title}; }
+            if (patient.dateOfBirth) {
+                var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
+                patientDbEntity.dateOfBirth = {N:dateOfBirthNumber};
+            }
+            if (patient.sex) { patientDbEntity.dateOfBirth = {S:patient.sex}; }
+            if (patient.gender) { patientDbEntity.dateOfBirth = {S:patient.gender}; }
+            if (patient.ethnicity) { patientDbEntity.ethnicity = {S:patient.ethnicity}; }
+            if (patient.nhsNumber) { patientDbEntity.nhsNumber = {S:patient.nhsNumber}; }
+            if (patient.otherIdentifiers) {
+                var allOtherIdentifiers = buildArray(patient.otherIdentifiers, mapOtherIdentifiersToDbEntity);
+                patientDbEntity.otherIdentifiers = {L:allOtherIdentifiers};
+            }
+            if (patient.phone) { patientDbEntity.phone = buildDynamoDbString(patient.phone); }
+            if (patient.mobile) { patientDbEntity.mobile = buildDynamoDbString(patient.mobile); }
+            if (patient.fax) { patientDbEntity.fax = buildDynamoDbString(patient.fax); }
+            if (patient.relevantContacts) {
+                var allRelevantContacts = buildArray(patient.relevantContacts, mapRelevantContactsToDbEntity);
+                patientDbEntity.relevantContacts = {L:allRelevantContacts};
+            }
+            if (patient.communicationPreference) { patientDbEntity.communicationPreference = buildDynamoDbString(patient.communicationPreference); }
+            if (patient.address) {
+                var fullAddress = mapAddressToDbEntity(patient.address);
+                patientDbEntity.address = {M:fullAddress};
+            }
+            if (patient.avatar) { patientDbEntity.avatar = buildDynamoDbString(patient.avatar); }
+            if (patient.externalId) { patientDbEntity.externalId = buildDynamoDbString(patient.externalId); }
+            if (patient.devices) {
+                var allDevices = buildArray(patient.devices, mapDevicesToDbEntity);
+                patientDbEntity.devices = {L:allDevices};
+            }
+            if (patient.healthProblems) {
+                var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
+                patientDbEntity.devices = {L:allHealthProblems};
+            }
+
+            return patientDbEntity;
+
+            /*return {
+                    //id: {S:patient.id},
+                    //name:{S:patient.name},
+                    //surname: {S:patient.surname},
+                    //title: {S:patient.title},
+                    //dateOfBirth: {N:dateOfBirthNumber},
+                    //sex: {S:patient.sex},
+                    //gender: {S:patient.gender},
+                    //ethnicity: {S:patient.ethnicity},
+                    //nhsNumber: {S:patient.nhsNumber},
+                    //otherIdentifiers: {L:allOtherIdentifiers},
+                    //phone: buildDynamoDbString(patient.phone),
+                    //mobile: buildDynamoDbString(patient.mobile),
+                    //fax: buildDynamoDbString(patient.fax),
+                    //email: {S:patient.email},
+                    //relevantContacts: {L:allRelevantContacts},
+                    //communicationPreference:buildDynamoDbString(patient.communicationPreference),
+                    //address: {M:fullAddress},
+                    //avatar: buildDynamoDbString(patient.avatar),
+                    //externalId: buildDynamoDbString(patient.externalId),
+                    //devices: {L:allDevices},
+                    //healthProblems : {L:allHealthProblems}
+            };*/
         },
 
 

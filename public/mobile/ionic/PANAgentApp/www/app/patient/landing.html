@@ -1,0 +1,26 @@
+<ion-view hide-nav-bar="true">
+  <ion-content>
+    <div class="patient-landing">
+    <ion-slide-box  show-pager="true" on-slide-changed="slideHasChanged($index)">
+      <ion-slide>
+        <div class="row">
+          <div class="col">
+            <h3>Would you like to book appointments just for 1 pound per week?</h3>
+            <button padding="true" class="button button-full button-positive">Book an Appointment</button>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="row">
+          <div class="col">
+            <h3>Would you like to buy devices and we'll monitor you for free?</h3>
+            <button padding="true" class="button button-full button-assertive" ui-sref="patient.devices">Buy Devices</button>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+  </div>
+</ion-content>
+</ion-view>
+
+

@@ -358,7 +358,7 @@
                     });
                     callback(null, results);
                 }else{
-                    callback(null, null);
+                    callback(null, []);
                 }
             });
         },
