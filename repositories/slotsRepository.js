@@ -166,6 +166,7 @@
             });
         },
         getBookedSlotsByPatient:function(patientId, callback){
+            //test
             var filterExpression='';
             var startTime = new Date();
             var params = {
