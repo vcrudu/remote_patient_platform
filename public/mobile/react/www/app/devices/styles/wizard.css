@@ -23,3 +23,7 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
+
+.btn-default {
+    width: auto;
+}
