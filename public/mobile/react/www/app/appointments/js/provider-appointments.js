@@ -39,51 +39,28 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
+                { className: "list-group-item", onClick: this.handleClickDashboard },
                 React.createElement(
                     "div",
-                    { className: "panel panel-default" },
+                    { className: "row-action-primary bottom" },
+                    React.createElement("img", { src: "images/user.png", className: this.state.onlineStatus == "offline" ? "img-responsive img-circle img-border-offline" : "img-responsive img-circle img-border-online" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "row-content" },
                     React.createElement(
-                        "div",
-                        { className: "panel-heading" },
+                        "h4",
+                        { className: "list-group-item-heading" },
+                        this.props.model ? this.props.model.name : ""
+                    ),
+                    React.createElement(
+                        "p",
+                        { className: "list-group-item-text" },
+                        "Appointment Time: ",
                         React.createElement(
-                            "h3",
-                            { className: "panel-title" },
-                            this.props.model ? this.props.model.name : ""
-                        ),
-                        React.createElement(
-                            "p",
+                            "strong",
                             null,
-                            "Appointment Time: ",
-                            React.createElement(
-                                "strong",
-                                null,
-                                this.formatDate(this.props.model.slotDateTimeString)
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "panel-image hide-panel-body" },
-                        React.createElement("img", { src: "images/user.png", className: "img-responsive" })
-                    ),
-                    React.createElement("div", { className: this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online" }),
-                    React.createElement(
-                        "div",
-                        { className: "panel-footer text-center" },
-                        React.createElement(
-                            "div",
-                            { className: "row" },
-                            React.createElement(
-                                "div",
-                                { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
-                                React.createElement("img", { className: "img-responsive pull-right", src: "images/call-icon.png", width: "100", onClick: this.handleCallClick })
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
-                                React.createElement("img", { className: "img-responsive pull-left", src: "images/dashboard-icon.png", width: "100", onClick: this.handleClickDashboard })
-                            )
+                            this.formatDate(this.props.model.slotDateTimeString)
                         )
                     )
                 )
@@ -102,6 +79,8 @@
         socketCallback: function (message) {
             var event = message.data.event;
             var userId = message.data.user;
+            debugger;
+            var refs = this.refs;
             var provider = this.refs[userId];
 
             if (event == "onlineStatus") {
@@ -114,9 +93,12 @@
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function (apiResult) {
+                var orderedResult = _.sortBy(apiResult.data, function (num) {
+                    return num.slotDateTime;
+                });
                 if (apiResult.success && apiResult.data && apiResult.data.length > 0) {
                     component.setState({
-                        appointments: apiResult.data
+                        appointments: orderedResult
                     });
                 }
             });
@@ -130,7 +112,16 @@
                 "div",
                 { className: "list-group" },
                 component.state.appointments.map(function (appointment) {
-                    return React.createElement(ProviderAppointment, { ref: appointment.patientId, key: appointment.patientId, model: appointment, onCall: component.handleCall });
+                    return React.createElement(
+                        "div",
+                        { key: appointment.patientId + "_" + appointment.slotDateTime + "_div" },
+                        React.createElement(ProviderAppointment, {
+                            ref: appointment.patientId + "_" + appointment.slotDateTime,
+                            key: appointment.patientId + "_" + appointment.slotDateTime,
+                            model: appointment,
+                            onCall: component.handleCall }),
+                        React.createElement("div", { className: "list-group-separator", key: appointment.patientId + "_" + appointment.slotDateTime + "_separator" })
+                    );
                 })
             );
         }
