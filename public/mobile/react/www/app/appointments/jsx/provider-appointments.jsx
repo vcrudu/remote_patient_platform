@@ -17,7 +17,7 @@
             Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId
                 + "&appointmentTime=" + this.props.model.slotDateTimeString
                 + "&name=" + this.props.model.name
-                + "&onlineStatus=" + this.props.model.onlineStatus);
+                + "&onlineStatus=" + this.state.onlineStatus);
         },
         changeOnlineStatus: function(status) {
             this.setState({
@@ -59,13 +59,15 @@
         socketCallback: function(message) {
             var event = message.data.event;
             var userId = message.data.user;
-            debugger;
             var refs = this.refs;
-            var provider = this.refs[userId];
-
-            if (event == "onlineStatus") {
-                if (provider) {
-                    provider.changeOnlineStatus(message.data.status);
+            for (var name in refs){
+                if (name.indexOf(userId) != -1) {
+                    if (event == "onlineStatus") {
+                        var provider = this.refs[name];
+                        if (provider) {
+                            provider.changeOnlineStatus(message.data.status);
+                        }
+                    }
                 }
             }
         },
