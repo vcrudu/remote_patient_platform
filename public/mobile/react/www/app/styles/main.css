@@ -3,10 +3,15 @@
     background-color: transparent;
     text-align: center;
 }
-@import "fonts.css";
+
+@import url(fonts.css);
 
 body {
-    font-family:"NotoSansRegular";
+    font-family:"Roboto-Light";
+}
+
+.h1, .h2, .h3, .h4, body, h1, h2, h3, h4, h5, h6 {
+    font-family:"Roboto-Light";
 }
 
 .row-no-padding [class*="col-"] {
@@ -68,6 +73,7 @@ body {
     line-height:48px;
     margin:0;
     font-size:24px;
+    font-family:"Roboto-Regular";
 }
 
 /* Rules for sizing the icon. */
@@ -143,7 +149,7 @@ body {
     color:#03a9f4 !important;
     border-radius:0;
     opacity:1;
-    font-family:"NotoSansBold";
+    font-family:"Roboto-Bold";
 }
 
 .btn-next:disabled {
