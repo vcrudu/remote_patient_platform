@@ -17,6 +17,14 @@
                 onlineStatus: ""
             };
         },
+        socketCallback: function (message) {
+            var event = message.data.event;
+            var userId = message.data.user;
+
+            if (event == "onlineStatus") {
+                this.setState({ onlineStatus: message.data.status });
+            }
+        },
         componentDidMount: function () {
             var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
             var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
@@ -34,6 +42,8 @@
                     $(a.target).prev('.panel-heading').removeClass('active');
                 });
             });
+
+            Bridge.Provider.socketCallBack = this.socketCallback;
         },
         formatDate: function (dateString) {
             var date = moment(dateString);
