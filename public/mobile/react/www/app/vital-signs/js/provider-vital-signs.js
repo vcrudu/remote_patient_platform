@@ -100,6 +100,20 @@
                             )
                         )
                     )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "fixed-btn" },
+                    React.createElement(
+                        "a",
+                        { href: "javascript:void(0)", className: "btn btn-primary btn-fab" },
+                        React.createElement(
+                            "i",
+                            { className: "material-icons" },
+                            "call"
+                        ),
+                        React.createElement("div", { className: "ripple-container" })
+                    )
                 )
             );
         }

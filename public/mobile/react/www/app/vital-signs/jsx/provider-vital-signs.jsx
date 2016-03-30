@@ -87,6 +87,10 @@
                       </div>
                   </div>
               </div>
+
+                <div className="fixed-btn">
+                    <a href="javascript:void(0)" className="btn btn-primary btn-fab"><i className="material-icons">call</i><div className="ripple-container"></div></a>
+                </div>
            </div>
         }
     });
