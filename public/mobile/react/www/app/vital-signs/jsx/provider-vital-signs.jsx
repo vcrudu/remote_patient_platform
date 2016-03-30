@@ -89,7 +89,9 @@
               </div>
 
                 <div className="fixed-btn">
-                    <a href="javascript:void(0)" onClick={this.handleCallClick} className={this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab"}><i className="material-icons">call</i><div className="ripple-container"></div></a>
+                    <a href="javascript:void(0)" onClick={this.handleCallClick} className={this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab"}>
+                        <i className="material-icons">call</i><div className="ripple-container"></div>
+                    </a>
                 </div>
            </div>
         }
