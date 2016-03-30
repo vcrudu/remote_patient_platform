@@ -1,4 +1,7 @@
+@import "../../styles/fonts.css";
+
 /* chart */
+
 .graphic { width: 100%; }
 .graphic img {
     max-width: 100%;
@@ -116,4 +119,31 @@
 
 .nav-tabs {
     background-color: white;
+}
+
+.patient-banner {
+    min-height: 260px;
+    max-height: 360px;
+    position: relative;
+    background-color: #2196F3;
+    margin-bottom: 20px;
+}
+
+.patient-image-border {
+    background: white;
+    margin-top: 30px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.white {
+    color: white;
 }

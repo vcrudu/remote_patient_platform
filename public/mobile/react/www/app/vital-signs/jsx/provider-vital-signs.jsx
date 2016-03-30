@@ -44,6 +44,15 @@
             });
 
             Bridge.Provider.socketCallBack = this.socketCallback;
+
+            /*var component = this;
+            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
+            Bridge.Provider.getPatientDetails(patientId, function(result) {
+                component.setState({
+                    user: result.data
+                });
+
+            });*/
         },
         formatDate: function(dateString) {
             var date = moment(dateString);
@@ -64,21 +73,114 @@
             var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
             var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
 
-            return <div className="panel panel-default">
-               <div className="panel-heading">
-                   <h3 className="panel-title">{this.state.name ? this.state.name : name}</h3>
-                   <p>Appointment Time: <strong>{this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : appointmentTime}</strong></p>
-               </div>
-               <div className="panel-image hide-panel-body">
-                   <img src="images/user.png" className="img-responsive"/>
-               </div>
-               <div className={this.state.onlineStatus ? (this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online") : "statusBorder " + onlineStatus}></div>
-               <div className="panel-footer text-center">
-                   <div className="row">
-                       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img className="img-responsive center-block call" src="images/call-icon.png" width="100" onClick={this.handleCallClick}/></div>
-                   </div>
-               </div>
+            return <div className="patient-banner">
+              <div className="container">
+                  <div className="row">
+                      <div className="col-xs-12 col-sm-12 col-md-12">
+                          <img src="images/user.png" width="150" className="img-resonpive img-circle center-block patient-image-border"/>
+
+                      </div>
+                  </div>
+                  <div className="row">
+                      <div className="col-xs-12 col-sm-12 col-md-12">
+                          <h3 className="align-center white">{this.state.name ? this.state.name : name}</h3>
+                      </div>
+                  </div>
+              </div>
            </div>
+        }
+    });
+
+    var VitalSignCharts = React.createClass({
+        getInitState: function() {
+            var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
+            return {
+                loadCharts: false,
+                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
+                bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                heartRateDef: emptyVitalSigns.heartRateDef,
+                weightDef: emptyVitalSigns.weightDef,
+            }
+        },
+        handleChartsClick: function (state) {
+            this.setState( {
+                loadCharts: true,
+                temperatureVitalSignsDef: state.temperatureVitalSignsDef,
+                bloodPressureDef: state.bloodPressureDef,
+                bloodOxygenDef: state.bloodOxygenDef,
+                heartRateDef: state.heartRateDef,
+                weightDef: state.weightDef,
+            });
+        },
+        render: function() {
+            if (!this.state) {
+                return <div role="tabpanel" className="tab-pane" id="vital-signs">&nbsp;</div>;
+            }
+            else {
+                if (!this.state.loadCharts) {
+                    return <div role="tabpanel" className="tab-pane" id="vital-signs">&nbsp;</div>;
+                }
+                else {
+                    return <div role="tabpanel" className="tab-pane" id="vital-signs">
+                        <VitalSingChart dataSource={this.state.bloodPressureDef}
+                                        aspectWidth={16}
+                                        aspectHeight={9}
+                                        ticks={10}
+                                        mobileThreshold={500}
+                                        mobileTicks={5}
+                                        type={this.state.bloodPressureDef.measurementType}
+                                        minValue={this.state.bloodPressureDef.minValue}
+                                        yDelta={50}
+                                        label={this.state.bloodPressureDef.label}
+                                        unit={this.state.bloodPressureDef.unit} />
+                        <VitalSingChart dataSource={this.state.temperatureVitalSignsDef}
+                                        aspectWidth={16}
+                                        aspectHeight={9}
+                                        ticks={10}
+                                        mobileThreshold={500}
+                                        mobileTicks={5}
+                                        type={this.state.temperatureVitalSignsDef.measurementType}
+                                        minValue={this.state.temperatureVitalSignsDef.minValue}
+                                        yDelta={1}
+                                        label={this.state.temperatureVitalSignsDef.label}
+                                        unit={this.state.temperatureVitalSignsDef.unit} />
+                        <VitalSingChart dataSource={this.state.bloodOxygenDef}
+                                        aspectWidth={16}
+                                        aspectHeight={9}
+                                        ticks={10}
+                                        mobileThreshold={500}
+                                        mobileTicks={5}
+                                        type={this.state.bloodOxygenDef.measurementType}
+                                        minValue={this.state.bloodOxygenDef.minValue}
+                                        yDelta={5}
+                                        label={this.state.bloodOxygenDef.label}
+                                        unit={this.state.bloodOxygenDef.unit} />
+                        <VitalSingChart dataSource={this.state.heartRateDef}
+                                        aspectWidth={16}
+                                        aspectHeight={9}
+                                        ticks={10}
+                                        mobileThreshold={500}
+                                        mobileTicks={5}
+                                        type={this.state.heartRateDef.measurementType}
+                                        minValue={this.state.heartRateDef.minValue}
+                                        yDelta={5}
+                                        label={this.state.heartRateDef.label}
+                                        unit={this.state.heartRateDef.unit} />
+                        <VitalSingChart dataSource={this.state.weightDef}
+                                        aspectWidth={16}
+                                        aspectHeight={9}
+                                        ticks={10}
+                                        mobileThreshold={500}
+                                        mobileTicks={5}
+                                        type={this.state.weightDef.measurementType}
+                                        minValue={this.state.weightDef.minValue}
+                                        yDelta={0}
+                                        label={this.state.weightDef.label}
+                                        unit={this.state.weightDef.unit} />
+                    </div>
+                }
+            }
         }
     });
 
@@ -504,7 +606,7 @@
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
             return {
                 temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
-                bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
                 bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
                 heartRateDef: emptyVitalSigns.heartRateDef,
                 weightDef: emptyVitalSigns.weightDef,
@@ -512,8 +614,21 @@
             }
         },
         componentDidMount: function() {
+            var userId = Bridge.Redirect.getQueryStringParam()["userId"];
+            var component = this;
+
+            Bridge.Provider.getPatientDetails(userId, function(result) {
+                component.setState({
+                    user: result.data
+                });
+            });
+        },
+        handleChartsClick: function () {
             var component = this;
             if (Modernizr.svg) { // if svg is supported, draw dynamic chart
+                if (component.refs["vitalSignCharts"].loadCharts) {
+                    return;
+                }
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
                 var vitalSigns = Bridge.Provider.getPatientVitalSigns(userId, function(result) {
                     if (result.success) {
@@ -526,11 +641,7 @@
                                 heartRateDef: newDataSource.heartRateDef,
                                 weightDef: newDataSource.weightDef,
                             });
-                        Bridge.Provider.getPatientDetails(userId, function(result) {
-                            component.setState({
-                                    user: result.data
-                                });
-                        });
+                        component.refs["vitalSignCharts"].handleChartsClick(component.state);
                     }
                 });
             }
@@ -541,81 +652,87 @@
         render: function() {
             var component = this;
             return <div>
-                <PatientDetails user={this.state.user} onCall={component.handleCall}/>
-                <div className="card">
-                    <ul className="nav nav-tabs" role="tablist">
-                        <li role="presentation" className="active">
-                            <a href="#vital-signs" aria-controls="vital-signs" role="tab" data-toggle="tab">
-                                <img src="images/icon-reports.png" width="50"/>
-                            </a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#user-details" aria-controls="vital-signs" role="tab" data-toggle="tab">
-                                <img src="images/icon-person.png" width="50"/>
-                            </a>
-                        </li>
-                    </ul>
+                <PatientDetails onCall={component.handleCall}/>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xs-12 col-sm-12 col-md-12">
+                            <div className="card">
+                                <ul className="nav nav-tabs" role="tablist">
+                                    <li role="presentation" className="active">
+                                        <a href="#user-details" aria-controls="vital-signs" role="tab" data-toggle="tab">
+                                            <img src="images/icon-person.png" width="50"/> <span>User Details</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" onClick={this.handleChartsClick}>
+                                        <a href="#vital-signs" aria-controls="vital-signs" role="tab" data-toggle="tab">
+                                            <img src="images/icon-reports.png" width="50"/> <span>Vital Signs</span>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                    <div className="tab-content">
-                        <div role="tabpanel" className="tab-pane active" id="vital-signs">
-                            <VitalSingChart dataSource={this.state.bloodPressureDef}
-                                            aspectWidth={16}
-                                            aspectHeight={9}
-                                            ticks={10}
-                                            mobileThreshold={500}
-                                            mobileTicks={5}
-                                            type={this.state.bloodPressureDef.measurementType}
-                                            minValue={this.state.bloodPressureDef.minValue}
-                                            yDelta={50}
-                                            label={this.state.bloodPressureDef.label}
-                                            unit={this.state.bloodPressureDef.unit} />
-                            <VitalSingChart dataSource={this.state.temperatureVitalSignsDef}
-                                            aspectWidth={16}
-                                            aspectHeight={9}
-                                            ticks={10}
-                                            mobileThreshold={500}
-                                            mobileTicks={5}
-                                            type={this.state.temperatureVitalSignsDef.measurementType}
-                                            minValue={this.state.temperatureVitalSignsDef.minValue}
-                                            yDelta={1}
-                                            label={this.state.temperatureVitalSignsDef.label}
-                                            unit={this.state.temperatureVitalSignsDef.unit} />
-                            <VitalSingChart dataSource={this.state.bloodOxygenDef}
-                                            aspectWidth={16}
-                                            aspectHeight={9}
-                                            ticks={10}
-                                            mobileThreshold={500}
-                                            mobileTicks={5}
-                                            type={this.state.bloodOxygenDef.measurementType}
-                                            minValue={this.state.bloodOxygenDef.minValue}
-                                            yDelta={5}
-                                            label={this.state.bloodOxygenDef.label}
-                                            unit={this.state.bloodOxygenDef.unit} />
-                            <VitalSingChart dataSource={this.state.heartRateDef}
-                                            aspectWidth={16}
-                                            aspectHeight={9}
-                                            ticks={10}
-                                            mobileThreshold={500}
-                                            mobileTicks={5}
-                                            type={this.state.heartRateDef.measurementType}
-                                            minValue={this.state.heartRateDef.minValue}
-                                            yDelta={5}
-                                            label={this.state.heartRateDef.label}
-                                            unit={this.state.heartRateDef.unit} />
-                            <VitalSingChart dataSource={this.state.weightDef}
-                                            aspectWidth={16}
-                                            aspectHeight={9}
-                                            ticks={10}
-                                            mobileThreshold={500}
-                                            mobileTicks={5}
-                                            type={this.state.weightDef.measurementType}
-                                            minValue={this.state.weightDef.minValue}
-                                            yDelta={0}
-                                            label={this.state.weightDef.label}
-                                            unit={this.state.weightDef.unit} />
-                        </div>
-                        <div role="tabpanel" className="tab-pane" id="user-details">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                <div className="tab-content">
+                                    <div role="tabpanel" className="tab-pane active" id="user-details">
+                                        <div className="list-group">
+                                            <div className="list-group-item">
+                                                <div className="row-action-primary">
+                                                    <i className="material-icons">call</i>
+                                                </div>
+                                                <div className="row-content">
+                                                    <div className="action-secondary"><i className="material-icons">message</i></div>
+                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.mobile : ""}</h4>
+                                                    <p className="list-group-item-text">Mobile</p>
+                                                </div>
+                                            </div>
+                                            <div className="list-group-separator"></div>
+                                            <div className="list-group-item">
+                                                <div className="row-action-primary">
+                                                    <i className="material-icons">email</i>
+                                                </div>
+                                                <div className="row-content">
+                                                    <div className="action-secondary"><i className="material-icons">message</i></div>
+                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.email : ""}</h4>
+                                                    <p className="list-group-item-text">Home</p>
+                                                </div>
+                                            </div>
+                                            <div className="list-group-separator"></div>
+                                            <div className="list-group-item">
+                                                <div className="row-action-primary">
+                                                    <i className="material-icons">place</i>
+                                                </div>
+                                                <div className="row-content">
+                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.addressLine1 : ""}</h5>
+                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.town : ""}</h5>
+                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.county : ""}</h5>
+                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.country : ""}</h5>
+                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.postCode : ""}</h5>
+                                                    <p className="list-group-item-text">Address</p>
+                                                </div>
+                                            </div>
+                                            <div className="list-group-separator"></div>
+                                            <div className="list-group-item">
+                                                <div className="row-action-primary">
+                                                    <i className="material-icons">group</i>
+                                                </div>
+                                                <div className="row-content">
+                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.sex : ""}</h4>
+                                                    <p className="list-group-item-text">Sex</p>
+                                                </div>
+                                            </div>
+                                            <div className="list-group-separator"></div>
+                                            <div className="list-group-item">
+                                                <div className="row-action-primary">
+                                                    <i className="material-icons">assignment</i>
+                                                </div>
+                                                <div className="row-content">
+                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.nhsNumber : ""}</h4>
+                                                    <p className="list-group-item-text">NHS Number</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <VitalSignCharts ref="vitalSignCharts"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
