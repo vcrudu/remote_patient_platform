@@ -59,7 +59,7 @@
         },
         handleCallClick: function () {
             var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            var onlineStatus = this.state.onlineStatus; //decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
             if (this.props.onCall) {
                 if (onlineStatus == "offline") {
                     return;
@@ -106,7 +106,7 @@
                     { className: "fixed-btn" },
                     React.createElement(
                         "a",
-                        { href: "javascript:void(0)", className: "btn btn-primary btn-fab" },
+                        { href: "javascript:void(0)", onClick: this.handleCallClick, className: this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab" },
                         React.createElement(
                             "i",
                             { className: "material-icons" },

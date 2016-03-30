@@ -60,7 +60,7 @@
         },
         handleCallClick: function() {
             var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            var onlineStatus = this.state.onlineStatus; //decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
             if (this.props.onCall) {
                 if (onlineStatus == "offline") {
                     return;
@@ -89,7 +89,7 @@
               </div>
 
                 <div className="fixed-btn">
-                    <a href="javascript:void(0)" className="btn btn-primary btn-fab"><i className="material-icons">call</i><div className="ripple-container"></div></a>
+                    <a href="javascript:void(0)" onClick={this.handleCallClick} className={this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab"}><i className="material-icons">call</i><div className="ripple-container"></div></a>
                 </div>
            </div>
         }
