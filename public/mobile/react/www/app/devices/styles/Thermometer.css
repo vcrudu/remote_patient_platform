@@ -1,5 +1,8 @@
+@import "../../styles/fonts.css";
+
 #thermometer {
     margin-top: -80px;
+    background:#ffffff;
 }
 
 #thermometer-measure {
