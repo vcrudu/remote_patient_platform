@@ -401,26 +401,26 @@
                     return "";
                 }
 
-                if (width <= props.mobileThreshold) {
+                /*if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
-                } else {
-                    var fmt = d3.time.format('%b-%d');
-                    return fmt(d);
-                }
+                } else {*/
+                var fmt = d3.time.format('%b-%d');
+                return fmt(d);
+                /*}*/
             }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function (d, i) {
                 if (i == 0 || i == uniqueArray.length - 1) {
                     return "";
                 }
 
-                if (width <= props.mobileThreshold) {
+                /*if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
-                } else {
-                    var fmt = d3.time.format('%b-%d');
-                    return fmt(d);
-                }
+                } else {*/
+                var fmt = d3.time.format('%b-%d');
+                return fmt(d);
+                /*}*/
             }).tickValues(uniqueArray);
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
