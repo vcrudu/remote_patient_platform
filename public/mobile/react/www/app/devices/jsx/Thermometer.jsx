@@ -45,6 +45,7 @@
                                 doneButtonVisibility: true,
                                 deviceAddress: result.data.address
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                     }
                 }
