@@ -125,6 +125,7 @@
                                         appointmentReason: $scope.reasonText
                                     },
                                     function (success) {
+                                        $('#calendarBook').fullCalendar('refetchEvents');
                                         $modalInstance.close($scope.reasonText);
                                     }, function (error) {
                                         $modalInstance.close($scope.reasonText);
@@ -257,6 +258,7 @@
                                     },
 
                                     function (success) {
+                                        $('#calendarBook').fullCalendar('refetchEvents');
                                         $modalInstance.close($scope.scheduleValue);
                                     }, function (error) {
                                         $scope.serverError = true;
