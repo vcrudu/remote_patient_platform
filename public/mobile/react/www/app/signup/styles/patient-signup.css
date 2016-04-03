@@ -2,6 +2,8 @@
 
 body {
     background:#fafafa;
+    font-size:24px;
+    font-family: "Roboto-Light";
 }
 
 .header {
@@ -10,12 +12,13 @@ body {
 
 .form-group {
     position:relative;
-    margin-left:70px;
+   margin-right:-15px;
+    margin-left:60px;
 }
 
 .form-group > i {
     position:absolute;
-    left:-70px;
+    left:-60px;
     width:40px;
 }
 

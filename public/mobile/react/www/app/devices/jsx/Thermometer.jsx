@@ -45,6 +45,7 @@
                                 doneButtonVisibility: true,
                                 deviceAddress: result.data.address
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                     }
                 }
@@ -78,12 +79,12 @@
             });
         },
         render: function() {
-            return <div className="row buttonsContainer">
-                <div className="col-xs-8">
+            return <div className="row has-separator buttons-container">
+                <div className="col-xs-6">
                 </div>
-                <div className="col-xs-4">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Next" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                <div className="col-xs-6">
+                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Next" onClick={this.handleNext}></input> : null }
+                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
                 </div>
             </div>
         }

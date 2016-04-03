@@ -84,24 +84,37 @@
     module.exports  = {
 
         mapToDbEntity : function(item){
-            var fullAddress = mapAddressToDbEntity(item.address);
-            var allContactDetails = buildArray(item.getContactDetails(), mapContactDetailsToDbEntity);
-            var allAvailabilities = buildArray(item.getAvailabilities(), mapAvailabilitiesToDbEntity);
-            return {
-                id : {S : item.id},
-                email : {S : item.email},
-                title : {S : item.title},
-                name : {S : item.name},
-                surname : {S : item.surname},
-                practiceName : {S : item.practiceName},
-                practiceIdentifier : {S : item.practiceIdentifier},
-                providerType : {S : item.providerType},
-                address: {M:fullAddress},
-                contactDetails: {L:allContactDetails},
-                availabilityType: {S : item.availabilityType},
-                availabilities: {L:allAvailabilities}
+            if (item.agent!=='mobile') {
+                var fullAddress = mapAddressToDbEntity(item.address);
+                var allContactDetails = buildArray(item.getContactDetails(), mapContactDetailsToDbEntity);
+                var allAvailabilities = buildArray(item.getAvailabilities(), mapAvailabilitiesToDbEntity);
 
-            };
+                return {
+                    id: {S: item.id},
+                    email: {S: item.email},
+                    title: {S: item.title},
+                    name: {S: item.name},
+                    surname: {S: item.surname},
+                    practiceName: {S: item.practiceName},
+                    practiceIdentifier: {S: item.practiceIdentifier},
+                    providerType: {S: item.providerType},
+                    address: {M: fullAddress},
+                    contactDetails: {L: allContactDetails},
+                    availabilityType: {S: item.availabilityType},
+                    availabilities: {L: allAvailabilities}
+
+                };
+            } else {
+                return {
+                    id: {S: item.id},
+                    email: {S: item.email},
+                    title: {S: 'Mr.'},
+                    name: {S: item.name},
+                    surname: {S: item.surname},
+                    availabilityType: {S: 'regular'},
+                    availabilities: {L: []}
+                };
+            }
         },
 
         mapFromDbEntity : function(dbEntity){
