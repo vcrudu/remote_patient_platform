@@ -42,26 +42,8 @@
                 retryButtonVisibility: false
             });
 
-            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
-                if (result.success) {
-                    switch (result.data.status) {
-                        case "paired":
-                            component.setState({
-                                doneButtonVisibility: true,
-                                cancelButtonVisibility: false,
-                                retryButtonVisibility: false,
-                                deviceAddress: result.data.address
-                            });
-                            break;
-                    }
-                } else {
-                    component.setState({
-                        doneButtonVisibility: false,
-                        cancelButtonVisibility: true,
-                        retryButtonVisibility: true
-                    });
-                }
-            });
+            $(component.props.carouselWizard).carousel("prev");
+            this.componentDidMount();
         },
         handleNext: function () {
             var component = this;
@@ -83,6 +65,7 @@
                                 retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                     }
                 } else {
@@ -127,14 +110,18 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "row buttonsContainer" },
+                { className: "row has-separator buttons-container" },
                 React.createElement(
                     "div",
-                    { className: "col-xs-12" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null,
-                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Cancel", onClick: this.handleCancel }) : null,
-                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Retry", onClick: this.handleRetry }) : null
+                    { className: "col-xs-6" },
+                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                ),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null,
+                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Retry", onClick: this.handleRetry }) : null
                 )
             );
         }

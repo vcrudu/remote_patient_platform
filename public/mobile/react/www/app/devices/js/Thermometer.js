@@ -14,6 +14,8 @@
             return {
                 nextButtonVisibility: false,
                 doneButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false,
                 deviceAddress: undefined
             };
         },
@@ -31,12 +33,26 @@
                 }
             });
         },
+        handleRetry: function () {
+            var component = this;
+
+            component.setState({
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false
+            });
+
+            $(component.props.carouselWizard).carousel("prev");
+            this.componentDidMount();
+        },
         handleNext: function () {
             var component = this;
 
             $(this.props.carouselWizard).carousel("next");
             component.setState({
-                nextButtonVisibility: false
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false
             });
 
             Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
@@ -45,13 +61,24 @@
                         case "paired":
                             component.setState({
                                 doneButtonVisibility: true,
+                                cancelButtonVisibility: false,
+                                retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
                             $(component.props.carouselWizard).carousel("next");
                             break;
                     }
+                } else {
+                    component.setState({
+                        doneButtonVisibility: false,
+                        cancelButtonVisibility: true,
+                        retryButtonVisibility: true
+                    });
                 }
             });
+        },
+        handleCancel: function () {
+            Bridge.Redirect.redirectTo("patient-my-devices.html");
         },
         handleDone: function () {
             var availableDevices = [];
@@ -84,12 +111,17 @@
             return React.createElement(
                 "div",
                 { className: "row has-separator buttons-container" },
-                React.createElement("div", { className: "col-xs-6" }),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                ),
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
                     this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null,
+                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Retry", onClick: this.handleRetry }) : null
                 )
             );
         }
