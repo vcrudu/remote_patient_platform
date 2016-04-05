@@ -13,12 +13,30 @@
 }
 
 .use-steps {
-    text-align:left;
+    counter-reset: my-badass-counter;
+    text-align: left;
+    list-style-type: none;
+}
+
+.use-steps > li {
+    padding-left:10px;
+    position:relative;
+    padding-bottom:15px;
+}
+
+.use-steps > li:before {
+    content: counter(my-badass-counter);
+    counter-increment: my-badass-counter;
+    position:absolute;
+    left:-30px;
+    font-size:24px;
 }
 
 .carousel-caption.first-step {
     margin-bottom:0;
 }
+
+
 
 /* -------------------------------------- *\
     #Landscape Orientation Only
