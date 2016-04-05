@@ -1,5 +1,9 @@
-html,body{
-    height:100%;
+@import "../../styles/fonts.css";
+
+html,
+body {
+    height: 100%;
+    background:#ffffff;
 }
 
 .container {
