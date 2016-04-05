@@ -1,5 +1,8 @@
+@import "../../styles/fonts.css";
+
 #blood-oxygen {
     margin-top: -80px;
+    background:#ffffff;
 }
 
 #blood-oxygen-measure {
@@ -8,4 +11,15 @@
 
 .btn-default {
     width: auto;
+}
+
+/* -------------------------------------- *\
+    #Landscape Orientation Only
+\* -------------------------------------- */
+@media screen and (orientation:landscape) {
+    #blood-oxygen {
+        background: #ffffff none repeat scroll 0 0;
+        margin-top: 50px;
+        position:static;
+    }
 }
