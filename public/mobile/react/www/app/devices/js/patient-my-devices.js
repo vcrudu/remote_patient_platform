@@ -10,6 +10,27 @@
     var PairedDevice = React.createClass({
         displayName: "PairedDevice",
 
+        getInitialState: function () {
+            return {
+                deviceIcon: ""
+            };
+        },
+        componentDidMount: function () {
+            switch (this.props.modelType) {
+                case "Temperature":
+                    this.setState({ deviceIcon: "images/thermometer-icon.png" });
+                    break;
+                case "BloodOxygen":
+                    this.setState({ deviceIcon: "images/oximeter-icon.png" });
+                    break;
+                case "BloodPressure":
+                    this.setState({ deviceIcon: "images/UA-767PBT-Ci.png" });
+                    break;
+                case "Weight":
+                    this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
+                    break;
+            }
+        },
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -49,7 +70,7 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-4" },
-                        React.createElement("img", { src: "images/" + this.props.model + ".png", className: "img-responsive device-image" })
+                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
                 )
             );
@@ -59,6 +80,27 @@
     var Device = React.createClass({
         displayName: "Device",
 
+        getInitialState: function () {
+            return {
+                deviceIcon: ""
+            };
+        },
+        componentDidMount: function () {
+            switch (this.props.modelType) {
+                case "Temperature":
+                    this.setState({ deviceIcon: "images/thermometer-icon.png" });
+                    break;
+                case "BloodOxygen":
+                    this.setState({ deviceIcon: "images/oximeter-icon.png" });
+                    break;
+                case "BloodPressure":
+                    this.setState({ deviceIcon: "images/UA-767PBT-Ci.png" });
+                    break;
+                case "Weight":
+                    this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
+                    break;
+            }
+        },
         handleDeviceItemClick: function (e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -98,7 +140,7 @@
                     React.createElement(
                         "div",
                         { className: "col-xs-4" },
-                        React.createElement("img", { src: "images/" + this.props.model + ".png", className: "img-responsive device-image" })
+                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
                 )
             );

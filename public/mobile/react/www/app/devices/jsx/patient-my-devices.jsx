@@ -8,6 +8,28 @@
     $.material.init();
 
     var PairedDevice = React.createClass({
+        getInitialState: function() {
+            return {
+                deviceIcon: "",
+            }
+        },
+        componentDidMount: function() {
+            switch (this.props.modelType)
+            {
+                case "Temperature":
+                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    break;
+                case "BloodOxygen":
+                    this.setState({deviceIcon: "images/oximeter-icon.png"})
+                    break;
+                case "BloodPressure":
+                    this.setState({deviceIcon: "images/UA-767PBT-Ci.png"})
+                    break;
+                case "Weight":
+                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
+                    break;
+            }
+        },
         handleDeviceItemClick: function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -32,7 +54,7 @@
                         <p>{this.props.description}</p>
                     </div>
                     <div className="col-xs-4">
-                        <img src={"images/" + this.props.model + ".png"} className="img-responsive device-image"/>
+                        <img src={this.state.deviceIcon} className="img-responsive device-image"/>
                     </div>
                 </div>
             </div>
@@ -40,6 +62,28 @@
     });
 
     var Device = React.createClass({
+        getInitialState: function() {
+            return {
+                deviceIcon: "",
+            }
+        },
+        componentDidMount: function() {
+            switch (this.props.modelType)
+            {
+                case "Temperature":
+                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    break;
+                case "BloodOxygen":
+                    this.setState({deviceIcon: "images/oximeter-icon.png"})
+                    break;
+                case "BloodPressure":
+                    this.setState({deviceIcon: "images/UA-767PBT-Ci.png"})
+                    break;
+                case "Weight":
+                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
+                    break;
+            }
+        },
         handleDeviceItemClick: function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -64,7 +108,7 @@
                         <p>{this.props.description}</p>
                     </div>
                     <div className="col-xs-4">
-                        <img src={"images/" + this.props.model + ".png"} className="img-responsive device-image"/>
+                        <img src={this.state.deviceIcon} className="img-responsive device-image"/>
                     </div>
                 </div>
             </div>
