@@ -74,7 +74,7 @@
         },
         render: function() {
             return <div className="container">
-                <div className="row">
+                <div className="row has-separator buttons-container">
                     <div className="col-xs-6">
                         { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }
                     </div>
@@ -82,12 +82,12 @@
                         { this.state.value ? "Pulse: " +  this.state.value.pr : null }
                     </div>
                 </div>
-                <div className="row buttonsContainer">
+                <div className="row has-separator buttons-container">
                     <div className="col-xs-12">
-                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Confirm" onClick={this.handleNext}></input> : null }
-                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default" value="Try Again" onClick={this.handleTryAgain}></input> : null }
-                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default" value="Cancel" onClick={this.handleCancel}></input> : null }
-                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Try Again" onClick={this.handleTryAgain}></input> : null }
+                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Cancel" onClick={this.handleCancel}></input> : null }
+                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Confirm" onClick={this.handleNext}></input> : null }
+                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
                     </div>
                 </div>
             </div>

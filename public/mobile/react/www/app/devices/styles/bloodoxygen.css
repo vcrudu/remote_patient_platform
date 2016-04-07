@@ -17,7 +17,7 @@
     #Landscape Orientation Only
 \* -------------------------------------- */
 @media screen and (orientation:landscape) {
-    #blood-oxygen {
+    #blood-oxygen, #blood-oxygen-measure {
         background: #ffffff none repeat scroll 0 0;
         margin-top: 50px;
         position:static;
