@@ -278,7 +278,7 @@
                                  validators={["required"]}
                                  validatorMessages={["Surname is required."]} />
                 <ValidationInput inputLabel="Given name"
-                                 inputIconName="person outline"
+                                 inputIconName="person"
                                  inputType="text"
                                  inputName="givenNameSurname"
                                  inputId="givenNameSurname"
@@ -287,7 +287,7 @@
                                  validators={["required"]}
                                  validatorMessages={["Given Name is required."]} />
                 <ValidationInput inputLabel="Phone"
-                                 inputIconName="phone outline"
+                                 inputIconName="phone"
                                  inputType="text"
                                  inputName="phoneNumber"
                                  inputId="phoneNumber"

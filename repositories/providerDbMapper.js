@@ -111,6 +111,7 @@
                     title: {S: 'Mr.'},
                     name: {S: item.name},
                     surname: {S: item.surname},
+                    phone: {S: item.phone},
                     availabilityType: {S: 'regular'},
                     availabilities: {L: []}
                 };
