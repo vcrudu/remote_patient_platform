@@ -33,7 +33,7 @@ body {
     position:fixed;
     bottom:0;
     padding:8px 0;
-    height:70px;
+    min-height:70px;
 }
 
 .buttons-group .btn {

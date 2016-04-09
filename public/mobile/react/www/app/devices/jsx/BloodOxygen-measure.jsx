@@ -75,10 +75,10 @@
         render: function() {
             return <div className="container">
                 <div className="row has-separator buttons-container">
-                    <div className="col-xs-6">
+                    <div className="col-xs-6 text-center">
                         { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }
                     </div>
-                    <div className="col-xs-6">
+                    <div className="col-xs-6 text-center">
                         { this.state.value ? "Pulse: " +  this.state.value.pr : null }
                     </div>
                 </div>

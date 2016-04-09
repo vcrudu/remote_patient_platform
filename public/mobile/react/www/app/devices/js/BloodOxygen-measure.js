@@ -83,12 +83,12 @@
                     { className: "row has-separator buttons-container" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-6" },
+                        { className: "col-xs-6 text-center" },
                         this.state.value ? "SPO2: " + this.state.value.spo2 : null
                     ),
                     React.createElement(
                         "div",
-                        { className: "col-xs-6" },
+                        { className: "col-xs-6 text-center" },
                         this.state.value ? "Pulse: " + this.state.value.pr : null
                     )
                 ),
