@@ -24,6 +24,9 @@
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
+                        case "measure-taking":
+                            $(component.props.carouselWizard).carousel("next");
+                            break;
                         case "measure-received":
                             component.setState({
                                 nextButtonVisibility: true,
@@ -31,6 +34,7 @@
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
                             component.setState({
