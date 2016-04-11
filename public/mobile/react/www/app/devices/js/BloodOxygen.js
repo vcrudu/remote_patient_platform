@@ -49,6 +49,7 @@
             var component = this;
 
             $(this.props.carouselWizard).carousel("next");
+
             component.setState({
                 nextButtonVisibility: false,
                 cancelButtonVisibility: false,
@@ -65,7 +66,7 @@
                                 retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
-                            $(component.props.carouselWizard).carousel("next");
+                            $(component.props.carouselWizard).carousel(2);
                             break;
                     }
                 } else {
