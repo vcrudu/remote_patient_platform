@@ -87,9 +87,11 @@
                     </div>
                 </div>
                 <div className="row has-separator buttons-container">
-                    <div className="col-xs-12">
-                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Try Again" onClick={this.handleTryAgain}></input> : null }
-                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Cancel" onClick={this.handleCancel}></input> : null }
+                    <div className="col-xs-6">
+                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
+                    </div>
+                    <div className="col-xs-6">
+                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Try Again" onClick={this.handleTryAgain}></input> : null }
                         { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Confirm" onClick={this.handleNext}></input> : null }
                         { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
                     </div>

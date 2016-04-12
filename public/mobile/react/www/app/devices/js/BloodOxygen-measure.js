@@ -101,9 +101,13 @@
                     { className: "row has-separator buttons-container" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-12" },
-                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Try Again", onClick: this.handleTryAgain }) : null,
-                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Cancel", onClick: this.handleCancel }) : null,
+                        { className: "col-xs-6" },
+                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-6" },
+                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Try Again", onClick: this.handleTryAgain }) : null,
                         this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Confirm", onClick: this.handleNext }) : null,
                         this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
                     )

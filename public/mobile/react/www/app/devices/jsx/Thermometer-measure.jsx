@@ -30,6 +30,7 @@
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
                             component.setState({
@@ -50,7 +51,6 @@
         },
         handleNext: function() {
             var component = this;
-
             $(this.props.carouselWizard).carousel("next");
             component.setState({
                 nextButtonVisibility: false,
@@ -75,17 +75,19 @@
         },
         render: function() {
             return <div className="container">
-                <div className="row">
-                    <div className="col-xs-6">
+                <div className="row row-data-cells">
+                    <div className="col-xs-12 data-cell">
                         { this.state.value ? "Temperature: " +  this.state.value.temperature : null }
                     </div>
                 </div>
-                <div className="row buttonsContainer">
-                    <div className="col-xs-12">
-                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Confirm" onClick={this.handleNext}></input> : null }
-                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default" value="Try Again" onClick={this.handleTryAgain}></input> : null }
-                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default" value="Cancel" onClick={this.handleCancel}></input> : null }
-                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
+                <div className="row has-separator buttons-container">
+                    <div className="col-xs-6">
+                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
+                    </div>
+                    <div className="col-xs-6">
+                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Confirm" onClick={this.handleNext}></input> : null }
+                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Try Again" onClick={this.handleTryAgain}></input> : null }
+                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
                     </div>
                 </div>
             </div>

@@ -31,6 +31,7 @@
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
                             component.setState({
@@ -51,7 +52,6 @@
         },
         handleNext: function () {
             var component = this;
-
             $(this.props.carouselWizard).carousel("next");
             component.setState({
                 nextButtonVisibility: false,
@@ -80,23 +80,27 @@
                 { className: "container" },
                 React.createElement(
                     "div",
-                    { className: "row" },
+                    { className: "row row-data-cells" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-6" },
+                        { className: "col-xs-12 data-cell" },
                         this.state.value ? "Temperature: " + this.state.value.temperature : null
                     )
                 ),
                 React.createElement(
                     "div",
-                    { className: "row buttonsContainer" },
+                    { className: "row has-separator buttons-container" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-12" },
-                        this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Confirm", onClick: this.handleNext }) : null,
-                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Try Again", onClick: this.handleTryAgain }) : null,
-                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Cancel", onClick: this.handleCancel }) : null,
-                        this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
+                        { className: "col-xs-6" },
+                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-xs-6" },
+                        this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Confirm", onClick: this.handleNext }) : null,
+                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Try Again", onClick: this.handleTryAgain }) : null,
+                        this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
                     )
                 )
             );
