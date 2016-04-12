@@ -13,6 +13,19 @@
     width: auto;
 }
 
+.row-data-cells {
+    background:#ffffff;
+    margin-top:-9px;
+}
+
+.row-data-cells > .data-cell  {
+    padding:10px;
+    text-align: center;
+    font-size:18px;
+    color:#8bc34a;
+    text-align: center;
+}
+
 /* -------------------------------------- *\
     #Landscape Orientation Only
 \* -------------------------------------- */

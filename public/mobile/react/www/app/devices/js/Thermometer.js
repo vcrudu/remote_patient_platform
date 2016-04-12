@@ -65,7 +65,7 @@
                                 retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
-                            $(component.props.carouselWizard).carousel("next");
+                            $(component.props.carouselWizard).carousel(2);
                             break;
                     }
                 } else {
