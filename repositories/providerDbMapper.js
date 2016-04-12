@@ -111,8 +111,8 @@
                     title: {S: 'Mr.'},
                     name: {S: item.name},
                     surname: {S: item.surname},
-                    phone: {S: item.phone},
                     availabilityType: {S: 'regular'},
+                    contactDetails: {L: [{"M": {"contactType": {"S": "Phone"}, "contact": {"S": item.phone}}}]},
                     availabilities: {L: []}
                 };
             }
