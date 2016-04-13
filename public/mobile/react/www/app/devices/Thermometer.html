@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>JPD-FR100+</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
+    <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
+    <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
+    <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
     <link rel="stylesheet" href="../lib/bootstrap-material-design-icons/css/material-icons.min.css">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
@@ -73,6 +77,16 @@
         $(".carousel").carousel({
             interval: 0 //changes the speed
         });
+    });
+
+    $(window).resize(function() {
+        if (window.outerHeight < window.outerWidth) {
+            console.log("orientation changed");
+        } else if (window.outerHeight > window.outerWidth) {
+            console.log("orientation changed");
+        }
+
+        window.location.href = window.location.href;
     });
 
 </script>

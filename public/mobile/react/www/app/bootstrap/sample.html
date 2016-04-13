@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>UC-355PBT-Ci</title>
+    <title>Sample</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
@@ -13,30 +13,10 @@
     <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
-
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="styles/wizard.css">
-    <link rel="stylesheet" href="styles/UC-355PBT-Ci.css">
 </head>
 <body>
 
-<!-- Full Page Image Background Carousel Header -->
-<header id="wizard" class="carousel slide">
-    <!-- Wrapper for Slides -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <!-- Set the first background image using inline CSS below. -->
-            <div class="fill" style="background-image:url('images/UC-355PBT-Ci%20Slide%20One.png');"></div>
-        </div>
-        <div class="item">
-            <!-- Set the second background image using inline CSS below. -->
-            <div class="fill" style="background-image:url('images/UC-355PBT-Ci%20Slide%20Two.png');"></div>
-        </div>
-    </div>
-
-    <div id="uc-355pbt-ci" class="container">
-    </div>
-</header>
+<button class="btn-footer">Hello</button>
 
 <script type="text/javascript" src="../model/EventBus.js"></script>
 <script type="text/javascript" src="../model/Bridge.js"></script>
@@ -49,8 +29,6 @@
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
 
-<script type="text/javascript" src="js/UC-355PBT-Ci.js"></script>
-
 <script>
     $(document).ready(function() {
         $("body").height($(window).height());
@@ -59,15 +37,8 @@
         });
     });
 
-    $(window).resize(function() {
-        if (window.outerHeight < window.outerWidth) {
-            console.log("orientation changed");
-        } else if (window.outerHeight > window.outerWidth) {
-            console.log("orientation changed");
-        }
+    alert(window.devicePixelRatio);
 
-        window.location.href = window.location.href;
-    });
 </script>
 </body>
 </html>

@@ -136,6 +136,15 @@
         $("body").css({visibility: "visible"});
     });
 
+    $(window).resize(function() {
+        if (window.outerHeight < window.outerWidth) {
+            console.log("orientation changed");
+        } else if (window.outerHeight > window.outerWidth) {
+            console.log("orientation changed");
+        }
+
+        window.location.href = window.location.href;
+    });
 </script>
 </body>
 </html>
