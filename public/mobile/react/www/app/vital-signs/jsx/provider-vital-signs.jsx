@@ -65,7 +65,7 @@
                 if (onlineStatus == "offline") {
                     return;
                 }
-                this.props.onCall(patientId);
+                this.props.onCall(patientId, this.state.name);
             }
         },
         render: function() {
@@ -652,8 +652,8 @@
                 });
             }
         },
-        handleCall: function(patientId) {
-            Bridge.Provider.callPatient(patientId, function(callResult) {});
+        handleCall: function(patientId, patientName) {
+            Bridge.Provider.callPatient(patientId, patientName, function(callResult) {});
         },
         render: function() {
             var component = this;
