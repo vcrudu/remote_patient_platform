@@ -129,6 +129,10 @@ body {
 
 }
 
+.green-text {
+    color:#8bc34a;
+}
+
 .btn-login {
     color:#8bc34a !important;
 }

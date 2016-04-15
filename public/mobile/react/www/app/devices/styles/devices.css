@@ -19,6 +19,13 @@ body {
     height: 100%;
 }
 
+.list-group .list-group-separator.full-width::before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    content: "";
+    float: right;
+    width: 100%;
+}
+
 .addDeviceOverlay {
     height: 100%;
     width: 100%;
@@ -32,4 +39,12 @@ body {
 
 .btn-default {
     width: auto;
+}
+
+.bottom-container {
+    position:absolute;
+    bottom:0;
+    padding:15px 0;
+    left:15px;
+    right:15px;
 }

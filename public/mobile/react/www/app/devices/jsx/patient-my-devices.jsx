@@ -23,7 +23,7 @@
                     this.setState({deviceIcon: "images/oximeter-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/UA-767PBT-Ci.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
@@ -47,17 +47,20 @@
             }
         },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
-                <div className="row">
-                    <div className="col-xs-8">
-                        <h3>{this.props.model}</h3>
-                        <p>{this.props.description}</p>
+            return <div>
+                    <div className="list-group-item" onClick={this.handleDeviceItemClick}>
+                        <div className="row">
+                            <div className="col-xs-8">
+                                <h3 className="green-text">{this.props.model}</h3>
+                                <p>{this.props.description}</p>
+                            </div>
+                            <div className="col-xs-4">
+                                <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-xs-4">
-                        <img src={this.state.deviceIcon} className="img-responsive device-image"/>
-                    </div>
+                    <div className="list-group-separator full-width"></div>
                 </div>
-            </div>
         }
     });
 
@@ -77,10 +80,10 @@
                     this.setState({deviceIcon: "images/oximeter-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/UA-767PBT-Ci.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
                     break;
                 case "Weight":
-                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
                     break;
             }
         },
@@ -191,18 +194,20 @@
         },
         render: function() {
             return <div className="container">
-                <div className="row fill">
+                <div className="row">
                     <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
                     <div className="col-xs-12">
                         <div className="row">
                             <div className="col-xs-12">
-                                <a href="javascript:void(0);" className="btn btn-default btn-lg btn-block btn-raised" onClick={this.handleAddDevice}>+<div className="ripple-container"></div></a>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-12">
                                 <PairedDevices devices={this.state.pairedDevices}/>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-container">
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <a href="javascript:void(0);" className="pull-right btn btn-info btn-fab" onClick={this.handleAddDevice}><i className="material-icons">add</i><div className="ripple-container"></div></a>
                         </div>
                     </div>
                 </div>

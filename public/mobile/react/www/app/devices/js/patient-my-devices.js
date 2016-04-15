@@ -24,7 +24,7 @@
                     this.setState({ deviceIcon: "images/oximeter-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/UA-767PBT-Ci.png" });
+                    this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
                     break;
                 case "Weight":
                     this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
@@ -49,30 +49,35 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "list-group-item", onClick: this.handleDeviceItemClick },
+                null,
                 React.createElement(
                     "div",
-                    { className: "row" },
+                    { className: "list-group-item", onClick: this.handleDeviceItemClick },
                     React.createElement(
                         "div",
-                        { className: "col-xs-8" },
+                        { className: "row" },
                         React.createElement(
-                            "h3",
-                            null,
-                            this.props.model
+                            "div",
+                            { className: "col-xs-8" },
+                            React.createElement(
+                                "h3",
+                                { className: "green-text" },
+                                this.props.model
+                            ),
+                            React.createElement(
+                                "p",
+                                null,
+                                this.props.description
+                            )
                         ),
                         React.createElement(
-                            "p",
-                            null,
-                            this.props.description
+                            "div",
+                            { className: "col-xs-4" },
+                            React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                         )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-4" },
-                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
-                )
+                ),
+                React.createElement("div", { className: "list-group-separator full-width" })
             );
         }
     });
@@ -94,10 +99,10 @@
                     this.setState({ deviceIcon: "images/oximeter-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/UA-767PBT-Ci.png" });
+                    this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
                     break;
                 case "Weight":
-                    this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
+                    this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
                     break;
             }
         },
@@ -240,7 +245,7 @@
                 { className: "container" },
                 React.createElement(
                     "div",
-                    { className: "row fill" },
+                    { className: "row" },
                     React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay", devices: this.state.devices }),
                     React.createElement(
                         "div",
@@ -251,21 +256,29 @@
                             React.createElement(
                                 "div",
                                 { className: "col-xs-12" },
-                                React.createElement(
-                                    "a",
-                                    { href: "javascript:void(0);", className: "btn btn-default btn-lg btn-block btn-raised", onClick: this.handleAddDevice },
-                                    "+",
-                                    React.createElement("div", { className: "ripple-container" })
-                                )
+                                React.createElement(PairedDevices, { devices: this.state.pairedDevices })
                             )
-                        ),
+                        )
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "bottom-container" },
+                    React.createElement(
+                        "div",
+                        { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "row" },
+                            { className: "col-xs-12" },
                             React.createElement(
-                                "div",
-                                { className: "col-xs-12" },
-                                React.createElement(PairedDevices, { devices: this.state.pairedDevices })
+                                "a",
+                                { href: "javascript:void(0);", className: "pull-right btn btn-info btn-fab", onClick: this.handleAddDevice },
+                                React.createElement(
+                                    "i",
+                                    { className: "material-icons" },
+                                    "add"
+                                ),
+                                React.createElement("div", { className: "ripple-container" })
                             )
                         )
                     )
