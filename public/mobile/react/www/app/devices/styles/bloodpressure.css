@@ -12,31 +12,17 @@
     width: auto;
 }
 
-.use-steps {
-    counter-reset: my-badass-counter;
-    text-align: left;
-    list-style-type: none;
+.row-data-cells {
+    background:#ffffff;
+    margin-top:-9px;
 }
 
-.use-steps > li {
-    padding-left:10px;
-    position:relative;
-    padding-bottom:15px;
+.row-data-cells > .data-cell  {
+    padding:10px;
+    text-align: center;
+    font-size:18px;
+    color:#8bc34a;
 }
-
-.use-steps > li:before {
-    content: counter(my-badass-counter);
-    counter-increment: my-badass-counter;
-    position:absolute;
-    left:-30px;
-    font-size:24px;
-}
-
-.carousel-caption.first-step {
-    margin-bottom:0;
-}
-
-
 
 /* -------------------------------------- *\
     #Landscape Orientation Only
