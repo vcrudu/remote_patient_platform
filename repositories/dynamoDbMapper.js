@@ -135,6 +135,10 @@
 
     function mapAddressFromDbEntity(item)
     {
+        if(item.addressLine1.S==""){
+            return {id: item.id.S,
+                addressLine1: item.addressLine1.S};
+        }
         return domainModel.createAddress({
             id: item.id.S,
             addressLine1: item.addressLine1.S,
@@ -202,15 +206,15 @@
                 var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
                 patientDbEntity.dateOfBirth = {N:dateOfBirthNumber};
             }
-            if (patient.sex) { patientDbEntity.dateOfBirth = {S:patient.sex}; }
-            if (patient.gender) { patientDbEntity.dateOfBirth = {S:patient.gender}; }
+           // if (patient.sex) { patientDbEntity.dateOfBirth = {S:patient.sex}; } //not such field
+            if (patient.gender) { patientDbEntity.gender = {S:patient.gender}; }
             if (patient.ethnicity) { patientDbEntity.ethnicity = {S:patient.ethnicity}; }
             if (patient.nhsNumber) { patientDbEntity.nhsNumber = {S:patient.nhsNumber}; }
             if (patient.otherIdentifiers) {
                 var allOtherIdentifiers = buildArray(patient.otherIdentifiers, mapOtherIdentifiersToDbEntity);
                 patientDbEntity.otherIdentifiers = {L:allOtherIdentifiers};
             }
-            if (patient.phone) { patientDbEntity.phone = buildDynamoDbString(patient.phone); }
+            if (patient.phone) { patientDbEntity.phone = {S:patient.phone}; }
             if (patient.mobile) { patientDbEntity.mobile = buildDynamoDbString(patient.mobile); }
             if (patient.fax) { patientDbEntity.fax = buildDynamoDbString(patient.fax); }
             if (patient.relevantContacts) {
@@ -264,11 +268,59 @@
         mapPatientFromUserDetailsDbEntity: function(dbEntity)
         {
             var dateOfBirthOriginal = new Date();
-            dateOfBirthOriginal.setTime(parseInt(dbEntity.dateOfBirth.N));
+            if (dbEntity.dateOfBirth) {
+                dateOfBirthOriginal.setTime(parseInt(dbEntity.dateOfBirth.N));
+            }
+            if (!dbEntity.otherIdentifiers){
+                dbEntity.otherIdentifiers={L:[]};
+            }
             var allOtherIdentifiers = buildArray(dbEntity.otherIdentifiers.L, mapOtherIdentifiersFromDbEntity);
+            if (!dbEntity.relevantContacts){
+                dbEntity.relevantContacts={L:[]};
+            }
             var allRelevantContacts = buildArray(dbEntity.relevantContacts.L, mapRelevantContactsFromDbEntity);
+            if (!dbEntity.address){
+                dbEntity.address={M:{
+                    "id": {
+                        "S": ""
+                    },
+                    "county": {
+                        "S": ""
+                    },
+                    "postCode": {
+                        "S": ""
+                    },
+                    "town": {
+                        "S": ""
+                    },
+                    "addressLine2": {
+                        "S": ""
+                    },
+                    "addressLine1": {
+                        "S": ""
+                    },
+                    "country": {
+                        "S": ""
+                    },
+                    "longitude": {
+                        "NULL": true
+                    },
+
+                    "latitude": {
+                        "NULL": true
+                    }
+                }};
+            }
+
             var fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
+
+            if (!dbEntity.devices){
+                dbEntity.devices={L:[]};
+            }
             var allDevices = buildArray(dbEntity.devices.L, mapDevicesFromDbEntity);
+            if (!dbEntity.healthProblems){
+                dbEntity.healthProblems=[];
+            }
             var allHealthProblems = buildArray(dbEntity.healthProblems, mapHealthProblemsFromDbEntity);
 
             var checkNull = function(arg1){
@@ -280,19 +332,19 @@
                     id: dbEntity.id.S,
                     name: dbEntity.name.S,
                     surname: dbEntity.surname.S,
-                    title: dbEntity.title.S,
+                    title: dbEntity.title?dbEntity.title.S:dbEntity.title={S:""},
                     dateOfBirth: dateOfBirthOriginal,
                     sex: checkNull(dbEntity.sex),
-                    gender: dbEntity.gender.S,
-                    ethnicity: dbEntity.ethnicity.S,
-                    nhsNumber: dbEntity.nhsNumber.S,
+                    gender:dbEntity.gender?dbEntity.gender.S:dbEntity.gender={S:""},
+                    ethnicity: dbEntity.ethnicity?dbEntity.ethnicity.S:dbEntity.ethnicity={S:""},
+                    nhsNumber: dbEntity.nhsNumber?dbEntity.nhsNumber.S:dbEntity.nhsNumber={S:""},
                     otherIdentifiers: allOtherIdentifiers,
                     phone: checkNull(dbEntity.phone),
                     mobile: checkNull(dbEntity.mobile),
                     fax: checkNull(dbEntity.fax),
                     email: dbEntity.email.S,
                     relevantContacts: allRelevantContacts,
-                    communicationPreference: dbEntity.communicationPreference.S,
+                    communicationPreference: dbEntity.communicationPreference?dbEntity.communicationPreference.S:dbEntity.communicationPreference={S:""},
                     address: fullAddress,
                     avatar: checkNull(dbEntity.avatar),
                     externalId: checkNull(dbEntity.externalId),
