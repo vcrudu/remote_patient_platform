@@ -125,10 +125,16 @@
         showAddDeviceOverlay: function() {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
             appointmentModalDiv.slideDown();
+            Bridge.DeviceInstaller.showDevicePopup(function() {
+                appointmentModalDiv.slideUp();
+            });
         },
         hideAddDeviceOverlay: function() {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
             appointmentModalDiv.slideUp();
+            Bridge.DeviceInstaller.closeDevicePopup(function() {
+
+            });
         },
         render: function() {
             return <div ref="addDeviceOverlay" className="addDeviceOverlay" onClick={this.hideAddDeviceOverlay}>
