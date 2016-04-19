@@ -16,15 +16,31 @@
                 tryAgainButtonVisibility: false,
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
-                value: undefined
+                value: undefined,
+                progressBar: undefined
             };
         },
         componentDidMount: function () {
             var component = this;
+
+            var intObj = {
+                template: 3,
+                parent: '.progress-bar-indeterminate' // this option will insert bar HTML into this parent Element
+            };
+            var indeterminateProgress = new Mprogress(intObj);
+            component.setState({
+                progressBar: indeterminateProgress
+            });
+
+            indeterminateProgress.start();
+
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
+                            if (component.state.progressBar) {
+                                component.state.progressBar.end();
+                            }
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -34,11 +50,8 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            component.setState({
-                                nextButtonVisibility: false,
-                                tryAgainButtonVisibility: true,
-                                cancelButtonVisibility: true
-                            });
+                            component.handleTryAgain();
+                            break;
                     }
                 }
             });
@@ -78,6 +91,11 @@
             return React.createElement(
                 "div",
                 { className: "container" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement("div", { className: "col-xs-12 progress-bar-indeterminate", ref: "progress-bar-indeterminate" })
+                ),
                 React.createElement(
                     "div",
                     { className: "row row-data-cells" },

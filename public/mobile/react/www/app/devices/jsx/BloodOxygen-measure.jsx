@@ -15,10 +15,23 @@
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
                 value: undefined,
+                progressBar: undefined
             }
         },
         componentDidMount: function() {
             var component = this;
+
+            var intObj = {
+                template: 3,
+                parent: '.progress-bar-indeterminate' // this option will insert bar HTML into this parent Element
+            };
+            var indeterminateProgress = new Mprogress(intObj);
+            component.setState({
+                progressBar: indeterminateProgress
+            });
+
+            indeterminateProgress.start();
+
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function(result) {
                 if (result.success) {
                     switch (result.data.status) {
@@ -26,20 +39,21 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-received":
+                            if (component.state.progressBar) {
+                                component.state.progressBar.end();
+                            }
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
+
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            component.setState({
-                                nextButtonVisibility: false,
-                                tryAgainButtonVisibility: true,
-                                cancelButtonVisibility: true,
-                            });
+                            component.handleTryAgain();
+                            break;
                     }
                 }
             });
@@ -78,6 +92,9 @@
         },
         render: function() {
             return <div className="container">
+                <div className="row">
+                    <div className="col-xs-12 progress-bar-indeterminate" ref="progress-bar-indeterminate"></div>
+                </div>
                 <div className="row row-data-cells">
                     <div className="col-xs-6 data-cell">
                         { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }

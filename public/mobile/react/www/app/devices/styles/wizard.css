@@ -55,9 +55,7 @@ body {
 
 .buttons-group .buttons-container [class*="col-"]
 
-
-
-    /* Background images are set within the HTML using inline CSS, not here */
+/* Background images are set within the HTML using inline CSS, not here */
 .fill {
     height: 300px;
     background-position: center;
@@ -69,6 +67,20 @@ body {
 
 .btn-default {
     width: auto;
+}
+
+.progress-bar-indeterminate {
+    height: 4px;
+}
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg {
+    background: #B388FF;
+    height: 4px;
+}
+
+.ui-mprogress .indeter-bar {
+    background: #651FFF;
+    height: 4px;
 }
 /* -------------------------------------- *\
     #Landscape Orientation Only
