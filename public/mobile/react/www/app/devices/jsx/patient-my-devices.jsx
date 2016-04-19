@@ -107,7 +107,7 @@
             return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
                 <div className="row">
                     <div className="col-xs-7">
-                        <h3>{this.props.model}</h3>
+                        <h3 className="green-text">{this.props.model}</h3>
                         <p>{this.props.description}</p>
                     </div>
                     <div className="col-xs-5">
