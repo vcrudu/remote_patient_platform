@@ -77,7 +77,7 @@
                     this.setState({deviceIcon: "images/thermometer-icon.png"})
                     break;
                 case "BloodOxygen":
-                    this.setState({deviceIcon: "images/oximeter-icon.png"})
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
                     break;
                 case "BloodPressure":
                     this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
