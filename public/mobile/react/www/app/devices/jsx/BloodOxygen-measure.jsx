@@ -7,6 +7,21 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_OXYGEN_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
     var BLOOD_OXYGEN_MEASURE = React.createClass({
         getInitialState: function() {
             return {
@@ -14,23 +29,11 @@
                 tryAgainButtonVisibility: false,
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
-                value: undefined,
-                progressBar: undefined
+                value: undefined
             }
         },
         componentDidMount: function() {
             var component = this;
-
-            var intObj = {
-                template: 3,
-                parent: '.progress-bar-indeterminate' // this option will insert bar HTML into this parent Element
-            };
-            var indeterminateProgress = new Mprogress(intObj);
-            component.setState({
-                progressBar: indeterminateProgress
-            });
-
-            indeterminateProgress.start();
 
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function(result) {
                 if (result.success) {
@@ -39,9 +42,7 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-received":
-                            if (component.state.progressBar) {
-                                component.state.progressBar.end();
-                            }
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -92,9 +93,6 @@
         },
         render: function() {
             return <div className="container">
-                <div className="row">
-                    <div className="col-xs-12 progress-bar-indeterminate" ref="progress-bar-indeterminate"></div>
-                </div>
                 <div className="row row-data-cells">
                     <div className="col-xs-6 data-cell">
                         { this.state.value ? "SPO2: " +  this.state.value.spo2 : null }
@@ -118,4 +116,5 @@
     });
 
     ReactDOM.render(<BLOOD_OXYGEN_MEASURE carouselWizard="#measure-wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen-measure"));
+    ReactDOM.render(<BLOOD_OXYGEN_PROGRESS />, document.getElementById("blood-oxygen-measure-progress"));
 })();

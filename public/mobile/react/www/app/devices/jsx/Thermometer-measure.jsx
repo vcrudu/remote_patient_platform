@@ -8,7 +8,22 @@
 
     $.material.init();
 
-    var M110_Measure = React.createClass({
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
+    var THERMOMETER_MEASURE = React.createClass({
         getInitialState: function() {
             return {
                 nextButtonVisibility: false,
@@ -37,9 +52,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
-                            if (component.state.progressBar) {
-                                component.state.progressBar.end();
-                            }
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -88,9 +101,6 @@
         },
         render: function() {
             return <div className="container">
-                <div className="row">
-                    <div className="col-xs-12 progress-bar-indeterminate" ref="progress-bar-indeterminate"></div>
-                </div>
                 <div className="row row-data-cells">
                     <div className="col-xs-12 data-cell">
                         { this.state.value ? "Temperature: " +  this.state.value.temperature : null }
@@ -110,5 +120,6 @@
         }
     });
 
-    ReactDOM.render(<M110_Measure carouselWizard="#measure-wizard" deviceModelType="Temperature"/>, document.getElementById("thermometer-measure"));
+    ReactDOM.render(<THERMOMETER_MEASURE carouselWizard="#measure-wizard" deviceModelType="Temperature"/>, document.getElementById("thermometer-measure"));
+    ReactDOM.render(<BLOOD_PRESSURE_PROGRESS />, document.getElementById("thermometer-measure-progress"));
 })();

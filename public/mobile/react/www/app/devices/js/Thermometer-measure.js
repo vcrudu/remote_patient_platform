@@ -92,10 +92,11 @@
                 "div",
                 { className: "container" },
                 React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement("div", { className: "col-xs-12 progress-bar-indeterminate", ref: "progress-bar-indeterminate" })
+                    "h3",
+                    null,
+                    "Taking measurements..."
                 ),
+                React.createElement("div", { className: "progress-bar-indeterminate", ref: "progress-bar-indeterminate" }),
                 React.createElement(
                     "div",
                     { className: "row row-data-cells" },

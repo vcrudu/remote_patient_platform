@@ -133,7 +133,7 @@
                         { className: "col-xs-7" },
                         React.createElement(
                             "h3",
-                            null,
+                            { className: "green-text" },
                             this.props.model
                         ),
                         React.createElement(
