@@ -7,6 +7,21 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var THERMOMETER_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
     var THERMOMETER = React.createClass({
         getInitialState: function() {
             return {
@@ -57,6 +72,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
                                 cancelButtonVisibility: false,
@@ -68,11 +84,12 @@
                     }
                 }
                 else {
-                    component.setState({
+                    component.componentDidMount();
+                    /*component.setState({
                         doneButtonVisibility: false,
                         cancelButtonVisibility: true,
                         retryButtonVisibility: true,
-                    });
+                    });*/
                 }
             });
         },
@@ -121,4 +138,5 @@
     });
 
     ReactDOM.render(<THERMOMETER carouselWizard="#wizard" deviceModelType="Temperature"/>, document.getElementById("thermometer"));
+    ReactDOM.render(<THERMOMETER_PROGRESS />, document.getElementById("thermometer-pair-progress"));
 })();

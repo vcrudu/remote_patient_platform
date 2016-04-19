@@ -7,6 +7,23 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_OXYGEN_PROGRESS = React.createClass({
+        displayName: "BLOOD_OXYGEN_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var BLOOD_OXYGEN = React.createClass({
         displayName: "BLOOD_OXYGEN",
 
@@ -60,6 +77,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
                                 cancelButtonVisibility: false,
@@ -70,11 +88,12 @@
                             break;
                     }
                 } else {
-                    component.setState({
+                    component.componentDidMount();
+                    /*component.setState({
                         doneButtonVisibility: false,
                         cancelButtonVisibility: true,
-                        retryButtonVisibility: true
-                    });
+                        retryButtonVisibility: true,
+                    });*/
                 }
             });
         },
@@ -129,4 +148,5 @@
     });
 
     ReactDOM.render(React.createElement(BLOOD_OXYGEN, { carouselWizard: "#wizard", deviceModelType: "BloodOxygen" }), document.getElementById("blood-oxygen"));
+    ReactDOM.render(React.createElement(BLOOD_OXYGEN_PROGRESS, null), document.getElementById("blood-oxygen-pair-progress"));
 })();

@@ -7,6 +7,25 @@
 
     $.material.init();
 
+    $.material.init();
+
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+        displayName: "BLOOD_PRESSURE_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var BLOOD_PRESSURE = React.createClass({
         displayName: "BLOOD_PRESSURE",
 
@@ -59,6 +78,7 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
                                 cancelButtonVisibility: false,
@@ -69,11 +89,12 @@
                             break;
                     }
                 } else {
-                    component.setState({
+                    component.componentDidMount();
+                    /*component.setState({
                         doneButtonVisibility: false,
                         cancelButtonVisibility: true,
-                        retryButtonVisibility: true
-                    });
+                        retryButtonVisibility: true,
+                    });*/
                 }
             });
         },
@@ -128,4 +149,5 @@
     });
 
     ReactDOM.render(React.createElement(BLOOD_PRESSURE, { carouselWizard: "#wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE_PROGRESS, null), document.getElementById("blood-pressure-pair-progress"));
 })();
