@@ -5,13 +5,14 @@
 (function () {
     "use strict";
 
+    $.material.init();
+
     var intObj = {
         template: 3,
         parent: ".progress-bar-indeterminate"
     };
     var indeterminateProgress = new Mprogress(intObj);
 
-    $.material.init();
     var BLOOD_OXYGEN_PROGRESS = React.createClass({
         displayName: "BLOOD_OXYGEN_PROGRESS",
 

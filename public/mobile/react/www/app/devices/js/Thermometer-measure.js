@@ -7,8 +7,25 @@
 
     $.material.init();
 
-    var M110_Measure = React.createClass({
-        displayName: "M110_Measure",
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var THERMOMETER_PROGRESS = React.createClass({
+        displayName: "THERMOMETER_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
+    var THERMOMETER_MEASURE = React.createClass({
+        displayName: "THERMOMETER_MEASURE",
 
         getInitialState: function () {
             return {
@@ -16,31 +33,17 @@
                 tryAgainButtonVisibility: false,
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
-                value: undefined,
-                progressBar: undefined
+                value: undefined
             };
         },
         componentDidMount: function () {
             var component = this;
 
-            var intObj = {
-                template: 3,
-                parent: '.progress-bar-indeterminate' // this option will insert bar HTML into this parent Element
-            };
-            var indeterminateProgress = new Mprogress(intObj);
-            component.setState({
-                progressBar: indeterminateProgress
-            });
-
-            indeterminateProgress.start();
-
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
-                            if (component.state.progressBar) {
-                                component.state.progressBar.end();
-                            }
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -92,12 +95,6 @@
                 "div",
                 { className: "container" },
                 React.createElement(
-                    "h3",
-                    null,
-                    "Taking measurements..."
-                ),
-                React.createElement("div", { className: "progress-bar-indeterminate", ref: "progress-bar-indeterminate" }),
-                React.createElement(
                     "div",
                     { className: "row row-data-cells" },
                     React.createElement(
@@ -126,5 +123,6 @@
         }
     });
 
-    ReactDOM.render(React.createElement(M110_Measure, { carouselWizard: "#measure-wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer-measure"));
+    ReactDOM.render(React.createElement(THERMOMETER_MEASURE, { carouselWizard: "#measure-wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer-measure"));
+    ReactDOM.render(React.createElement(THERMOMETER_PROGRESS, null), document.getElementById("thermometer-measure-progress"));
 })();

@@ -14,7 +14,7 @@
     };
     var indeterminateProgress = new Mprogress(intObj);
 
-    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+    var THERMOMETER_PROGRESS = React.createClass({
         componentDidMount: function() {
             indeterminateProgress.start();
         },
@@ -30,23 +30,11 @@
                 tryAgainButtonVisibility: false,
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
-                value: undefined,
-                progressBar: undefined
+                value: undefined
             }
         },
         componentDidMount: function() {
             var component = this;
-
-            var intObj = {
-                template: 3,
-                parent: '.progress-bar-indeterminate' // this option will insert bar HTML into this parent Element
-            };
-            var indeterminateProgress = new Mprogress(intObj);
-            component.setState({
-                progressBar: indeterminateProgress
-            });
-
-            indeterminateProgress.start();
 
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function(result) {
                 if (result.success) {
@@ -121,5 +109,5 @@
     });
 
     ReactDOM.render(<THERMOMETER_MEASURE carouselWizard="#measure-wizard" deviceModelType="Temperature"/>, document.getElementById("thermometer-measure"));
-    ReactDOM.render(<BLOOD_PRESSURE_PROGRESS />, document.getElementById("thermometer-measure-progress"));
+    ReactDOM.render(<THERMOMETER_PROGRESS />, document.getElementById("thermometer-measure-progress"));
 })();

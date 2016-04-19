@@ -13,9 +13,8 @@
     };
     var indeterminateProgress = new Mprogress(intObj);
 
-    $.material.init();
-    var BLOOD_OXYGEN_PROGRESS = React.createClass({
-        displayName: "BLOOD_OXYGEN_PROGRESS",
+    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+        displayName: "BLOOD_PRESSURE_PROGRESS",
 
         componentDidMount: function () {
             indeterminateProgress.start();
@@ -130,5 +129,5 @@
     });
 
     ReactDOM.render(React.createElement(BLOOD_PRESSURE_MEASURE, { carouselWizard: "#measure-wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure-measure"));
-    ReactDOM.render(React.createElement(BLOOD_OXYGEN_PROGRESS, null), document.getElementById("blood-pressure-measure-progress"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE_PROGRESS, null), document.getElementById("blood-pressure-measure-progress"));
 })();
