@@ -58,7 +58,7 @@
                         { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "col-xs-8" },
+                            { className: "col-xs-7" },
                             React.createElement(
                                 "h3",
                                 { className: "green-text" },
@@ -72,8 +72,8 @@
                         ),
                         React.createElement(
                             "div",
-                            { className: "col-xs-4" },
-                            React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image brand-green-bg" })
+                            { className: "col-xs-5" },
+                            React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                         )
                     )
                 ),
@@ -130,7 +130,7 @@
                     { className: "row" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-8" },
+                        { className: "col-xs-7" },
                         React.createElement(
                             "h3",
                             null,
@@ -144,8 +144,8 @@
                     ),
                     React.createElement(
                         "div",
-                        { className: "col-xs-4" },
-                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image circle brand-green-bg" })
+                        { className: "col-xs-5" },
+                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
                 )
             );
