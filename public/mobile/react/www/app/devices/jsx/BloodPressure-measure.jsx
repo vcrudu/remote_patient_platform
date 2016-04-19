@@ -87,6 +87,9 @@
         },
         render: function() {
             return <div className="container">
+                <div className="row">
+                    <div className="col-xs-12 progress-bar-indeterminate" ref="progress-bar-indeterminate"></div>
+                </div>
                 <div className="row row-data-cells">
                     <div className="col-xs-6 data-cell">
                         { this.state.value ? "Systolic: " +  this.state.value.systolic : null }
