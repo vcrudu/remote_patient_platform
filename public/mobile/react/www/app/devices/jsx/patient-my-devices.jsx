@@ -20,10 +20,10 @@
                     this.setState({deviceIcon: "images/thermometer-icon.png"})
                     break;
                 case "BloodOxygen":
-                    this.setState({deviceIcon: "images/oximeter-icon.png"})
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
@@ -55,7 +55,7 @@
                                 <p>{this.props.description}</p>
                             </div>
                             <div className="col-xs-4">
-                                <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                                <img src={this.state.deviceIcon} className="img-responsive device-image brand-green-bg"/>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     this.setState({deviceIcon: "images/oximeter-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
@@ -111,7 +111,7 @@
                         <p>{this.props.description}</p>
                     </div>
                     <div className="col-xs-4">
-                        <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                        <img src={this.state.deviceIcon} className="img-responsive device-image circle brand-green-bg"/>
                     </div>
                 </div>
             </div>

@@ -133,6 +133,16 @@ body {
     color:#8bc34a;
 }
 
+.brand-green-bg {
+    background:#98b743;
+}
+.brand-gold-bg {
+    background:#f8b042;
+}
+.brand-red-bg {
+    background:#e74138;
+}
+
 .btn-login {
     color:#8bc34a !important;
 }

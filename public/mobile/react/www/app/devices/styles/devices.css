@@ -37,6 +37,14 @@ body {
     z-index: 100;
 }
 
+.device-image {
+    border-radius:50%;
+}
+
+
+
+
+
 .btn-default {
     width: auto;
 }
