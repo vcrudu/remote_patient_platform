@@ -21,10 +21,10 @@
                     this.setState({ deviceIcon: "images/thermometer-icon.png" });
                     break;
                 case "BloodOxygen":
-                    this.setState({ deviceIcon: "images/oximeter-icon.png" });
+                    this.setState({ deviceIcon: "images/oximeter-JPD-500F-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
+                    this.setState({ deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png" });
                     break;
                 case "Weight":
                     this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
@@ -58,7 +58,7 @@
                         { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "col-xs-8" },
+                            { className: "col-xs-7" },
                             React.createElement(
                                 "h3",
                                 { className: "green-text" },
@@ -72,7 +72,7 @@
                         ),
                         React.createElement(
                             "div",
-                            { className: "col-xs-4" },
+                            { className: "col-xs-5" },
                             React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                         )
                     )
@@ -99,7 +99,7 @@
                     this.setState({ deviceIcon: "images/oximeter-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
+                    this.setState({ deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png" });
                     break;
                 case "Weight":
                     this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });
@@ -130,7 +130,7 @@
                     { className: "row" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-8" },
+                        { className: "col-xs-7" },
                         React.createElement(
                             "h3",
                             null,
@@ -144,7 +144,7 @@
                     ),
                     React.createElement(
                         "div",
-                        { className: "col-xs-4" },
+                        { className: "col-xs-5" },
                         React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
                 )

@@ -20,10 +20,10 @@
                     this.setState({deviceIcon: "images/thermometer-icon.png"})
                     break;
                 case "BloodOxygen":
-                    this.setState({deviceIcon: "images/oximeter-icon.png"})
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
@@ -50,11 +50,11 @@
             return <div>
                     <div className="list-group-item" onClick={this.handleDeviceItemClick}>
                         <div className="row">
-                            <div className="col-xs-8">
+                            <div className="col-xs-7">
                                 <h3 className="green-text">{this.props.model}</h3>
                                 <p>{this.props.description}</p>
                             </div>
-                            <div className="col-xs-4">
+                            <div className="col-xs-5">
                                 <img src={this.state.deviceIcon} className="img-responsive device-image"/>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                     this.setState({deviceIcon: "images/oximeter-icon.png"})
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
@@ -106,11 +106,11 @@
         render: function() {
             return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
                 <div className="row">
-                    <div className="col-xs-8">
+                    <div className="col-xs-7">
                         <h3>{this.props.model}</h3>
                         <p>{this.props.description}</p>
                     </div>
-                    <div className="col-xs-4">
+                    <div className="col-xs-5">
                         <img src={this.state.deviceIcon} className="img-responsive device-image"/>
                     </div>
                 </div>
