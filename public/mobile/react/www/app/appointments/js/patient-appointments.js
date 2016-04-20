@@ -5,8 +5,6 @@
 (function () {
     "use strict";
 
-    $.material.init();
-
     var DateSelector = React.createClass({
         displayName: "DateSelector",
 
@@ -37,12 +35,16 @@
         render: function () {
             return React.createElement(
                 "div",
-                null,
+                { className: "show-appointments-mobiscroll-wrapper" },
                 React.createElement("input", { id: "changeDayPicker", ref: "changeDayPicker", className: "hide" }),
                 React.createElement(
                     "button",
-                    { id: "show", ref: "show", onClick: this.handleShow, className: "btn btn-raised btn-info" },
-                    "Change Day"
+                    { id: "show", ref: "show", onClick: this.handleShow, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-appointments-mobiscroll" },
+                    React.createElement(
+                        "i",
+                        { className: "material-icons" },
+                        "event available"
+                    )
                 )
             );
         }
@@ -64,7 +66,6 @@
                 appointmentModalDiv.modal('hide');
                 return;
             } else {
-                console.log(reasonText.val());
                 Bridge.patientBookAnAppointment({
                     cancel: false,
                     slotDateTime: slotId,
@@ -96,12 +97,15 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '00:15:00',
                 allDaySlot: false,
+                header: false,
+                height: $(window).height() - 3,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
                         duration: { days: 1 },
                         slotDuration: '00:15',
-                        slotLabelInterval: '00:15'
+                        slotLabelInterval: '00:15',
+                        columnFormat: 'dddd MM / DD'
                     }
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
@@ -123,33 +127,28 @@
                     var events = [];
                     Bridge.getSlots(function (slotsResult) {
                         if (!slotsResult.success) return;
-                        // console.log(slotsResult);
                         Bridge.getPatientAppointment(function (appointmentsResult) {
                             if (!appointmentsResult.success) return;
-                            // console.log(appointmentsResult);
                             for (var i = 0; i < slotsResult.data.length; i++) {
                                 if (slotsResult.data[i].slotDateTime >= start.valueOf() && slotsResult.data[i].slotDateTime < end.valueOf()) {
-                                    console.log(slotsResult.data[i]);
                                     var event = Bridge.CalendarFactory.getEvent(slotsResult.data[i], appointmentsResult.data);
 
                                     events.push(event);
                                 }
                             }
-                            console.log(events);
                             callback(events);
                         });
                     });
 
                     component.refs["dateSelector"].setDate(start._d);
                 },
-                eventAfterAllRender: function (view) {},
-                resources: [{ id: 'a', title: 'Health care providers' }]
+                eventAfterAllRender: function (view) {}
             });
         },
         render: function () {
             return React.createElement(
                 "div",
-                null,
+                { ref: "appointmentsCalendarWrapper" },
                 React.createElement("div", { ref: "appointmentsCalendar" }),
                 React.createElement(
                     "div",
