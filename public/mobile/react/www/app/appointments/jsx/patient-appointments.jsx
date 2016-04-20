@@ -72,11 +72,25 @@
             var date = moment(valueText);
             $(this.refs.appointmentsCalendar).fullCalendar("gotoDate", date);
         },
+        isToday: function (td){
+            var d = new Date();
+            return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+        },
         componentDidMount: function() {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentModal = $(this.refs.appointmentModal).modal('hide');
             var reasonText = $(this.refs.reasonText);
             var component = this;
+
+            $(component.refs.appointmentsCalendar).on("swipeleft" , function(event) {
+                $(component.refs.appointmentsCalendar).fullCalendar("next");
+            });
+
+            $(component.refs.appointmentsCalendar).on("swiperight", function(event) {
+                var defDate = $(component.refs.appointmentsCalendar).fullCalendar("getDate")._d;
+                if (component.isToday(defDate)) {return;}
+                $(component.refs.appointmentsCalendar).fullCalendar("prev");
+            });
 
             var currentDate = new Date();
             $(this.refs.appointmentsCalendar).fullCalendar({
@@ -129,6 +143,8 @@
                     });
 
                     component.refs["dateSelector"].setDate(start._d);
+
+
                 },
                 eventAfterAllRender: function (view) {
                 }
