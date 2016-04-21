@@ -1,0 +1,7 @@
+/*overrides*/
+.mdl-textfield__label--accent:after{background-color: rgb(124,77,255) !important}
+
+/*modal*/
+.book-appointment-content {
+    padding: 0 !important;
+}

@@ -62,8 +62,7 @@
             var slotDateTime = moment(slotId);
             var now = new Date();
             if (slotDateTime <= now.getTime()) {
-                //de prisos
-                appointmentModalDiv.modal('hide');
+                document.querySelector("#" + appointmentModalDiv.attr("id")).close();
                 return;
             } else {
                 Bridge.patientBookAnAppointment({
@@ -76,10 +75,14 @@
                         appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
                     }
 
-                    appointmentModalDiv.modal('hide');
+                    document.querySelector("#" + appointmentModalDiv.attr("id")).close();
                     return;
                 });
             }
+        },
+        handleCancelAppointmentModal: function () {
+            var appointmentModalDiv = $(this.refs.appointmentModal);
+            document.querySelector("#" + appointmentModalDiv.attr("id")).close();
         },
         onDateChanged: function (valueText, inst) {
             var date = moment(valueText);
@@ -91,7 +94,6 @@
         },
         componentDidMount: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
-            var appointmentModal = $(this.refs.appointmentModal).modal('hide');
             var reasonText = $(this.refs.reasonText);
             var component = this;
 
@@ -134,9 +136,9 @@
                             return;
                         }
 
-                    appointmentModalDiv.attr("data-slot-id", calEvent.id);
-                    appointmentModal.modal('show');
+                    $("#" + appointmentModalDiv.attr("id")).attr("data-slot-id", calEvent.id);
                     reasonText.val("");
+                    document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
                 },
                 events: function (start, end, timezone, callback) {
 
@@ -167,58 +169,39 @@
                 { ref: "appointmentsCalendarWrapper" },
                 React.createElement("div", { ref: "appointmentsCalendar" }),
                 React.createElement(
-                    "div",
-                    { ref: "appointmentModal", id: "appointmentModal", className: "modal fade", role: "dialog" },
+                    "dialog",
+                    { className: "mdl-dialog", ref: "appointmentModal", id: "appointmentModal" },
+                    React.createElement(
+                        "h4",
+                        null,
+                        "Book an appointment"
+                    ),
                     React.createElement(
                         "div",
-                        { className: "modal-dialog" },
+                        { className: "mdl-dialog__content book-appointment-content" },
                         React.createElement(
                             "div",
-                            { className: "modal-content" },
+                            { className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label" },
+                            React.createElement("textarea", { className: "mdl-textfield__input", type: "text", rows: "3", id: "reasonText", name: "reasonText", ref: "reasonText" }),
                             React.createElement(
-                                "div",
-                                { className: "modal-header" },
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "close", "data-dismiss": "modal" },
-                                    "×"
-                                ),
-                                React.createElement(
-                                    "h4",
-                                    { className: "modal-title" },
-                                    "Book appointment"
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "modal-body" },
-                                React.createElement(
-                                    "div",
-                                    { className: "form-group is-empty" },
-                                    React.createElement(
-                                        "label",
-                                        { htmlFor: "reasonText", className: "control-label" },
-                                        "Reason"
-                                    ),
-                                    React.createElement("textarea", { className: "form-control", rows: "3", id: "reasonText", ref: "reasonText" }),
-                                    React.createElement("input", { type: "hidden", id: "slotId" })
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "modal-footer" },
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
-                                    "Close"
-                                ),
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "btn btn-primary", onClick: this.handleBookAppointment },
-                                    "Submit",
-                                    React.createElement("div", { className: "ripple-container" })
-                                )
+                                "label",
+                                { className: "mdl-textfield__label mdl-textfield__label--accent", htmlFor: "reasonText" },
+                                "Reason"
                             )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "mdl-dialog__actions" },
+                        React.createElement(
+                            "button",
+                            { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleBookAppointment },
+                            "Submit"
+                        ),
+                        React.createElement(
+                            "button",
+                            { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleCancelAppointmentModal },
+                            "Close"
                         )
                     )
                 ),
