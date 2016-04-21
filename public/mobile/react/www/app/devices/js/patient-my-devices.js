@@ -164,10 +164,10 @@
             devices: [];
         },
         showAddDeviceOverlay: function () {
-            var appointmentModalDiv = $(this.refs.addDeviceOverlay);
-            appointmentModalDiv.slideDown();
+            var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
+            addDeviceOverlayDiv.slideDown();
             Bridge.DeviceInstaller.showDevicePopup(function () {
-                appointmentModalDiv.slideUp();
+                addDeviceOverlayDiv.slideUp();
             });
         },
         hideAddDeviceOverlay: function () {
@@ -179,9 +179,10 @@
             return React.createElement(
                 "div",
                 { ref: "addDeviceOverlay", className: "addDeviceOverlay gray_200", onClick: this.hideAddDeviceOverlay },
+                React.createElement("div", { className: "space_24" }),
                 React.createElement(
                     "div",
-                    { className: "list-group" },
+                    { className: "list-group", ref: "addDeviceOverlayList" },
                     this.props.devices.map(function (device) {
                         return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
                     })
@@ -199,10 +200,15 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "list-group" },
-                this.props.devices.map(function (device) {
-                    return React.createElement(PairedDevice, { key: "paired-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
-                })
+                null,
+                React.createElement("div", { className: "space_24" }),
+                React.createElement(
+                    "div",
+                    { className: "list-group" },
+                    this.props.devices.map(function (device) {
+                        return React.createElement(PairedDevice, { key: "paired-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
+                    })
+                )
             );
         }
     });
@@ -246,22 +252,14 @@
                     "div",
                     { className: "bottom-container" },
                     React.createElement(
-                        "div",
-                        { className: "row" },
+                        "a",
+                        { href: "javascript:void(0);", className: "pull-right btn btn-fab btn-accent", onClick: this.handleAddDevice },
                         React.createElement(
-                            "div",
-                            { className: "col-xs-12" },
-                            React.createElement(
-                                "a",
-                                { href: "javascript:void(0);", className: "pull-right btn btn-info btn-fab", onClick: this.handleAddDevice },
-                                React.createElement(
-                                    "i",
-                                    { className: "material-icons" },
-                                    "add"
-                                ),
-                                React.createElement("div", { className: "ripple-container" })
-                            )
-                        )
+                            "i",
+                            { className: "material-icons accent" },
+                            "add"
+                        ),
+                        React.createElement("div", { className: "ripple-container" })
                     )
                 )
             );

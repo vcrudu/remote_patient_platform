@@ -126,10 +126,10 @@
             devices: []
         },
         showAddDeviceOverlay: function() {
-            var appointmentModalDiv = $(this.refs.addDeviceOverlay);
-            appointmentModalDiv.slideDown();
+            var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
+            addDeviceOverlayDiv.slideDown();
             Bridge.DeviceInstaller.showDevicePopup(function() {
-                appointmentModalDiv.slideUp();
+                addDeviceOverlayDiv.slideUp();
             });
         },
         hideAddDeviceOverlay: function() {
@@ -141,7 +141,8 @@
         },
         render: function() {
             return <div ref="addDeviceOverlay" className="addDeviceOverlay gray_200" onClick={this.hideAddDeviceOverlay}>
-                <div className="list-group">
+                <div className="space_24"></div>
+                <div className="list-group" ref="addDeviceOverlayList">
                     {this.props.devices.map(function(device) {
                         return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
                     })}
@@ -155,14 +156,16 @@
             devices: []
         },
         render: function() {
-            return  <div className="list-group">
-                {
-                    this.props.devices.map(function(device) {
-                        return <PairedDevice key={"paired-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
-                    })
-                }
+            return <div>
+                <div className="space_24"></div>
+                <div className="list-group">
+                    {
+                        this.props.devices.map(function(device) {
+                            return <PairedDevice key={"paired-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
+                        })
+                    }
+                </div>
             </div>
-
         }
     });
 
@@ -201,11 +204,7 @@
                 <PairedDevices devices={this.state.pairedDevices}/>
 
                 <div className="bottom-container">
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <a href="javascript:void(0);" className="pull-right btn btn-info btn-fab" onClick={this.handleAddDevice}><i className="material-icons">add</i><div className="ripple-container"></div></a>
-                        </div>
-                    </div>
+                    <a href="javascript:void(0);" className="pull-right btn btn-fab btn-accent" onClick={this.handleAddDevice}><i className="material-icons accent">add</i><div className="ripple-container"></div></a>
                 </div>
             </div>
         }

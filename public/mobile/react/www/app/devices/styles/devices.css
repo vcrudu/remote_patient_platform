@@ -24,14 +24,14 @@ body {
 }
 
 .list-group .list-group-separator.full-width::before {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     content: "";
     float: right;
     width: 100%;
 }
 
 .addDeviceOverlay {
-    height: 100%;
+    height: auto;
     width: 100%;
     display: none;
     background-color:#ffffff;
@@ -45,18 +45,25 @@ body {
 
 }
 
+.btn.btn-fab.btn-accent {
+    background-color: rgb(124,77,255) !important;
+}
 
-
-
+i.accent {
+    color: white !important;
+}
 
 .btn-default {
     width: auto;
 }
 
 .bottom-container {
-    position:absolute;
-    bottom:0;
-    padding:15px 0;
-    left:15px;
-    right:15px;
+    position: absolute;
+    bottom: 0;
+    padding: 12px 0;
+    right: 12px;
+}
+
+.space_24 {
+    height: 24px;
 }
