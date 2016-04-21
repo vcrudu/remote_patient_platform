@@ -51,8 +51,8 @@
                     <div className="list-group-item" onClick={this.handleDeviceItemClick}>
                         <div className="row">
                             <div className="col-xs-7">
-                                <h3 className="green-text">{this.props.model}</h3>
-                                <p>{this.props.description}</p>
+                                <h4 className="primary-text">{this.props.model}</h4>
+                                <p className="primary-text-secondary">{this.props.description}</p>
                             </div>
                             <div className="col-xs-5">
                                 <img src={this.state.deviceIcon} className="img-responsive device-image"/>
@@ -104,16 +104,19 @@
             }
         },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
-                <div className="row">
-                    <div className="col-xs-7">
-                        <h3 className="green-text">{this.props.model}</h3>
-                        <p>{this.props.description}</p>
-                    </div>
-                    <div className="col-xs-5">
-                        <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+            return <div>
+                <div className="list-group-item" onClick={this.handleDeviceItemClick}>
+                    <div className="row">
+                        <div className="col-xs-7">
+                            <h4 className="primary-text">{this.props.model}</h4>
+                            <p className="primary-text-secondary">{this.props.description}</p>
+                        </div>
+                        <div className="col-xs-5">
+                            <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                        </div>
                     </div>
                 </div>
+                <div className="list-group-separator full-width"></div>
             </div>
         }
     });
@@ -137,17 +140,11 @@
             });
         },
         render: function() {
-            return <div ref="addDeviceOverlay" className="addDeviceOverlay" onClick={this.hideAddDeviceOverlay}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="list-group">
-                                {this.props.devices.map(function(device) {
-                                    return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
-                                })}
-                            </div>
-                        </div>
-                    </div>
+            return <div ref="addDeviceOverlay" className="addDeviceOverlay gray_200" onClick={this.hideAddDeviceOverlay}>
+                <div className="list-group">
+                    {this.props.devices.map(function(device) {
+                        return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
+                    })}
                 </div>
             </div>
         }
@@ -199,17 +196,10 @@
             });
         },
         render: function() {
-            return <div className="container">
-                <div className="row">
-                    <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
-                    <div className="col-xs-12">
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <PairedDevices devices={this.state.pairedDevices}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            return <div>
+                <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
+                <PairedDevices devices={this.state.pairedDevices}/>
+
                 <div className="bottom-container">
                     <div className="row">
                         <div className="col-xs-12">

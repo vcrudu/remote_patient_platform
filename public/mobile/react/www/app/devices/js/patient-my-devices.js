@@ -60,13 +60,13 @@
                             "div",
                             { className: "col-xs-7" },
                             React.createElement(
-                                "h3",
-                                { className: "green-text" },
+                                "h4",
+                                { className: "primary-text" },
                                 this.props.model
                             ),
                             React.createElement(
                                 "p",
-                                null,
+                                { className: "primary-text-secondary" },
                                 this.props.description
                             )
                         ),
@@ -124,30 +124,35 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "list-group-item", onClick: this.handleDeviceItemClick },
+                null,
                 React.createElement(
                     "div",
-                    { className: "row" },
+                    { className: "list-group-item", onClick: this.handleDeviceItemClick },
                     React.createElement(
                         "div",
-                        { className: "col-xs-7" },
+                        { className: "row" },
                         React.createElement(
-                            "h3",
-                            { className: "green-text" },
-                            this.props.model
+                            "div",
+                            { className: "col-xs-7" },
+                            React.createElement(
+                                "h4",
+                                { className: "primary-text" },
+                                this.props.model
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: "primary-text-secondary" },
+                                this.props.description
+                            )
                         ),
                         React.createElement(
-                            "p",
-                            null,
-                            this.props.description
+                            "div",
+                            { className: "col-xs-5" },
+                            React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                         )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-5" },
-                        React.createElement("img", { src: this.state.deviceIcon, className: "img-responsive device-image" })
                     )
-                )
+                ),
+                React.createElement("div", { className: "list-group-separator full-width" })
             );
         }
     });
@@ -173,25 +178,13 @@
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "addDeviceOverlay", className: "addDeviceOverlay", onClick: this.hideAddDeviceOverlay },
+                { ref: "addDeviceOverlay", className: "addDeviceOverlay gray_200", onClick: this.hideAddDeviceOverlay },
                 React.createElement(
                     "div",
-                    { className: "container" },
-                    React.createElement(
-                        "div",
-                        { className: "row" },
-                        React.createElement(
-                            "div",
-                            { className: "col-xs-12" },
-                            React.createElement(
-                                "div",
-                                { className: "list-group" },
-                                this.props.devices.map(function (device) {
-                                    return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
-                                })
-                            )
-                        )
-                    )
+                    { className: "list-group" },
+                    this.props.devices.map(function (device) {
+                        return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
+                    })
                 )
             );
         }
@@ -246,25 +239,9 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "container" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay", devices: this.state.devices }),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-12" },
-                        React.createElement(
-                            "div",
-                            { className: "row" },
-                            React.createElement(
-                                "div",
-                                { className: "col-xs-12" },
-                                React.createElement(PairedDevices, { devices: this.state.pairedDevices })
-                            )
-                        )
-                    )
-                ),
+                null,
+                React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay", devices: this.state.devices }),
+                React.createElement(PairedDevices, { devices: this.state.pairedDevices }),
                 React.createElement(
                     "div",
                     { className: "bottom-container" },

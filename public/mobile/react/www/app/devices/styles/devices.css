@@ -3,7 +3,11 @@
 html,
 body {
     height: 100%;
-    background:#ffffff;
+    background:#F5F5F5; //gray_100
+}
+
+.gray_200 {
+    background: #EEEEEE !important;
 }
 
 .container {

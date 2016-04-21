@@ -7,11 +7,11 @@
 @import url(fonts.css);
 
 body {
-    font-family:"Roboto-Light";
+    font-family:"Roboto-Regular";
 }
 
 .h1, .h2, .h3, .h4, body, h1, h2, h3, h4, h5, h6 {
-    font-family:"Roboto-Light";
+    font-family:"Roboto-Regular";
 }
 
 .row-no-padding [class*="col-"] {
@@ -128,9 +128,16 @@ body {
     color:#03a9f4 !important;
 
 }
-
 .green-text {
     color:#8bc34a;
+}
+
+.primary-text {
+    color:rgba(0,0,0,0.87);
+}
+
+.primary-text-secondary {
+    color:rgba(0,0,0,0.54);
 }
 
 .brand-green-bg {
