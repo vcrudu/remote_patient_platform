@@ -1,7 +1,51 @@
-/*overrides*/
-.mdl-textfield__label--accent:after{background-color: rgb(124,77,255) !important}
+/*General*/
+body {
+    font-family: Roboto-Regular;
+}
 
-/*modal*/
+
+
+
+/*Overrides*/
+.patient-appointments .fc-ltr .fc-time-grid .fc-event-container {
+    margin: 0;
+}
+
+.patient-appointments .fc-time-grid-event {
+    background-color: #FF5252 !important;
+    border: 0;
+    border-top: 1px solid #9E9E9E !important;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.patient-appointments .fc-content {
+    background-color: #FF5252;
+}
+
+.patient-appointments .fc-widget-content {
+    border-left: 0;
+    border-right: 0;
+}
+
+.mdl-textfield__label--accent:after{
+    background-color: rgb(124,77,255) !important
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover,
+.fc-unthemed .fc-row,
+.fc-unthemed tbody,
+.fc-unthemed td,
+.fc-unthemed th,
+.fc-unthemed thead {
+    border-color: #9E9E9E;
+}
+
+
+/*Modal*/
 .book-appointment-content {
     padding: 0 !important;
 }
+
