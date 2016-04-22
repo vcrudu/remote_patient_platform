@@ -57,6 +57,7 @@ angular.module('app').controller('patientCallCtrl', ['$scope', '$log', '$state',
             $localStorage.callData = {recipient: provider.email, caller: $localStorage.user.email};
 
             $localStorage.callerModal = $modal.open({
+                backdrop: 'static',
                 templateUrl: 'patient/appointments/dialog.call.html',
                 controller : function($scope,$modalInstance,$rootScope, provider,isCalling){
 

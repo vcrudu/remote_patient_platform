@@ -4,13 +4,19 @@
 
 (function(){
     angular.module('app').
-    controller('mainCtrl', ['$scope','$state','toastr','authService',function($scope, $state, toastr, authService){
+    controller('mainCtrl', ['$scope','$state','$localStorage','toastr','authService',function($scope, $state, $localStorage, toastr, authService){
             $scope.extr_page="extr-page";
             $scope.bodyClass="desktop-detected pace-done";
 
             $scope.containerClass="container";
-
-
+            function setLayout(){
+                if($localStorage.user){
+                    $scope.extr_page="";
+                    $scope.userName = authService.getUserName();
+                    $scope.containerClass="";
+                }
+            }
+            setLayout();
         $scope.$on('signin', function(){
             $scope.extr_page="";
             $scope.userName = authService.getUserName();

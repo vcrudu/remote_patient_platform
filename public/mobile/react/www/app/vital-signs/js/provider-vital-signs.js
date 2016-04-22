@@ -17,6 +17,14 @@
                 onlineStatus: ""
             };
         },
+        socketCallback: function (message) {
+            var event = message.data.event;
+            var userId = message.data.user;
+
+            if (event == "onlineStatus") {
+                this.setState({ onlineStatus: message.data.status });
+            }
+        },
         componentDidMount: function () {
             var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
             var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
@@ -34,6 +42,16 @@
                     $(a.target).prev('.panel-heading').removeClass('active');
                 });
             });
+
+            Bridge.Provider.socketCallBack = this.socketCallback;
+
+            /*var component = this;
+            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
+            Bridge.Provider.getPatientDetails(patientId, function(result) {
+                component.setState({
+                    user: result.data
+                });
+              });*/
         },
         formatDate: function (dateString) {
             var date = moment(dateString);
@@ -41,12 +59,12 @@
         },
         handleCallClick: function () {
             var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+            var onlineStatus = this.state.onlineStatus; //decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
             if (this.props.onCall) {
                 if (onlineStatus == "offline") {
                     return;
                 }
-                this.props.onCall(patientId);
+                this.props.onCall(patientId, this.state.name);
             }
         },
         render: function () {
@@ -56,46 +74,151 @@
 
             return React.createElement(
                 "div",
-                { className: "panel panel-default" },
+                { className: "patient-banner" },
                 React.createElement(
                     "div",
-                    { className: "panel-heading" },
-                    React.createElement(
-                        "h3",
-                        { className: "panel-title" },
-                        this.state.name ? this.state.name : name
-                    ),
-                    React.createElement(
-                        "p",
-                        null,
-                        "Appointment Time: ",
-                        React.createElement(
-                            "strong",
-                            null,
-                            this.state.appointmentTime ? this.formatDate(this.state.appointmentTime) : appointmentTime
-                        )
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "panel-image hide-panel-body" },
-                    React.createElement("img", { src: "images/user.png", className: "img-responsive" })
-                ),
-                React.createElement("div", { className: this.state.onlineStatus ? this.state.onlineStatus == "offline" ? "statusBorder offline" : "statusBorder online" : "statusBorder " + onlineStatus }),
-                React.createElement(
-                    "div",
-                    { className: "panel-footer text-center" },
+                    { className: "container" },
                     React.createElement(
                         "div",
                         { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-                            React.createElement("img", { className: "img-responsive center-block call", src: "images/call-icon.png", width: "100", onClick: this.handleCallClick })
+                            { className: "col-xs-12 col-sm-12 col-md-12" },
+                            React.createElement("img", { src: "images/user.png", width: "150", className: "img-resonpive img-circle center-block patient-image-border" })
                         )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-12 col-sm-12 col-md-12" },
+                            React.createElement(
+                                "h3",
+                                { className: "align-center white" },
+                                this.state.name ? this.state.name : name
+                            )
+                        )
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "fixed-btn" },
+                    React.createElement(
+                        "a",
+                        { href: "javascript:void(0)", onClick: this.handleCallClick, className: this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab" },
+                        React.createElement(
+                            "i",
+                            { className: "material-icons" },
+                            "call"
+                        ),
+                        React.createElement("div", { className: "ripple-container" })
                     )
                 )
             );
+        }
+    });
+
+    var VitalSignCharts = React.createClass({
+        displayName: "VitalSignCharts",
+
+        getInitState: function () {
+            var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
+            return {
+                loadCharts: false,
+                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
+                bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                heartRateDef: emptyVitalSigns.heartRateDef,
+                weightDef: emptyVitalSigns.weightDef
+            };
+        },
+        handleChartsClick: function (state) {
+            this.setState({
+                loadCharts: true,
+                temperatureVitalSignsDef: state.temperatureVitalSignsDef,
+                bloodPressureDef: state.bloodPressureDef,
+                bloodOxygenDef: state.bloodOxygenDef,
+                heartRateDef: state.heartRateDef,
+                weightDef: state.weightDef
+            });
+        },
+        render: function () {
+            if (!this.state) {
+                return React.createElement(
+                    "div",
+                    { role: "tabpanel", className: "tab-pane", id: "vital-signs" },
+                    " "
+                );
+            } else {
+                if (!this.state.loadCharts) {
+                    return React.createElement(
+                        "div",
+                        { role: "tabpanel", className: "tab-pane", id: "vital-signs" },
+                        " "
+                    );
+                } else {
+                    return React.createElement(
+                        "div",
+                        { role: "tabpanel", className: "tab-pane", id: "vital-signs" },
+                        React.createElement(VitalSingChart, { dataSource: this.state.bloodPressureDef,
+                            aspectWidth: 16,
+                            aspectHeight: 9,
+                            ticks: 10,
+                            mobileThreshold: 500,
+                            mobileTicks: 5,
+                            type: this.state.bloodPressureDef.measurementType,
+                            minValue: this.state.bloodPressureDef.minValue,
+                            yDelta: 50,
+                            label: this.state.bloodPressureDef.label,
+                            unit: this.state.bloodPressureDef.unit }),
+                        React.createElement(VitalSingChart, { dataSource: this.state.temperatureVitalSignsDef,
+                            aspectWidth: 16,
+                            aspectHeight: 9,
+                            ticks: 10,
+                            mobileThreshold: 500,
+                            mobileTicks: 5,
+                            type: this.state.temperatureVitalSignsDef.measurementType,
+                            minValue: this.state.temperatureVitalSignsDef.minValue,
+                            yDelta: 1,
+                            label: this.state.temperatureVitalSignsDef.label,
+                            unit: this.state.temperatureVitalSignsDef.unit }),
+                        React.createElement(VitalSingChart, { dataSource: this.state.bloodOxygenDef,
+                            aspectWidth: 16,
+                            aspectHeight: 9,
+                            ticks: 10,
+                            mobileThreshold: 500,
+                            mobileTicks: 5,
+                            type: this.state.bloodOxygenDef.measurementType,
+                            minValue: this.state.bloodOxygenDef.minValue,
+                            yDelta: 5,
+                            label: this.state.bloodOxygenDef.label,
+                            unit: this.state.bloodOxygenDef.unit }),
+                        React.createElement(VitalSingChart, { dataSource: this.state.heartRateDef,
+                            aspectWidth: 16,
+                            aspectHeight: 9,
+                            ticks: 10,
+                            mobileThreshold: 500,
+                            mobileTicks: 5,
+                            type: this.state.heartRateDef.measurementType,
+                            minValue: this.state.heartRateDef.minValue,
+                            yDelta: 5,
+                            label: this.state.heartRateDef.label,
+                            unit: this.state.heartRateDef.unit }),
+                        React.createElement(VitalSingChart, { dataSource: this.state.weightDef,
+                            aspectWidth: 16,
+                            aspectHeight: 9,
+                            ticks: 10,
+                            mobileThreshold: 500,
+                            mobileTicks: 5,
+                            type: this.state.weightDef.measurementType,
+                            minValue: this.state.weightDef.minValue,
+                            yDelta: 0,
+                            label: this.state.weightDef.label,
+                            unit: this.state.weightDef.unit })
+                    );
+                }
+            }
         }
     });
 
@@ -278,26 +401,26 @@
                     return "";
                 }
 
-                if (width <= props.mobileThreshold) {
+                /*if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
-                } else {
-                    var fmt = d3.time.format('%b-%d');
-                    return fmt(d);
-                }
+                } else {*/
+                var fmt = d3.time.format('%b-%d');
+                return fmt(d);
+                /*}*/
             }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function (d, i) {
                 if (i == 0 || i == uniqueArray.length - 1) {
                     return "";
                 }
 
-                if (width <= props.mobileThreshold) {
+                /*if (width <= props.mobileThreshold) {
                     var fmt = d3.time.format('%d');
                     return '\u2019' + fmt(d);
-                } else {
-                    var fmt = d3.time.format('%b-%d');
-                    return fmt(d);
-                }
+                } else {*/
+                var fmt = d3.time.format('%b-%d');
+                return fmt(d);
+                /*}*/
             }).tickValues(uniqueArray);
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
@@ -468,7 +591,7 @@
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
             return {
                 temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
-                bloodPressureDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
                 bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
                 heartRateDef: emptyVitalSigns.heartRateDef,
                 weightDef: emptyVitalSigns.weightDef,
@@ -476,9 +599,22 @@
             };
         },
         componentDidMount: function () {
+            var userId = Bridge.Redirect.getQueryStringParam()["userId"];
+            var component = this;
+
+            Bridge.Provider.getPatientDetails(userId, function (result) {
+                component.setState({
+                    user: result.data
+                });
+            });
+        },
+        handleChartsClick: function () {
             var component = this;
             if (Modernizr.svg) {
                 // if svg is supported, draw dynamic chart
+                if (component.refs["vitalSignCharts"].loadCharts) {
+                    return;
+                }
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
                 var vitalSigns = Bridge.Provider.getPatientVitalSigns(userId, function (result) {
                     if (result.success) {
@@ -490,115 +626,257 @@
                             heartRateDef: newDataSource.heartRateDef,
                             weightDef: newDataSource.weightDef
                         });
-                        Bridge.Provider.getPatientDetails(userId, function (result) {
-                            component.setState({
-                                user: result.data
-                            });
-                        });
+                        component.refs["vitalSignCharts"].handleChartsClick(component.state);
                     }
                 });
             }
         },
-        handleCall: function (patientId) {
-            Bridge.Provider.callPatient(patientId, function (callResult) {});
+        handleCall: function (patientId, patientName) {
+            Bridge.Provider.callPatient(patientId, patientName, function (callResult) {});
         },
         render: function () {
             var component = this;
             return React.createElement(
                 "div",
                 null,
-                React.createElement(PatientDetails, { user: this.state.user, onCall: component.handleCall }),
+                React.createElement(PatientDetails, { onCall: component.handleCall }),
                 React.createElement(
                     "div",
-                    { className: "card" },
-                    React.createElement(
-                        "ul",
-                        { className: "nav nav-tabs", role: "tablist" },
-                        React.createElement(
-                            "li",
-                            { role: "presentation", className: "active" },
-                            React.createElement(
-                                "a",
-                                { href: "#vital-signs", "aria-controls": "vital-signs", role: "tab", "data-toggle": "tab" },
-                                React.createElement("img", { src: "images/icon-reports.png", width: "50" })
-                            )
-                        ),
-                        React.createElement(
-                            "li",
-                            { role: "presentation" },
-                            React.createElement(
-                                "a",
-                                { href: "#user-details", "aria-controls": "vital-signs", role: "tab", "data-toggle": "tab" },
-                                React.createElement("img", { src: "images/icon-person.png", width: "50" })
-                            )
-                        )
-                    ),
+                    { className: "container" },
                     React.createElement(
                         "div",
-                        { className: "tab-content" },
+                        { className: "row" },
                         React.createElement(
                             "div",
-                            { role: "tabpanel", className: "tab-pane active", id: "vital-signs" },
-                            React.createElement(VitalSingChart, { dataSource: this.state.bloodPressureDef,
-                                aspectWidth: 16,
-                                aspectHeight: 9,
-                                ticks: 10,
-                                mobileThreshold: 500,
-                                mobileTicks: 5,
-                                type: this.state.bloodPressureDef.measurementType,
-                                minValue: this.state.bloodPressureDef.minValue,
-                                yDelta: 50,
-                                label: this.state.bloodPressureDef.label,
-                                unit: this.state.bloodPressureDef.unit }),
-                            React.createElement(VitalSingChart, { dataSource: this.state.temperatureVitalSignsDef,
-                                aspectWidth: 16,
-                                aspectHeight: 9,
-                                ticks: 10,
-                                mobileThreshold: 500,
-                                mobileTicks: 5,
-                                type: this.state.temperatureVitalSignsDef.measurementType,
-                                minValue: this.state.temperatureVitalSignsDef.minValue,
-                                yDelta: 1,
-                                label: this.state.temperatureVitalSignsDef.label,
-                                unit: this.state.temperatureVitalSignsDef.unit }),
-                            React.createElement(VitalSingChart, { dataSource: this.state.bloodOxygenDef,
-                                aspectWidth: 16,
-                                aspectHeight: 9,
-                                ticks: 10,
-                                mobileThreshold: 500,
-                                mobileTicks: 5,
-                                type: this.state.bloodOxygenDef.measurementType,
-                                minValue: this.state.bloodOxygenDef.minValue,
-                                yDelta: 5,
-                                label: this.state.bloodOxygenDef.label,
-                                unit: this.state.bloodOxygenDef.unit }),
-                            React.createElement(VitalSingChart, { dataSource: this.state.heartRateDef,
-                                aspectWidth: 16,
-                                aspectHeight: 9,
-                                ticks: 10,
-                                mobileThreshold: 500,
-                                mobileTicks: 5,
-                                type: this.state.heartRateDef.measurementType,
-                                minValue: this.state.heartRateDef.minValue,
-                                yDelta: 5,
-                                label: this.state.heartRateDef.label,
-                                unit: this.state.heartRateDef.unit }),
-                            React.createElement(VitalSingChart, { dataSource: this.state.weightDef,
-                                aspectWidth: 16,
-                                aspectHeight: 9,
-                                ticks: 10,
-                                mobileThreshold: 500,
-                                mobileTicks: 5,
-                                type: this.state.weightDef.measurementType,
-                                minValue: this.state.weightDef.minValue,
-                                yDelta: 0,
-                                label: this.state.weightDef.label,
-                                unit: this.state.weightDef.unit })
-                        ),
-                        React.createElement(
-                            "div",
-                            { role: "tabpanel", className: "tab-pane", id: "user-details" },
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                            { className: "col-xs-12 col-sm-12 col-md-12" },
+                            React.createElement(
+                                "div",
+                                { className: "card" },
+                                React.createElement(
+                                    "ul",
+                                    { className: "nav nav-tabs", role: "tablist" },
+                                    React.createElement(
+                                        "li",
+                                        { role: "presentation", className: "active" },
+                                        React.createElement(
+                                            "a",
+                                            { href: "#user-details", "aria-controls": "vital-signs", role: "tab", "data-toggle": "tab" },
+                                            React.createElement("img", { src: "images/icon-person.png", width: "50" }),
+                                            " ",
+                                            React.createElement(
+                                                "span",
+                                                null,
+                                                "User Details"
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(
+                                        "li",
+                                        { role: "presentation", onClick: this.handleChartsClick },
+                                        React.createElement(
+                                            "a",
+                                            { href: "#vital-signs", "aria-controls": "vital-signs", role: "tab", "data-toggle": "tab" },
+                                            React.createElement("img", { src: "images/icon-reports.png", width: "50" }),
+                                            " ",
+                                            React.createElement(
+                                                "span",
+                                                null,
+                                                "Vital Signs"
+                                            )
+                                        )
+                                    )
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "tab-content" },
+                                    React.createElement(
+                                        "div",
+                                        { role: "tabpanel", className: "tab-pane active", id: "user-details" },
+                                        React.createElement(
+                                            "div",
+                                            { className: "list-group" },
+                                            React.createElement(
+                                                "div",
+                                                { className: "list-group-item" },
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-action-primary" },
+                                                    React.createElement(
+                                                        "i",
+                                                        { className: "material-icons" },
+                                                        "call"
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-content" },
+                                                    React.createElement(
+                                                        "div",
+                                                        { className: "action-secondary" },
+                                                        React.createElement(
+                                                            "i",
+                                                            { className: "material-icons" },
+                                                            "message"
+                                                        )
+                                                    ),
+                                                    React.createElement(
+                                                        "h4",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.mobile : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "p",
+                                                        { className: "list-group-item-text" },
+                                                        "Mobile"
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement("div", { className: "list-group-separator" }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "list-group-item" },
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-action-primary" },
+                                                    React.createElement(
+                                                        "i",
+                                                        { className: "material-icons" },
+                                                        "email"
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-content" },
+                                                    React.createElement(
+                                                        "div",
+                                                        { className: "action-secondary" },
+                                                        React.createElement(
+                                                            "i",
+                                                            { className: "material-icons" },
+                                                            "message"
+                                                        )
+                                                    ),
+                                                    React.createElement(
+                                                        "h4",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.email : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "p",
+                                                        { className: "list-group-item-text" },
+                                                        "Home"
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement("div", { className: "list-group-separator" }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "list-group-item" },
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-action-primary" },
+                                                    React.createElement(
+                                                        "i",
+                                                        { className: "material-icons" },
+                                                        "place"
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-content" },
+                                                    React.createElement(
+                                                        "h5",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.address.addressLine1 : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "h5",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.address.town : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "h5",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.address.county : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "h5",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.address.country : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "h5",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.address.postCode : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "p",
+                                                        { className: "list-group-item-text" },
+                                                        "Address"
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement("div", { className: "list-group-separator" }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "list-group-item" },
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-action-primary" },
+                                                    React.createElement(
+                                                        "i",
+                                                        { className: "material-icons" },
+                                                        "group"
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-content" },
+                                                    React.createElement(
+                                                        "h4",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.sex : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "p",
+                                                        { className: "list-group-item-text" },
+                                                        "Sex"
+                                                    )
+                                                )
+                                            ),
+                                            React.createElement("div", { className: "list-group-separator" }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "list-group-item" },
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-action-primary" },
+                                                    React.createElement(
+                                                        "i",
+                                                        { className: "material-icons" },
+                                                        "assignment"
+                                                    )
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { className: "row-content" },
+                                                    React.createElement(
+                                                        "h4",
+                                                        { className: "list-group-item-heading" },
+                                                        this.state.user ? this.state.user.nhsNumber : ""
+                                                    ),
+                                                    React.createElement(
+                                                        "p",
+                                                        { className: "list-group-item-text" },
+                                                        "NHS Number"
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(VitalSignCharts, { ref: "vitalSignCharts" })
+                                )
+                            )
                         )
                     )
                 )

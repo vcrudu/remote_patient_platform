@@ -8,6 +8,28 @@
     $.material.init();
 
     var PairedDevice = React.createClass({
+        getInitialState: function() {
+            return {
+                deviceIcon: "",
+            }
+        },
+        componentDidMount: function() {
+            switch (this.props.modelType)
+            {
+                case "Temperature":
+                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    break;
+                case "BloodOxygen":
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
+                    break;
+                case "BloodPressure":
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
+                    break;
+                case "Weight":
+                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
+                    break;
+            }
+        },
         handleDeviceItemClick: function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -25,21 +47,46 @@
             }
         },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
-                <div className="row">
-                    <div className="col-xs-8">
-                        <h3>{this.props.model}</h3>
-                        <p>{this.props.description}</p>
+            return <div>
+                    <div className="list-group-item" onClick={this.handleDeviceItemClick}>
+                        <div className="row">
+                            <div className="col-xs-7">
+                                <h4 className="primary-text">{this.props.model}</h4>
+                                <p className="primary-text-secondary">{this.props.description}</p>
+                            </div>
+                            <div className="col-xs-5">
+                                <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-xs-4">
-                        <img src={"images/" + this.props.model + ".png"} className="img-responsive device-image"/>
-                    </div>
+                    <div className="list-group-separator full-width"></div>
                 </div>
-            </div>
         }
     });
 
     var Device = React.createClass({
+        getInitialState: function() {
+            return {
+                deviceIcon: "",
+            }
+        },
+        componentDidMount: function() {
+            switch (this.props.modelType)
+            {
+                case "Temperature":
+                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    break;
+                case "BloodOxygen":
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
+                    break;
+                case "BloodPressure":
+                    this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"})
+                    break;
+                case "Weight":
+                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    break;
+            }
+        },
         handleDeviceItemClick: function(e) {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -57,16 +104,19 @@
             }
         },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleDeviceItemClick}>
-                <div className="row">
-                    <div className="col-xs-8">
-                        <h3>{this.props.model}</h3>
-                        <p>{this.props.description}</p>
-                    </div>
-                    <div className="col-xs-4">
-                        <img src={"images/" + this.props.model + ".png"} className="img-responsive device-image"/>
+            return <div>
+                <div className="list-group-item" onClick={this.handleDeviceItemClick}>
+                    <div className="row">
+                        <div className="col-xs-7">
+                            <h4 className="primary-text">{this.props.model}</h4>
+                            <p className="primary-text-secondary">{this.props.description}</p>
+                        </div>
+                        <div className="col-xs-5">
+                            <img src={this.state.deviceIcon} className="img-responsive device-image"/>
+                        </div>
                     </div>
                 </div>
+                <div className="list-group-separator full-width"></div>
             </div>
         }
     });
@@ -76,25 +126,26 @@
             devices: []
         },
         showAddDeviceOverlay: function() {
-            var appointmentModalDiv = $(this.refs.addDeviceOverlay);
-            appointmentModalDiv.slideDown();
+            var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
+            addDeviceOverlayDiv.slideDown();
+            Bridge.DeviceInstaller.showDevicePopup(function() {
+                addDeviceOverlayDiv.slideUp();
+            });
         },
         hideAddDeviceOverlay: function() {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
             appointmentModalDiv.slideUp();
+            Bridge.DeviceInstaller.closeDevicePopup(function() {
+
+            });
         },
         render: function() {
-            return <div ref="addDeviceOverlay" className="addDeviceOverlay" onClick={this.hideAddDeviceOverlay}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="list-group">
-                                {this.props.devices.map(function(device) {
-                                    return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
-                                })}
-                            </div>
-                        </div>
-                    </div>
+            return <div ref="addDeviceOverlay" className="addDeviceOverlay gray_200" onClick={this.hideAddDeviceOverlay}>
+                <div className="space_24"></div>
+                <div className="list-group" ref="addDeviceOverlayList">
+                    {this.props.devices.map(function(device) {
+                        return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
+                    })}
                 </div>
             </div>
         }
@@ -105,14 +156,16 @@
             devices: []
         },
         render: function() {
-            return  <div className="list-group">
-                {
-                    this.props.devices.map(function(device) {
-                        return <PairedDevice key={"paired-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
-                    })
-                }
+            return <div>
+                <div className="space_24"></div>
+                <div className="list-group">
+                    {
+                        this.props.devices.map(function(device) {
+                            return <PairedDevice key={"paired-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
+                        })
+                    }
+                </div>
             </div>
-
         }
     });
 
@@ -146,21 +199,12 @@
             });
         },
         render: function() {
-            return <div className="container">
-                <div className="row fill">
-                    <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
-                    <div className="col-xs-12">
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <a href="javascript:void(0);" className="btn btn-default btn-lg btn-block btn-raised" onClick={this.handleAddDevice}>+<div className="ripple-container"></div></a>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <PairedDevices devices={this.state.pairedDevices}/>
-                            </div>
-                        </div>
-                    </div>
+            return <div>
+                <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
+                <PairedDevices devices={this.state.pairedDevices}/>
+
+                <div className="bottom-container">
+                    <a href="javascript:void(0);" className="pull-right btn btn-fab btn-accent" onClick={this.handleAddDevice}><i className="material-icons accent">add</i><div className="ripple-container"></div></a>
                 </div>
             </div>
         }

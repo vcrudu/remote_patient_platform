@@ -105,6 +105,7 @@
         },
         render: function () {
             return <div className={this.state.defaultFormGroupClassName}>
+                <i className="material-icons md-36">{this.props.inputIconName}</i>
                 <label htmlFor={this.props.inputName} className="control-label">{this.props.inputLabel}</label>
                 <input type={this.props.inputType}
                        className="form-control"
@@ -127,7 +128,8 @@
                 passwordIsValid: this.state.password.isValid,
                 confirmPasswordIsValid: this.state.confirmPassword.isValid,
                 surnameIsValid: this.state.surname.isValid,
-                givenNameIsValid: this.state.givenName.isValid
+                givenNameIsValid: this.state.givenName.isValid,
+                phoneNumberIsValid: this.state.phoneNumber.isValid
             };
             this.setState({email: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
@@ -137,7 +139,8 @@
                 passwordIsValid: isValid,
                 confirmPasswordIsValid: this.state.confirmPassword.isValid,
                 surnameIsValid: this.state.surname.isValid,
-                givenNameIsValid: this.state.givenName.isValid
+                givenNameIsValid: this.state.givenName.isValid,
+                phoneNumberIsValid: this.state.phoneNumber.isValid
             };
             this.setState({password: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
@@ -147,7 +150,8 @@
                 passwordIsValid: this.state.password.isValid,
                 confirmPasswordIsValid: isValid,
                 surnameIsValid: this.state.surname.isValid,
-                givenNameIsValid: this.state.givenName.isValid
+                givenNameIsValid: this.state.givenName.isValid,
+                phoneNumberIsValid: this.state.phoneNumber.isValid
             };
             this.setState({confirmPassword: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
@@ -157,7 +161,8 @@
                 passwordIsValid: this.state.password.isValid,
                 confirmPasswordIsValid: this.state.confirmPassword.isValid,
                 surnameIsValid: isValid,
-                givenNameIsValid: this.state.givenName.isValid
+                givenNameIsValid: this.state.givenName.isValid,
+                phoneNumberIsValid: this.state.phoneNumber.isValid
             };
             this.setState({surname: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
@@ -167,9 +172,21 @@
                 passwordIsValid: this.state.password.isValid,
                 confirmPasswordIsValid: this.state.confirmPassword.isValid,
                 surnameIsValid: this.state.surname.isValid,
-                givenNameIsValid: isValid
+                givenNameIsValid: isValid,
+                phoneNumberIsValid: this.state.phoneNumber.isValid
             };
             this.setState({givenName: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+        },
+        phoneNumberOnBlur: function(component, isValid) {
+            var validFields = {
+                emailIsValid: this.state.email.isValid,
+                passwordIsValid: this.state.password.isValid,
+                confirmPasswordIsValid: this.state.confirmPassword.isValid,
+                surnameIsValid: this.state.surname.isValid,
+                givenNameIsValid: this.state.givenName.isValid,
+                phoneNumberIsValid: isValid
+            };
+            this.setState({phoneNumber: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         getInitialState: function() {
             return {
@@ -178,6 +195,7 @@
                 confirmPassword: {value: "", isValid: false},
                 surname: {value: "", isValid: false},
                 givenName: {value: "", isValid: false},
+                phoneNumber: {value: "", isValid: false},
                 canSubmitForm: false
             }
         },
@@ -186,22 +204,31 @@
                 && validFields.passwordIsValid
                 &&  validFields.confirmPasswordIsValid
                 &&  validFields.surnameIsValid
-                &&  validFields.givenNameIsValid;
+                &&  validFields.givenNameIsValid
+                &&  validFields.phoneNumberIsValid;
 
             return canSubmit;
         },
-        handleSubmit: function(component) {
+        handleSubmit: function(event) {
+            event.preventDefault();
             var signUpFormData = {
                 email: this.state.email.value,
                 password: this.state.password.value,
                 confirmPassword: this.state.confirmPassword.value,
-                type: "patient",
+                type: "provider",
                 name: this.state.surname.value,
                 surname: this.state.givenName.value,
+                phone: this.state.phoneNumber.value,
                 agent: "mobile"
             };
 
-            Bridge.signUp(signUpFormData, function() {
+            Bridge.providerSignUp(signUpFormData, function(result) {
+                if (result.success) {
+                  Bridge.Redirect.redirectToSignIn(result.data.email);
+                }
+                else {
+                    Bridge.error(result, function() {});
+                }
             });
         },
         componentDidUpdate: function() {
@@ -209,6 +236,7 @@
         render: function () {
             return <form name="signUpForm" onSubmit={this.handleSubmit}>
                 <ValidationInput inputLabel="Email"
+                                 inputIconName="email"
                                  inputType="email"
                                  inputName="userEmail"
                                  inputId="userEmail"
@@ -219,6 +247,7 @@
                                  validators={["required", "pattern"]}
                                  validatorMessages={["Email is required.", "Your email must look like an e-mail address."]} />
                 <ValidationInput inputLabel="Password"
+                                 inputIconName="https"
                                  inputType="password"
                                  inputName="userPassword"
                                  inputId="userPassword"
@@ -229,6 +258,7 @@
                                  validators={["required", "pattern"]}
                                  validatorMessages={["Password is required.", "At least one number, one lowercase, one uppercase letter and at least six characters."]} />
                 <ValidationInput inputLabel="Confirm Password"
+                                 inputIconName="https"
                                  inputType="password"
                                  inputName="userConfirmPassword"
                                  inputId="userConfirmPassword"
@@ -240,6 +270,7 @@
                                  validators={["required", "compare", "pattern"]}
                                  validatorMessages={["Confirm Password is required.", "Must match password from previous entry.", "At least one number, one lowercase, one uppercase letter and at least six characters."]} />
                 <ValidationInput inputLabel="Surname"
+                                 inputIconName="person"
                                  inputType="text"
                                  inputName="userSurname"
                                  inputId="userSurname"
@@ -248,6 +279,7 @@
                                  validators={["required"]}
                                  validatorMessages={["Surname is required."]} />
                 <ValidationInput inputLabel="Given name"
+                                 inputIconName="person"
                                  inputType="text"
                                  inputName="givenNameSurname"
                                  inputId="givenNameSurname"
@@ -255,6 +287,17 @@
                                  lostFocusCallBack={this.givenNameOnBlur}
                                  validators={["required"]}
                                  validatorMessages={["Given Name is required."]} />
+                <ValidationInput inputLabel="Phone"
+                                 inputIconName="phone"
+                                 inputType="text"
+                                 inputName="phoneNumber"
+                                 inputId="phoneNumber"
+                                 inputRequired={true}
+                                 lostFocusCallBack={this.phoneNumberOnBlur}
+                                 regexString="(((\+44\s?|0044\s?)?|(\(?0))((2[03489]\)?\s?\d{4}\s?\d{4})|(1[23456789]1\)?\s?\d{3}\s?\d{4})|(1[23456789][234578][0234679]\)?\s?\d{6})|(1[2579][0245][0467]\)?\s?\d{5})|(11[345678]\)?\s?\d{3}\s?\d{4})|(1[35679][234689]\s?[46789][234567]\)?\s?\d{4,5})|([389]\d{2}\s?\d{3}\s?\d{4})|([57][0-9]\s?\d{4}\s?\d{4})|(500\s?\d{6})|(7[456789]\d{2}\s?\d{6})))"
+                                 regex={/^(((\+44\s?|0044\s?)?|(\(?0))((2[03489]\)?\s?\d{4}\s?\d{4})|(1[23456789]1\)?\s?\d{3}\s?\d{4})|(1[23456789][234578][0234679]\)?\s?\d{6})|(1[2579][0245][0467]\)?\s?\d{5})|(11[345678]\)?\s?\d{3}\s?\d{4})|(1[35679][234689]\s?[46789][234567]\)?\s?\d{4,5})|([389]\d{2}\s?\d{3}\s?\d{4})|([57][0-9]\s?\d{4}\s?\d{4})|(500\s?\d{6})|(7[456789]\d{2}\s?\d{6})))$/}
+                                 validators={["required", "pattern"]}
+                                 validatorMessages={["Phone is required.", "Phone number is not valid."]} />
                 <div className="form-actions">
                     <button type="submit" href="javascript:void(0);" className="btn btn-raised btn-info" disabled={!this.state.canSubmitForm}>Register</button>
                 </div>

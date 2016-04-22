@@ -87,10 +87,10 @@ Bridge.Provider = {
             });
         }
     },
-    callPatient: function(patientId, callBack) {
+    callPatient: function(patientId, patientName, callBack) {
         Bridge.resultCallback = callBack;
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Provider.callPatient", data: {userId: patientId}};
+            var message = {method:"Bridge.Provider.callPatient", data: {userId: patientId, name: patientName}};
             prompt("bridge_key", JSON.stringify(message));
         } else {
         }
