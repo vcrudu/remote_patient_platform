@@ -13,3 +13,5 @@ log/*
 !.elasticbeanstalk/*.global.yml
 
 *.log
+
+.DS_Store
