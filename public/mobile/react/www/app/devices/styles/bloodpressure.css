@@ -13,7 +13,6 @@
 }
 
 .row-data-cells {
-    background:#ffffff;
     margin-top:-9px;
 }
 
@@ -29,7 +28,6 @@
 \* -------------------------------------- */
 @media screen and (orientation:landscape) {
     #blood-pressure {
-        background: #ffffff none repeat scroll 0 0;
         margin-top: 50px;
         position:static;
     }

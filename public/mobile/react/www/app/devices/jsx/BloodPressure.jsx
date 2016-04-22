@@ -86,6 +86,7 @@
                     }
                 }
                 else {
+                    $(component.props.carouselWizard).carousel("prev");
                     component.componentDidMount();
                     /*component.setState({
                         doneButtonVisibility: false,
@@ -128,12 +129,12 @@
         render: function() {
             return <div className="row has-separator buttons-container">
                 <div className="col-xs-6">
-                    { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
+                    { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
                 </div>
                 <div className="col-xs-6">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Next" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
-                    { this.state.retryButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Retry" onClick={this.handleRetry}></input> : null }
+                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Next" onClick={this.handleNext}></input> : null }
+                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Done" onClick={this.handleDone}></input> : null }
+                    { this.state.retryButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Retry" onClick={this.handleRetry}></input> : null }
                 </div>
             </div>
         }

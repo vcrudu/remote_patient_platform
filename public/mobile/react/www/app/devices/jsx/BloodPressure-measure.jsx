@@ -87,23 +87,22 @@
             Bridge.Redirect.redirectTo("patient-my-devices.html");
         },
         render: function() {
-            return <div className="container">
-                <div className="row row-data-cells">
-                    <div className="col-xs-6 data-cell">
-                        { this.state.value ? "Systolic: " +  this.state.value.systolic : null }
-                    </div>
-                    <div className="col-xs-6 data-cell">
-                        { this.state.value ? "Diastolic: " +  this.state.value.diastolic : null }
-                    </div>
-                </div>
-                <div className="row has-separator buttons-container">
-                    <div className="col-xs-6">
-                        { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
-                    </div>
-                    <div className="col-xs-6">
-                        { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Confirm" onClick={this.handleNext}></input> : null }
-                        { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Try Again" onClick={this.handleTryAgain}></input> : null }
-                        { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default pull-right" value="Done" onClick={this.handleDone}></input> : null }
+            return <div>
+                <div className="buttons-group">
+                    <div className="row has-separator buttons-container">
+                        <div className="col-xs-4 data-cell-footer">
+                            <h4 className="primary-text vertical-center">{ this.state.value ? "Systolic: " +  this.state.value.systolic : null }</h4>
+
+                        </div>
+                        <div className="col-xs-4 data-cell-footer">
+                            <h4 className="primary-text vertical-center">{ this.state.value ? "Diastolic: " +  this.state.value.diastolic : null }</h4>
+                        </div>
+                        <div className="col-xs-4 data-cell-footer">
+                            { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Cancel" onClick={this.handleCancel}></input> : null }
+                            { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Confirm" onClick={this.handleNext}></input> : null }
+                            { this.state.tryAgainButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Try Again" onClick={this.handleTryAgain}></input> : null }
+                            { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Done" onClick={this.handleDone}></input> : null }
+                        </div>
                     </div>
                 </div>
             </div>

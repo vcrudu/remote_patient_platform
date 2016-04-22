@@ -98,35 +98,39 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "container" },
+                null,
                 React.createElement(
                     "div",
-                    { className: "row row-data-cells" },
+                    { className: "buttons-group" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-6 data-cell" },
-                        this.state.value ? "SPO2: " + this.state.value.spo2 : null
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-6 data-cell" },
-                        this.state.value ? "Pulse: " + this.state.value.pr : null
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "row has-separator buttons-container" },
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-6" },
-                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-left", value: "Cancel", onClick: this.handleCancel }) : null
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-6" },
-                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Try Again", onClick: this.handleTryAgain }) : null,
-                        this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Confirm", onClick: this.handleNext }) : null,
-                        this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
+                        { className: "row has-separator buttons-container" },
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4 data-cell-footer" },
+                            React.createElement(
+                                "h4",
+                                { className: "primary-text vertical-center" },
+                                this.state.value ? "SPO2: " + this.state.value.spo2 : null
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4  data-cell-footer" },
+                            React.createElement(
+                                "h4",
+                                { className: "primary-text vertical-center" },
+                                this.state.value ? "Pulse: " + this.state.value.pr : null
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4  data-cell-footer" },
+                            this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Cancel", onClick: this.handleCancel }) : null,
+                            this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Try Again", onClick: this.handleTryAgain }) : null,
+                            this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Confirm", onClick: this.handleNext }) : null,
+                            this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null
+                        )
                     )
                 )
             );

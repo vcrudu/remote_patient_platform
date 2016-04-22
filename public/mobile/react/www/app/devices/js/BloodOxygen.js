@@ -88,6 +88,7 @@
                             break;
                     }
                 } else {
+                    $(component.props.carouselWizard).carousel("prev");
                     component.componentDidMount();
                     /*component.setState({
                         doneButtonVisibility: false,
@@ -134,14 +135,14 @@
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
-                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-footer pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-left", value: "Cancel", onClick: this.handleCancel }) : null
                 ),
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-footer pull-right", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null,
-                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-footer pull-right", value: "Retry", onClick: this.handleRetry }) : null
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null,
+                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Retry", onClick: this.handleRetry }) : null
                 )
             );
         }

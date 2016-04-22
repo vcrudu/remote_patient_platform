@@ -118,9 +118,18 @@ body {
 
 }
 
+.btn {
+    outline: none !important;
+}
+
 .btn:hover, .btn:focus {
     background:none !important;
     outline:none;
+}
+
+
+.btn.btn-default.btn-accent {
+    color: rgb(124,77,255) !important;
 }
 
 .btn-sign-up {
