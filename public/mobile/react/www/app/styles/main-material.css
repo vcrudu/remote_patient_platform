@@ -7,6 +7,14 @@ body {
 
 
 /*Overrides*/
+.fc-widget-header {
+    background-color: #9E9E9E;
+    font-size: 24px;
+    font-weight: 400;
+    padding: 15px 0;
+    color: rgba(0, 0, 0, 0.87);
+}
+
 .patient-appointments .fc-ltr .fc-time-grid .fc-event-container {
     margin: 0;
 }
@@ -42,6 +50,18 @@ body {
 .fc-unthemed thead {
     border-color: #9E9E9E;
 }
+
+.fc-content .fc-time,
+.fc-content .fc-title {
+    font-size: 15px;
+}
+
+.fc-time-grid .fc-slats td {
+    vertical-align: top;
+    font-size: 15px;
+}
+
+
 
 
 /*Modal*/
