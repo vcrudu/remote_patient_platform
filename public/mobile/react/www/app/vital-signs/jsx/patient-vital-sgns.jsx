@@ -70,7 +70,7 @@
             g.selectAll("circle").data(data).enter().append("circle")
                 .attr("cx", function(d) { return x(d.dateTime); })
                 .attr("cy", function(d) { return y(d.value); })
-                .attr("r", 10)
+                .attr("r", 9)
                 .attr("class", 'circle')
                 .attr("data-legend",function(d) { return d.label})
                 .style("fill", function(d) { return d.color; })
@@ -142,7 +142,7 @@
                     tempArray1.push({
                         dateTime: moment(props.dataSource.values[i].time),
                         value: props.dataSource.values[i].value,
-                        color:"#311B92",
+                        color:"#7E57C2",
                         label: props.dataSource.label
                     });
 
@@ -362,14 +362,14 @@
                 context.selectAll('circle').data(data).enter().append("circle")
                     .attr("cx", function(d) { return x2(d.dateTime); })
                     .attr("cy", function(d) { return y2(d.value); })
-                    .attr("r", 4)
+                    .attr("r", 3)
                     .style("stroke", function(d) {return d.color;}).style("fill", "none").style("stroke-width", 2);
             }
             else {
                 context.selectAll('circle').data(data).enter().append("circle")
                     .attr("cx", function(d) { return x2(d.dateTime); })
                     .attr("cy", function(d) { return y2(d.value); })
-                    .attr("r", 4)
+                    .attr("r", 3)
                     .style("stroke", function(d) {return d.color;}).style("fill", "none").style("stroke-width", 2);
             }
             context.append("g")

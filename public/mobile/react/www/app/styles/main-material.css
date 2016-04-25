@@ -55,13 +55,25 @@ body {
 .fc-content .fc-title {
     font-size: 15px;
 }
-
+.fc-event .fc-bg
+{
+    background-color: transparent;
+    opacity: 1;
+}
 .fc-time-grid .fc-slats td {
     vertical-align: top;
     font-size: 15px;
 }
-
-
+.fc-content .fc-time {
+    display: none;
+}
+.fc-time-grid .fc-slats td {
+    height: 65px;
+}
+.fc-unthemed tbody {
+    border-color: transparent;
+    background-color: #F5F5F5;
+}
 
 
 /*Modal*/

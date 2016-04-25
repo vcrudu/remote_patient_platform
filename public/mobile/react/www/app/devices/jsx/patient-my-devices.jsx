@@ -182,6 +182,8 @@
         componentDidMount: function() {
             var component = this;
 
+            $(".addDeviceOverlay").height($("body").height());
+
             Bridge.getPatientDevices(function (devicesResult) {
                 if (!devicesResult.success) {
                     return;
