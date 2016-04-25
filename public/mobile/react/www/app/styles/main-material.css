@@ -7,12 +7,8 @@ body {
 
 
 /*Overrides*/
-.fc-widget-header {
-    background-color: #9E9E9E;
-    font-size: 24px;
-    font-weight: 400;
-    padding: 15px 0;
-    color: rgba(0, 0, 0, 0.87);
+.patient-appointments thead {
+    display: none;
 }
 
 .patient-appointments .fc-ltr .fc-time-grid .fc-event-container {
@@ -20,21 +16,25 @@ body {
 }
 
 .patient-appointments .fc-time-grid-event {
-    background-color: #FF5252 !important;
     border: 0;
-    border-top: 1px solid #9E9E9E !important;
+    border-top: 0 none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
 }
 
-.patient-appointments .fc-content {
-    background-color: #FF5252;
-}
-
 .patient-appointments .fc-widget-content {
     border-left: 0;
     border-right: 0;
+}
+
+.patient-appointments .fc-event .fc-content {
+    padding:4px;
+}
+
+.patient-appointments .fc-widget-content > span {
+    position: relative;
+    top:2px;
 }
 
 .mdl-textfield__label--accent:after{
