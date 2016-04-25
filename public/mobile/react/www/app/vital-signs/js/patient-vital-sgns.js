@@ -4,8 +4,6 @@
 (function () {
     "use strict";
 
-    $.material.init();
-
     var VitalSingChart = React.createClass({
         displayName: "VitalSingChart",
 
@@ -36,7 +34,7 @@
                 zoom: undefined,
                 focus: undefined,
                 brush: undefined,
-                area: undefined,
+                /*area: undefined,*/
                 svg: undefined
             };
         },
@@ -63,12 +61,12 @@
                 return x(d.dateTime);
             }).attr("cy", function (d) {
                 return y(d.value);
-            }).attr("r", 7).attr("class", 'circle').attr("data-legend", function (d) {
+            }).attr("r", 10).attr("class", 'circle').attr("data-legend", function (d) {
                 return d.label;
             }).style("fill", function (d) {
                 return d.color;
             }).on("click", function (d) {
-                tip.show(d);d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 2);
+                tip.show(d);d3.select(this).style("stroke", d.color).style("fill", "white").style("stroke-width", 2);
             }).on("mouseout", function (d) {
                 tip.hide(d);d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 0);
             });
@@ -136,7 +134,7 @@
                     tempArray1.push({
                         dateTime: moment(props.dataSource.values[i].time),
                         value: props.dataSource.values[i].value,
-                        color: "blue",
+                        color: "#311B92",
                         label: props.dataSource.label
                     });
 
@@ -153,7 +151,7 @@
                             y1: props.dataSource.values[i].value.systolic,
                             y2: props.dataSource.values[i].value.diastolic
                         },
-                        color: "blue",
+                        color: "#311B92",
                         label: props.dataSource.label
                     });
 
@@ -164,7 +162,7 @@
                             y1: props.dataSource.values[i].value.systolic,
                             y2: props.dataSource.values[i].value.diastolic
                         },
-                        color: "red",
+                        color: "#7E57C2",
                         label: props.dataSource.label
                     });
 
@@ -185,47 +183,36 @@
                     return "";
                 }
 
-                /*if (width <= props.mobileThreshold) {
-                    var fmt = d3.time.format('%d');
-                    return '\u2019' + fmt(d);
-                } else {*/
                 var fmt = d3.time.format('%b-%d');
                 return fmt(d);
-                /*}*/
             }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function (d, i) {
                 if (i == 0 || i == uniqueArray.length - 1) {
                     return "";
                 }
 
-                /*if (width <= props.mobileThreshold) {
-                    var fmt = d3.time.format('%d');
-                    return '\u2019' + fmt(d);
-                } else {*/
                 var fmt = d3.time.format('%b-%d');
                 return fmt(d);
-                /*}*/
             }).tickValues(uniqueArray);
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
-            var line = d3.svg.line().interpolate("monotone").x(function (d) {
-                return x(d.dateTime);
-            }).y(function (d) {
-                return y(d.value);
-            });
+            /*var line = d3.svg.line()
+                .interpolate("monotone")
+                .x(function(d) { return x(d.dateTime); })
+                .y(function(d) { return y(d.value); });*/
 
-            var area = d3.svg.area().interpolate("monotone").x(function (d) {
-                return x(d.dateTime);
-            }).y0(height).y1(function (d) {
-                return y(d.value);
-            });
+            /*var area = d3.svg.area()
+                .interpolate("monotone")
+                .x(function(d) { return x(d.dateTime); })
+                .y0(height)
+                .y1(function(d) { return y(d.value); });*/
 
-            var area2 = d3.svg.area().interpolate("monotone").x(function (d) {
-                return x2(d.dateTime);
-            }).y0(height2).y1(function (d) {
-                return y2(d.value);
-            });
+            /*var area2 = d3.svg.area()
+                .interpolate("monotone")
+                .x(function(d) { return x2(d.dateTime); })
+                .y0(height2)
+                .y1(function(d) { return y2(d.value); });*/
 
             var svg = d3.select(chartRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
 
@@ -246,8 +233,8 @@
             var brush = d3.svg.brush().x(x2).on("brush", function () {
                 tip.hide();
                 x.domain(brush.empty() ? x2.domain() : brush.extent());
-                focus.select(".area").attr("d", area);
-                focus.select(".line").attr("d", line);
+                /*focus.select(".area").attr("d", area);*/
+                /*focus.select(".line").attr("d", line);*/
 
                 if (props.type == "bloodPressure") {
                     component.fillLines(focus, data, x, y, num_ticks, width);
@@ -262,8 +249,8 @@
             });
 
             var zoom = d3.behavior.zoom().on("zoom", function () {
-                focus.select(".area").attr("d", area);
-                focus.select(".line").attr("d", line);
+                /*focus.select(".area").attr("d", area);*/
+                /*focus.select(".line").attr("d", line);*/
 
                 focus.selectAll('circle').attr('cx', function (d) {
                     return x(d.dateTime);
@@ -271,7 +258,7 @@
                     return y(d.value);
                 });
 
-                focus.select(".line").attr("d", line);
+                /*focus.select(".line").attr("d", line);*/
 
                 focus.select(".x.grid").call(xAxis);
 
@@ -304,9 +291,16 @@
 
                 focus.append("g").classed('y', true).classed('grid', true).call(yAxisGrid);
 
-                focus.append("path").datum(data).attr("class", "area").attr("d", area);
-
-                focus.append("path").datum(data).attr("class", "line").attr("width", width).attr("d", line);
+                /*focus.append("path")
+                .datum(data)
+                .attr("class", "area")
+                .attr("d", area);
+                */
+                /*focus.append("path")
+                .datum(data)
+                .attr("class", "line")
+                .attr("width", width)
+                .attr("d", line);*/
             }
 
             if (props.type == "bloodPressure") {
@@ -320,29 +314,29 @@
             focus.append("g").attr("class", "y axis").call(yAxis);
 
             if (props.type != "bloodPressure") {
-                context.append("path").datum(data).attr("class", "area").attr("d", area2);
+                context.selectAll('circle').data(data).enter().append("circle").attr("cx", function (d) {
+                    return x2(d.dateTime);
+                }).attr("cy", function (d) {
+                    return y2(d.value);
+                }).attr("r", 4).style("stroke", function (d) {
+                    return d.color;
+                }).style("fill", "none").style("stroke-width", 2);
             } else {
                 context.selectAll('circle').data(data).enter().append("circle").attr("cx", function (d) {
                     return x2(d.dateTime);
                 }).attr("cy", function (d) {
                     return y2(d.value);
-                }).attr("r", 3).style("stroke", function (d) {
+                }).attr("r", 4).style("stroke", function (d) {
                     return d.color;
                 }).style("fill", "none").style("stroke-width", 2);
             }
             context.append("g").attr("class", "x axis").attr("transform", "translate(0," + height2 + ")").call(xAxis2);
 
             context.append("g").attr("class", "x brush").call(brush).selectAll("rect").attr("y", -6).attr("height", height2 + 7);
-
-            /*var rect = focus.append("svg:rect")
-                .attr("class", "pane")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                .call(zoom);*/
         },
         componentDidMount: function () {
             var component = this;
+
             component.drawGraphic(component.props);
 
             $(window).resize(function () {
@@ -356,14 +350,26 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "graphicWrapper", ref: "graphicWrapper" },
+                { className: "chart-card-square mdl-card mdl-shadow--2dp", ref: "graphicWrapper" },
                 React.createElement(
-                    "h1",
-                    null,
-                    this.props.label
+                    "div",
+                    { className: "mdl-card__title" },
+                    React.createElement(
+                        "h2",
+                        { className: "mdl-card__title-text" },
+                        this.props.label
+                    )
                 ),
-                React.createElement("div", { className: "graphic", id: "graphic", ref: "graphic" }),
-                React.createElement("div", { className: "graphic", id: "graphicContext", ref: "graphicContext" })
+                React.createElement(
+                    "div",
+                    { className: "mdl-card__supporting-text" },
+                    React.createElement("div", { className: "graphic", id: "graphic", ref: "graphic" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "mdl-card__actions mdl-card--border" },
+                    React.createElement("div", { className: "graphic", id: "graphicContext", ref: "graphicContext" })
+                )
             );
         }
     });
@@ -382,6 +388,8 @@
             };
         },
         componentDidMount: function () {
+            var chartsWrapper = $(this.refs.chartsWrapper);
+
             var component = this;
             if (Modernizr.svg) {
                 // if svg is supported, draw dynamic chart
@@ -403,7 +411,7 @@
         render: function () {
             return React.createElement(
                 "div",
-                null,
+                { ref: "chartsWrapper" },
                 React.createElement(VitalSingChart, { dataSource: this.state.bloodPressureDef,
                     aspectWidth: 16,
                     aspectHeight: 9,

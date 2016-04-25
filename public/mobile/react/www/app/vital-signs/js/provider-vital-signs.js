@@ -574,7 +574,7 @@
                 "div",
                 { className: "graphicWrapper", ref: "graphicWrapper" },
                 React.createElement(
-                    "h1",
+                    "h4",
                     null,
                     this.props.label
                 ),

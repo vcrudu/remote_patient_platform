@@ -600,7 +600,7 @@
         },
         render: function() {
             return <div className="graphicWrapper" ref="graphicWrapper">
-                <h1>{this.props.label}</h1>
+                <h4>{this.props.label}</h4>
                 <div className="graphic" id="graphic" ref="graphic"></div>
                 <div className="graphic" id="graphicContext" ref="graphicContext"></div>
             </div>
