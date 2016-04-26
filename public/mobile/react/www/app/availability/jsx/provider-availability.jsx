@@ -76,15 +76,15 @@
             $(this.refs.availabilityCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
-                defaultTimedEventDuration: '00:15:00',
+                defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
                 allDay:false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
                         duration: {days: 1},
-                        slotDuration: '00:15',
-                        slotLabelInterval: '00:15'
+                        slotDuration: '01:00',
+                        slotLabelInterval: '01:00'
                     }
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
