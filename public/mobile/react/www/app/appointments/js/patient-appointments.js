@@ -143,7 +143,7 @@
                 events: function (start, end, timezone, callback) {
 
                     var events = [];
-                    Bridge.getSlots(function (slotsResult) {
+                    Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
                         Bridge.getPatientAppointment(function (appointmentsResult) {
                             if (!appointmentsResult.success) return;

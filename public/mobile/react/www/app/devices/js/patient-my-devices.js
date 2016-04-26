@@ -7,6 +7,68 @@
 
     $.material.init();
 
+    var NoDevicesMessage = React.createClass({
+        displayName: "NoDevicesMessage",
+
+        componentDidMount: function () {
+            $(this.refs.noDeviceMessage).hide();
+            if (this.props.pairedDevices && this.props.pairedDevices.length > 0) {
+                $(this.refs.noDeviceMessage).hide();
+            } else {
+                $(this.refs.noDeviceMessage).show();
+            }
+            $(this.refs.noDeviceMessage).removeClass("hide");
+        },
+        hideMessage: function () {
+            $(this.refs.noDeviceMessage).addClass("hide");
+        },
+        handleAddDevice: function () {
+            this.props.handleInstallDevice();
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "container hide", ref: "noDeviceMessage" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-sm-12" },
+                        React.createElement(
+                            "div",
+                            { className: "bs-component" },
+                            React.createElement(
+                                "div",
+                                { className: "jumbotron" },
+                                React.createElement(
+                                    "h2",
+                                    { className: "primary-title primary-text" },
+                                    "Welcome"
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "supporting-text" },
+                                    "Add some devices to get started."
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "supporting-text pull-right" },
+                                    React.createElement(
+                                        "a",
+                                        { href: "javascript:void(0);", className: "btn btn-primary btn-accent", onClick: this.handleAddDevice },
+                                        "Install a new device"
+                                    )
+                                ),
+                                React.createElement("div", { className: "clear" })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    });
+
     var PairedDevice = React.createClass({
         displayName: "PairedDevice",
 
@@ -228,6 +290,8 @@
         componentDidMount: function () {
             var component = this;
 
+            component.refs.noDevices.hideMessage();
+
             $(".addDeviceOverlay").height($("body").height());
 
             Bridge.getPatientDevices(function (devicesResult) {
@@ -235,11 +299,15 @@
                     return;
                 } else {
                     Bridge.DeviceInstaller.getDevicesFromToLocalStorage(function (pairedResult) {
+                        component.refs.noDevices.hideMessage();
+
                         if (!pairedResult.success) {
                             component.setState({ devices: devicesResult.data });
                             return;
                         }
+
                         component.setState({ pairedDevices: pairedResult.data, devices: devicesResult.data });
+                        component.refs.noDevices.componentDidMount();
                     });
                 }
             });
@@ -248,6 +316,7 @@
             return React.createElement(
                 "div",
                 null,
+                React.createElement(NoDevicesMessage, { ref: "noDevices", pairedDevices: this.state.pairedDevices, handleInstallDevice: this.handleAddDevice }),
                 React.createElement(AddDeviceOverlay, { ref: "addDeviceOverlay", devices: this.state.devices }),
                 React.createElement(PairedDevices, { devices: this.state.pairedDevices }),
                 React.createElement(
