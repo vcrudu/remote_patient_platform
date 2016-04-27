@@ -133,7 +133,7 @@
             return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
                 <header className="mdl-layout__header">
                     <div className="primary-bg profile-image-container">
-                        <img src="images/user.png" width="150" height="150" className="img-responsive center-block profile-user-photo"/>
+                        <img src="images/user.png" width="120" height="120" className="img-responsive center-block profile-user-photo"/>
                         <div className="userName"><h4>{this.state.name ? this.state.name : name}</h4></div>
                     </div>
                     <div className="mdl-layout__tab-bar mdl-js-ripple-effect">

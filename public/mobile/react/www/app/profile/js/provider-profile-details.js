@@ -95,7 +95,7 @@
                         React.createElement(
                             "span",
                             { className: "mdl-list__item-sub-title" },
-                            "home"
+                            "email"
                         )
                     )
                 ),
@@ -217,7 +217,7 @@
                     React.createElement(
                         "div",
                         { className: "primary-bg profile-image-container" },
-                        React.createElement("img", { src: "images/user.png", width: "150", height: "150", className: "img-responsive center-block profile-user-photo" }),
+                        React.createElement("img", { src: "images/user.png", width: "120", height: "120", className: "img-responsive center-block profile-user-photo" }),
                         React.createElement(
                             "div",
                             { className: "userName" },
