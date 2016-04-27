@@ -16,7 +16,7 @@
             };
         },
         handleClickDashboard: function () {
-            Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId + "&appointmentTime=" + this.props.model.slotDateTimeString + "&name=" + this.props.model.name + "&onlineStatus=" + this.state.onlineStatus);
+            Bridge.Redirect.redirectTo("../profile/provider-profile-details.html?userId=" + this.props.model.patientId + "&appointmentTime=" + this.props.model.slotDateTimeString + "&name=" + this.props.model.name + "&onlineStatus=" + this.state.onlineStatus);
         },
         changeOnlineStatus: function (status) {
             this.setState({

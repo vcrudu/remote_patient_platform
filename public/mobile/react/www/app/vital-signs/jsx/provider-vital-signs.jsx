@@ -77,7 +77,7 @@
               <div className="container">
                   <div className="row">
                       <div className="col-xs-12 col-sm-12 col-md-12">
-                          <img src="images/user.png" width="150" className="img-resonpive img-circle center-block patient-image-border"/>
+                          <img src="images/user.png" width="150" className="img-responsive img-circle center-block patient-image-border"/>
 
                       </div>
                   </div>

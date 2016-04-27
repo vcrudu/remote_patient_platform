@@ -52,6 +52,12 @@ gulp.task("babel-availability", function () {
         .pipe(gulp.dest("www/app/availability/js"));
 });
 
+gulp.task("babel-profile", function () {
+    return gulp.src("www/app/profile/jsx/*")
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/profile/js"));
+});
+
 gulp.task("babel-watch-availability", function () {
     return gulp.src("www/app/availability/jsx/*")
         .pipe(watch("www/app/availability/jsx/*"))
@@ -85,14 +91,21 @@ gulp.task("babel-watch-devices", function () {
         .pipe(gulp.dest("www/app/devices/js"));
 });
 
+gulp.task("babel-watch-profile", function () {
+    return gulp.src("www/app/profile/jsx/*")
+        .pipe(watch("www/app/profile/jsx/*"))
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/profile/js"));
+});
+
 // use default task to launch Browsersync and watch JS files
-gulp.task("serve", ["babel-landing", "babel-signup", "babel-appointments", "babel-vital-signs", "babel-devices", "babel-availability"], function () {
+gulp.task("serve", ["babel-landing", "babel-signup", "babel-appointments", "babel-vital-signs", "babel-devices", "babel-availability", "babel-profile"], function () {
     // Serve files from the root of this project
     browserSync.init({
         server: {
             baseDir: "./www/app"
         },
-        files: ["www/app/styles/*.css", "www/app/landing/js/*.js", "www/app/signup/js/*.js", "www/app/appointments/js/*.js", "www/app/vital-signs/js/*.js", "www/app/devices/js/*.js", "www/app/availability/js/*.js"],
+        files: ["www/app/styles/*.css", "www/app/landing/js/*.js", "www/app/signup/js/*.js", "www/app/appointments/js/*.js", "www/app/vital-signs/js/*.js", "www/app/devices/js/*.js", "www/app/availability/js/*.js", "www/app/profile/js/*.js"],
         port: 3030
     });
 });

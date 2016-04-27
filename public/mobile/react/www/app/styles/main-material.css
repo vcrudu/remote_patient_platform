@@ -3,8 +3,76 @@ body {
     font-family: Roboto-Regular;
 }
 
+.clear {
+    clear: both;
+}
+
+.mdl-list .divider {
+    position: relative;
+    margin-left: 72px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.mdl-layout__content {
+    background-color: #F5F5F5;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.mdl-layout__tab {
+    font-family: Roboto-Medium;
+}
+
+.mdl-layout__tab-bar {
+    background-color: #EEEEEE !important;
+}
+
+.primary-bg {
+    background-color: #EEEEEE;
+}
 
 
+/* provider user profile */
+.profile-image-container {
+    height: 200px;
+    position: relative;
+}
+
+.profile-image-container .userName {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.profile-user-photo {
+    /*margin-top: 48px;*/
+}
+
+.call-fab-container {
+    position: absolute;
+    right: 16px;
+    margin-top: -28px;
+    z-index: 1000;
+}
+
+.mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
+    font-size: 24px !important;
+    padding: 8px !important;
+}
+
+/* end provider user profile */
 
 /*Overrides*/
 .patient-appointments thead {

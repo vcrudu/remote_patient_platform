@@ -84,7 +84,7 @@
                         React.createElement(
                             "div",
                             { className: "col-xs-12 col-sm-12 col-md-12" },
-                            React.createElement("img", { src: "images/user.png", width: "150", className: "img-resonpive img-circle center-block patient-image-border" })
+                            React.createElement("img", { src: "images/user.png", width: "150", className: "img-responsive img-circle center-block patient-image-border" })
                         )
                     ),
                     React.createElement(
