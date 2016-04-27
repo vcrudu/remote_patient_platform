@@ -91,11 +91,9 @@ body {
     border-radius: 0;
 }
 
-.mbsc-material .dw-cal-btn-txt {
-    color: #673AB7;
-}
-
-.mbsc-material .dwb {
+.mbsc-material .dw-cal-btn-txt,
+.mbsc-material .dwb,
+.mbsc-material .dw-hl-now .dw-cal-today{
     color: #673AB7;
 }
 
