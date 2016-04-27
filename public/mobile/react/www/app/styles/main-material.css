@@ -91,6 +91,18 @@ body {
     border-radius: 0;
 }
 
+.mbsc-material .dw-cal-btn-txt {
+    color: #673AB7;
+}
+
+.mbsc-material .dwb {
+    color: #673AB7;
+}
+
+.mbsc-material .dw-cal .dw-sel .dw-cal-day-fg {
+    background: rgba(103,58,183,.3);
+}
+
 .patient-appointments .fc-widget-content {
     border-left: 0;
     border-right: 0;
