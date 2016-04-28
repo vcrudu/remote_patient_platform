@@ -173,6 +173,9 @@ button.mdl-button {
 .fc-time-grid .fc-slats td {
     vertical-align: top;
     font-size: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-align: left;
 }
 .fc-content .fc-time {
     display: none;
@@ -198,3 +201,9 @@ button.mdl-button {
     padding: 0 !important;
 }
 
+/*MOBILE*/
+@media (max-width: 768px) {
+    .fc-time-grid .fc-slats td {
+        height:75px;
+    }
+}
