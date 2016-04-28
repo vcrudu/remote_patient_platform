@@ -203,7 +203,8 @@ button.mdl-button {
 
 /*MOBILE*/
 @media (max-width: 768px) {
-    .fc-time-grid .fc-slats td {
-        height:75px;
+    .fc-time-grid .fc-time,
+    .fc-time-grid .fc-widget-content {
+        padding-bottom:10px;
     }
 }
