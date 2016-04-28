@@ -108,10 +108,11 @@ a.offline {
 
 .patient-appointments .fc-time-grid-event {
     border: 0;
-    border-top: 0 none;
+    border-top: solid 1px #d5d5d5 !important;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    margin-left: 20px;
 }
 
 .mbsc-material .dw-cal-btn-txt,
@@ -135,7 +136,7 @@ a.offline {
 
 .patient-appointments .fc-widget-content > span {
     position: relative;
-    top:2px;
+    top:8px;
 }
 
 .mdl-textfield__label--accent:after{
@@ -157,7 +158,7 @@ button.mdl-button {
 .fc-unthemed td,
 .fc-unthemed th,
 .fc-unthemed thead {
-    border-color: #9E9E9E;
+    border-color: #d5d5d5;
 }
 
 .fc-content .fc-time,
@@ -178,10 +179,17 @@ button.mdl-button {
 }
 .fc-time-grid .fc-slats td {
     height: 65px;
+    border: 0;
+    border-top: solid 1px transparent;
 }
 .fc-unthemed tbody {
     border-color: transparent;
     background-color: #F5F5F5;
+}
+
+.fc-time-grid-event .fc-time,
+.fc-time-grid-event .fc-title {
+    padding: 5px 0;
 }
 
 
