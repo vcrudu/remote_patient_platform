@@ -177,6 +177,7 @@
             var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
             var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
             var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+
             this.setState({
                 appointmentTime: appointmentTime,
                 name: name,
@@ -199,13 +200,17 @@
         },
         handleCallClick: function () {
             var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            var onlineStatus = this.state.onlineStatus; //decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
-            if (this.props.onCall) {
-                if (onlineStatus == "offline") {
-                    return;
-                }
-                Bridge.Provider.callPatient(patientId, this.state.name, function (callResult) {});
+            var onlineStatus = this.state.onlineStatus;
+
+            if (onlineStatus == "offline") {
+                return;
             }
+            Bridge.Provider.callPatient(patientId, this.state.name, function (callResult) {});
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+            var button = this.refs.callButton;
+            button.addEventListener('click', this.handleCallClick);
         },
         render: function () {
             return React.createElement(
@@ -217,7 +222,7 @@
                     React.createElement(
                         "div",
                         { className: "primary-bg profile-image-container" },
-                        React.createElement("img", { src: "images/user.png", width: "120", height: "120", className: "img-responsive center-block profile-user-photo" }),
+                        React.createElement("img", { src: "images/user.png", width: "120", height: "120", className: this.state.onlineStatus == "offline" ? "img-responsive center-block profile-user-photo" : "img-responsive center-block profile-user-photo" }),
                         React.createElement(
                             "div",
                             { className: "userName" },
@@ -247,7 +252,7 @@
                         { className: "call-fab-container" },
                         React.createElement(
                             "button",
-                            { className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored", onclick: "" },
+                            { ref: "callButton", className: this.state.onlineStatus == "offline" ? "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored offline" : "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" },
                             React.createElement(
                                 "i",
                                 { className: "material-icons" },

@@ -5,8 +5,6 @@
 (function() {
     "use strict";
 
-    $.material.init();
-
     var ProviderAppointment = React.createClass({
         getInitialState: function(){
             return {
@@ -37,16 +35,24 @@
                 this.props.onCall(patientId);
             }
         },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+            var listItem = this.refs.listItem;
+            listItem.addEventListener('click', this.handleClickDashboard);
+        },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleClickDashboard}>
-                <div className="row-action-primary bottom">
-                    <img src="images/user.png" className={this.state.onlineStatus == "offline" ? "img-responsive img-circle img-border-offline" : "img-responsive img-circle img-border-online"}/>
-                </div>
-                <div className="row-content">
-                    <h4 className="list-group-item-heading">{this.props.model? this.props.model.name : ""}</h4>
-                    <p className="list-group-item-text">Appointment Time: <strong>{this.formatDate(this.props.model.slotDateTimeString)}</strong></p>
-                </div>
-            </div>
+            return <li className="mdl-list__item mdl-list__item--two-line" onClick={this.handleClickDashboard} ref="listItem">
+                <span className="mdl-list__item-primary-content">
+                  <i className="material-icons mdl-list__item-avatar">person</i>
+                  <span>{this.props.model? this.props.model.name : ""}</span>
+                  <span className="mdl-list__item-sub-title">Appointment Time: <strong>{this.formatDate(this.props.model.slotDateTimeString)}</strong></span>
+                </span>
+                <span className="mdl-list__item-secondary-content">
+                  <a className={this.state.onlineStatus == "offline" ? "mdl-list__item-secondary-action offline" : "mdl-list__item-secondary-action"} href="#"><i className="material-icons">lens</i></a>
+                </span>
+                <div className="divider"></div>
+                <div className="clear"></div>
+            </li>
         }
     });
 
@@ -75,6 +81,7 @@
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function(apiResult) {
+                debugger;
                 var orderedResult = _.sortBy(apiResult.data, function(num){
                     return num.slotDateTime;
                 });
@@ -90,7 +97,7 @@
         },
         render: function() {
             var component = this;
-            return <div className="list-group">
+            return <ul className="mdl-list">
                 {
                     component.state.appointments.map(function (appointment) {
                         return <div key={appointment.patientId + "_" + appointment.slotDateTime + "_div"}>
@@ -103,7 +110,7 @@
                             </div>
                     })
                 }
-            </div>
+            </ul>
         }
     });
 

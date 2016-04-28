@@ -7,6 +7,15 @@ body {
     clear: both;
 }
 
+.offline {
+    background: #B39DDB !important; //200
+}
+
+a.offline {
+    color: #B39DDB !important; //200;
+    background: transparent !important;
+}
+
 .mdl-list .divider {
     position: relative;
     margin-left: 72px;
@@ -58,6 +67,8 @@ body {
 
 .profile-user-photo {
     /*margin-top: 48px;*/
+    border-radius: 50%;
+    background-color: #FAFAFA !important;
 }
 
 .call-fab-container {

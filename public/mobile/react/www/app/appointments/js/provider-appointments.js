@@ -5,8 +5,6 @@
 (function () {
     "use strict";
 
-    $.material.init();
-
     var ProviderAppointment = React.createClass({
         displayName: "ProviderAppointment",
 
@@ -36,26 +34,31 @@
                 this.props.onCall(patientId);
             }
         },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+            var listItem = this.refs.listItem;
+            listItem.addEventListener('click', this.handleClickDashboard);
+        },
         render: function () {
             return React.createElement(
-                "div",
-                { className: "list-group-item", onClick: this.handleClickDashboard },
+                "li",
+                { className: "mdl-list__item mdl-list__item--two-line", onClick: this.handleClickDashboard, ref: "listItem" },
                 React.createElement(
-                    "div",
-                    { className: "row-action-primary bottom" },
-                    React.createElement("img", { src: "images/user.png", className: this.state.onlineStatus == "offline" ? "img-responsive img-circle img-border-offline" : "img-responsive img-circle img-border-online" })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "row-content" },
+                    "span",
+                    { className: "mdl-list__item-primary-content" },
                     React.createElement(
-                        "h4",
-                        { className: "list-group-item-heading" },
+                        "i",
+                        { className: "material-icons mdl-list__item-avatar" },
+                        "person"
+                    ),
+                    React.createElement(
+                        "span",
+                        null,
                         this.props.model ? this.props.model.name : ""
                     ),
                     React.createElement(
-                        "p",
-                        { className: "list-group-item-text" },
+                        "span",
+                        { className: "mdl-list__item-sub-title" },
                         "Appointment Time: ",
                         React.createElement(
                             "strong",
@@ -63,7 +66,22 @@
                             this.formatDate(this.props.model.slotDateTimeString)
                         )
                     )
-                )
+                ),
+                React.createElement(
+                    "span",
+                    { className: "mdl-list__item-secondary-content" },
+                    React.createElement(
+                        "a",
+                        { className: this.state.onlineStatus == "offline" ? "mdl-list__item-secondary-action offline" : "mdl-list__item-secondary-action", href: "#" },
+                        React.createElement(
+                            "i",
+                            { className: "material-icons" },
+                            "lens"
+                        )
+                    )
+                ),
+                React.createElement("div", { className: "divider" }),
+                React.createElement("div", { className: "clear" })
             );
         }
     });
@@ -95,6 +113,7 @@
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function (apiResult) {
+                debugger;
                 var orderedResult = _.sortBy(apiResult.data, function (num) {
                     return num.slotDateTime;
                 });
@@ -111,8 +130,8 @@
         render: function () {
             var component = this;
             return React.createElement(
-                "div",
-                { className: "list-group" },
+                "ul",
+                { className: "mdl-list" },
                 component.state.appointments.map(function (appointment) {
                     return React.createElement(
                         "div",
