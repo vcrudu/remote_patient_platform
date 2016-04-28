@@ -23,6 +23,10 @@ a.offline {
     border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
+.mdl-layout__container {
+    background-color: #F5F5F5;
+}
+
 .mdl-layout__content {
     background-color: #F5F5F5;
 }
@@ -43,6 +47,14 @@ a.offline {
     font-family: Roboto-Medium;
 }
 
+.mdl-layout__tab-bar-button {
+    background-color: #EEEEEE !important;
+}
+
+.mdl-layout__tab-bar-container {
+    background-color: #EEEEEE !important;
+}
+
 .mdl-layout__tab-bar {
     background-color: #EEEEEE !important;
 }
@@ -50,7 +62,6 @@ a.offline {
 .primary-bg {
     background-color: #EEEEEE;
 }
-
 
 /* provider user profile */
 .profile-image-container {

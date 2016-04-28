@@ -81,7 +81,6 @@
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function(apiResult) {
-                debugger;
                 var orderedResult = _.sortBy(apiResult.data, function(num){
                     return num.slotDateTime;
                 });
