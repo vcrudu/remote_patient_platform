@@ -50,8 +50,6 @@
                 <span className="mdl-list__item-secondary-content">
                   <a className={this.state.onlineStatus == "offline" ? "mdl-list__item-secondary-action offline" : "mdl-list__item-secondary-action"} href="#"><i className="material-icons">lens</i></a>
                 </span>
-                <div className="divider"></div>
-                <div className="clear"></div>
             </li>
         }
     });
@@ -99,14 +97,11 @@
             return <ul className="mdl-list">
                 {
                     component.state.appointments.map(function (appointment) {
-                        return <div key={appointment.patientId + "_" + appointment.slotDateTime + "_div"}>
-                                <ProviderAppointment
+                        return <ProviderAppointment
                                     ref={appointment.patientId + "_" + appointment.slotDateTime}
                                     key={appointment.patientId + "_" + appointment.slotDateTime}
                                     model={appointment}
                                     onCall={component.handleCall}/>
-                                <div className="list-group-separator" key={appointment.patientId + "_" + appointment.slotDateTime + "_separator"}></div>
-                            </div>
                     })
                 }
             </ul>

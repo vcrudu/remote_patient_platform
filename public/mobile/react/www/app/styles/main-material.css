@@ -67,6 +67,7 @@ a.offline {
 .profile-image-container {
     height: 176px;
     position: relative;
+    padding-top:16px;
 }
 
 .profile-image-container .userName {

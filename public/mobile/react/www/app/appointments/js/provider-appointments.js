@@ -79,9 +79,7 @@
                             "lens"
                         )
                     )
-                ),
-                React.createElement("div", { className: "divider" }),
-                React.createElement("div", { className: "clear" })
+                )
             );
         }
     });
@@ -132,16 +130,11 @@
                 "ul",
                 { className: "mdl-list" },
                 component.state.appointments.map(function (appointment) {
-                    return React.createElement(
-                        "div",
-                        { key: appointment.patientId + "_" + appointment.slotDateTime + "_div" },
-                        React.createElement(ProviderAppointment, {
-                            ref: appointment.patientId + "_" + appointment.slotDateTime,
-                            key: appointment.patientId + "_" + appointment.slotDateTime,
-                            model: appointment,
-                            onCall: component.handleCall }),
-                        React.createElement("div", { className: "list-group-separator", key: appointment.patientId + "_" + appointment.slotDateTime + "_separator" })
-                    );
+                    return React.createElement(ProviderAppointment, {
+                        ref: appointment.patientId + "_" + appointment.slotDateTime,
+                        key: appointment.patientId + "_" + appointment.slotDateTime,
+                        model: appointment,
+                        onCall: component.handleCall });
                 })
             );
         }
