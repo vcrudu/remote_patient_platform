@@ -17,10 +17,6 @@ a.offline {
     background: transparent !important;
 }
 
-.page-content {
-    margin: 16px;
-}
-
 .progress-bar-indeterminate {
     height: 4px;
 }
