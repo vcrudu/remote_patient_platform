@@ -91,6 +91,7 @@ a.offline {
 
 .exit-from-application-button {
     width: 206px;
+    margin-right: 8px;
 }
 
 /* provider user profile */
@@ -223,6 +224,10 @@ button.mdl-button {
 .fc-time-grid-event .fc-time,
 .fc-time-grid-event .fc-title {
     padding: 5px 0;
+}
+
+.mdl-card {
+    width:auto;
 }
 
 /*Modal*/
