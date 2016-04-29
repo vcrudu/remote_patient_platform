@@ -17,6 +17,20 @@ a.offline {
     background: transparent !important;
 }
 
+.progress-bar-indeterminate {
+    height: 4px;
+}
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg {
+    background: #B388FF;
+    height: 4px;
+}
+
+.ui-mprogress .indeter-bar {
+    background: #651FFF;
+    height: 4px;
+}
+
 .mdl-list .divider {
     position: relative;
     margin-left: 72px;

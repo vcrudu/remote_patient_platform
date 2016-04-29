@@ -2,6 +2,10 @@ body{
     background: #F5F5F5;
 }
 
+.mdl-layout__header {
+    background-color: #EEEEEE;
+}
+
 .mdl-card__title {
     color: rgba(0, 0, 0, 0.87) !important;
 }

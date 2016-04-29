@@ -5,6 +5,26 @@
 (function () {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var APPOINTMENTS_PROGRESS = React.createClass({
+        displayName: "APPOINTMENTS_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var ProviderAppointment = React.createClass({
         displayName: "ProviderAppointment",
 
@@ -107,10 +127,14 @@
                 }
             }
         },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
         componentDidMount: function () {
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function (apiResult) {
+                indeterminateProgress.end();
                 var orderedResult = _.sortBy(apiResult.data, function (num) {
                     return num.slotDateTime;
                 });
@@ -127,15 +151,20 @@
         render: function () {
             var component = this;
             return React.createElement(
-                "ul",
-                { className: "mdl-list" },
-                component.state.appointments.map(function (appointment) {
-                    return React.createElement(ProviderAppointment, {
-                        ref: appointment.patientId + "_" + appointment.slotDateTime,
-                        key: appointment.patientId + "_" + appointment.slotDateTime,
-                        model: appointment,
-                        onCall: component.handleCall });
-                })
+                "main",
+                { className: "mdl-layout__content" },
+                React.createElement(APPOINTMENTS_PROGRESS, null),
+                React.createElement(
+                    "ul",
+                    { className: "mdl-list" },
+                    component.state.appointments.map(function (appointment) {
+                        return React.createElement(ProviderAppointment, {
+                            ref: appointment.patientId + "_" + appointment.slotDateTime,
+                            key: appointment.patientId + "_" + appointment.slotDateTime,
+                            model: appointment,
+                            onCall: component.handleCall });
+                    })
+                )
             );
         }
     });

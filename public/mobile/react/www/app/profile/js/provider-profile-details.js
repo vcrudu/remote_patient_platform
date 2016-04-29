@@ -4,6 +4,26 @@
 (function () {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var USER_PROFILE_PROGRESS = React.createClass({
+        displayName: "USER_PROFILE_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var VitalSignCharts = React.createClass({
         displayName: "VitalSignCharts",
 
@@ -456,6 +476,7 @@
             var component = this;
 
             Bridge.Provider.getPatientDetails(userId, function (result) {
+                indeterminateProgress.end();
                 component.setState({
                     user: result.data
                 });
@@ -607,7 +628,8 @@
                 user: undefined,
                 appointmentTime: "",
                 name: "",
-                onlineStatus: ""
+                onlineStatus: "",
+                chartsLoaded: false
             };
         },
         socketCallback: function (message) {
@@ -625,8 +647,15 @@
                 if (component.refs["vitalSignCharts"].loadCharts) {
                     return;
                 }
+
+                if (component.state.chartsLoaded) {
+                    return;
+                }
+
+                indeterminateProgress.start();
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
-                var vitalSigns = Bridge.Provider.getPatientVitalSigns(userId, function (result) {
+                Bridge.Provider.getPatientVitalSigns(userId, function (result) {
+                    indeterminateProgress.end();
                     if (result.success) {
                         var newDataSource = VitalSignsFactory.createVitalSings(result.data);
                         component.setState({
@@ -634,7 +663,8 @@
                             bloodPressureDef: newDataSource.bloodPressureDef,
                             bloodOxygenDef: newDataSource.bloodOxygenDef,
                             heartRateDef: newDataSource.heartRateDef,
-                            weightDef: newDataSource.weightDef
+                            weightDef: newDataSource.weightDef,
+                            chartsLoaded: true
                         });
                         component.refs["vitalSignCharts"].handleChartsClick(component.state);
                     }
@@ -690,6 +720,7 @@
                 React.createElement(
                     "header",
                     { className: "mdl-layout__header" },
+                    React.createElement(USER_PROFILE_PROGRESS, null),
                     React.createElement(
                         "div",
                         { className: "primary-bg profile-image-container" },
