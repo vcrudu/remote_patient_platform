@@ -17,6 +17,10 @@ a.offline {
     background: transparent !important;
 }
 
+.page-content {
+    margin: 16px;
+}
+
 .progress-bar-indeterminate {
     height: 4px;
 }
@@ -76,6 +80,17 @@ a.offline {
 
 .primary-bg {
     background-color: #EEEEEE;
+}
+
+.buttons-container-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 8px;
+}
+
+.exit-from-application-button {
+    width: 206px;
 }
 
 /* provider user profile */

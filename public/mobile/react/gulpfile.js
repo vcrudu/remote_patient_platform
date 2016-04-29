@@ -39,6 +39,12 @@ gulp.task("babel-appointments", function () {
         .pipe(gulp.dest("www/app/appointments/js"));
 });
 
+gulp.task("babel-network", function () {
+    return gulp.src("www/app/network/jsx/*")
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/network/js"));
+});
+
 gulp.task("babel-watch-appointments", function () {
     return gulp.src("www/app/appointments/jsx/*")
         .pipe(watch("www/app/appointments/jsx/*"))
@@ -98,14 +104,37 @@ gulp.task("babel-watch-profile", function () {
         .pipe(gulp.dest("www/app/profile/js"));
 });
 
+gulp.task("babel-watch-network", function () {
+    return gulp.src("www/app/network/jsx/*")
+        .pipe(watch("www/app/network/jsx/*"))
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/network/js"));
+});
+
 // use default task to launch Browsersync and watch JS files
-gulp.task("serve", ["babel-landing", "babel-signup", "babel-appointments", "babel-vital-signs", "babel-devices", "babel-availability", "babel-profile"], function () {
+gulp.task("serve", ["babel-landing",
+                    "babel-signup",
+                    "babel-appointments",
+                    "babel-vital-signs",
+                    "babel-devices",
+                    "babel-availability",
+                    "babel-profile",
+                    "babel-network"], function () {
     // Serve files from the root of this project
     browserSync.init({
         server: {
             baseDir: "./www/app"
         },
-        files: ["www/app/styles/*.css", "www/app/landing/js/*.js", "www/app/signup/js/*.js", "www/app/appointments/js/*.js", "www/app/vital-signs/js/*.js", "www/app/devices/js/*.js", "www/app/availability/js/*.js", "www/app/profile/js/*.js"],
+        files: [
+            "www/app/styles/*.css",
+            "www/app/landing/js/*.js",
+            "www/app/signup/js/*.js",
+            "www/app/appointments/js/*.js",
+            "www/app/vital-signs/js/*.js",
+            "www/app/devices/js/*.js",
+            "www/app/availability/js/*.js",
+            "www/app/profile/js/*.js",
+            "www/app/network/js/*.js"],
         port: 3030
     });
 });
