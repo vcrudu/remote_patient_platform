@@ -20,14 +20,26 @@ body {
     max-height: 45px;
 }
 
+.form-group.label-floating label.control-label,
+.form-group.label-placeholder label.control-label {
+    font-family: "Roboto-Regular";
+    color: rgba(0,0,0,0.58);
+}
+
 .patientSignUpForm .btn-next{
     color: #673AB7 !important;
 }
 
 .form-group {
     position:relative;
-   margin-right:-15px;
+    margin-right:-15px;
     margin-left:60px;
+    padding-bottom: 8px;
+}
+
+.form-group .form-control {
+    font-family: "Roboto-Regular";
+    color: #000;
 }
 
 .form-group > i {
