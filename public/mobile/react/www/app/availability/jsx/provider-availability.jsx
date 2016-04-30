@@ -7,6 +7,46 @@
 
     $.material.init();
 
+    var TimeSelector = React.createClass({
+        setTime: function(time) {
+            //var changeDayPicker = $(this.refs.changeDayPicker);
+            //changeDayPicker.mobiscroll("setVal", date);
+            //changeDayPicker.mobiscroll("setDate", date, true)
+        },
+        handleShow: function() {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            changeTimePicker.mobiscroll('show');
+            return false;
+        },
+        componentDidMount: function() {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            var component = this;
+
+            changeTimePicker.mobiscroll().range({
+                theme: "material",
+                display: "bottom",
+                controls: ['time'],
+                steps: {
+                    minute: 60,
+                    zeroBased: true
+                },
+                onSelect: function (valueText, inst) {
+                    component.props.onSelectTimeCallback(valueText, inst);
+                },
+                maxWidth: 100
+
+            });
+        },
+        render: function() {
+            return <div className="show-avaialbility-mobiscroll-wrapper">
+                <input id="changeTimePicker" ref="changeTimePicker" className="hide"/>
+                <button id="show" ref="show" onClick={this.handleShow} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-availability-mobiscroll"><i className="material-icons">add</i></button>
+            </div>
+        }
+    });
+
+
+
     var ProviderAvailabilityCalendar = React.createClass({
         validateTimeString: function() {
             var reasonText = $(this.refs.availabilityText);
@@ -41,6 +81,11 @@
 
             availabilityString = availabilityString.substring(0,availabilityString.length-1);
             return availabilityString;
+        },
+        onTimeChanged: function(valueText, inst) {
+            var time = moment(valueText);
+            console.log(time);
+           // $(this.refs.avalabilityCalendar).fullCalendar("gotoDate", date);
         },
         handleProviderAvailability: function() {
             var availabilityModalDiv = $(this.refs.appointmentModal);
@@ -78,6 +123,11 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
+                header:{
+                    left: '',
+                    center: 'title',
+                    right: 'today'
+                },
                 allDay:false,
                 views: {
                     nursesGrid: {
@@ -168,35 +218,10 @@
             });
         },
         render: function() {
-            return <div>
+            return <div ref="appointmentsCalendarWrapper">
                 <div ref="availabilityCalendar" id="calendar"></div>
-                <div ref="appointmentModal" id="appointmentModal" className="modal fade" role="dialog">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                <h4 className="modal-title"></h4>
-                            </div>
-                            <div className="modal-body">
 
-                                <div className="form-group is-empty">
-                                    <header id="modal-body-header">Current schedule:
-                                        <span id="currentSchedule"></span>
-                                    </header>
-                                    <label htmlFor="availabilityText" className="control-label">Availability</label>
-                                    <textarea className="form-control" rows="3" id="availabilityText" ref="availabilityText" onChange={this.validateTimeString}></textarea>
-                                    <span className="note">Example: 08:00-12:00, 13:00-17:00 </span>
-                                    <input type="hidden" id="slotId"/>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" id="modal-submit" onClick={this.handleProviderAvailability}>Submit<div className="ripple-container"></div></button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <TimeSelector ref="timeSelector" onSelectTimeCallback="{this.onTimeChanged}"/>
             </div>
         }
     });

@@ -7,6 +7,56 @@
 
     $.material.init();
 
+    var TimeSelector = React.createClass({
+        displayName: "TimeSelector",
+
+        setTime: function (time) {
+            //var changeDayPicker = $(this.refs.changeDayPicker);
+            //changeDayPicker.mobiscroll("setVal", date);
+            //changeDayPicker.mobiscroll("setDate", date, true)
+        },
+        handleShow: function () {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            changeTimePicker.mobiscroll('show');
+            return false;
+        },
+        componentDidMount: function () {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            var component = this;
+
+            changeTimePicker.mobiscroll().range({
+                theme: "material",
+                display: "bottom",
+                controls: ['time'],
+                steps: {
+                    minute: 60,
+                    zeroBased: true
+                },
+                onSelect: function (valueText, inst) {
+                    component.props.onSelectTimeCallback(valueText, inst);
+                },
+                maxWidth: 100
+
+            });
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "show-avaialbility-mobiscroll-wrapper" },
+                React.createElement("input", { id: "changeTimePicker", ref: "changeTimePicker", className: "hide" }),
+                React.createElement(
+                    "button",
+                    { id: "show", ref: "show", onClick: this.handleShow, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-availability-mobiscroll" },
+                    React.createElement(
+                        "i",
+                        { className: "material-icons" },
+                        "add"
+                    )
+                )
+            );
+        }
+    });
+
     var ProviderAvailabilityCalendar = React.createClass({
         displayName: "ProviderAvailabilityCalendar",
 
@@ -41,6 +91,11 @@
 
             availabilityString = availabilityString.substring(0, availabilityString.length - 1);
             return availabilityString;
+        },
+        onTimeChanged: function (valueText, inst) {
+            var time = moment(valueText);
+            console.log(time);
+            // $(this.refs.avalabilityCalendar).fullCalendar("gotoDate", date);
         },
         handleProviderAvailability: function () {
             var availabilityModalDiv = $(this.refs.appointmentModal);
@@ -77,6 +132,11 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
+                header: {
+                    left: '',
+                    center: 'title',
+                    right: 'today'
+                },
                 allDay: false,
                 views: {
                     nursesGrid: {
@@ -165,71 +225,9 @@
         render: function () {
             return React.createElement(
                 "div",
-                null,
+                { ref: "appointmentsCalendarWrapper" },
                 React.createElement("div", { ref: "availabilityCalendar", id: "calendar" }),
-                React.createElement(
-                    "div",
-                    { ref: "appointmentModal", id: "appointmentModal", className: "modal fade", role: "dialog" },
-                    React.createElement(
-                        "div",
-                        { className: "modal-dialog" },
-                        React.createElement(
-                            "div",
-                            { className: "modal-content" },
-                            React.createElement(
-                                "div",
-                                { className: "modal-header" },
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "close", "data-dismiss": "modal" },
-                                    "×"
-                                ),
-                                React.createElement("h4", { className: "modal-title" })
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "modal-body" },
-                                React.createElement(
-                                    "div",
-                                    { className: "form-group is-empty" },
-                                    React.createElement(
-                                        "header",
-                                        { id: "modal-body-header" },
-                                        "Current schedule:",
-                                        React.createElement("span", { id: "currentSchedule" })
-                                    ),
-                                    React.createElement(
-                                        "label",
-                                        { htmlFor: "availabilityText", className: "control-label" },
-                                        "Availability"
-                                    ),
-                                    React.createElement("textarea", { className: "form-control", rows: "3", id: "availabilityText", ref: "availabilityText", onChange: this.validateTimeString }),
-                                    React.createElement(
-                                        "span",
-                                        { className: "note" },
-                                        "Example: 08:00-12:00, 13:00-17:00 "
-                                    ),
-                                    React.createElement("input", { type: "hidden", id: "slotId" })
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "modal-footer" },
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
-                                    "Close"
-                                ),
-                                React.createElement(
-                                    "button",
-                                    { type: "button", className: "btn btn-primary", id: "modal-submit", onClick: this.handleProviderAvailability },
-                                    "Submit",
-                                    React.createElement("div", { className: "ripple-container" })
-                                )
-                            )
-                        )
-                    )
-                )
+                React.createElement(TimeSelector, { ref: "timeSelector", onSelectTimeCallback: "{this.onTimeChanged}" })
             );
         }
     });
