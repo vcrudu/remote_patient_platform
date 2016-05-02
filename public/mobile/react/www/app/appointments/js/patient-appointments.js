@@ -83,6 +83,13 @@
         handleCancelAppointmentModal: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+
+            var actualHeight = $(".fc-scroller").height();
+            $(".fc-scroller").height(actualHeight + 1);
+            $(".fc-scroller").height(actualHeight - 1);
+
+            componentHandler.upgradeDom();
+            return;
         },
         onDateChanged: function (valueText, inst) {
             var date = moment(valueText);
@@ -141,7 +148,6 @@
                     document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
                 },
                 events: function (start, end, timezone, callback) {
-
                     var events = [];
                     Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
@@ -160,7 +166,8 @@
 
                     component.refs["dateSelector"].setDate(start._d);
                 },
-                eventAfterAllRender: function (view) {}
+                eventAfterAllRender: function (view) {},
+                loading: function (isLoading, view) {}
             });
         },
         render: function () {
