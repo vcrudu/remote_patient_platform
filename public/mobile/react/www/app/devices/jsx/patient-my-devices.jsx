@@ -7,6 +7,24 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var MY_DEVICES_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function() {
+            //componentHandler.upgradeDom();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
     var NoDevicesMessage = React.createClass({
         componentDidMount: function() {
             $(this.refs.noDeviceMessage).hide();
@@ -239,8 +257,12 @@
 
                         component.setState({pairedDevices: pairedResult.data, devices: devicesResult.data });
                         component.refs.noDevices.componentDidMount();
+
+
                     });
                 }
+
+                indeterminateProgress.end();
             });
         },
         render: function() {
@@ -256,6 +278,7 @@
         }
     });
 
+    ReactDOM.render(<MY_DEVICES_PROGRESS/>, document.getElementById("my-devices-progress"));
     ReactDOM.render(<MyDevices/>, document.getElementById("my-devices"));
 })();
 

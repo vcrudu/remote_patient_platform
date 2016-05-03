@@ -5,6 +5,23 @@
 (function() {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var APPOINTMENTS_PROGRESS = React.createClass({
+        componentDidMount: function() {
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
     var DateSelector = React.createClass({
         setDate: function(date) {
             var changeDayPicker = $(this.refs.changeDayPicker);
@@ -87,6 +104,9 @@
             var d = new Date();
             return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
         },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+        },
         componentDidMount: function() {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             var reasonText = $(this.refs.reasonText);
@@ -135,6 +155,7 @@
                     document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
                 },
                 events: function (start, end, timezone, callback) {
+                    indeterminateProgress.start();
                     var events = [];
                     Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
@@ -148,6 +169,8 @@
                                 }
                             }
                             callback(events);
+
+                           indeterminateProgress.end();
                         })
                     });
 
@@ -180,5 +203,6 @@
         }
     });
 
+    ReactDOM.render(<APPOINTMENTS_PROGRESS/>, document.getElementById("patient-appointments-progress"));
     ReactDOM.render(<AppointmentsCalendar/>, document.getElementById("patient-appointments"));
 })();

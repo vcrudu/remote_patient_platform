@@ -14,6 +14,20 @@ body {
     font-family:"Roboto-Regular";
 }
 
+.progress-bar-indeterminate {
+    height: 4px;
+}
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg {
+    background: #B388FF;
+    height: 4px;
+}
+
+.ui-mprogress .indeter-bar {
+    background: #651FFF;
+    height: 4px;
+}
+
 .row-no-padding [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;

@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="../resources/js/mobiscroll/mobiscroll.custom-2.17.2.min.css">
     <link rel="stylesheet" href="../styles/material-design-lite/material.icons.min.css">
     <link rel="stylesheet" href="../styles/material-design-lite/material.grey-deep_purple.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/build/css/mprogress.min.css">
     <link rel="stylesheet" href="../styles/main-material.css">
     <link rel="stylesheet" href="styles/charts.css">
 </head>
 <body>
 <div class="mdl-layout__container">
-    <main class="mdl-layout__content">
+    <div id="patient-vital-sings-progress"></div>
+    <main class="mdl-layout__content vital-signs">
         <div id="patient-vital-sings-container"></div>
     </main>
 </div>
@@ -27,7 +29,10 @@
 <script type="text/javascript" src="../resources/js/d3.tip/d3.tip.js"></script>
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/material-design-lite/material.min.js"></script>
 <script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
+<script type="text/javascript" src="../lib/mprogress/build/js/mprogress.min.js"></script>
 <script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
 
 <script type="text/javascript" src="js/patient-vital-sgns.js"></script>

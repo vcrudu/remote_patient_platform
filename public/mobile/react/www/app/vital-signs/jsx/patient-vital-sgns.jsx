@@ -4,6 +4,60 @@
 (function() {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var VITAL_SINGS_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
+    var NoVitalSignsMessage = React.createClass({
+        componentDidMount: function() {
+            /*$(this.refs.noVitalsSingsMessage).hide();*/
+        },
+        hideMessage: function(){
+            $(this.refs.noVitalsSingsMessage).addClass("hide");
+        },
+        showMessage: function(){
+            $(this.refs.noVitalsSingsMessage).removeClass("hide");
+        },
+        handleTakeMeasurements: function(){
+            this.props.handleGoToMyDevices();
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+
+            var goToMyDevicesButton = this.refs.goToMyDevicesButton;
+            goToMyDevicesButton.addEventListener('click', this.handleTakeMeasurements);
+        },
+        render: function() {
+            return <div className="mdl-card mdl-shadow--2dp hide" ref="noVitalsSingsMessage">
+                    <div className="mdl-card__title">
+                        <h2 className="mdl-card__title-text">Welcome</h2>
+                    </div>
+                    <div className="mdl-card__supporting-text">
+                        Please take some measurements to be able to see history.
+                    </div>
+                    <div className="buttons-container-right">
+                        <button className="mdl-button mdl-js-button mdl-button--accent go-to-my-devices-button" ref="goToMyDevicesButton">
+                            GO TO MY DEVICES
+                        </button>
+                    </div>
+            </div>
+        }
+    });
+
     var VitalSingChart = React.createClass({
         propTypes: {
             aspectWidth: React.PropTypes.number.isRequired,
@@ -425,6 +479,9 @@
                 weightDef: emptyVitalSigns.weightDef
             }
         },
+        goToMyDevices: function() {
+            Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
+        },
         componentDidMount: function() {
             var chartsWrapper = $(this.refs.chartsWrapper);
 
@@ -442,12 +499,27 @@
                                 heartRateDef: newDataSource.heartRateDef,
                                 weightDef: newDataSource.weightDef
                             });
+
+                        if (newDataSource
+                            && (newDataSource.temperatureVitalSignsDef.values.length > 0
+                                || newDataSource.bloodPressureDef.values.length > 0
+                                || newDataSource.bloodOxygenDef.values.length > 0
+                                || newDataSource.heartRateDef.values.length > 0
+                                || newDataSource.weightDef.values.length > 0)) {
+
+                            component.refs.noVitalSigns.hideMessage();
+                        }
+                        else {
+                            component.refs.noVitalSigns.showMessage();
+                        }
+                        indeterminateProgress.end();
                     }
                 });
             }
         },
         render: function() {
             return <div ref="chartsWrapper">
+                <NoVitalSignsMessage ref="noVitalSigns" handleGoToMyDevices={this.goToMyDevices}/>
                 <VitalSingChart dataSource={this.state.bloodPressureDef}
                                 aspectWidth={16}
                                 aspectHeight={9}
@@ -506,6 +578,6 @@
             </div>
         }
     });
-
+    ReactDOM.render(<VITAL_SINGS_PROGRESS />, document.getElementById("patient-vital-sings-progress"));
     ReactDOM.render(<PatientVitalSingsPage />, document.getElementById("patient-vital-sings-container"));
 })();

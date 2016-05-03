@@ -7,6 +7,26 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var MY_DEVICES_PROGRESS = React.createClass({
+        displayName: "MY_DEVICES_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function () {
+            //componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var NoDevicesMessage = React.createClass({
         displayName: "NoDevicesMessage",
 
@@ -310,6 +330,8 @@
                         component.refs.noDevices.componentDidMount();
                     });
                 }
+
+                indeterminateProgress.end();
             });
         },
         render: function () {
@@ -337,5 +359,6 @@
         }
     });
 
+    ReactDOM.render(React.createElement(MY_DEVICES_PROGRESS, null), document.getElementById("my-devices-progress"));
     ReactDOM.render(React.createElement(MyDevices, null), document.getElementById("my-devices"));
 })();

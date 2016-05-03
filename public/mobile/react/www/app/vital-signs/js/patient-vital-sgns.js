@@ -4,6 +4,78 @@
 (function () {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var VITAL_SINGS_PROGRESS = React.createClass({
+        displayName: "VITAL_SINGS_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
+    var NoVitalSignsMessage = React.createClass({
+        displayName: "NoVitalSignsMessage",
+
+        componentDidMount: function () {
+            /*$(this.refs.noVitalsSingsMessage).hide();*/
+        },
+        hideMessage: function () {
+            $(this.refs.noVitalsSingsMessage).addClass("hide");
+        },
+        showMessage: function () {
+            $(this.refs.noVitalsSingsMessage).removeClass("hide");
+        },
+        handleTakeMeasurements: function () {
+            this.props.handleGoToMyDevices();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+
+            var goToMyDevicesButton = this.refs.goToMyDevicesButton;
+            goToMyDevicesButton.addEventListener('click', this.handleTakeMeasurements);
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "mdl-card mdl-shadow--2dp hide", ref: "noVitalsSingsMessage" },
+                React.createElement(
+                    "div",
+                    { className: "mdl-card__title" },
+                    React.createElement(
+                        "h2",
+                        { className: "mdl-card__title-text" },
+                        "Welcome"
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "mdl-card__supporting-text" },
+                    "Please take some measurements to be able to see history."
+                ),
+                React.createElement(
+                    "div",
+                    { className: "buttons-container-right" },
+                    React.createElement(
+                        "button",
+                        { className: "mdl-button mdl-js-button mdl-button--accent go-to-my-devices-button", ref: "goToMyDevicesButton" },
+                        "GO TO MY DEVICES"
+                    )
+                )
+            );
+        }
+    });
+
     var VitalSingChart = React.createClass({
         displayName: "VitalSingChart",
 
@@ -387,6 +459,9 @@
                 weightDef: emptyVitalSigns.weightDef
             };
         },
+        goToMyDevices: function () {
+            Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
+        },
         componentDidMount: function () {
             var chartsWrapper = $(this.refs.chartsWrapper);
 
@@ -404,6 +479,14 @@
                             heartRateDef: newDataSource.heartRateDef,
                             weightDef: newDataSource.weightDef
                         });
+
+                        if (newDataSource && (newDataSource.temperatureVitalSignsDef.values.length > 0 || newDataSource.bloodPressureDef.values.length > 0 || newDataSource.bloodOxygenDef.values.length > 0 || newDataSource.heartRateDef.values.length > 0 || newDataSource.weightDef.values.length > 0)) {
+
+                            component.refs.noVitalSigns.hideMessage();
+                        } else {
+                            component.refs.noVitalSigns.showMessage();
+                        }
+                        indeterminateProgress.end();
                     }
                 });
             }
@@ -412,6 +495,7 @@
             return React.createElement(
                 "div",
                 { ref: "chartsWrapper" },
+                React.createElement(NoVitalSignsMessage, { ref: "noVitalSigns", handleGoToMyDevices: this.goToMyDevices }),
                 React.createElement(VitalSingChart, { dataSource: this.state.bloodPressureDef,
                     aspectWidth: 16,
                     aspectHeight: 9,
@@ -470,6 +554,6 @@
             );
         }
     });
-
+    ReactDOM.render(React.createElement(VITAL_SINGS_PROGRESS, null), document.getElementById("patient-vital-sings-progress"));
     ReactDOM.render(React.createElement(PatientVitalSingsPage, null), document.getElementById("patient-vital-sings-container"));
 })();

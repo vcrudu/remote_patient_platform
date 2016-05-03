@@ -4,6 +4,10 @@ body {
     background-color: #f5f5f5;
 }
 
+.hide {
+    display: none !important;
+}
+
 .clear {
     clear: both;
 }
@@ -87,6 +91,11 @@ a.offline {
 
 .exit-from-application-button {
     width: 206px;
+    margin-right: 8px;
+}
+
+.go-to-my-devices-button {
+    width: 164px;
     margin-right: 8px;
 }
 
