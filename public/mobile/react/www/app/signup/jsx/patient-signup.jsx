@@ -96,6 +96,12 @@
 
             return isValid;
         },
+        showError: function(message) {
+            this.setState({
+                validationMessage: message,
+                defaultFormGroupClassName: "form-group label-floating has-error is-focused " + Math.random().toString(36).slice(-5),
+            });
+        },
         onChange: function(component) {
             this.validateComponent(component);
         },
@@ -221,11 +227,13 @@
                 agent: "mobile"
             };
 
+            var component = this;
             Bridge.signUp(signUpFormData, function(result) {
                 if (result.success) {
                     Bridge.Redirect.redirectToSignIn(result.data.email);
                 }
                 else {
+                    component.refs.emailInput.showError(result.error);
                     Bridge.error(result, function() {});
                 }
             });
@@ -234,7 +242,8 @@
         },
         render: function () {
             return <form name="signUpForm" onSubmit={this.handleSubmit}>
-                <ValidationInput inputLabel="Email"
+                <ValidationInput ref="emailInput"
+                                 inputLabel="Email"
                                  inputIconName="email"
                                  inputType="email"
                                  inputName="userEmail"
