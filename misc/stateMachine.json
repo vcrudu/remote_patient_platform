@@ -1,0 +1,128 @@
+{
+  "start": {
+    "name": "unreadWelcome",
+    "transition": {
+      "event": "readWelcome",
+      "target": "welcomed"
+    },
+    "commands": [{
+      "name": "sendWelcomeNotification"
+    }]
+  },
+  "states": [
+    {
+      "name": "welcomed",
+      "transition": {
+        "event": "readInformDevicesAvailable",
+        "target": "informedDevicesAvailable"
+      },
+      "commands": [{
+        "name": "sendInformDevicesAvailable"
+      }]
+    },
+    {
+      "name": "informedDevicesAvailable",
+      "transitions": [{
+        "event": "readInformCanMakeAppointments",
+        "target": "informedCanMakeAppointments"
+      }],
+      "commands": [{
+        "name": "sendInformCanMakeAppointments"
+      }]
+    },
+    {
+      "name": "informedCanMakeAppointments",
+      "transitions": [{
+        "event": "readInformProvideDetails",
+        "target": "informedProvideDetails"
+      }],
+      "commands": [{
+        "name": "sendInformProvideDetails"
+      }]
+    },
+    {
+      "name": "informedProvideDetails",
+      "transitions": [{
+        "event": "readInformedProvideDetails",
+        "target": "idle"
+      }]
+    },
+    {
+      "name": "idle",
+      "transitions": [{
+        "event": "appointmentBooking",
+        "target": "appointmentBooked"
+      },
+        {
+        "event": "devicesOrdering",
+        "target": "devicesOrdered"
+      },
+        {
+          "event":"measurementExpected",
+          "target" : "waitingMeasurement"
+        }
+      ]
+    },
+    {
+      "name":"appointmentBooked",
+      "transitions": [{
+        "event": "oneMinuteRemained",
+        "target": "informedNotificationSoon"
+      }],
+      "commands": [{
+        "name": "sendPatientAppointmentBookedNotification"
+      },
+       {
+        "name": "sendProviderAppointmentBookedNotification"
+      }]
+    },
+    {
+      "name":"informedNotificationSoon",
+      "transitions": [{
+        "event": "notificationSoonSent",
+        "target": "idle"
+      }],
+      "commands": []
+    },
+    {
+      "name":"devicesOrdered",
+      "transitions": [{
+        "event": "devicesDispatching",
+        "target": "devicesDispatched"
+      }],
+      "commands": [{
+        "name": "sendDevicesOrderedNotification"
+      }]
+    },
+    {
+      "name": "devicesDispatched",
+      "transition": {
+        "event": "devicesDelivering",
+        "target": "devicesDelivered"
+      },
+      "commands": [{
+        "name": "sendDevicesDispatchedNotification"
+      }]
+    },
+    {
+      "name": "devicesDelivered",
+      "transitions": [{
+        "event": "devicesInstalled",
+        "target": "waitingMeasurement"
+      }],
+        "commands":[{
+          "name":"sendTakeMeasurementNotification"
+        }]
+    },
+    {
+      "name":"waitingMeasurement",
+      "transitions":[{
+        "event":"measurementReceived",
+        "target":"idle"
+      }],
+      "commands":[{
+        "name":"sendTakeMeasurementNotification"
+      }]
+    }
+  ]
+}
