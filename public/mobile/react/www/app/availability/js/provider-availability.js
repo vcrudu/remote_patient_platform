@@ -10,10 +10,10 @@
     var TimeSelector = React.createClass({
         displayName: "TimeSelector",
 
-        setTime: function (time) {
-            //var changeDayPicker = $(this.refs.changeDayPicker);
-            //changeDayPicker.mobiscroll("setVal", date);
-            //changeDayPicker.mobiscroll("setDate", date, true)
+        setTime: function (date) {
+            //var changeTimePicker = $(this.refs.changeTimePicker);
+            //changeTimePicker.mobiscroll("setVal", date);
+            //changeTimePicker.mobiscroll("setDate", date, true)
         },
         handleShow: function () {
             var changeTimePicker = $(this.refs.changeTimePicker);
@@ -23,11 +23,14 @@
         componentDidMount: function () {
             var changeTimePicker = $(this.refs.changeTimePicker);
             var component = this;
-
+            var strt = new Date(new Date().setHours(8, 0, 0, 0));
+            var nd = new Date(new Date().setHours(12, 0, 0, 0));
             changeTimePicker.mobiscroll().range({
                 theme: "material",
                 display: "bottom",
                 controls: ['time'],
+                timeFormat: 'HH',
+                defaultValue: [strt, nd],
                 steps: {
                     minute: 60,
                     zeroBased: true
@@ -60,18 +63,7 @@
     var ProviderAvailabilityCalendar = React.createClass({
         displayName: "ProviderAvailabilityCalendar",
 
-        validateTimeString: function () {
-            var reasonText = $(this.refs.availabilityText);
-            var scheduleValue = reasonText.val();
-            var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
-            var match = re.exec(scheduleValue);
 
-            if (match) {
-                $("#modal-submit").prop("disabled", false);
-            } else {
-                $("#modal-submit").prop("disabled", true);
-            }
-        },
         getTodayAvailability: function (date) {
             var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
             var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
@@ -93,8 +85,15 @@
             return availabilityString;
         },
         onTimeChanged: function (valueText, inst) {
-            var time = moment(valueText);
-            console.log(time);
+            var availabilityCalendarDiv = $(this.refs.availabilityCalendar);
+            var dateString = moment(availabilityCalendarDiv.fullCalendar("getDate")).format("DD[.]MM[.]YYYY");
+            var inputTimeRange = valueText.split(" ");
+            var availabilityString = inputTimeRange[0] + ':00-' + inputTimeRange[2] + ':00';
+            Bridge.providerSetAvailability({ availabilityString: availabilityString, dateString: dateString }, function (result) {
+                availabilityCalendarDiv.fullCalendar("refetchEvents");
+            });
+
+            //console.log(timeRange,dateString);
             // $(this.refs.avalabilityCalendar).fullCalendar("gotoDate", date);
         },
         handleProviderAvailability: function () {
@@ -133,7 +132,7 @@
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
                 header: {
-                    left: '',
+                    left: 'prev,next',
                     center: 'title',
                     right: 'today'
                 },
@@ -148,50 +147,12 @@
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
                 eventClick: function (calEvent, jsEvent, view) {
-                    var dateTitle = "Edit availability " + moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
-                    $(".modal-title").text(dateTitle);
-
-                    var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    var availabilityText = component.getTodayAvailability(calendarDate);
-                    availabilityTextInput.val(availabilityText);
-
-                    $("#currentSchedule").html(availabilityText);
-                    if (!availabilityText || availabilityText == "") {
-                        $("#modal-body-header").hide();
-                    } else {
-                        $("#modal-body-header").show();
-                    }
-
-                    availabilityModal.modal('show');
+                    //var dateTitle="Edit availability "+moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
+                    console.log('apare mobi');
+                    //var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
+                    //var availabilityText = component.getTodayAvailability(calendarDate);
                 },
-                dayClick: function (calEvent, jsEvent, view) {
-                    var now = new Date();
-                    if (calEvent < now.getTime()) {
-                        return;
-                    }
 
-                    var dateTitle = "Set availability " + moment(calEvent._d).format("DD[/]MM[/]YYYY"); //formattedDate(calEvent);
-
-                    $(".modal-title").text(dateTitle);
-
-                    var dateTitle = "Set availability " + moment(calEvent._d).format("DD[/]MM[/]YYYY");
-                    $("span#modal-title-data").text(dateTitle);
-
-                    var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    var availabilityText = component.getTodayAvailability(calendarDate);
-                    availabilityTextInput.val(availabilityText);
-
-                    $("#currentSchedule").html(availabilityText);
-                    if (!availabilityText || availabilityText == "") {
-                        $("#modal-body-header").hide();
-                    } else {
-                        $("#modal-body-header").show();
-                    }
-
-                    availabilityModal.modal('show');
-
-                    $("#modal-submit").prop("disabled", true);
-                },
                 events: function (start, end, timezone, callback) {
                     var events = [];
                     Bridge.getProviderSlots(start, end, function (result) {
@@ -213,6 +174,7 @@
                             callback(events);
                         }
                     });
+                    //component.refs["dateSelector"].setTime(start._d);
                 },
                 eventRender: function (event, element) {
                     element.find('.fc-event-title').append("<br/>" + event.location);
@@ -227,7 +189,7 @@
                 "div",
                 { ref: "appointmentsCalendarWrapper" },
                 React.createElement("div", { ref: "availabilityCalendar", id: "calendar" }),
-                React.createElement(TimeSelector, { ref: "timeSelector", onSelectTimeCallback: "{this.onTimeChanged}" })
+                React.createElement(TimeSelector, { ref: "timeSelector", onSelectTimeCallback: this.onTimeChanged })
             );
         }
     });
