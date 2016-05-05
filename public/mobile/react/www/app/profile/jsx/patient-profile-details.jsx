@@ -23,7 +23,249 @@
         }
     });
 
+    var PatientMedicalInfo = React.createClass({
+        getInitialState: function() {
+            return {
+                nhsNumber: "",
+                ethnicity: "",
+                height: "",
+                weight: "",
+            }
+        },
+        updateState: function(stateObject) {
+            this.setState(stateObject);
+        },
+        handleEthnicityClick: function() {
+            $(this.refs.sEthnicity).mobiscroll("show");
+        },
+        setupEthnicityClick: function() {
+            var component = this;
+
+            $(this.refs.sEthnicity).mobiscroll().select({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                minWidth: 200,
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtEthnicity, component.refs.txtEthnicityDiv);
+                }
+            });
+
+            $("#sEthnicity_dummy").hide();
+        },
+        setRefElementValue: function(valueText, refElement, refElementDiv) {
+            $(refElement).val(valueText);
+
+            if (valueText != "") {
+                if ($(refElementDiv).hasClass("is-focused")) {
+                    $(refElementDiv).removeClass("is-focused");
+                }
+                if (!$(refElementDiv).hasClass("is-dirty")) {
+                    $(refElementDiv).addClass("is-dirty");
+                }
+            }
+
+            $(refElement).blur();
+        },
+        componentDidMount: function() {
+            this.setupEthnicityClick();
+
+            var txtEthnicity = this.refs.txtEthnicity;
+            txtEthnicity.addEventListener("focus", this.handleEthnicityClick);
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+
+            this.setRefElementValue(this.state.nhsNumber, this.refs.txtNhsNumber, this.refs.txtNhsNumberDiv);
+            this.setRefElementValue(this.state.ethnicity, this.refs.txtEthnicity, this.refs.txtEthnicityDiv);
+            this.setRefElementValue(this.state.height, this.refs.txtHeight, this.refs.txtHeightDiv);
+            this.setRefElementValue(this.state.weight, this.refs.txtWeight, this.refs.txtWeightDiv);
+        },
+        render: function() {
+            return <div>
+                <div className="mdl-textfield mdl-js-textfield" ref="txtNhsNumberDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtNhsNumber" ref="txtNhsNumber" />
+                    <label className="mdl-textfield__label" htmlFor="txtNhsNumber">NHS Number</label>
+                </div>
+                <div className="clear"></div>
+                <div className="mdl-textfield mdl-js-textfield" ref="txtEthnicityDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtEthnicity" ref="txtEthnicity" onClick={this.handleEthnicityClick}/>
+                    <label className="mdl-textfield__label" htmlFor="txtEthnicity">Choose Ethnicity</label>
+                </div>
+                <div className="clear"></div>
+                <div className="mdl-textfield mdl-js-textfield" ref="txtHeightDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight" />
+                    <label className="mdl-textfield__label" htmlFor="txtHeight">Current Height</label>
+                </div>
+                <div className="clear"></div>
+                <div className="mdl-textfield mdl-js-textfield" ref="txtWeightDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight" />
+                    <label className="mdl-textfield__label" htmlFor="txtWeight">Current Weight</label>
+                </div>
+                <div className="clear"></div>
+                <ul className="mdl-list">
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Do you have any of the following diseases?
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Asthma (on medication)
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkAsthma">
+                              <input type="checkbox" id="chkAsthma" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Cancer
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkCancer">
+                              <input type="checkbox" id="chkCancer" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Diabetes
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkDiabetes">
+                              <input type="checkbox" id="chkDiabetes" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Epilepsy
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkEpilepsy">
+                              <input type="checkbox" id="chkEpilepsy" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Stroke/TIA
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkStroke">
+                              <input type="checkbox" id="chkStroke" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Hypertension (high blood pressure)
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkHypertension">
+                              <input type="checkbox" id="chkHypertension" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Chronic heart disease
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkChronicHeartDisease">
+                              <input type="checkbox" id="chkChronicHeartDisease" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Chronic kidney disease
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkChronicKidneyDisease">
+                              <input type="checkbox" id="chkChronicKidneyDisease" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Chronic lung disease
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkChronicLungDisease">
+                              <input type="checkbox" id="chkChronicLungDisease" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Hypothyroidism (underactive thyroid)
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkHypothyroidism">
+                              <input type="checkbox" id="chkHypothyroidism" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Mental health concerns (give details)
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkMentalHealthConcerns">
+                              <input type="checkbox" id="chkMentalHealthConcerns" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                    <li className="mdl-list__item">
+                        <span className="mdl-list__item-primary-content">
+                          Previous operations
+                        </span>
+                        <span className="mdl-list__item-secondary-action">
+                          <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="chkPreviousOperations">
+                              <input type="checkbox" id="chkPreviousOperations" className="mdl-checkbox__input" />
+                          </label>
+                        </span>
+                    </li>
+                </ul>
+                <div className="clear"></div>
+                <select className="hide" name="Ethnicity" id="sEthnicity" ref="sEthnicity">
+                    <option value="British / Mixed British">British / Mixed British</option>
+                    <option value="Irish">Irish</option>
+                    <option value="Other White Background">Other White Background</option>
+                    <option value="White & BlackCaribbean">White & BlackCaribbean</option>
+                    <option value="White & Black African">White & Black African</option>
+                    <option value="Other Mixed Background">Other Mixed Background</option>
+                    <option value="Indian / British Indian">Indian/ British Indian</option>
+                    <option value="Pakistani / British Pakistani">Pakistani / British Pakistani</option>
+                    <option value="Bangladeshi/British Bangladeshi">Bangladeshi / British Bangladeshi</option>
+                    <option value="Other Asian Background">Other Asian Background</option>
+                    <option value="Caribbean">Caribbean</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Other Black Background">Other Black Background</option>
+                    <option value="Other ethnic group">Other ethnic group</option>
+                </select>
+            </div>;
+        }
+    });
+
     var PatientAddress = React.createClass({
+        getInitialState: function() {
+            return {
+                country: "",
+                county: "",
+                town: "",
+                postCode: "",
+                addressLine1: "",
+                addressLine2: "",
+                phone: "",
+                mobile: "",
+            }
+        },
+        updateState: function(stateObject) {
+            this.setState(stateObject);
+        },
         handleCountry: function() {
             $(this.refs.sCountries).mobiscroll("show");
         },
@@ -37,18 +279,25 @@
                 minWidth: [50, 100],
                 maxWidth: [50, 230],
                 onClosed: function (valueText, inst) {
-                    $(component.refs.txtCountry).val(valueText);
-                    if ($(component.refs.txtCountryDiv).hasClass("is-focused")) {
-                        $(component.refs.txtCountryDiv).removeClass("is-focused");
-                    }
-                    if (!$(component.refs.txtCountryDiv).hasClass("is-dirty")) {
-                        $(component.refs.txtCountryDiv).addClass("is-dirty");
-                    }
-                    $(component.refs.txtCountry).blur();
+                    component.setRefElementValue(valueText, component.refs.txtCountry, component.refs.txtCountryDiv);
                 }
             });
 
             $("#sCountries_dummy").hide();
+        },
+        setRefElementValue: function(valueText, refElement, refElementDiv) {
+            $(refElement).val(valueText);
+
+            if (valueText != "") {
+                if ($(refElementDiv).hasClass("is-focused")) {
+                    $(refElementDiv).removeClass("is-focused");
+                }
+                if (!$(refElementDiv).hasClass("is-dirty")) {
+                    $(refElementDiv).addClass("is-dirty");
+                }
+            }
+
+            $(refElement).blur();
         },
         componentDidMount: function() {
             this.setupCountrySelect();
@@ -58,6 +307,15 @@
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
+
+            this.setRefElementValue(this.state.country, this.refs.txtCountry, this.refs.txtCountryDiv);
+            this.setRefElementValue(this.state.county, this.refs.txtCounty, this.refs.txtCountyDiv);
+            this.setRefElementValue(this.state.town, this.refs.txtTown, this.refs.txtTownDiv);
+            this.setRefElementValue(this.state.postCode, this.refs.txtPostCode, this.refs.txtPostCodeDiv);
+            this.setRefElementValue(this.state.addressLine1, this.refs.txtAddressLine1, this.refs.txtAddressLine1Div);
+            this.setRefElementValue(this.state.addressLine2, this.refs.txtAddressLine2, this.refs.txtAddressLine2Div);
+            this.setRefElementValue(this.state.mobile, this.refs.txtMobile, this.refs.txtMobileDiv);
+            this.setRefElementValue(this.state.phone, this.refs.txtPhone, this.refs.txtPhoneDiv);
         },
         render: function() {
             return <div>
@@ -294,6 +552,18 @@
     });
 
     var PatientBasicInfo = React.createClass({
+        getInitialState: function() {
+            return {
+                title: "",
+                firstName: "",
+                surname: "",
+                gender: "",
+                dateOfBirth: ""
+            }
+        },
+        updateState: function(stateObject) {
+            this.setState(stateObject);
+        },
         handleTitleClick: function() {
             $(this.refs.sTitle).mobiscroll("show");
         },
@@ -312,14 +582,7 @@
                 display: 'bottom',
                 minWidth: 200,
                 onClosed: function (valueText, inst) {
-                    $(component.refs.txtTitle).val(valueText);
-                    if ($(component.refs.txtTitleDiv).hasClass("is-focused")) {
-                        $(component.refs.txtTitleDiv).removeClass("is-focused");
-                    }
-                    if (!$(component.refs.txtTitleDiv).hasClass("is-dirty")) {
-                        $(component.refs.txtTitleDiv).addClass("is-dirty");
-                    }
-                    $(component.refs.txtTitle).blur();
+                    component.setRefElementValue(valueText, component.refs.txtTitle, component.refs.txtTitleDiv);
                 }
             });
 
@@ -333,14 +596,7 @@
                 display: 'bottom',
                 minWidth: 200,
                 onClosed: function (valueText, inst) {
-                    $(component.refs.txtGender).val(valueText);
-                    if ($(component.refs.txtGenderDiv).hasClass("is-focused")) {
-                        $(component.refs.txtGenderDiv).removeClass("is-focused");
-                    }
-                    if (!$(component.refs.txtGenderDiv).hasClass("is-dirty")) {
-                        $(component.refs.txtGenderDiv).addClass("is-dirty");
-                    }
-                    $(component.refs.txtGender).blur();
+                    component.setRefElementValue(valueText, component.refs.txtGender, component.refs.txtGenderDiv);
                 }
             });
 
@@ -357,15 +613,7 @@
                 dateFormat: "mm/dd/yyyy",
                 maxDate: maxDate,
                 onSelect: function (valueText, inst) {
-                    $(component.refs.txtBirthDay).val(valueText);
-                    if ($(component.refs.txtBirthDayDiv).hasClass("is-focused")) {
-                        $(component.refs.txtBirthDayDiv).removeClass("is-focused");
-                    }
-                    if (!$(component.refs.txtBirthDayDiv).hasClass("is-dirty")) {
-                        $(component.refs.txtBirthDayDiv).addClass("is-dirty");
-                    }
-
-                    $(component.refs.txtBirthDay).blur();
+                    component.setRefElementValue(valueText, component.refs.txtBirthDay, component.refs.txtBirthDayDiv);
                 }
             }).mobiscroll("setDate", maxDate, true);
         },
@@ -383,23 +631,43 @@
             var txtBirthDay = this.refs.txtBirthDay;
             txtBirthDay.addEventListener("focus", this.handleBirthDayClick);
         },
+        setRefElementValue: function(valueText, refElement, refElementDiv) {
+            $(refElement).val(valueText);
+
+            if (valueText != "") {
+                if ($(refElementDiv).hasClass("is-focused")) {
+                    $(refElementDiv).removeClass("is-focused");
+                }
+                if (!$(refElementDiv).hasClass("is-dirty")) {
+                    $(refElementDiv).addClass("is-dirty");
+                }
+            }
+
+            $(refElement).blur();
+        },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
+
+            this.setRefElementValue(this.state.title, this.refs.txtTitle, this.refs.txtTitleDiv);
+            this.setRefElementValue(this.state.firstName, this.refs.txtFirstName, this.refs.txtFirstDiv);
+            this.setRefElementValue(this.state.surname, this.refs.txtSurname, this.refs.txtSurnameDiv);
+            this.setRefElementValue(this.state.gender, this.refs.txtGender, this.refs.txtGenderDiv);
+            this.setRefElementValue(this.state.dateOfBirth, this.refs.txtBirthDay, this.refs.txtBirthDayDiv);
         },
         render: function() {
             return <div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtTitleDiv">
-                    <input className="mdl-textfield__input" type="text" id="txtTitle" ref="txtTitle" onClick={this.handleTitleClick}/>
+                    <input className="mdl-textfield__input" type="text" id="txtTitle" ref="txtTitle" onClick={this.handleTitleClick} />
                     <label className="mdl-textfield__label" htmlFor="txtTitle">Title</label>
                 </div>
                 <div className="clear"></div>
-                <div className="mdl-textfield mdl-js-textfield">
-                    <input className="mdl-textfield__input" type="text" id="txtFirstName" />
+                <div className="mdl-textfield mdl-js-textfield" ref="txtFirstDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtFirstName" ref="txtFirstName"/>
                     <label className="mdl-textfield__label" htmlFor="txtFirstName">First Name</label>
                 </div>
                 <div className="clear"></div>
-                <div className="mdl-textfield mdl-js-textfield">
-                    <input className="mdl-textfield__input" type="text" id="txtSurname" />
+                <div className="mdl-textfield mdl-js-textfield" ref="txtSurnameDiv">
+                    <input className="mdl-textfield__input" type="text" id="txtSurname" ref="txtSurname"/>
                     <label className="mdl-textfield__label" htmlFor="txtSurname">Surname</label>
                 </div>
                 <div className="clear"></div>
@@ -429,9 +697,17 @@
     });
 
     var ProviderPatientProfileDetails = React.createClass({
+        getInitialState: function() {
+            return {
+                userName: "",
+                userDetails: undefined
+            };
+        },
         socketCallback: function(message) {
         },
         componentDidMount: function() {
+            componentHandler.upgradeDom();
+            var component = this;
             $(document).ready(function() {
                 $('#patient-details-collapse')
                     .on('show.bs.collapse', function(a) {
@@ -442,7 +718,58 @@
                     });
             });
 
-            indeterminateProgress.end();
+            Bridge.Patient.getDetails(function(result) {
+                indeterminateProgress.end();
+                if (result.success) {
+                    component.setState({userDetails: result.data});
+
+                    var userTitle = result.data.title ? result.data.title : "";
+                    var userName = result.data.name ? result.data.name : "";
+                    var userSurname = result.data.surname ? result.data.surname : "";
+
+                    var finalName = userTitle;
+                    if (finalName == "") {
+                        finalName = userName;
+                    }
+                    else {
+                        finalName += " " + userName;
+                    }
+
+                    if (finalName == "") {
+                        finalName = userSurname;
+                    }
+                    else {
+                        finalName += " " + userSurname;
+                    }
+
+                    component.setState({userName: finalName});
+
+                    component.refs.patientInfoComponent.updateState({
+                        title: result.data.title ? result.data.title : "",
+                        firstName: result.data.name ? result.data.name : "",
+                        surname: result.data.surname ? result.data.surname : "",
+                        gender: result.data.gender ? result.data.gender : "",
+                        dateOfBirth: result.data.dateOfBirth ? moment(result.data.dateOfBirth).format("MM/DD/YYYY") : ""
+                    });
+
+                    component.refs.patientAddress.updateState({
+                        country: result.data.address && result.data.address.country ? result.data.address.country : "",
+                        county: result.data.address && result.data.address.county ? result.data.address.county : "",
+                        town: result.data.address && result.data.address.town ? result.data.address.town : "",
+                        postCode: result.data.address && result.data.address.postCode ? result.data.address.postCode : "",
+                        addressLine1: result.data.address && result.data.address.addressLine1 ? result.data.address.addressLine1 : "",
+                        addressLine2: result.data.address && result.data.address.addressLine2 ? result.data.address.addressLine2 : "",
+                        phone: result.data.phone ? result.data.phone : "",
+                        mobile: result.data.mobile ? result.data.mobile : "",
+                    });
+                    component.refs.patientMedicalInfo.updateState({
+                        nhsNumber: result.data.nhsNumber ? result.data.nhsNumber : "",
+                        ethnicity: result.data.ethnicity ? result.data.ethnicity : "",
+                        height: result.data.height ? result.data.height : "",
+                        weight: result.data.weight ? result.data.weight : "",
+                    });
+                }
+            });
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
@@ -453,7 +780,7 @@
                     <USER_PROFILE_PROGRESS />
                     <div className="primary-bg profile-image-container">
                         <img src="images/user.png" width="120" height="120" className="img-responsive center-block profile-user-photo" />
-                        <div className="userName"><h4>User Name</h4></div>
+                        <div className="userName"><h4>{this.state.userName}</h4></div>
                     </div>
                     <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
                         <a href="#basic-info" className="mdl-layout__tab is-active">Basic Info</a>
@@ -465,20 +792,28 @@
                             <i className="material-icons">photo_camera</i>
                         </button>
                     </div>
+                    <div className="mdl-card__menu">
+                        <button className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i className="material-icons">done</i>
+                            <span className="mdl-button__ripple-container"><span className="mdl-ripple is-animating"></span>
+                            </span>
+                        </button>
+                    </div>
                 </header>
                 <main className="mdl-layout__content">
                     <section className="mdl-layout__tab-panel is-active" id="basic-info">
                         <div className="page-content">
-                            <PatientBasicInfo />
+                            <PatientBasicInfo ref="patientInfoComponent"/>
                         </div>
                     </section>
                     <section className="mdl-layout__tab-panel" id="address">
                         <div className="page-content">
-                            <PatientAddress />
+                            <PatientAddress ref="patientAddress"/>
                         </div>
                     </section>
                     <section className="mdl-layout__tab-panel" id="medical">
                         <div className="page-content">
+                            <PatientMedicalInfo ref="patientMedicalInfo"/>
                         </div>
                     </section>
                 </main>
