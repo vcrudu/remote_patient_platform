@@ -1,64 +1,64 @@
 {
   "start": {
     "name": "unreadWelcome",
-    "transition": {
-      "event": "readWelcome",
+    "transitions": {
+      "trigger": "readWelcome",
       "target": "welcomed"
     },
-    "commands": [{
+    "actions": [{
       "name": "sendWelcomeNotification"
     }]
   },
   "states": [
     {
       "name": "welcomed",
-      "transition": {
-        "event": "readInformDevicesAvailable",
+      "transitions": {
+        "trigger": "readInformDevicesAvailable",
         "target": "informedDevicesAvailable"
       },
-      "commands": [{
+      "actions": [{
         "name": "sendInformDevicesAvailable"
       }]
     },
     {
       "name": "informedDevicesAvailable",
       "transitions": [{
-        "event": "readInformCanMakeAppointments",
+        "trigger": "readInformCanMakeAppointments",
         "target": "informedCanMakeAppointments"
       }],
-      "commands": [{
+      "actions": [{
         "name": "sendInformCanMakeAppointments"
       }]
     },
     {
       "name": "informedCanMakeAppointments",
       "transitions": [{
-        "event": "readInformProvideDetails",
+        "trigger": "readInformProvideDetails",
         "target": "informedProvideDetails"
       }],
-      "commands": [{
+      "actions": [{
         "name": "sendInformProvideDetails"
       }]
     },
     {
       "name": "informedProvideDetails",
       "transitions": [{
-        "event": "readInformedProvideDetails",
+        "trigger": "readInformedProvideDetails",
         "target": "idle"
       }]
     },
     {
       "name": "idle",
       "transitions": [{
-        "event": "appointmentBooking",
+        "trigger": "appointmentBooking",
         "target": "appointmentBooked"
       },
         {
-        "event": "devicesOrdering",
+        "trigger": "devicesOrdering",
         "target": "devicesOrdered"
       },
         {
-          "event":"measurementExpected",
+          "trigger":"measurementExpected",
           "target" : "waitingMeasurement"
         }
       ]
@@ -66,10 +66,10 @@
     {
       "name":"appointmentBooked",
       "transitions": [{
-        "event": "oneMinuteRemained",
+        "trigger": "oneMinuteRemained",
         "target": "informedNotificationSoon"
       }],
-      "commands": [{
+      "actions": [{
         "name": "sendPatientAppointmentBookedNotification"
       },
        {
@@ -79,48 +79,48 @@
     {
       "name":"informedNotificationSoon",
       "transitions": [{
-        "event": "notificationSoonSent",
+        "trigger": "notificationSoonSent",
         "target": "idle"
       }],
-      "commands": []
+      "actions": []
     },
     {
       "name":"devicesOrdered",
       "transitions": [{
-        "event": "devicesDispatching",
+        "trigger": "devicesDispatching",
         "target": "devicesDispatched"
       }],
-      "commands": [{
+      "actions": [{
         "name": "sendDevicesOrderedNotification"
       }]
     },
     {
       "name": "devicesDispatched",
       "transition": {
-        "event": "devicesDelivering",
+        "trigger": "devicesDelivering",
         "target": "devicesDelivered"
       },
-      "commands": [{
+      "actions": [{
         "name": "sendDevicesDispatchedNotification"
       }]
     },
     {
       "name": "devicesDelivered",
       "transitions": [{
-        "event": "devicesInstalled",
+        "trigger": "devicesInstalled",
         "target": "waitingMeasurement"
       }],
-        "commands":[{
+        "actions":[{
           "name":"sendTakeMeasurementNotification"
         }]
     },
     {
       "name":"waitingMeasurement",
       "transitions":[{
-        "event":"measurementReceived",
+        "trigger":"measurementReceived",
         "target":"idle"
       }],
-      "commands":[{
+      "actions":[{
         "name":"sendTakeMeasurementNotification"
       }]
     }
