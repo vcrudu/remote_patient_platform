@@ -7,6 +7,61 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var MY_DEVICES_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function() {
+            //componentHandler.upgradeDom();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
+    var NoDevicesMessage = React.createClass({
+        componentDidMount: function() {
+            $(this.refs.noDeviceMessage).hide();
+            if (this.props.pairedDevices && this.props.pairedDevices.length > 0) {
+                $(this.refs.noDeviceMessage).hide();
+            }
+            else {
+                $(this.refs.noDeviceMessage).show();
+            }
+            $(this.refs.noDeviceMessage).removeClass("hide");
+        },
+        hideMessage: function(){
+            $(this.refs.noDeviceMessage).addClass("hide");
+        },
+        handleAddDevice: function(){
+            this.props.handleInstallDevice();
+        },
+        render: function() {
+            return <div className="container hide" ref="noDeviceMessage">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="bs-component">
+                            <div className="jumbotron">
+                                <h2 className="primary-title primary-text">Welcome</h2>
+                                <p className="supporting-text">Add some devices to get started.</p>
+                                <p className="supporting-text pull-right">
+                                    <a href="javascript:void(0);" className="btn btn-primary btn-accent" onClick={this.handleAddDevice}>Install a new device</a>
+                                </p>
+                                <div className="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    });
+
     var PairedDevice = React.createClass({
         getInitialState: function() {
             return {
@@ -182,24 +237,37 @@
         componentDidMount: function() {
             var component = this;
 
+            component.refs.noDevices.hideMessage();
+
+            $(".addDeviceOverlay").height($("body").height());
+
             Bridge.getPatientDevices(function (devicesResult) {
                 if (!devicesResult.success) {
                     return;
                 }
                 else {
                     Bridge.DeviceInstaller.getDevicesFromToLocalStorage(function (pairedResult) {
+                        component.refs.noDevices.hideMessage();
+
                         if (!pairedResult.success)
                         {
                             component.setState({devices: devicesResult.data })
                             return;
                         }
-                        component.setState({pairedDevices: pairedResult.data, devices: devicesResult.data })
+
+                        component.setState({pairedDevices: pairedResult.data, devices: devicesResult.data });
+                        component.refs.noDevices.componentDidMount();
+
+
                     });
                 }
+
+                indeterminateProgress.end();
             });
         },
         render: function() {
             return <div>
+                <NoDevicesMessage ref="noDevices" pairedDevices={this.state.pairedDevices} handleInstallDevice={this.handleAddDevice} />
                 <AddDeviceOverlay ref="addDeviceOverlay" devices={this.state.devices}/>
                 <PairedDevices devices={this.state.pairedDevices}/>
 
@@ -210,6 +278,7 @@
         }
     });
 
+    ReactDOM.render(<MY_DEVICES_PROGRESS/>, document.getElementById("my-devices-progress"));
     ReactDOM.render(<MyDevices/>, document.getElementById("my-devices"));
 })();
 

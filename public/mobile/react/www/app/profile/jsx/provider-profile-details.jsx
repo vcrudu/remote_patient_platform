@@ -1,99 +1,24 @@
 /**
- * Created by Victor on 3/18/2016.
+ * Created by Victor on 4/27/2016.
  */
-
 (function() {
     "use strict";
 
-    $.material.init();
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
 
-    var PatientDetails = React.createClass({
-        getInitialState: function() {
-            return {
-                appointmentTime: "",
-                name: "",
-                onlineStatus: ""
-            }
-        },
-        socketCallback: function(message) {
-            var event = message.data.event;
-            var userId = message.data.user;
-
-            if (event == "onlineStatus") {
-                this.setState({onlineStatus: message.data.status});
-            }
-        },
+    var USER_PROFILE_PROGRESS = React.createClass({
         componentDidMount: function() {
-            var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
-            var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
-            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
-            this.setState({
-                appointmentTime: appointmentTime,
-                name: name,
-                onlineStatus: onlineStatus
-            });
-
-            $(document).ready(function() {
-                $('#patient-details-collapse')
-                    .on('show.bs.collapse', function(a) {
-                        $(a.target).prev('.panel-heading').addClass('active');
-                    })
-                    .on('hide.bs.collapse', function(a) {
-                        $(a.target).prev('.panel-heading').removeClass('active');
-                    });
-            });
-
-            Bridge.Provider.socketCallBack = this.socketCallback;
-
-            /*var component = this;
-            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            Bridge.Provider.getPatientDetails(patientId, function(result) {
-                component.setState({
-                    user: result.data
-                });
-
-            });*/
+            indeterminateProgress.start();
         },
-        formatDate: function(dateString) {
-            var date = moment(dateString);
-            return date.calendar();
-        },
-        handleCallClick: function() {
-            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
-            var onlineStatus = this.state.onlineStatus; //decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
-            if (this.props.onCall) {
-                if (onlineStatus == "offline") {
-                    return;
-                }
-                this.props.onCall(patientId, this.state.name);
-            }
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
         },
         render: function() {
-            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
-            var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
-            var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
-
-            return <div className="patient-banner">
-              <div className="container">
-                  <div className="row">
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                          <img src="images/user.png" width="150" className="img-responsive img-circle center-block patient-image-border"/>
-
-                      </div>
-                  </div>
-                  <div className="row">
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                          <h3 className="align-center white">{this.state.name ? this.state.name : name}</h3>
-                      </div>
-                  </div>
-              </div>
-
-                <div className="fixed-btn">
-                    <a href="javascript:void(0)" onClick={this.handleCallClick} className={this.state.onlineStatus == "offline" ? "btn btn-default btn-fab" : "btn btn-primary btn-fab"}>
-                        <i className="material-icons">call</i><div className="ripple-container"></div>
-                    </a>
-                </div>
-           </div>
+            return <div className="progress-bar-indeterminate"></div>
         }
     });
 
@@ -218,7 +143,6 @@
                 zoom: undefined,
                 focus: undefined,
                 brush: undefined,
-                area: undefined,
                 svg: undefined,
             }
         },
@@ -256,11 +180,11 @@
             g.selectAll("circle").data(data).enter().append("circle")
                 .attr("cx", function(d) { return x(d.dateTime); })
                 .attr("cy", function(d) { return y(d.value); })
-                .attr("r", 7)
+                .attr("r", 9)
                 .attr("class", 'circle')
                 .attr("data-legend",function(d) { return d.label})
                 .style("fill", function(d) { return d.color; })
-                .on("click", function(d){ tip.show(d); d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 2); } )
+                .on("click", function(d){ tip.show(d); d3.select(this).style("stroke", d.color).style("fill", "white").style("stroke-width", 2); } )
                 .on("mouseout", function(d){ tip.hide(d); d3.select(this).style("stroke", "black").style("fill", d.color).style("stroke-width", 0); } );
         },
         removeDuplicate: function(arrayOfStrings){
@@ -328,7 +252,7 @@
                     tempArray1.push({
                         dateTime: moment(props.dataSource.values[i].time),
                         value: props.dataSource.values[i].value,
-                        color:"blue",
+                        color:"#7E57C2",
                         label: props.dataSource.label
                     });
 
@@ -346,7 +270,7 @@
                             y1:props.dataSource.values[i].value.systolic,
                             y2:props.dataSource.values[i].value.diastolic
                         },
-                        color:"blue",
+                        color:"#311B92",
                         label: props.dataSource.label
                     });
 
@@ -357,7 +281,7 @@
                             y1:props.dataSource.values[i].value.systolic,
                             y2:props.dataSource.values[i].value.diastolic
                         },
-                        color:"red",
+                        color:"#7E57C2",
                         label: props.dataSource.label
                     });
 
@@ -378,46 +302,21 @@
                         return "";
                     }
 
-                    /*if (width <= props.mobileThreshold) {
-                        var fmt = d3.time.format('%d');
-                        return '\u2019' + fmt(d);
-                    } else {*/
-                        var fmt = d3.time.format('%b-%d');
-                        return fmt(d);
-                    /*}*/
+                    var fmt = d3.time.format('%b-%d');
+                    return fmt(d);
+
                 }).tickValues(uniqueArray),
                 xAxis2 = d3.svg.axis().scale(x2).orient("bottom").tickFormat(function(d,i) {
                     if (i == 0 || i == uniqueArray.length - 1) {
                         return "";
                     }
 
-                    /*if (width <= props.mobileThreshold) {
-                        var fmt = d3.time.format('%d');
-                        return '\u2019' + fmt(d);
-                    } else {*/
-                        var fmt = d3.time.format('%b-%d');
-                        return fmt(d);
-                    /*}*/
+                    var fmt = d3.time.format('%b-%d');
+                    return fmt(d);
+
                 }).tickValues(uniqueArray);
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
-
-            var line = d3.svg.line()
-                .interpolate("monotone")
-                .x(function(d) { return x(d.dateTime); })
-                .y(function(d) { return y(d.value); });
-
-            var area = d3.svg.area()
-                .interpolate("monotone")
-                .x(function(d) { return x(d.dateTime); })
-                .y0(height)
-                .y1(function(d) { return y(d.value); });
-
-            var area2 = d3.svg.area()
-                .interpolate("monotone")
-                .x(function(d) { return x2(d.dateTime); })
-                .y0(height2)
-                .y1(function(d) { return y2(d.value); });
 
             var svg = d3.select(chartRef[0]).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -455,8 +354,6 @@
                 .on("brush", function() {
                     tip.hide();
                     x.domain(brush.empty() ? x2.domain() : brush.extent());
-                    focus.select(".area").attr("d", area);
-                    focus.select(".line").attr("d", line);
 
                     if (props.type == "bloodPressure") {
                         component.fillLines(focus, data, x, y, num_ticks, width);
@@ -471,14 +368,10 @@
                 });
 
             var zoom = d3.behavior.zoom().on("zoom", function() {
-                focus.select(".area").attr("d", area);
-                focus.select(".line").attr("d", line);
 
                 focus.selectAll('circle')
                     .attr('cx', function(d) { return x(d.dateTime); })
                     .attr('cy', function(d) { return y(d.value); });
-
-                focus.select(".line").attr("d", line);
 
                 focus.select(".x.grid").call(xAxis);
 
@@ -524,17 +417,6 @@
                     .classed('y', true)
                     .classed('grid', true)
                     .call(yAxisGrid);
-
-                focus.append("path")
-                    .datum(data)
-                    .attr("class", "area")
-                    .attr("d", area);
-
-                focus.append("path")
-                    .datum(data)
-                    .attr("class", "line")
-                    .attr("width", width)
-                    .attr("d", line);
             }
 
             if (props.type == "bloodPressure") {
@@ -553,10 +435,11 @@
                 .call(yAxis);
 
             if (props.type != "bloodPressure") {
-                context.append("path")
-                    .datum(data)
-                    .attr("class", "area")
-                    .attr("d", area2);
+                context.selectAll('circle').data(data).enter().append("circle")
+                    .attr("cx", function(d) { return x2(d.dateTime); })
+                    .attr("cy", function(d) { return y2(d.value); })
+                    .attr("r", 3)
+                    .style("stroke", function(d) {return d.color;}).style("fill", "none").style("stroke-width", 2);
             }
             else {
                 context.selectAll('circle').data(data).enter().append("circle")
@@ -576,17 +459,10 @@
                 .selectAll("rect")
                 .attr("y", -6)
                 .attr("height", height2 + 7);
-
-            /*var rect = focus.append("svg:rect")
-             .attr("class", "pane")
-             .attr("width", width)
-             .attr("height", height)
-             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-             .call(zoom);*/
-
         },
         componentDidMount: function() {
             var component = this;
+
             component.drawGraphic(component.props);
 
             $(window).resize(function() {
@@ -599,23 +475,25 @@
             component.drawGraphic(component.props);
         },
         render: function() {
-            return <div className="graphicWrapper" ref="graphicWrapper">
-                <h4>{this.props.label}</h4>
-                <div className="graphic" id="graphic" ref="graphic"></div>
-                <div className="graphic" id="graphicContext" ref="graphicContext"></div>
+            return <div className="chart-card-square mdl-card mdl-shadow--2dp" ref="graphicWrapper">
+                <div className="mdl-card__title">
+                    <h2 className="mdl-card__title-text">{this.props.label}</h2>
+                </div>
+                <div className="mdl-card__supporting-text">
+                    <div className="graphic" id="graphic" ref="graphic"></div>
+
+                </div>
+                <div className="mdl-card__actions mdl-card--border">
+                    <div className="graphic" id="graphicContext" ref="graphicContext"></div>
+                </div>
             </div>
         }
     });
 
-    var PatientVitalSingsPage = React.createClass({
+    var UserGeneralInfo = React.createClass({
         getInitialState: function() {
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
             return {
-                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
-                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
-                bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
-                heartRateDef: emptyVitalSigns.heartRateDef,
-                weightDef: emptyVitalSigns.weightDef,
                 user: undefined
             }
         },
@@ -624,10 +502,91 @@
             var component = this;
 
             Bridge.Provider.getPatientDetails(userId, function(result) {
+                indeterminateProgress.end();
                 component.setState({
                     user: result.data
                 });
             });
+        },
+        render: function() {
+            return <div className="demo-list-action mdl-list">
+                <div className="mdl-list__item mdl-list__item--two-line">
+                    <span className="mdl-list__item-primary-content">
+                        <i className="material-icons mdl-list__item-avatar">call</i>
+                        <span>{this.state.user ? this.state.user.mobile : ""}</span>
+                        <span className="mdl-list__item-sub-title">mobile</span>
+                    </span>
+                </div>
+                <div className="divider"></div>
+                <div className="clear"></div>
+                <div className="mdl-list__item mdl-list__item--two-line">
+                    <span className="mdl-list__item-primary-content">
+                        <i className="material-icons mdl-list__item-avatar">place</i>
+                        <span>
+                            {this.state.user ? this.state.user.address.addressLine1 : ""}
+                            {this.state.user ? ", " + this.state.user.address.town : ""}
+                            {this.state.user ? ", " + this.state.user.address.county : ""}
+                            {this.state.user ? ", " + this.state.user.address.country : ""}
+                            {this.state.user ? ", " + this.state.user.address.postCode : ""}
+                        </span>
+                    </span>
+                </div>
+                <div className="divider"></div>
+                <div className="clear"></div>
+                <div className="mdl-list__item mdl-list__item--two-line">
+                    <span className="mdl-list__item-primary-content">
+                        <i className="material-icons mdl-list__item-avatar">message</i>
+                        <span>{this.state.user ? this.state.user.email : ""}</span>
+                        <span className="mdl-list__item-sub-title">email</span>
+                    </span>
+                </div>
+                <div className="divider"></div>
+                <div className="clear"></div>
+                <div className="mdl-list__item mdl-list__item--two-line">
+                    <span className="mdl-list__item-primary-content">
+                        <i className="material-icons mdl-list__item-avatar">group</i>
+                        <span>{this.state.user ? this.state.user.sex : ""}</span>
+                        <span className="mdl-list__item-sub-title">sex</span>
+                    </span>
+                </div>
+                <div className="divider"></div>
+                <div className="clear"></div>
+                <div className="mdl-list__item mdl-list__item--two-line">
+                    <span className="mdl-list__item-primary-content">
+                        <i className="material-icons mdl-list__item-avatar">assignment</i>
+                        <span>{this.state.user ? this.state.user.nhsNumber : ""}</span>
+                        <span className="mdl-list__item-sub-title">nhs number</span>
+                    </span>
+                </div>
+                <div className="divider"></div>
+                <div className="clear"></div>
+            </div>
+        }
+    });
+
+    var ProviderPatientProfileDetails = React.createClass({
+        getInitialState: function() {
+            var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
+            return {
+                temperatureVitalSignsDef: emptyVitalSigns.temperatureVitalSignsDef,
+                bloodPressureDef: emptyVitalSigns.bloodPressureDef,
+                bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
+                heartRateDef: emptyVitalSigns.heartRateDef,
+                weightDef: emptyVitalSigns.weightDef,
+                user: undefined,
+                appointmentTime: "",
+                name: "",
+                onlineStatus: "",
+                chartsLoaded: false
+            }
+        },
+        socketCallback: function(message) {
+            var event = message.data.event;
+            var userId = message.data.user;
+
+            if (event == "onlineStatus") {
+                this.setState({onlineStatus: message.data.status});
+            }
         },
         handleChartsClick: function () {
             var component = this;
@@ -635,8 +594,15 @@
                 if (component.refs["vitalSignCharts"].loadCharts) {
                     return;
                 }
+
+                if (component.state.chartsLoaded) {
+                    return;
+                }
+
+                indeterminateProgress.start();
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
-                var vitalSigns = Bridge.Provider.getPatientVitalSigns(userId, function(result) {
+                Bridge.Provider.getPatientVitalSigns(userId, function(result) {
+                    indeterminateProgress.end();
                     if (result.success) {
                         var newDataSource = VitalSignsFactory.createVitalSings(result.data);
                         component.setState(
@@ -646,105 +612,90 @@
                                 bloodOxygenDef: newDataSource.bloodOxygenDef,
                                 heartRateDef: newDataSource.heartRateDef,
                                 weightDef: newDataSource.weightDef,
+                                chartsLoaded: true
                             });
                         component.refs["vitalSignCharts"].handleChartsClick(component.state);
                     }
                 });
             }
         },
-        handleCall: function(patientId, patientName) {
-            Bridge.Provider.callPatient(patientId, patientName, function(callResult) {});
+        componentDidMount: function() {
+            var appointmentTime = Bridge.Redirect.getQueryStringParam()["appointmentTime"];
+            var name = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["name"]);
+            var onlineStatus = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["onlineStatus"]);
+
+            this.setState({
+                appointmentTime: appointmentTime,
+                name: name,
+                onlineStatus: onlineStatus
+            });
+
+            $(document).ready(function() {
+                $('#patient-details-collapse')
+                    .on('show.bs.collapse', function(a) {
+                        $(a.target).prev('.panel-heading').addClass('active');
+                    })
+                    .on('hide.bs.collapse', function(a) {
+                        $(a.target).prev('.panel-heading').removeClass('active');
+                    });
+            });
+
+            Bridge.Provider.socketCallBack = this.socketCallback;
+        },
+        formatDate: function(dateString) {
+            var date = moment(dateString);
+            return date.calendar();
+        },
+        handleCallClick: function() {
+            var patientId = decodeURIComponent(Bridge.Redirect.getQueryStringParam()["userId"]);
+            var onlineStatus = this.state.onlineStatus;
+
+            if (onlineStatus == "offline") {
+                return;
+            }
+            Bridge.Provider.callPatient(patientId, this.state.name, function(callResult) {});
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+            var button = this.refs.callButton;
+            button.addEventListener('click', this.handleCallClick);
+
+            var vitalSignsLink = this.refs.vitalSignsLink;
+            vitalSignsLink.addEventListener('click', this.handleChartsClick);
         },
         render: function() {
-            var component = this;
-            return <div>
-                <PatientDetails onCall={component.handleCall}/>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xs-12 col-sm-12 col-md-12">
-                            <div className="card">
-                                <ul className="nav nav-tabs" role="tablist">
-                                    <li role="presentation" className="active">
-                                        <a href="#user-details" aria-controls="vital-signs" role="tab" data-toggle="tab">
-                                            <img src="images/icon-person.png" width="50"/> <span>User Details</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation" onClick={this.handleChartsClick}>
-                                        <a href="#vital-signs" aria-controls="vital-signs" role="tab" data-toggle="tab">
-                                            <img src="images/icon-reports.png" width="50"/> <span>Vital Signs</span>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div className="tab-content">
-                                    <div role="tabpanel" className="tab-pane active" id="user-details">
-                                        <div className="list-group">
-                                            <div className="list-group-item">
-                                                <div className="row-action-primary">
-                                                    <i className="material-icons">call</i>
-                                                </div>
-                                                <div className="row-content">
-                                                    <div className="action-secondary"><i className="material-icons">message</i></div>
-                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.mobile : ""}</h4>
-                                                    <p className="list-group-item-text">Mobile</p>
-                                                </div>
-                                            </div>
-                                            <div className="list-group-separator"></div>
-                                            <div className="list-group-item">
-                                                <div className="row-action-primary">
-                                                    <i className="material-icons">email</i>
-                                                </div>
-                                                <div className="row-content">
-                                                    <div className="action-secondary"><i className="material-icons">message</i></div>
-                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.email : ""}</h4>
-                                                    <p className="list-group-item-text">Home</p>
-                                                </div>
-                                            </div>
-                                            <div className="list-group-separator"></div>
-                                            <div className="list-group-item">
-                                                <div className="row-action-primary">
-                                                    <i className="material-icons">place</i>
-                                                </div>
-                                                <div className="row-content">
-                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.addressLine1 : ""}</h5>
-                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.town : ""}</h5>
-                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.county : ""}</h5>
-                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.country : ""}</h5>
-                                                    <h5 className="list-group-item-heading">{this.state.user ? this.state.user.address.postCode : ""}</h5>
-                                                    <p className="list-group-item-text">Address</p>
-                                                </div>
-                                            </div>
-                                            <div className="list-group-separator"></div>
-                                            <div className="list-group-item">
-                                                <div className="row-action-primary">
-                                                    <i className="material-icons">group</i>
-                                                </div>
-                                                <div className="row-content">
-                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.sex : ""}</h4>
-                                                    <p className="list-group-item-text">Sex</p>
-                                                </div>
-                                            </div>
-                                            <div className="list-group-separator"></div>
-                                            <div className="list-group-item">
-                                                <div className="row-action-primary">
-                                                    <i className="material-icons">assignment</i>
-                                                </div>
-                                                <div className="row-content">
-                                                    <h4 className="list-group-item-heading">{this.state.user ? this.state.user.nhsNumber : ""}</h4>
-                                                    <p className="list-group-item-text">NHS Number</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <VitalSignCharts ref="vitalSignCharts"/>
-                                </div>
-                            </div>
-                        </div>
+            return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+                <header className="mdl-layout__header">
+                    <USER_PROFILE_PROGRESS />
+                    <div className="primary-bg profile-image-container">
+                        <img src="images/user.png" width="120" height="120" className={this.state.onlineStatus == "offline" ? "img-responsive center-block profile-user-photo" : "img-responsive center-block profile-user-photo"} />
+                        <div className="userName"><h4>{this.state.name ? this.state.name : name}</h4></div>
                     </div>
-                </div>
+                    <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
+                        <a href="#user-info" className="mdl-layout__tab is-active">User Info</a>
+                        <a href="#vital-signs" className="mdl-layout__tab" ref="vitalSignsLink">Vital Signs</a>
+                    </div>
+                    <div className="call-fab-container">
+                        <button ref="callButton" className={this.state.onlineStatus == "offline" ? "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored offline" : "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"}>
+                            <i className="material-icons">call</i>
+                        </button>
+                    </div>
+                </header>
+                <main className="mdl-layout__content">
+                    <section className="mdl-layout__tab-panel is-active" id="user-info">
+                        <div className="page-content">
+                            <UserGeneralInfo />
+                        </div>
+                    </section>
+                    <section className="mdl-layout__tab-panel" id="vital-signs">
+                        <div className="page-content">
+                            <VitalSignCharts ref="vitalSignCharts"/>
+                        </div>
+                    </section>
+                </main>
             </div>
         }
     });
 
-    ReactDOM.render(<PatientVitalSingsPage />, document.getElementById("provider-vital-sings-container"));
+    ReactDOM.render(<ProviderPatientProfileDetails />, document.getElementById("provider-profile-details-container"));
 })();

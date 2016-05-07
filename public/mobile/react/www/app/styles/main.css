@@ -14,6 +14,20 @@ body {
     font-family:"Roboto-Regular";
 }
 
+.progress-bar-indeterminate {
+    height: 4px;
+}
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg {
+    background: #B388FF;
+    height: 4px;
+}
+
+.ui-mprogress .indeter-bar {
+    background: #651FFF;
+    height: 4px;
+}
+
 .row-no-padding [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -36,6 +50,7 @@ body {
     display:table;
     width:100%;
     padding:15px 20px;
+    background-color: #EEEEEE;
 }
 
 .header .header-inner .col-left {
@@ -54,7 +69,7 @@ body {
 }
 
 .img-logo {
-    max-width:80px;
+    max-width:45px;
 }
 
 .header .btn-back {
@@ -72,7 +87,7 @@ body {
     display:inline;
     line-height:48px;
     margin:0;
-    font-size:24px;
+    font-size:20px;
     font-family:"Roboto-Regular";
 }
 
@@ -127,9 +142,22 @@ body {
     outline:none;
 }
 
+.hide {
+    display: none;
+}
+
+.btn-accent {
+    color: rgb(124,77,255) !important;
+}
 
 .btn.btn-default.btn-accent {
     color: rgb(124,77,255) !important;
+}
+
+.supporting-text .btn-primary {
+    font-family: Roboto-Medium;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .btn-sign-up {
@@ -143,6 +171,33 @@ body {
 
 .primary-text {
     color:rgba(0,0,0,0.87);
+}
+
+.primary-title {
+    font-family: Roboto-Regular;
+    font-size: 24px;
+    padding-top: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 0 !important;
+}
+
+.supporting-text {
+    padding: 16px !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+}
+
+.clear {
+    clear: both;
+}
+
+.container .jumbotron, .container-fluid .jumbotron {
+    padding: 0 !important;
+}
+
+.jumbotron {
+    margin-top: 15px;
 }
 
 .primary-text-secondary {
@@ -179,7 +234,7 @@ body {
     color:#03a9f4 !important;
     border-radius:0;
     opacity:1;
-    font-family:"Roboto-Bold";
+    font-family:"Roboto-Medium";
 }
 
 .btn-next:disabled {

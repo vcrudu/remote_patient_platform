@@ -7,20 +7,51 @@
 
     $.material.init();
 
-    var ProviderAvailabilityCalendar = React.createClass({
-        validateTimeString: function() {
-            var reasonText = $(this.refs.availabilityText);
-            var scheduleValue=reasonText.val();
-            var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
-            var match = re.exec(scheduleValue);
-
-            if(match){
-                $( "#modal-submit" ).prop( "disabled", false );
-            } else {
-                $( "#modal-submit" ).prop( "disabled", true );
-            }
-
+    var TimeSelector = React.createClass({
+        setTime: function(date) {
+            //var changeTimePicker = $(this.refs.changeTimePicker);
+            //changeTimePicker.mobiscroll("setVal", date);
+            //changeTimePicker.mobiscroll("setDate", date, true)
         },
+        handleShow: function() {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            changeTimePicker.mobiscroll('show');
+            return false;
+        },
+        componentDidMount: function() {
+            var changeTimePicker = $(this.refs.changeTimePicker);
+            var component = this;
+            var strt=new Date(new Date().setHours(8, 0, 0, 0));
+            var nd=new Date(new Date().setHours(12, 0, 0, 0));
+            changeTimePicker.mobiscroll().range({
+                theme: "material",
+                display: "bottom",
+                controls: ['time'],
+                timeFormat:'HH',
+                defaultValue: [strt,nd],
+                steps: {
+                    minute: 60,
+                    zeroBased: true
+                },
+                onSelect: function (valueText, inst) {
+                    component.props.onSelectTimeCallback(valueText, inst);
+                },
+                maxWidth: 100
+
+            });
+        },
+        render: function() {
+            return <div className="show-avaialbility-mobiscroll-wrapper">
+                <input id="changeTimePicker" ref="changeTimePicker" className="hide"/>
+                <button id="show" ref="show" onClick={this.handleShow} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-availability-mobiscroll"><i className="material-icons">add</i></button>
+            </div>
+        }
+    });
+
+
+
+    var ProviderAvailabilityCalendar = React.createClass({
+
         getTodayAvailability: function(date) {
             var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
             var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
@@ -41,6 +72,18 @@
 
             availabilityString = availabilityString.substring(0,availabilityString.length-1);
             return availabilityString;
+        },
+        onTimeChanged: function(valueText, inst) {
+            var availabilityCalendarDiv = $(this.refs.availabilityCalendar);
+            var dateString = moment(availabilityCalendarDiv.fullCalendar("getDate")).format("DD[.]MM[.]YYYY");
+            var inputTimeRange=valueText.split(" ");
+            var availabilityString=inputTimeRange[0]+':00-'+inputTimeRange[2]+':00';
+            Bridge.providerSetAvailability({availabilityString: availabilityString, dateString: dateString }, function(result) {
+                availabilityCalendarDiv.fullCalendar("refetchEvents");
+            });
+
+            //console.log(timeRange,dateString);
+           // $(this.refs.avalabilityCalendar).fullCalendar("gotoDate", date);
         },
         handleProviderAvailability: function() {
             var availabilityModalDiv = $(this.refs.appointmentModal);
@@ -76,65 +119,31 @@
             $(this.refs.availabilityCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
-                defaultTimedEventDuration: '00:15:00',
+                defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
+                header:{
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                },
                 allDay:false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
                         duration: {days: 1},
-                        slotDuration: '00:15',
-                        slotLabelInterval: '00:15'
+                        slotDuration: '01:00',
+                        slotLabelInterval: '01:00'
                     }
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
                 eventClick: function (calEvent, jsEvent, view) {
-                    var dateTitle="Edit availability "+moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
-                    $(".modal-title").text(dateTitle);
+                    //var dateTitle="Edit availability "+moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
+                    console.log('apare mobi');
+                    //var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
+                    //var availabilityText = component.getTodayAvailability(calendarDate);
 
-                    var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    var availabilityText = component.getTodayAvailability(calendarDate);
-                    availabilityTextInput.val(availabilityText);
-
-                    $("#currentSchedule").html(availabilityText);
-                    if (!availabilityText || availabilityText == "") {
-                        $("#modal-body-header").hide();
-                    }
-                    else {
-                        $("#modal-body-header").show();
-                    }
-
-                    availabilityModal.modal('show');
                 },
-                dayClick: function (calEvent, jsEvent, view) {
-                    var now = new Date();
-                    if (calEvent < now.getTime()) {
-                        return;
-                    }
 
-                    var dateTitle="Set availability "+moment(calEvent._d).format("DD[/]MM[/]YYYY");//formattedDate(calEvent);
-
-                    $(".modal-title").text(dateTitle);
-
-                    var dateTitle="Set availability "+moment(calEvent._d).format("DD[/]MM[/]YYYY");
-                    $("span#modal-title-data").text(dateTitle);
-
-                    var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    var availabilityText = component.getTodayAvailability(calendarDate);
-                    availabilityTextInput.val(availabilityText);
-
-                    $("#currentSchedule").html(availabilityText);
-                    if (!availabilityText || availabilityText == "") {
-                        $("#modal-body-header").hide();
-                    }
-                    else {
-                        $("#modal-body-header").show();
-                    }
-
-                    availabilityModal.modal('show');
-
-                    $( "#modal-submit" ).prop( "disabled", true );
-                },
                 events: function (start, end, timezone, callback) {
                     var events = [];
                     Bridge.getProviderSlots(start,end,function (result) {
@@ -155,7 +164,9 @@
 
                             callback(events);
                         }
-                    })},
+                    });
+                    //component.refs["dateSelector"].setTime(start._d);
+        },
                 eventRender: function(event, element) {
                     element.find('.fc-event-title').append("<br/>" + event.location);
                     element.find('.fc-time').hide();
@@ -168,35 +179,10 @@
             });
         },
         render: function() {
-            return <div>
+            return <div ref="appointmentsCalendarWrapper">
                 <div ref="availabilityCalendar" id="calendar"></div>
-                <div ref="appointmentModal" id="appointmentModal" className="modal fade" role="dialog">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                <h4 className="modal-title"></h4>
-                            </div>
-                            <div className="modal-body">
 
-                                <div className="form-group is-empty">
-                                    <header id="modal-body-header">Current schedule:
-                                        <span id="currentSchedule"></span>
-                                    </header>
-                                    <label htmlFor="availabilityText" className="control-label">Availability</label>
-                                    <textarea className="form-control" rows="3" id="availabilityText" ref="availabilityText" onChange={this.validateTimeString}></textarea>
-                                    <span className="note">Example: 08:00-12:00, 13:00-17:00 </span>
-                                    <input type="hidden" id="slotId"/>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" id="modal-submit" onClick={this.handleProviderAvailability}>Submit<div className="ripple-container"></div></button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <TimeSelector ref="timeSelector" onSelectTimeCallback={this.onTimeChanged}/>
             </div>
         }
     });

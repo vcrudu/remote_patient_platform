@@ -5,6 +5,24 @@
 (function () {
     "use strict";
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var APPOINTMENTS_PROGRESS = React.createClass({
+        displayName: "APPOINTMENTS_PROGRESS",
+
+        componentDidMount: function () {},
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var DateSelector = React.createClass({
         displayName: "DateSelector",
 
@@ -83,6 +101,13 @@
         handleCancelAppointmentModal: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
             document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+
+            var actualHeight = $(".fc-scroller").height();
+            $(".fc-scroller").height(actualHeight + 1);
+            $(".fc-scroller").height(actualHeight - 1);
+
+            componentHandler.upgradeDom();
+            return;
         },
         onDateChanged: function (valueText, inst) {
             var date = moment(valueText);
@@ -91,6 +116,9 @@
         isToday: function (td) {
             var d = new Date();
             return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
         },
         componentDidMount: function () {
             var appointmentModalDiv = $(this.refs.appointmentModal);
@@ -141,9 +169,9 @@
                     document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
                 },
                 events: function (start, end, timezone, callback) {
-
+                    indeterminateProgress.start();
                     var events = [];
-                    Bridge.getSlots(function (slotsResult) {
+                    Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
                         Bridge.getPatientAppointment(function (appointmentsResult) {
                             if (!appointmentsResult.success) return;
@@ -155,12 +183,15 @@
                                 }
                             }
                             callback(events);
+
+                            indeterminateProgress.end();
                         });
                     });
 
                     component.refs["dateSelector"].setDate(start._d);
                 },
-                eventAfterAllRender: function (view) {}
+                eventAfterAllRender: function (view) {},
+                loading: function (isLoading, view) {}
             });
         },
         render: function () {
@@ -210,5 +241,6 @@
         }
     });
 
+    ReactDOM.render(React.createElement(APPOINTMENTS_PROGRESS, null), document.getElementById("patient-appointments-progress"));
     ReactDOM.render(React.createElement(AppointmentsCalendar, null), document.getElementById("patient-appointments"));
 })();

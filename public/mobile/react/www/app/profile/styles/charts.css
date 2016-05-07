@@ -2,6 +2,10 @@ body{
     background: #F5F5F5;
 }
 
+.mdl-layout__header {
+    background-color: #EEEEEE;
+}
+
 .mdl-card__title {
     color: rgba(0, 0, 0, 0.87) !important;
 }
@@ -11,10 +15,7 @@ body{
 }
 
 .mdl-layout__content {
-    margin-top: 12px;
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-bottom: 16px;
+    margin: 16px;
 }
 
 .mdl-card {
@@ -25,9 +26,6 @@ body{
 
 .mdl-card__supporting-text {
     width: 96% !important;
-}
-
-.vital-signs {
 }
 
 /* chart */

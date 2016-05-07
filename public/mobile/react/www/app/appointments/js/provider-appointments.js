@@ -5,7 +5,25 @@
 (function () {
     "use strict";
 
-    $.material.init();
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var APPOINTMENTS_PROGRESS = React.createClass({
+        displayName: "APPOINTMENTS_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
 
     var ProviderAppointment = React.createClass({
         displayName: "ProviderAppointment",
@@ -16,7 +34,7 @@
             };
         },
         handleClickDashboard: function () {
-            Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId + "&appointmentTime=" + this.props.model.slotDateTimeString + "&name=" + this.props.model.name + "&onlineStatus=" + this.state.onlineStatus);
+            Bridge.Redirect.redirectTo("../profile/provider-profile-details.html?userId=" + this.props.model.patientId + "&appointmentTime=" + this.props.model.slotDateTimeString + "&name=" + this.props.model.name + "&onlineStatus=" + this.state.onlineStatus);
         },
         changeOnlineStatus: function (status) {
             this.setState({
@@ -36,31 +54,49 @@
                 this.props.onCall(patientId);
             }
         },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+            var listItem = this.refs.listItem;
+            listItem.addEventListener('click', this.handleClickDashboard);
+        },
         render: function () {
             return React.createElement(
-                "div",
-                { className: "list-group-item", onClick: this.handleClickDashboard },
+                "li",
+                { className: "mdl-list__item mdl-list__item--two-line", onClick: this.handleClickDashboard, ref: "listItem" },
                 React.createElement(
-                    "div",
-                    { className: "row-action-primary bottom" },
-                    React.createElement("img", { src: "images/user.png", className: this.state.onlineStatus == "offline" ? "img-responsive img-circle img-border-offline" : "img-responsive img-circle img-border-online" })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "row-content" },
+                    "span",
+                    { className: "mdl-list__item-primary-content" },
                     React.createElement(
-                        "h4",
-                        { className: "list-group-item-heading" },
+                        "i",
+                        { className: "material-icons mdl-list__item-avatar" },
+                        "person"
+                    ),
+                    React.createElement(
+                        "span",
+                        null,
                         this.props.model ? this.props.model.name : ""
                     ),
                     React.createElement(
-                        "p",
-                        { className: "list-group-item-text" },
+                        "span",
+                        { className: "mdl-list__item-sub-title" },
                         "Appointment Time: ",
                         React.createElement(
                             "strong",
                             null,
                             this.formatDate(this.props.model.slotDateTimeString)
+                        )
+                    )
+                ),
+                React.createElement(
+                    "span",
+                    { className: "mdl-list__item-secondary-content" },
+                    React.createElement(
+                        "a",
+                        { className: this.state.onlineStatus == "offline" ? "mdl-list__item-secondary-action offline" : "mdl-list__item-secondary-action", href: "#" },
+                        React.createElement(
+                            "i",
+                            { className: "material-icons" },
+                            "lens"
                         )
                     )
                 )
@@ -91,10 +127,14 @@
                 }
             }
         },
+        componentDidUpdate: function () {
+            componentHandler.upgradeDom();
+        },
         componentDidMount: function () {
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function (apiResult) {
+                indeterminateProgress.end();
                 var orderedResult = _.sortBy(apiResult.data, function (num) {
                     return num.slotDateTime;
                 });
@@ -111,20 +151,20 @@
         render: function () {
             var component = this;
             return React.createElement(
-                "div",
-                { className: "list-group" },
-                component.state.appointments.map(function (appointment) {
-                    return React.createElement(
-                        "div",
-                        { key: appointment.patientId + "_" + appointment.slotDateTime + "_div" },
-                        React.createElement(ProviderAppointment, {
+                "main",
+                { className: "mdl-layout__content" },
+                React.createElement(APPOINTMENTS_PROGRESS, null),
+                React.createElement(
+                    "ul",
+                    { className: "mdl-list" },
+                    component.state.appointments.map(function (appointment) {
+                        return React.createElement(ProviderAppointment, {
                             ref: appointment.patientId + "_" + appointment.slotDateTime,
                             key: appointment.patientId + "_" + appointment.slotDateTime,
                             model: appointment,
-                            onCall: component.handleCall }),
-                        React.createElement("div", { className: "list-group-separator", key: appointment.patientId + "_" + appointment.slotDateTime + "_separator" })
-                    );
-                })
+                            onCall: component.handleCall });
+                    })
+                )
             );
         }
     });
