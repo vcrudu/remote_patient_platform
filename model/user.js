@@ -4,7 +4,6 @@
 (function(){
     var bcrypt      = require('bcrypt');
     var domainModel = require('@vcrudu/hcm.domainmodel');
-    var userDetailsMapper = require('../repositories/dynamoDbMapper');
     var _ = require('underscore');
 
     // helper methods
