@@ -112,3 +112,36 @@ background-color: #f4f411;
     line-height: 20px;
     padding-left:25px;
 }
+
+.BooleanPrefix {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.MinValue {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.MaxValue{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Operator{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Value{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.invalid-value {
+    background: #fff0f0;
+    border-color: #A90329;
+}
+.selected-conditions {
+    list-style-type: none;
+}
