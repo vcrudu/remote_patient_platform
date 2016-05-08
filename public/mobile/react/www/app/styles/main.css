@@ -7,11 +7,25 @@
 @import url(fonts.css);
 
 body {
-    font-family:"Roboto-Light";
+    font-family:"Roboto-Regular";
 }
 
 .h1, .h2, .h3, .h4, body, h1, h2, h3, h4, h5, h6 {
-    font-family:"Roboto-Light";
+    font-family:"Roboto-Regular";
+}
+
+.progress-bar-indeterminate {
+    height: 4px;
+}
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg {
+    background: #B388FF;
+    height: 4px;
+}
+
+.ui-mprogress .indeter-bar {
+    background: #651FFF;
+    height: 4px;
 }
 
 .row-no-padding [class*="col-"] {
@@ -36,6 +50,7 @@ body {
     display:table;
     width:100%;
     padding:15px 20px;
+    background-color: #EEEEEE;
 }
 
 .header .header-inner .col-left {
@@ -54,7 +69,7 @@ body {
 }
 
 .img-logo {
-    max-width:80px;
+    max-width:45px;
 }
 
 .header .btn-back {
@@ -72,7 +87,7 @@ body {
     display:inline;
     line-height:48px;
     margin:0;
-    font-size:24px;
+    font-size:20px;
     font-family:"Roboto-Regular";
 }
 
@@ -118,15 +133,85 @@ body {
 
 }
 
+.btn {
+    outline: none !important;
+}
+
 .btn:hover, .btn:focus {
     background:none !important;
     outline:none;
+}
+
+.hide {
+    display: none;
+}
+
+.btn-accent {
+    color: rgb(124,77,255) !important;
+}
+
+.btn.btn-default.btn-accent {
+    color: rgb(124,77,255) !important;
+}
+
+.supporting-text .btn-primary {
+    font-family: Roboto-Medium;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .btn-sign-up {
 
     color:#03a9f4 !important;
 
+}
+.green-text {
+    color:#8bc34a;
+}
+
+.primary-text {
+    color:rgba(0,0,0,0.87);
+}
+
+.primary-title {
+    font-family: Roboto-Regular;
+    font-size: 24px;
+    padding-top: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 0 !important;
+}
+
+.supporting-text {
+    padding: 16px !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+}
+
+.clear {
+    clear: both;
+}
+
+.container .jumbotron, .container-fluid .jumbotron {
+    padding: 0 !important;
+}
+
+.jumbotron {
+    margin-top: 15px;
+}
+
+.primary-text-secondary {
+    color:rgba(0,0,0,0.54);
+}
+
+.brand-green-bg {
+    background:#98b743;
+}
+.brand-gold-bg {
+    background:#f8b042;
+}
+.brand-red-bg {
+    background:#e74138;
 }
 
 .btn-login {
@@ -149,7 +234,7 @@ body {
     color:#03a9f4 !important;
     border-radius:0;
     opacity:1;
-    font-family:"Roboto-Bold";
+    font-family:"Roboto-Medium";
 }
 
 .btn-next:disabled {

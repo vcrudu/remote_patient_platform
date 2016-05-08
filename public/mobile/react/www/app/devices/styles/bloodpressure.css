@@ -1,3 +1,5 @@
+@import "../../styles/fonts.css";
+
 #blood-pressure {
     margin-top: -80px;
 }
@@ -8,4 +10,25 @@
 
 .btn-default {
     width: auto;
+}
+
+.row-data-cells {
+    margin-top:-9px;
+}
+
+.row-data-cells > .data-cell  {
+    padding:10px;
+    text-align: center;
+    font-size:18px;
+    color:#8bc34a;
+}
+
+/* -------------------------------------- *\
+    #Landscape Orientation Only
+\* -------------------------------------- */
+@media screen and (orientation:landscape) {
+    #blood-pressure {
+        margin-top: 50px;
+        position:static;
+    }
 }

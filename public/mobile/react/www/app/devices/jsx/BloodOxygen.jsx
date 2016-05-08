@@ -7,6 +7,21 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_OXYGEN_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
+
     var BLOOD_OXYGEN = React.createClass({
         getInitialState: function() {
             return {
@@ -40,32 +55,14 @@
                 retryButtonVisibility: false,
             });
 
-            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function(result) {
-                if (result.success) {
-                    switch (result.data.status) {
-                        case "paired":
-                            component.setState({
-                                doneButtonVisibility: true,
-                                cancelButtonVisibility: false,
-                                retryButtonVisibility: false,
-                                deviceAddress: result.data.address
-                            });
-                            break;
-                    }
-                }
-                else {
-                    component.setState({
-                        doneButtonVisibility: false,
-                        cancelButtonVisibility: true,
-                        retryButtonVisibility: true,
-                    });
-                }
-            });
+            $(component.props.carouselWizard).carousel("prev");
+            this.componentDidMount();
         },
         handleNext: function() {
             var component = this;
 
             $(this.props.carouselWizard).carousel("next");
+
             component.setState({
                 nextButtonVisibility: false,
                 cancelButtonVisibility: false,
@@ -76,21 +73,25 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
                                 cancelButtonVisibility: false,
                                 retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
+                            $(component.props.carouselWizard).carousel(2);
                             break;
                     }
                 }
                 else {
-                    component.setState({
+                    $(component.props.carouselWizard).carousel("prev");
+                    component.componentDidMount();
+                    /*component.setState({
                         doneButtonVisibility: false,
                         cancelButtonVisibility: true,
                         retryButtonVisibility: true,
-                    });
+                    });*/
                 }
             });
         },
@@ -125,16 +126,19 @@
             });
         },
         render: function() {
-            return <div className="row buttonsContainer">
-                <div className="col-xs-12">
-                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default" value="Next" onClick={this.handleNext}></input> : null }
-                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default" value="Done" onClick={this.handleDone}></input> : null }
-                    { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default" value="Cancel" onClick={this.handleCancel}></input> : null }
-                    { this.state.retryButtonVisibility ? <input type="button" className="btn btn-default" value="Retry" onClick={this.handleRetry}></input> : null }
+            return <div className="row has-separator buttons-container">
+                <div className="col-xs-6">
+                    { this.state.cancelButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-left" value="Cancel" onClick={this.handleCancel}></input> : null }
+                </div>
+                <div className="col-xs-6">
+                    { this.state.nextButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Next" onClick={this.handleNext}></input> : null }
+                    { this.state.doneButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Done" onClick={this.handleDone}></input> : null }
+                    { this.state.retryButtonVisibility ? <input type="button" className="btn btn-default btn-accent btn-footer pull-right" value="Retry" onClick={this.handleRetry}></input> : null }
                 </div>
             </div>
         }
     });
 
     ReactDOM.render(<BLOOD_OXYGEN carouselWizard="#wizard" deviceModelType="BloodOxygen"/>, document.getElementById("blood-oxygen"));
+    ReactDOM.render(<BLOOD_OXYGEN_PROGRESS />, document.getElementById("blood-oxygen-pair-progress"));
 })();

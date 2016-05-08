@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>JPD-FR100+</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
+    <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
+    <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
+    <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
+    <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
     <link rel="stylesheet" href="../lib/bootstrap-material-design-icons/css/material-icons.min.css">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
     <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
@@ -19,12 +24,13 @@
 
 <!-- Full Page Image Background Carousel Header -->
 <div id="wizard" class="carousel slide">
+    <div id="thermometer-pair-progress"></div>
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
         <div class="item active">
             <!-- Set the first background image using inline CSS below. -->
             <div class="carousel-caption">
-                <h3>Turn on your Thermometer by pressing half a second the power button.</h3>
+                <h3 class="primary-text">Turn on your Thermometer by pressing half a second the power button.</h3>
             </div>
             <div class="fill">
                 <img src="images/thermometer-01.png" alt="Termometer JPD-FR302" class="img-responsive"/>
@@ -33,7 +39,7 @@
         <div class="item">
             <!-- Set the second background image using inline CSS below. -->
             <div class="carousel-caption">
-                <h3>Trying to detect your Thermometer.</h3>
+                <h3 class="primary-text">Trying to detect your Thermometer device.</h3>
             </div>
             <div class="fill">
                 <img src="images/thermometer-02.png" alt="Termometer JPD-FR302" class="img-responsive"/>
@@ -42,7 +48,7 @@
         <div class="item">
             <!-- Set the second background image using inline CSS below. -->
             <div class="carousel-caption">
-                <h3>The Thermometer has been paired successfully.</h3>
+                <h3 class="primary-text">The Thermometer has been paired successfully.</h3>
             </div>
             <div class="fill">
                 <img src="images/thermometer-03.png" alt="Termometer JPD-FR302" class="img-responsive"/>
@@ -50,7 +56,7 @@
         </div>
     </div>
 
-    <div id="thermometer" class="buttons-group container">
+    <div id="thermometer" class="buttons-group">
     </div>
 </div>
 
@@ -64,6 +70,7 @@
 <script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/ripples.min.js"></script>
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
 
 <script type="text/javascript" src="js/Thermometer.js"></script>
 
@@ -73,6 +80,16 @@
         $(".carousel").carousel({
             interval: 0 //changes the speed
         });
+    });
+
+    $(window).resize(function() {
+        if (window.outerHeight < window.outerWidth) {
+            console.log("orientation changed");
+        } else if (window.outerHeight > window.outerWidth) {
+            console.log("orientation changed");
+        }
+
+        window.location.href = window.location.href;
     });
 
 </script>

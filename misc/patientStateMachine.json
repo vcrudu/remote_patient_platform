@@ -1,0 +1,128 @@
+{
+  "start": {
+    "name": "unreadWelcome",
+    "transitions": {
+      "trigger": "readWelcome",
+      "target": "welcomed"
+    },
+    "actions": [{
+      "name": "sendWelcomeNotification"
+    }]
+  },
+  "states": [
+    {
+      "name": "welcomed",
+      "transitions": {
+        "trigger": "readInformDevicesAvailable",
+        "target": "informedDevicesAvailable"
+      },
+      "actions": [{
+        "name": "sendInformDevicesAvailable"
+      }]
+    },
+    {
+      "name": "informedDevicesAvailable",
+      "transitions": [{
+        "trigger": "readInformCanMakeAppointments",
+        "target": "informedCanMakeAppointments"
+      }],
+      "actions": [{
+        "name": "sendInformCanMakeAppointments"
+      }]
+    },
+    {
+      "name": "informedCanMakeAppointments",
+      "transitions": [{
+        "trigger": "readInformProvideDetails",
+        "target": "informedProvideDetails"
+      }],
+      "actions": [{
+        "name": "sendInformProvideDetails"
+      }]
+    },
+    {
+      "name": "informedProvideDetails",
+      "transitions": [{
+        "trigger": "readInformedProvideDetails",
+        "target": "idle"
+      }]
+    },
+    {
+      "name": "idle",
+      "transitions": [{
+        "trigger": "appointmentBooking",
+        "target": "appointmentBooked"
+      },
+        {
+        "trigger": "devicesOrdering",
+        "target": "devicesOrdered"
+      },
+        {
+          "trigger":"measurementExpected",
+          "target" : "waitingMeasurement"
+        }
+      ]
+    },
+    {
+      "name":"appointmentBooked",
+      "transitions": [{
+        "trigger": "oneMinuteRemained",
+        "target": "informedNotificationSoon"
+      }],
+      "actions": [{
+        "name": "sendPatientAppointmentBookedNotification"
+      },
+       {
+        "name": "sendProviderAppointmentBookedNotification"
+      }]
+    },
+    {
+      "name":"informedNotificationSoon",
+      "transitions": [{
+        "trigger": "notificationSoonSent",
+        "target": "idle"
+      }],
+      "actions": []
+    },
+    {
+      "name":"devicesOrdered",
+      "transitions": [{
+        "trigger": "devicesDispatching",
+        "target": "devicesDispatched"
+      }],
+      "actions": [{
+        "name": "sendDevicesOrderedNotification"
+      }]
+    },
+    {
+      "name": "devicesDispatched",
+      "transition": {
+        "trigger": "devicesDelivering",
+        "target": "devicesDelivered"
+      },
+      "actions": [{
+        "name": "sendDevicesDispatchedNotification"
+      }]
+    },
+    {
+      "name": "devicesDelivered",
+      "transitions": [{
+        "trigger": "devicesInstalled",
+        "target": "waitingMeasurement"
+      }],
+        "actions":[{
+          "name":"sendTakeMeasurementNotification"
+        }]
+    },
+    {
+      "name":"waitingMeasurement",
+      "transitions":[{
+        "trigger":"measurementReceived",
+        "target":"idle"
+      }],
+      "actions":[{
+        "name":"sendTakeMeasurementNotification"
+      }]
+    }
+  ]
+}

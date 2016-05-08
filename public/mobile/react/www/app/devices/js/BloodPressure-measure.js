@@ -7,6 +7,23 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+        displayName: "BLOOD_PRESSURE_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var BLOOD_PRESSURE_MEASURE = React.createClass({
         displayName: "BLOOD_PRESSURE_MEASURE",
 
@@ -25,19 +42,18 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "measure-received":
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            component.setState({
-                                nextButtonVisibility: false,
-                                tryAgainButtonVisibility: true,
-                                cancelButtonVisibility: true
-                            });
+                            component.handleTryAgain();
+                            break;
                     }
                 }
             });
@@ -77,31 +93,39 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "container" },
+                null,
                 React.createElement(
                     "div",
-                    { className: "row" },
+                    { className: "buttons-group" },
                     React.createElement(
                         "div",
-                        { className: "col-xs-6" },
-                        this.state.value ? "Systolic: " + this.state.value.systolic : null
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-6" },
-                        this.state.value ? "Diastolic: " + this.state.value.diastolic : null
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "row buttonsContainer" },
-                    React.createElement(
-                        "div",
-                        { className: "col-xs-12" },
-                        this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Confirm", onClick: this.handleNext }) : null,
-                        this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Try Again", onClick: this.handleTryAgain }) : null,
-                        this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Cancel", onClick: this.handleCancel }) : null,
-                        this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null
+                        { className: "row has-separator buttons-container" },
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4 data-cell-footer" },
+                            React.createElement(
+                                "h4",
+                                { className: "primary-text vertical-center" },
+                                this.state.value ? "Systolic: " + this.state.value.systolic : null
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4 data-cell-footer" },
+                            React.createElement(
+                                "h4",
+                                { className: "primary-text vertical-center" },
+                                this.state.value ? "Diastolic: " + this.state.value.diastolic : null
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-xs-4 data-cell-footer" },
+                            this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Cancel", onClick: this.handleCancel }) : null,
+                            this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Confirm", onClick: this.handleNext }) : null,
+                            this.state.tryAgainButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Try Again", onClick: this.handleTryAgain }) : null,
+                            this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null
+                        )
                     )
                 )
             );
@@ -109,4 +133,5 @@
     });
 
     ReactDOM.render(React.createElement(BLOOD_PRESSURE_MEASURE, { carouselWizard: "#measure-wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure-measure"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE_PROGRESS, null), document.getElementById("blood-pressure-measure-progress"));
 })();

@@ -7,6 +7,25 @@
 
     $.material.init();
 
+    $.material.init();
+
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var BLOOD_PRESSURE_PROGRESS = React.createClass({
+        displayName: "BLOOD_PRESSURE_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var BLOOD_PRESSURE = React.createClass({
         displayName: "BLOOD_PRESSURE",
 
@@ -42,26 +61,8 @@
                 retryButtonVisibility: false
             });
 
-            Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
-                if (result.success) {
-                    switch (result.data.status) {
-                        case "paired":
-                            component.setState({
-                                doneButtonVisibility: true,
-                                cancelButtonVisibility: false,
-                                retryButtonVisibility: false,
-                                deviceAddress: result.data.address
-                            });
-                            break;
-                    }
-                } else {
-                    component.setState({
-                        doneButtonVisibility: false,
-                        cancelButtonVisibility: true,
-                        retryButtonVisibility: true
-                    });
-                }
-            });
+            $(component.props.carouselWizard).carousel("prev");
+            this.componentDidMount();
         },
         handleNext: function () {
             var component = this;
@@ -77,20 +78,24 @@
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
                                 cancelButtonVisibility: false,
                                 retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
+                            $(component.props.carouselWizard).carousel("next");
                             break;
                     }
                 } else {
-                    component.setState({
+                    $(component.props.carouselWizard).carousel("prev");
+                    component.componentDidMount();
+                    /*component.setState({
                         doneButtonVisibility: false,
                         cancelButtonVisibility: true,
-                        retryButtonVisibility: true
-                    });
+                        retryButtonVisibility: true,
+                    });*/
                 }
             });
         },
@@ -127,18 +132,23 @@
         render: function () {
             return React.createElement(
                 "div",
-                { className: "row buttonsContainer" },
+                { className: "row has-separator buttons-container" },
                 React.createElement(
                     "div",
-                    { className: "col-xs-12" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Done", onClick: this.handleDone }) : null,
-                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Cancel", onClick: this.handleCancel }) : null,
-                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default", value: "Retry", onClick: this.handleRetry }) : null
+                    { className: "col-xs-6" },
+                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                ),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null,
+                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Retry", onClick: this.handleRetry }) : null
                 )
             );
         }
     });
 
     ReactDOM.render(React.createElement(BLOOD_PRESSURE, { carouselWizard: "#wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE_PROGRESS, null), document.getElementById("blood-pressure-pair-progress"));
 })();

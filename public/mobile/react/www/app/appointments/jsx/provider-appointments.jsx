@@ -5,7 +5,23 @@
 (function() {
     "use strict";
 
-    $.material.init();
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var APPOINTMENTS_PROGRESS = React.createClass({
+        componentDidMount: function() {
+            indeterminateProgress.start();
+        },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+        },
+        render: function() {
+            return <div className="progress-bar-indeterminate"></div>
+        }
+    });
 
     var ProviderAppointment = React.createClass({
         getInitialState: function(){
@@ -14,7 +30,7 @@
             }
         },
         handleClickDashboard: function(){
-            Bridge.Redirect.redirectTo("../vital-signs/provider-vital-signs.html?userId=" + this.props.model.patientId
+            Bridge.Redirect.redirectTo("../profile/provider-profile-details.html?userId=" + this.props.model.patientId
                 + "&appointmentTime=" + this.props.model.slotDateTimeString
                 + "&name=" + this.props.model.name
                 + "&onlineStatus=" + this.state.onlineStatus);
@@ -37,16 +53,22 @@
                 this.props.onCall(patientId);
             }
         },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+            var listItem = this.refs.listItem;
+            listItem.addEventListener('click', this.handleClickDashboard);
+        },
         render: function() {
-            return <div className="list-group-item" onClick={this.handleClickDashboard}>
-                <div className="row-action-primary bottom">
-                    <img src="images/user.png" className={this.state.onlineStatus == "offline" ? "img-responsive img-circle img-border-offline" : "img-responsive img-circle img-border-online"}/>
-                </div>
-                <div className="row-content">
-                    <h4 className="list-group-item-heading">{this.props.model? this.props.model.name : ""}</h4>
-                    <p className="list-group-item-text">Appointment Time: <strong>{this.formatDate(this.props.model.slotDateTimeString)}</strong></p>
-                </div>
-            </div>
+            return <li className="mdl-list__item mdl-list__item--two-line" onClick={this.handleClickDashboard} ref="listItem">
+                <span className="mdl-list__item-primary-content">
+                  <i className="material-icons mdl-list__item-avatar">person</i>
+                  <span>{this.props.model? this.props.model.name : ""}</span>
+                  <span className="mdl-list__item-sub-title">Appointment Time: <strong>{this.formatDate(this.props.model.slotDateTimeString)}</strong></span>
+                </span>
+                <span className="mdl-list__item-secondary-content">
+                  <a className={this.state.onlineStatus == "offline" ? "mdl-list__item-secondary-action offline" : "mdl-list__item-secondary-action"} href="#"><i className="material-icons">lens</i></a>
+                </span>
+            </li>
         }
     });
 
@@ -71,10 +93,14 @@
                 }
             }
         },
+        componentDidUpdate: function() {
+            componentHandler.upgradeDom();
+        },
         componentDidMount: function() {
             var component = this;
             Bridge.Provider.socketCallBack = this.socketCallback;
             Bridge.Provider.getAppointments(function(apiResult) {
+                indeterminateProgress.end();
                 var orderedResult = _.sortBy(apiResult.data, function(num){
                     return num.slotDateTime;
                 });
@@ -90,20 +116,20 @@
         },
         render: function() {
             var component = this;
-            return <div className="list-group">
-                {
-                    component.state.appointments.map(function (appointment) {
-                        return <div key={appointment.patientId + "_" + appointment.slotDateTime + "_div"}>
-                                <ProviderAppointment
-                                    ref={appointment.patientId + "_" + appointment.slotDateTime}
-                                    key={appointment.patientId + "_" + appointment.slotDateTime}
-                                    model={appointment}
-                                    onCall={component.handleCall}/>
-                                <div className="list-group-separator" key={appointment.patientId + "_" + appointment.slotDateTime + "_separator"}></div>
-                            </div>
-                    })
-                }
-            </div>
+            return <main className="mdl-layout__content">
+                    <APPOINTMENTS_PROGRESS />
+                    <ul className="mdl-list">
+                        {
+                            component.state.appointments.map(function (appointment) {
+                                return <ProviderAppointment
+                                            ref={appointment.patientId + "_" + appointment.slotDateTime}
+                                            key={appointment.patientId + "_" + appointment.slotDateTime}
+                                            model={appointment}
+                                            onCall={component.handleCall}/>
+                            })
+                        }
+                    </ul>
+                </main>
         }
     });
 

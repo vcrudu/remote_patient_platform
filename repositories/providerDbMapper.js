@@ -112,6 +112,7 @@
                     name: {S: item.name},
                     surname: {S: item.surname},
                     availabilityType: {S: 'regular'},
+                    contactDetails: {L: [{"M": {"contactType": {"S": "Phone"}, "contact": {"S": item.phone}}}]},
                     availabilities: {L: []}
                 };
             }

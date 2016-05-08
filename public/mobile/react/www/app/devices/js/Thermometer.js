@@ -7,6 +7,23 @@
 
     $.material.init();
 
+    var intObj = {
+        template: 3,
+        parent: ".progress-bar-indeterminate"
+    };
+    var indeterminateProgress = new Mprogress(intObj);
+
+    var THERMOMETER_PROGRESS = React.createClass({
+        displayName: "THERMOMETER_PROGRESS",
+
+        componentDidMount: function () {
+            indeterminateProgress.start();
+        },
+        render: function () {
+            return React.createElement("div", { className: "progress-bar-indeterminate" });
+        }
+    });
+
     var THERMOMETER = React.createClass({
         displayName: "THERMOMETER",
 
@@ -14,6 +31,8 @@
             return {
                 nextButtonVisibility: false,
                 doneButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false,
                 deviceAddress: undefined
             };
         },
@@ -31,27 +50,54 @@
                 }
             });
         },
+        handleRetry: function () {
+            var component = this;
+
+            component.setState({
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false
+            });
+
+            $(component.props.carouselWizard).carousel("prev");
+            this.componentDidMount();
+        },
         handleNext: function () {
             var component = this;
 
             $(this.props.carouselWizard).carousel("next");
             component.setState({
-                nextButtonVisibility: false
+                nextButtonVisibility: false,
+                cancelButtonVisibility: false,
+                retryButtonVisibility: false
             });
 
             Bridge.DeviceInstaller.pairDevice(component.props.deviceModelType, function (result) {
                 if (result.success) {
                     switch (result.data.status) {
                         case "paired":
+                            indeterminateProgress.end();
                             component.setState({
                                 doneButtonVisibility: true,
+                                cancelButtonVisibility: false,
+                                retryButtonVisibility: false,
                                 deviceAddress: result.data.address
                             });
-                            $(component.props.carouselWizard).carousel("next");
+                            $(component.props.carouselWizard).carousel(2);
                             break;
                     }
+                } else {
+                    component.componentDidMount();
+                    /*component.setState({
+                        doneButtonVisibility: false,
+                        cancelButtonVisibility: true,
+                        retryButtonVisibility: true,
+                    });*/
                 }
             });
+        },
+        handleCancel: function () {
+            Bridge.Redirect.redirectTo("patient-my-devices.html");
         },
         handleDone: function () {
             var availableDevices = [];
@@ -84,16 +130,22 @@
             return React.createElement(
                 "div",
                 { className: "row has-separator buttons-container" },
-                React.createElement("div", { className: "col-xs-6" }),
                 React.createElement(
                     "div",
                     { className: "col-xs-6" },
-                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Next", onClick: this.handleNext }) : null,
-                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default pull-right", value: "Done", onClick: this.handleDone }) : null
+                    this.state.cancelButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent pull-left", value: "Cancel", onClick: this.handleCancel }) : null
+                ),
+                React.createElement(
+                    "div",
+                    { className: "col-xs-6" },
+                    this.state.nextButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Next", onClick: this.handleNext }) : null,
+                    this.state.doneButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Done", onClick: this.handleDone }) : null,
+                    this.state.retryButtonVisibility ? React.createElement("input", { type: "button", className: "btn btn-default btn-accent btn-footer pull-right", value: "Retry", onClick: this.handleRetry }) : null
                 )
             );
         }
     });
 
     ReactDOM.render(React.createElement(THERMOMETER, { carouselWizard: "#wizard", deviceModelType: "Temperature" }), document.getElementById("thermometer"));
+    ReactDOM.render(React.createElement(THERMOMETER_PROGRESS, null), document.getElementById("thermometer-pair-progress"));
 })();

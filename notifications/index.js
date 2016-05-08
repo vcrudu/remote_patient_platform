@@ -13,11 +13,23 @@
 
     var loggerProvider = require('../logging');
 
+    var redis = require('socket.io-redis');
+
     var io;
 
     module.exports = {
         init: function (server) {
             io = require('socket.io')(server);
+            /*var adapter = redis({ host: 'socket-io-scala.kx6css.0001.euw1.cache.amazonaws.com', port: 6379 });
+            adapter.pubClient.on('error', function(error){
+                loggerProvider.getLogger().error(NS+"::pubClient::"+error);
+            });
+
+            adapter.subClient.on('error', function(error){
+                loggerProvider.getLogger().error(NS+"::subClient::"+error);
+            });
+
+            io.adapter(adapter);*/
             function notifyProvidersAboutPatientOnlineStatus(onlineStatus, socketUser) {
                 usersRepository.findOneByEmail(socketUser.email, function (err, user) {
                     if (!err && user && user.type === "patient") {

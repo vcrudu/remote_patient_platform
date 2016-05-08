@@ -28,6 +28,10 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.settings",
         templateUrl: "provider/settings/provider.settings.html",
         controller: 'providerSettingsCtrl'
+    }).state("provider.alarm_builder", {
+        url: "/provider.alarm_builder",
+        templateUrl: "provider/alarms/provider.alarm.builder.html",
+        controller: "providerAlarmBuilderCtrl"
     }).state("provider.call", {
         url: "/provider.call",
         templateUrl: "provider/appointments/provider.call.html",

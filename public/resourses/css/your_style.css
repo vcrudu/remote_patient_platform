@@ -36,6 +36,7 @@
 
 #header{
     background-color: #ffffff;
+    height:71px;
 }
 
 .separate{
@@ -79,6 +80,7 @@
 
 #header>:first-child{
     width: auto;
+    height:71px;
 }
 
 #extr-page{
@@ -91,4 +93,55 @@ background-color: #f4f411;
 
 #create_provider_link:hover{
     background-color: #f4f411;
+}
+/* # BRANDING */
+.site-branding {
+    display:table;
+    padding-left:25px;
+}
+
+.site-branding .logo {
+    display:table-cell;
+}
+.site-branding .branding-text {
+    display:table-cell;
+    vertical-align:middle;
+    color: #333333;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 20px;
+    padding-left:25px;
+}
+
+.BooleanPrefix {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.MinValue {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.MaxValue{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Operator{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Value{
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.invalid-value {
+    background: #fff0f0;
+    border-color: #A90329;
+}
+.selected-conditions {
+    list-style-type: none;
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "BloodPressureSystolicBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodPressureSystolicBetween\">$BooleanPrefix$ Blood Pressure Systolic range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Blood Pressure Systolic range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "BloodPressureSystolic",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodPressureSystolic\">$BooleanPrefix$ Blood Pressure Systolic is $Operator$ $Value$</span>",
+    "phrase": "Blood Pressure Systolic is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "BloodPressureDiastolicBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodPressureDiastolicBetween\">$BooleanPrefix$ Blood Pressure SystolicDiastolic range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Blood Pressure Diastolic range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "BloodPressureDiastolic",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodPressureDiastolic\">$BooleanPrefix$ Blood Pressure Diastolic is $Operator$ $Value$</span>",
+    "phrase": "Blood Pressure Diastolic is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "HeartRateBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"HeartRateBetween\">$BooleanPrefix$ Heart Rate range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Heart Rate range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "HeartRate",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"HeartRate\">$BooleanPrefix$ Heart Rate is $Operator$ $Value$</span>",
+    "phrase": "Heart Rate is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "TemperatureBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"TemperatureBetween\">$BooleanPrefix$ Temperature range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Temperature range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "Temperature",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"Temperature\">$BooleanPrefix$ Temperature is $Operator$ $Value$</span>",
+    "phrase": "Temperature is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "BloodOxygenBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodOxygenBetween\">$BooleanPrefix$ Blood Oxygen range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Blood Oxygen range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "BloodOxygen",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodOxygen\">$BooleanPrefix$ Blood Oxygen is $Operator$ $Value$</span>",
+    "phrase": "Blood Oxygen is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  }
+]
