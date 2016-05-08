@@ -85,6 +85,13 @@ gulp.task("babel-watch-devices", function () {
         .pipe(gulp.dest("www/app/devices/js"));
 });
 
+gulp.task("babel-watch-patient-details", function () {
+    return gulp.src("www/app/patient_details/jsx/*")
+        .pipe(watch("www/app/patient_details/jsx/*"))
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/patient_details/js"));
+});
+
 // use default task to launch Browsersync and watch JS files
 gulp.task("serve", ["babel-landing", "babel-signup", "babel-appointments", "babel-vital-signs", "babel-devices", "babel-availability"], function () {
     // Serve files from the root of this project
