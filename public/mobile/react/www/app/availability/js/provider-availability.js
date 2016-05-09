@@ -23,14 +23,14 @@
         componentDidMount: function () {
             var changeTimePicker = $(this.refs.changeTimePicker);
             var component = this;
-            var strt = new Date(new Date().setHours(8, 0, 0, 0));
-            var nd = new Date(new Date().setHours(12, 0, 0, 0));
+            var initRange1 = new Date(new Date().setHours(8));
+            var initRange2 = new Date(new Date().setHours(17));
             changeTimePicker.mobiscroll().range({
                 theme: "material",
                 display: "bottom",
                 controls: ['time'],
                 timeFormat: 'HH',
-                defaultValue: [strt, nd],
+                defaultValue: [initRange1, initRange2],
                 steps: {
                     minute: 60,
                     zeroBased: true
@@ -38,7 +38,20 @@
                 onSelect: function (valueText, inst) {
                     component.props.onSelectTimeCallback(valueText, inst);
                 },
-                maxWidth: 100
+                maxWidth: 100,
+                onBeforeShow: function (inst) {
+                    console.log(inst);
+                    if (inst.haveRange) {
+                        var start = inst.haveRange.intervals.split(':');
+                        var first = new Date(new Date().setHours(start[0], 0, 0, 0));
+                        var second = start[1].split('-');
+                        var end = new Date(new Date().setHours(second[1], 0, 0, 0));
+                        inst.setVal([new Date(new Date().setHours(start[0], 0, 0, 0)), end]);
+                        inst.haveRange = null;
+                    } else {
+                        inst.setVal([initRange1, initRange2]);
+                    }
+                }
 
             });
         },
@@ -147,10 +160,17 @@
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
                 eventClick: function (calEvent, jsEvent, view) {
-                    //var dateTitle="Edit availability "+moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
-                    console.log('apare mobi');
-                    //var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    //var availabilityText = component.getTodayAvailability(calendarDate);
+
+                    var range = calEvent.availability;
+                    var timeSelector = component.refs.timeSelector;
+                    if (timeSelector) {
+                        var changeTimePicker = $(timeSelector.refs.changeTimePicker);
+                        var inst = $(timeSelector.refs.changeTimePicker).mobiscroll('getInst');
+                        if (changeTimePicker && changeTimePicker.length > 0) {
+                            inst.haveRange = range;
+                            inst.show();
+                        }
+                    }
                 },
 
                 events: function (start, end, timezone, callback) {
