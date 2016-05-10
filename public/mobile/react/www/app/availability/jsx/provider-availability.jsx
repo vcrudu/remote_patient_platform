@@ -116,17 +116,30 @@
             }
 
         },
-       
+        isToday: function (td){
+            var d = new Date();
+            return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+        },
         componentDidMount: function() {
+            var component = this;
 
+            $(component.refs.availabilityCalendar).on("swipeleft" , function(event) {
+                $(component.refs.availabilityCalendar).fullCalendar("next");
+            });
+
+            $(component.refs.availabilityCalendar).on("swiperight", function(event) {
+                var defDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
+                if (component.isToday(defDate)) {return;}
+                $(component.refs.availabilityCalendar).fullCalendar("prev");
+            });
 
             var currentDate = new Date();
-            var component = this;
             $(this.refs.availabilityCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
+                height: $(window).height() - 3,
                 header:{
                     left: 'prev,next',
                     center: 'title',
