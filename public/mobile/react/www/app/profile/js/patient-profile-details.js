@@ -93,7 +93,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtNhsNumberDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "fingerprint"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtNhsNumber", ref: "txtNhsNumber" }),
@@ -109,7 +109,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtEthnicityDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "face"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtEthnicity", ref: "txtEthnicity", onClick: this.handleEthnicityClick }),
@@ -125,7 +125,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtHeightDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "accessibility"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight" }),
@@ -141,7 +141,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtWeightDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "adb"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight" }),
@@ -538,7 +538,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtCountryDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "language"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtCountry", ref: "txtCountry", onClick: this.handleCountry }),
@@ -554,7 +554,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtCountyDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "language"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtCounty", ref: "txtCounty" }),
@@ -570,7 +570,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtTownDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "home"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtTown", ref: "txtTown" }),
@@ -586,7 +586,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtPostCodeDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "place"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtPostCode", ref: "txtPostCode" }),
@@ -602,7 +602,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtAddressLine1Div" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "map"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtAddressLine1", ref: "txtAddressLine1" }),
@@ -618,7 +618,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtAddressLine2Div" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "map"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtAddressLine2", ref: "txtAddressLine2" }),
@@ -634,7 +634,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtPhoneDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "local_phone"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtPhone", ref: "txtPhone" }),
@@ -650,7 +650,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtMobileDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "stay_current_portrait"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtMobile", ref: "txtMobile" }),
@@ -1559,7 +1559,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtTitleDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "person"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtTitle", ref: "txtTitle", onClick: this.handleTitleClick }),
@@ -1575,7 +1575,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtFirstDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "person"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtFirstName", ref: "txtFirstName" }),
@@ -1591,7 +1591,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtSurnameDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "person"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtSurname", ref: "txtSurname" }),
@@ -1607,7 +1607,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtGenderDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "person"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtGender", ref: "txtGender", onClick: this.handleGenderClick }),
@@ -1623,7 +1623,7 @@
                     { className: "mdl-textfield mdl-js-textfield", ref: "txtBirthDayDiv" },
                     React.createElement(
                         "i",
-                        { className: "material-icons md-36" },
+                        { className: "material-icons primary-icons md-36" },
                         "cake"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtBirthDay", ref: "txtBirthDay", onClick: this.handleBirthDayClick }),
