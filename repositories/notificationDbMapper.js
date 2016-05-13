@@ -16,6 +16,7 @@
                 summary: {S: notification.summary},
                 title: {S: notification.title},
                 type: {S: notification.type},
+                category:{S: notification.category},
                 userId: {S: notification.userId}
             };
 
@@ -31,6 +32,7 @@
                 summary: dbEntity.summary.S,
                 title: dbEntity.title.S,
                 type: dbEntity.type.S,
+                category: dbEntity.category.S,
                 userId: dbEntity.userId.S
             };
 

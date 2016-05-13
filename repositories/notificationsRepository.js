@@ -46,25 +46,25 @@
             });
         },
 
-        getList : function(userId, type, startTime, endTime, callback){
+        getList : function(userId, category, startTime, endTime, callback){
 
             var filterExpression='';
             var params;
-            if(type!='All') {
-                filterExpression = '#type=:type';
+            if(category!='All') {
+                filterExpression = '#category=:category';
 
                 params = {
                     KeyConditionExpression: 'userId=:userId AND ' +
                     '#dateTime>=:startTime',
 
                     ExpressionAttributeNames: {
-                        "#type": "type",
+                        "#category": "category",
                         "#dateTime": "dateTime"
                     },
 
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId},
-                        ":type": {"S": type},
+                        ":category": {"S": category},
                         ":startTime": {"N": startTime.getTime().toString()}
                     },
 
@@ -73,7 +73,6 @@
                     Limit: 30
                 };
             }else{
-                console.log(endTime.getTime());
                 params = {
                     KeyConditionExpression: 'userId=:userId AND ' +
                     '#dateTime>=:startTime',
