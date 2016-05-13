@@ -66,6 +66,11 @@ a.offline {
     font-family: Roboto-Medium;
 }
 
+.mdl-layout__header {
+    background-color: #EEEEEE !important;
+    min-height: 48px !important;
+}
+
 .mdl-layout__tab-bar-button {
     background-color: #EEEEEE !important;
 }

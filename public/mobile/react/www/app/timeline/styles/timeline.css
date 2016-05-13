@@ -1,0 +1,21 @@
+.page-content-wrapper {
+    margin: 8px;
+}
+.dl-layout__header {
+    min-height: 48px !important;
+}
+
+.group-separator {
+    padding-top: 16px;
+    padding-bottom: 24px;
+    padding-left: 8px;
+}
+
+.mdl-card {
+    min-height: 170px;
+    margin-bottom: 8px;
+}
+
+h6.mdl-card__title-text {
+    font-size: 20px;
+}

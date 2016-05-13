@@ -97,7 +97,7 @@
             var inputTimeRange=valueText.split(" ");
             var availabilityString=inputTimeRange[0]+':00-'+inputTimeRange[2]+':00';
             if(!inst.haveRange) {
-                Bridge.providerSetAvailability({
+                Bridge.Provider.providerSetAvailability({
                     availabilityString: availabilityString,
                     dateString: dateString
                 }, function (result) {
@@ -105,7 +105,7 @@
                 });
             } else {
                 var oldAvailability=inst.haveRange.intervals;
-                Bridge.providerUpdateAvailability({
+                Bridge.Provider.providerUpdateAvailability({
                     availabilityString: availabilityString,
                     dateString: dateString,
                     oldAvailabilityString: oldAvailability
@@ -174,7 +174,7 @@
 
                 events: function (start, end, timezone, callback) {
                     var events = [];
-                    Bridge.getProviderSlots(start,end,function (result) {
+                    Bridge.Provider.getProviderSlots(start,end,function (result) {
                         if (result.success) {
                             for (var i = 0; i < result.data.length; i++) {
                                 var intervals = result.data[i].intervals.split("-");
