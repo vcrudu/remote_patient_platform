@@ -1,3 +1,7 @@
+.fc-nursesGrid-view th{
+    display: none;
+}
+
 .fc-toolbar {
     display: none;
 }
