@@ -48,7 +48,9 @@
                 onSelect: function (valueText, inst) {
                     component.props.onSelectDateCallback(valueText, inst);
                 }
-            }).mobiscroll("setDate", new Date(), true);
+            });
+
+            changeDayPicker.mobiscroll("setDate", new Date(), true);
         },
         render: function () {
             return React.createElement(

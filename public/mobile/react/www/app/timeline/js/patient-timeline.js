@@ -1,36 +1,30 @@
 /**
- * Created by Victor on 5/13/2016.
+ * Created by Victor on 5/16/2016.
  */
 
 (function () {
+
     "use strict";
 
-    var intObj = {
-        template: 3,
-        parent: ".progress-bar-indeterminate"
-    };
-    var indeterminateProgress = new Mprogress(intObj);
-
-    var USER_TIMELINE_PROGRESS = React.createClass({
-        displayName: "USER_TIMELINE_PROGRESS",
-
-        componentDidMount: function () {
-            indeterminateProgress.start();
-        },
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-        },
-        render: function () {
-            return React.createElement("div", { className: "progress-bar-indeterminate" });
-        }
-    });
+    var Layout = ReactMDL.Layout;
+    var Header = ReactMDL.Header;
+    var HeaderRow = ReactMDL.HeaderRow;
+    var HeaderTabs = ReactMDL.HeaderTabs;
+    var Tab = ReactMDL.Tab;
+    var Content = ReactMDL.Content;
+    var Card = ReactMDL.Card;
+    var CardTitle = ReactMDL.CardTitle;
+    var CardText = ReactMDL.CardText;
+    var CardMenu = ReactMDL.CardMenu;
+    var IconButton = ReactMDL.IconButton;
+    var Menu = ReactMDL.Menu;
+    var MenuItem = ReactMDL.MenuItem;
+    var ProgressBar = ReactMDL.ProgressBar;
 
     var DateCard = React.createClass({
         displayName: "DateCard",
 
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-        },
+        componentDidUpdate: function () {},
         componentDidMount: function () {},
         render: function () {
             return React.createElement(
@@ -48,22 +42,18 @@
     var InfoCard = React.createClass({
         displayName: "InfoCard",
 
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-            var viewButton = this.refs.viewButton;
-            viewButton.addEventListener('click', this.handleView);
-        },
+        componentDidUpdate: function () {},
         componentDidMount: function () {},
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
-                "div",
-                { className: "message-card-wide mdl-card mdl-shadow--2dp" },
+                Card,
+                { className: "message-card-wide" },
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__title" },
+                    CardTitle,
+                    null,
                     React.createElement(
                         "h6",
                         { className: "mdl-card__title-text" },
@@ -71,33 +61,25 @@
                     )
                 ),
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__supporting-text" },
+                    CardText,
+                    null,
                     this.props.message
                 ),
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__menu" },
+                    CardMenu,
+                    null,
+                    React.createElement(IconButton, { name: "more_vert", id: "card-menu-lower-right-" + this.props.cardId }),
                     React.createElement(
-                        "button",
-                        { id: "card-menu-lower-right-" + this.props.cardId, className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" },
+                        Menu,
+                        { target: "card-menu-lower-right-" + this.props.cardId, align: "right" },
                         React.createElement(
-                            "i",
-                            { className: "material-icons" },
-                            "more_vert"
-                        )
-                    ),
-                    React.createElement(
-                        "ul",
-                        { className: "mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect", htmlFor: "card-menu-lower-right-" + this.props.cardId },
-                        React.createElement(
-                            "li",
-                            { className: "mdl-menu__item", ref: "viewButton", onClick: this.handleView },
+                            MenuItem,
+                            { onClick: this.handleView },
                             "View"
                         ),
                         React.createElement(
-                            "li",
-                            { className: "mdl-menu__item" },
+                            MenuItem,
+                            null,
                             "Delete"
                         )
                     )
@@ -109,22 +91,18 @@
     var AlarmCard = React.createClass({
         displayName: "AlarmCard",
 
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-            var viewButton = this.refs.viewButton;
-            viewButton.addEventListener('click', this.handleView);
-        },
+        componentDidUpdate: function () {},
         componentDidMount: function () {},
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
-                "div",
-                { className: "message-card-wide mdl-card mdl-shadow--2dp" },
+                Card,
+                { className: "message-card-wide" },
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__title" },
+                    CardTitle,
+                    null,
                     React.createElement(
                         "h6",
                         { className: "mdl-card__title-text" },
@@ -132,33 +110,25 @@
                     )
                 ),
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__supporting-text" },
+                    CardText,
+                    null,
                     this.props.message
                 ),
                 React.createElement(
-                    "div",
-                    { className: "mdl-card__menu" },
+                    CardMenu,
+                    null,
+                    React.createElement(IconButton, { name: "more_vert", id: "card-menu-lower-right-" + this.props.cardId }),
                     React.createElement(
-                        "button",
-                        { id: "card-menu-lower-right-" + this.props.cardId, className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" },
+                        Menu,
+                        { target: "card-menu-lower-right-" + this.props.cardId, align: "right" },
                         React.createElement(
-                            "i",
-                            { className: "material-icons" },
-                            "more_vert"
-                        )
-                    ),
-                    React.createElement(
-                        "ul",
-                        { className: "mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect", htmlFor: "card-menu-lower-right-" + this.props.cardId },
-                        React.createElement(
-                            "li",
-                            { className: "mdl-menu__item", ref: "viewButton", onClick: this.handleView },
+                            MenuItem,
+                            { onClick: this.handleView },
                             "View"
                         ),
                         React.createElement(
-                            "li",
-                            { className: "mdl-menu__item" },
+                            MenuItem,
+                            null,
                             "Delete"
                         )
                     )
@@ -172,14 +142,15 @@
 
         getInitialState: function () {
             return {
+                activeTab: 0,
                 cards: [],
+                allCards: [],
                 alarmCards: [],
-                infoCards: []
+                infoCards: [],
+                readingsCards: []
             };
         },
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-        },
+        componentDidUpdate: function () {},
         formatCardDate: function (timeStamp) {
             return moment(timeStamp).format("dddd Do MMM");
         },
@@ -297,51 +268,63 @@
                         }
                     }
                 }
-                indeterminateProgress.end();
 
-                component.setState({ cards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards });
+                component.setState({ cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards });
+
+                $(".mdl-progress").css('visibility', 'hidden');
             });
+        },
+        onChange: function (tabId) {
+            if (tabId == 0) {
+                this.setState({ activeTab: tabId, cards: this.state.allCards });
+            } else if (tabId == 1) {
+                this.setState({ activeTab: tabId, cards: this.state.infoCards });
+            } else if (tabId == 2) {
+                this.setState({ activeTab: tabId, cards: this.state.alarmCards });
+            } else if (tabId == 3) {
+                this.setState({ activeTab: tabId, cards: this.state.readingsCards });
+            }
         },
         render: function () {
             var component = this;
             return React.createElement(
-                "div",
-                { className: "mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs" },
+                Layout,
+                { fixedHeader: true, fixedTabs: true },
                 React.createElement(
-                    "header",
-                    { className: "mdl-layout__header" },
-                    React.createElement(USER_TIMELINE_PROGRESS, null),
+                    Header,
+                    null,
+                    React.createElement(ProgressBar, { indeterminate: true, ref: "progressBar", id: "progressBar" }),
                     React.createElement(
-                        "div",
-                        { className: "mdl-layout__tab-bar mdl-js-ripple-effect" },
+                        HeaderTabs,
+                        { activeTab: this.state.activeTab, onChange: this.onChange, ripple: true },
                         React.createElement(
-                            "a",
-                            { href: "#tab-all", className: "mdl-layout__tab is-active" },
+                            Tab,
+                            { href: "#tab1" },
                             "All"
                         ),
                         React.createElement(
-                            "a",
-                            { href: "#tab-info", className: "mdl-layout__tab" },
+                            Tab,
+                            { href: "#tab2" },
                             "Info"
                         ),
                         React.createElement(
-                            "a",
-                            { href: "#tab-alarms", className: "mdl-layout__tab" },
+                            Tab,
+                            { href: "#tab3" },
                             "Alarms"
                         ),
                         React.createElement(
-                            "a",
-                            { href: "#tab-readings", className: "mdl-layout__tab" },
+                            Tab,
+                            { href: "#tab4" },
                             "Readings"
                         )
                     )
                 ),
                 React.createElement(
-                    "main",
-                    { className: "mdl-layout__content" },
+                    Content,
+                    null,
                     React.createElement(
                         "section",
-                        { className: "mdl-layout__tab-panel is-active", id: "tab-all" },
+                        { id: "tab1" },
                         React.createElement(
                             "div",
                             { className: "page-content" },
@@ -361,55 +344,13 @@
                             )
                         )
                     ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "tab-info" },
-                        React.createElement(
-                            "div",
-                            { className: "page-content" },
-                            React.createElement(
-                                "div",
-                                { className: "page-content-wrapper" },
-                                component.state.infoCards.map(function (card) {
-                                    switch (card.category) {
-                                        case "date":
-                                            return React.createElement(DateCard, { key: card.id + "_date_info", title: card.title, cardId: card.id + "_date_info" });
-                                        case "info":
-                                            return React.createElement(InfoCard, { key: card.dateTime + "_info", serverId: card.dateTime, title: card.title, message: card.summary, cardId: card.dateTime + "_info" });
-                                    }
-                                })
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "tab-alarms" },
-                        React.createElement(
-                            "div",
-                            { className: "page-content" },
-                            React.createElement(
-                                "div",
-                                { className: "page-content-wrapper" },
-                                component.state.alarmCards.map(function (card) {
-                                    switch (card.category) {
-                                        case "date":
-                                            return React.createElement(DateCard, { key: card.id + "_date_alarm", title: card.title, cardId: card.id + "_date_alarm" });
-                                        case "alarm":
-                                            return React.createElement(AlarmCard, { key: card.dateTime + "_alarm", serverId: card.dateTime, title: card.title, message: card.summary, cardId: card.dateTime + "_alarm" });
-                                    }
-                                })
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "tab-readings" },
-                        React.createElement("div", { className: "page-content" })
-                    )
+                    React.createElement("section", { id: "tab2", className: "hide" }),
+                    React.createElement("section", { id: "tab3", className: "hide" }),
+                    React.createElement("section", { id: "tab4", className: "hide" })
                 )
             );
         }
     });
 
-    ReactDOM.render(React.createElement(PatientTimeline, null), document.getElementById("patient-timeline"));
+    ReactDOM.render(React.createElement(PatientTimeline, null), document.getElementById("patient-timeline-2"));
 })();
