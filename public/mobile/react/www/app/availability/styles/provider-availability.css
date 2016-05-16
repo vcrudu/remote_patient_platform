@@ -2,6 +2,10 @@
     display: none;
 }
 
+.fc-time-grid-event {
+    border-radius: 0;
+}
+
 .fc-toolbar {
     display: none;
 }
