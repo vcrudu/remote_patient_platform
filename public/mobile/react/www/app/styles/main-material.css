@@ -35,6 +35,23 @@ a.offline {
     height: 4px;
 }
 
+.mdl-progress {
+    width: 100% !important;
+}
+
+.mdl-progress.mdl-progress--indeterminate>.bar1, .mdl-progress.mdl-progress__indeterminate>.bar1, .mdl-progress.mdl-progress--indeterminate>.bar3, .mdl-progress.mdl-progress__indeterminate>.bar3 {
+    background: #651FFF !important;
+}
+
+.mdl-progress>.bufferbar {
+    background: #B388FF !important;
+
+}
+
+.mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)>.auxbar, .mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)>.auxbar {
+    background: #B388FF !important;
+}
+
 .mdl-list .divider {
     position: relative;
     margin-left: 72px;
@@ -257,7 +274,8 @@ button.mdl-button {
     color:rgba(0,0,0,0.5);
 }
 
-.md-scroll-mask { position: initial;}
+.md-scroll-mask { position: initial; }
+.fc-scroller {position: initial; }
 
 /*mobiscroll*/
 .mbsc-mobiscroll .dwb,
