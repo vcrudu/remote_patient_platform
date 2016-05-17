@@ -5,22 +5,17 @@
 (function() {
     "use strict";
 
-    var intObj = {
-        template: 3,
-        parent: ".progress-bar-indeterminate"
-    };
-    var indeterminateProgress = new Mprogress(intObj);
-
-    var APPOINTMENTS_PROGRESS = React.createClass({
-        componentDidMount: function() {
-        },
-        componentDidUpdate: function() {
-            componentHandler.upgradeDom();
-        },
-        render: function() {
-            return <div className="progress-bar-indeterminate"></div>
-        }
-    });
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var FABButton = ReactMDL.FABButton;
+    var Icon = ReactMDL.Icon;
+    var Button = ReactMDL.Button;
+    var Dialog = ReactMDL.Dialog;
+    var DialogTitle = ReactMDL.DialogTitle;
+    var DialogContent = ReactMDL.DialogContent;
+    var DialogActions = ReactMDL.DialogActions;
+    var Textfield = ReactMDL.Textfield;
+    var ProgressBar  = ReactMDL.ProgressBar;
 
     var DateSelector = React.createClass({
         setDate: function(date) {
@@ -52,22 +47,25 @@
         render: function() {
             return <div className="show-appointments-mobiscroll-wrapper">
                 <input id="changeDayPicker" ref="changeDayPicker" className="hide"/>
-                <button id="show" ref="show" onClick={this.handleShow} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-appointments-mobiscroll"><i className="material-icons">event available</i></button>
+                <FABButton colored ripple className="show-appointments-mobiscroll" onClick={this.handleShow}>
+                    <Icon name="event available" />
+                </FABButton>
             </div>
         }
     });
 
     var AppointmentsCalendar = React.createClass({
         handleBookAppointment: function() {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
-            var slotId = parseInt(appointmentModalDiv.attr("data-slot-id"));
-            var reasonText = $(this.refs.reasonText);
+            var slotId = this.state.slotId;
+            var reasonText = $("#reasonText").val();
 
             var slotDateTime = moment(slotId);
             var now = new Date();
+            var component = this;
             if (slotDateTime <= now.getTime()) {
-                document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+                $("#reasonText").val("");
+                component.setState({openDialog: false, slotId: undefined});
                 return;
             }
             else
@@ -75,27 +73,26 @@
                 Bridge.patientBookAnAppointment({
                     cancel:false,
                     slotDateTime: slotId,
-                    appointmentReason: reasonText.val()
+                    appointmentReason: reasonText
                 }, function(result) {
                     var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
                     if (event) {
                         appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
                     }
 
-                    document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+                    $("#reasonText").val("");
+                    component.setState({openDialog: false, slotId: undefined});
                     return;
                 })
             }
         },
         handleCancelAppointmentModal: function() {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
-            document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+            this.setState({openDialog: false, slotId: undefined, slotReason: ""});
 
             var actualHeight = $(".fc-scroller").height();
             $(".fc-scroller").height(actualHeight + 1);
             $(".fc-scroller").height(actualHeight - 1);
 
-            componentHandler.upgradeDom();
             return;
         },
         onDateChanged: function(valueText, inst) {
@@ -107,11 +104,8 @@
             return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
         },
         componentDidUpdate: function() {
-            componentHandler.upgradeDom();
         },
         componentDidMount: function() {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
-            var reasonText = $(this.refs.reasonText);
             var component = this;
 
             $(component.refs.appointmentsCalendar).on("swipeleft" , function(event) {
@@ -131,7 +125,7 @@
                 defaultTimedEventDuration: '00:15:00',
                 allDaySlot: false,
                 header:false,
-                height: $(window).height() - 3,
+                height: $(window).height() - 4,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -147,17 +141,14 @@
                     if (calEvent.id < now.getTime()) {
                         return;
                     }
-                    if (calEvent.slot.countOfProviders == 0/* && calEvent.status !== "appointment"*/) {
+                    if (calEvent.slot.countOfProviders == 0) {
                         return;
-
                     }
 
-                    $("#" + appointmentModalDiv.attr("id")).attr("data-slot-id", calEvent.id);
-                    reasonText.val("");
-                    document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
+                    component.setState({openDialog: true, slotId: calEvent.id, slotReason: ""});
                 },
                 events: function (start, end, timezone, callback) {
-                    indeterminateProgress.start();
+                    $(".mdl-progress").css('visibility', 'visible');
                     var events = [];
                     Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
@@ -172,7 +163,7 @@
                             }
                             callback(events);
 
-                           indeterminateProgress.end();
+                           $(".mdl-progress").css('visibility', 'hidden');
                         })
                     });
 
@@ -184,27 +175,36 @@
                 }
             });
         },
+        getInitialState: function() {
+            return {
+                openDialog: false,
+                slotId: undefined,
+            }
+        },
+        onReasonChange: function() {
+        },
         render: function() {
-            return <div ref="appointmentsCalendarWrapper">
-                <div ref="appointmentsCalendar"></div>
-                <dialog className="mdl-dialog" ref="appointmentModal" id="appointmentModal">
-                    <h4>Book an appointment</h4>
-                    <div className="mdl-dialog__content book-appointment-content">
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <textarea className="mdl-textfield__input" type="text" rows= "3" id="reasonText" name="reasonText" ref="reasonText"></textarea>
-                            <label className="mdl-textfield__label mdl-textfield__label--accent" htmlFor="reasonText">Reason</label>
+            return <Layout>
+                    <Content>
+                        <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
+                        <div ref="appointmentsCalendarWrapper">
+                            <div ref="appointmentsCalendar"></div>
+                            <Dialog className="mdl-dialog" ref="appointmentModal" id="appointmentModal" open={this.state.openDialog}>
+                                <DialogTitle>Book an appointment</DialogTitle>
+                                <DialogContent className="book-appointment-content">
+                                    <Textfield id="reasonText" name="reasonText" ref="reasonText" label="Reason" rows={3} onChange={this.onReasonChange} />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button type="button" className="mdl-button mdl-button--accent" onClick={this.handleBookAppointment}>Submit</Button >
+                                    <Button type="button" className="mdl-button mdl-button--accent" onClick={this.handleCancelAppointmentModal}>Close</Button>
+                                </DialogActions>
+                            </Dialog>
+                            <DateSelector ref="dateSelector" onSelectDateCallback={this.onDateChanged}/>
                         </div>
-                    </div>
-                    <div className="mdl-dialog__actions">
-                        <button type="button" className="mdl-button mdl-button--accent" onClick={this.handleBookAppointment}>Submit</button>
-                        <button type="button" className="mdl-button mdl-button--accent" onClick={this.handleCancelAppointmentModal}>Close</button>
-                    </div>
-                </dialog>
-                <DateSelector ref="dateSelector" onSelectDateCallback={this.onDateChanged}/>
-            </div>
+                    </Content>
+                </Layout>
         }
     });
 
-    ReactDOM.render(<APPOINTMENTS_PROGRESS/>, document.getElementById("patient-appointments-progress"));
     ReactDOM.render(<AppointmentsCalendar/>, document.getElementById("patient-appointments"));
 })();
