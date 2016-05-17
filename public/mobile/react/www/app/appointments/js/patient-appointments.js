@@ -93,7 +93,8 @@
             }
         },
         handleCancelAppointmentModal: function () {
-            this.setState({ openDialog: false, slotId: undefined, slotReason: "" });
+            this.setState({ openDialog: false, slotId: undefined });
+            $("#reasonText").val("");
 
             var actualHeight = $(".fc-scroller").height();
             $(".fc-scroller").height(actualHeight + 1);
@@ -152,7 +153,15 @@
                         return;
                     }
 
-                    component.setState({ openDialog: true, slotId: calEvent.id, slotReason: "" });
+                    if (view.name == 'nursesGrid') {
+                        setTimeout(function () {
+                            $('.fc-scroller').animate({
+                                scrollTop: jsEvent.currentTarget.offsetTop
+                            }, 300, function () {
+                                component.setState({ openDialog: true, slotId: calEvent.id, slotReason: "" });
+                            });
+                        }, 0);
+                    }
                 },
                 events: function (start, end, timezone, callback) {
                     $(".mdl-progress").css('visibility', 'visible');
@@ -201,7 +210,7 @@
                         React.createElement("div", { ref: "appointmentsCalendar" }),
                         React.createElement(
                             Dialog,
-                            { className: "mdl-dialog", ref: "appointmentModal", id: "appointmentModal", open: this.state.openDialog },
+                            { ref: "appointmentModal", id: "appointmentModal", open: this.state.openDialog },
                             React.createElement(
                                 DialogTitle,
                                 null,
@@ -210,7 +219,7 @@
                             React.createElement(
                                 DialogContent,
                                 { className: "book-appointment-content" },
-                                React.createElement(Textfield, { id: "reasonText", name: "reasonText", ref: "reasonText", label: "Reason", rows: 3, onChange: this.onReasonChange })
+                                React.createElement(Textfield, { floatingLabel: true, id: "reasonText", name: "reasonText", ref: "reasonText", label: "Reason", rows: 3, onChange: this.onReasonChange })
                             ),
                             React.createElement(
                                 DialogActions,

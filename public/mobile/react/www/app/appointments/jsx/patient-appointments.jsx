@@ -87,7 +87,8 @@
             }
         },
         handleCancelAppointmentModal: function() {
-            this.setState({openDialog: false, slotId: undefined, slotReason: ""});
+            this.setState({openDialog: false, slotId: undefined});
+            $("#reasonText").val("");
 
             var actualHeight = $(".fc-scroller").height();
             $(".fc-scroller").height(actualHeight + 1);
@@ -145,7 +146,16 @@
                         return;
                     }
 
-                    component.setState({openDialog: true, slotId: calEvent.id, slotReason: ""});
+                    if(view.name=='nursesGrid')
+                    {
+                        setTimeout(function(){
+                            $('.fc-scroller').animate({
+                                scrollTop:  jsEvent.currentTarget.offsetTop
+                            }, 300, function () {
+                                component.setState({openDialog: true, slotId: calEvent.id, slotReason: ""});
+                            });
+                        }, 0);
+                    }
                 },
                 events: function (start, end, timezone, callback) {
                     $(".mdl-progress").css('visibility', 'visible');
@@ -189,10 +199,10 @@
                         <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
                         <div ref="appointmentsCalendarWrapper">
                             <div ref="appointmentsCalendar"></div>
-                            <Dialog className="mdl-dialog" ref="appointmentModal" id="appointmentModal" open={this.state.openDialog}>
+                            <Dialog ref="appointmentModal" id="appointmentModal" open={this.state.openDialog}>
                                 <DialogTitle>Book an appointment</DialogTitle>
                                 <DialogContent className="book-appointment-content">
-                                    <Textfield id="reasonText" name="reasonText" ref="reasonText" label="Reason" rows={3} onChange={this.onReasonChange} />
+                                    <Textfield floatingLabel id="reasonText" name="reasonText" ref="reasonText" label="Reason" rows={3} onChange={this.onReasonChange} />
                                 </DialogContent>
                                 <DialogActions>
                                     <Button type="button" className="mdl-button mdl-button--accent" onClick={this.handleBookAppointment}>Submit</Button >
