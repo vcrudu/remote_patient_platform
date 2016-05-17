@@ -9,3 +9,8 @@
 .fc-toolbar {
     display: none;
 }
+
+/*Specific page styling*/
+.fc-event-container {
+    width: 100%;
+}
