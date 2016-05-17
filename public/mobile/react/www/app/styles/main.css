@@ -17,6 +17,11 @@ body {
 /*Overrides*/
 
 /*Calendar*/
+
+.mdl-layout__content {
+    margin: 0;
+}
+
 .fc-time-grid-event {
     border: 0;
     border-top: solid 1px #d5d5d5 !important;
