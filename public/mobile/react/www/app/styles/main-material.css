@@ -206,6 +206,10 @@ button.mdl-button {
     font-family: Roboto-Medium;
 }
 
+.mdl-button--fab.mdl-button--colored {
+    background: rgb(103, 58, 183);
+}
+
 .mdl-dialog__content textarea {
     resize: none;
 }

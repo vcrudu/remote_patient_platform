@@ -16,6 +16,15 @@ body {
 
 /*Overrides*/
 
+/*Buttons*/
+.mdl-button--fab.mdl-button--colored {
+    background: rgb(103, 58, 183);
+}
+
+.mdl-button--fab.mdl-button--colored:hover {
+    background: rgb(103,58,183);
+}
+
 /*Calendar*/
 
 .mdl-layout__content {
@@ -110,12 +119,6 @@ body {
     color: #673AB7;
 
 }
-
-.mdl-button--fab.mdl-button--colored {
-    background: rgb(156,39,176);
-}
-
-
 
 .progress-bar-indeterminate {
     height: 4px;
