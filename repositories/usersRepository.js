@@ -10,6 +10,7 @@
     var TABLE_NAME        = 'User';
     var _             = require('underscore');
     var loggerProvider = require('../logging');
+    var util = require('util');
 
        var getDb = function(){
 
@@ -72,7 +73,7 @@
                 }
             });
         },
-
+        
         updateToken : function(user, callback) {
 
             var dynamodb = getDb();
