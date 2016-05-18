@@ -5,11 +5,20 @@
 (function () {
     "use strict";
 
-    $.material.init();
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var FABButton = ReactMDL.FABButton;
+    var Icon = ReactMDL.Icon;
+    var Button = ReactMDL.Button;
+    var Dialog = ReactMDL.Dialog;
+    var DialogTitle = ReactMDL.DialogTitle;
+    var DialogContent = ReactMDL.DialogContent;
+    var DialogActions = ReactMDL.DialogActions;
+    var Textfield = ReactMDL.Textfield;
+    var ProgressBar = ReactMDL.ProgressBar;
 
     var TimeSelector = React.createClass({
         displayName: "TimeSelector",
-
 
         handleShow: function () {
 
@@ -146,12 +155,8 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
-                height: $(window).height() - 3,
-                header: {
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'today'
-                },
+                height: $(window).height(),
+                header: false,
                 allDay: false,
                 views: {
                     nursesGrid: {
@@ -190,7 +195,7 @@
                                     allDay: true,
                                     icon: 'fa fa-calendar',
                                     className: ["event", 'bg-color-' + 'greenLight'],
-                                    backgroundColor: 'green'
+                                    backgroundColor: '#9575CD'
                                 });
                             }
 
@@ -208,10 +213,18 @@
         },
         render: function () {
             return React.createElement(
-                "div",
-                { ref: "appointmentsCalendarWrapper" },
-                React.createElement("div", { ref: "availabilityCalendar", id: "calendar" }),
-                React.createElement(TimeSelector, { ref: "timeSelector", onSelectTimeCallback: this.onTimeChanged })
+                Layout,
+                null,
+                React.createElement(
+                    Content,
+                    null,
+                    React.createElement(
+                        "div",
+                        { ref: "appointmentsCalendarWrapper" },
+                        React.createElement("div", { ref: "availabilityCalendar", id: "calendar" }),
+                        React.createElement(TimeSelector, { ref: "timeSelector", onSelectTimeCallback: this.onTimeChanged })
+                    )
+                )
             );
         }
     });

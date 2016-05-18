@@ -5,10 +5,19 @@
 (function() {
     "use strict";
 
-    $.material.init();
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var FABButton = ReactMDL.FABButton;
+    var Icon = ReactMDL.Icon;
+    var Button = ReactMDL.Button;
+    var Dialog = ReactMDL.Dialog;
+    var DialogTitle = ReactMDL.DialogTitle;
+    var DialogContent = ReactMDL.DialogContent;
+    var DialogActions = ReactMDL.DialogActions;
+    var Textfield = ReactMDL.Textfield;
+    var ProgressBar  = ReactMDL.ProgressBar;
 
     var TimeSelector = React.createClass({
-
         handleShow: function() {
 
                 var changeTimePicker = $(this.refs.changeTimePicker);
@@ -139,12 +148,8 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
-                height: $(window).height() - 3,
-                header:{
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'today'
-                },
+                height: $(window).height(),
+                header:false,
                 allDay:false,
                 views: {
                     nursesGrid: {
@@ -207,11 +212,15 @@
             });
         },
         render: function() {
-            return <div ref="appointmentsCalendarWrapper">
-                <div ref="availabilityCalendar" id="calendar"></div>
+            return <Layout>
+                <Content>
+                    <div ref="appointmentsCalendarWrapper">
+                        <div ref="availabilityCalendar" id="calendar"></div>
 
-                <TimeSelector ref="timeSelector" onSelectTimeCallback={this.onTimeChanged}/>
-            </div>
+                        <TimeSelector ref="timeSelector" onSelectTimeCallback={this.onTimeChanged}/>
+                    </div>
+                </Content>
+            </Layout>
         }
     });
 

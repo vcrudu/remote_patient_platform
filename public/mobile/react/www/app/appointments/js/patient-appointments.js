@@ -134,6 +134,7 @@
                 allDaySlot: false,
                 header: false,
                 height: $(window).height() - 4,
+                allDay: false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
