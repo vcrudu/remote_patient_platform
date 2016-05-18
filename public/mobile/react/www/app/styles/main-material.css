@@ -35,6 +35,24 @@ a.offline {
     height: 4px;
 }
 
+
+.mdl-progress {
+    width: 100% !important;
+}
+
+.mdl-progress.mdl-progress--indeterminate>.bar1, .mdl-progress.mdl-progress__indeterminate>.bar1, .mdl-progress.mdl-progress--indeterminate>.bar3, .mdl-progress.mdl-progress__indeterminate>.bar3 {
+    background: #651FFF !important;
+}
+
+.mdl-progress>.bufferbar {
+    background: #B388FF !important;
+
+}
+
+.mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)>.auxbar, .mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)>.auxbar {
+    background: #B388FF !important;
+}
+
 .mdl-list .divider {
     position: relative;
     margin-left: 72px;
@@ -64,6 +82,11 @@ a.offline {
 
 .mdl-layout__tab {
     font-family: Roboto-Medium;
+}
+
+.mdl-layout__header {
+    background-color: #EEEEEE !important;
+    min-height: 48px !important;
 }
 
 .mdl-layout__tab-bar-button {
@@ -183,6 +206,10 @@ button.mdl-button {
     font-family: Roboto-Medium;
 }
 
+.mdl-button--fab.mdl-button--colored {
+    background: rgb(103, 58, 183);
+}
+
 .mdl-dialog__content textarea {
     resize: none;
 }
@@ -238,6 +265,34 @@ button.mdl-button {
 /*Modal*/
 .book-appointment-content {
     padding: 0 !important;
+}
+
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-64 { font-size: 64px; }
+
+.primary-icons, a .primary-icons {
+    color:rgba(0,0,0,0.5);
+}
+
+/*mobiscroll*/
+.mbsc-mobiscroll .dwb,
+.mbsc-mobiscroll .dwl {
+    color: #673AB7;
+    font-weight: bold;
+}
+
+.mbsc-mobiscroll .dwwol {
+    border-top: 1px solid #673AB7;
+    border-bottom: 1px solid #673AB7;
+}
+
+.mbsc-mobiscroll .dwb-a {
+    background-color: rgba(0,0,0,.12);
 }
 
 /*MOBILE*/

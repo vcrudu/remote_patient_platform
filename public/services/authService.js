@@ -108,7 +108,10 @@ angular.module('app')
 
                                         $localStorage.recipientModal.result.then(function (arg) {
                                             if (arg.send && window.socket && window.socket.connected) {
-                                                window.socket.emit('answer', $localStorage.callData);
+                                                window.socket.emit('answer', {
+                                                    caller: $localStorage.callData.caller,
+                                                    recipient:$localStorage.callData.recipient,
+                                                    recipientSocketId: window.socket.id});
                                             }
                                         }, function (arg) {
                                             if (arg.send && window.socket && window.socket.connected) {

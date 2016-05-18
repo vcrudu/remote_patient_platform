@@ -5,35 +5,40 @@
 (function() {
     "use strict";
 
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var Card = ReactMDL.Card;
+    var CardTitle  = ReactMDL.CardTitle;
+    var CardText  = ReactMDL.CardText;
+    var CardMenu   = ReactMDL.CardMenu;
+    var CardActions   = ReactMDL.CardActions;
+    var Button   = ReactMDL.Button;
+
     var NoNetworkConnection = React.createClass({
         handleExitClick: function() {
             Bridge.Redirect.exitFromApplication();
         },
-        componentDidUpdate: function() {
-            componentHandler.upgradeDom();
-
-            var button = this.refs.btnExitFromApplication;
-            button.addEventListener('click', this.handleExitClick);
-        },
         render: function() {
             var component = this;
-            return <main className="mdl-layout__content">
-                <div className="page-content">
-                    <div className="mdl-card mdl-shadow--2dp">
-                        <div className="mdl-card__title">
-                            <h2 className="mdl-card__title-text">No Internet Connection</h2>
-                        </div>
-                        <div className="mdl-card__supporting-text">
-                            Sorry, no Internet connectivity detected. Please reconnect.
-                        </div>
-                        <div className="buttons-container-right">
-                            <button onClick={this.handleExitClick} ref="btnExitFromApplication" className="mdl-button mdl-js-button mdl-button--accent exit-from-application-button">
-                                EXIT FROM APPLICATION
-                            </button>
-                        </div>
+            return <Layout>
+                <Content>
+                    <div className="page-content-wrapper">
+                        <Card className="message-card-wide">
+                            <CardTitle>
+                                <h6 className="mdl-card__title-text">No Internet Connection</h6>
+                            </CardTitle>
+                            <CardText>
+                                Sorry, no Internet connectivity detected. Please reconnect.
+                            </CardText>
+                            <CardMenu>
+                                <CardActions>
+                                    <Button onClick={this.handleExitClick} className="mdl-button--accent exit-from-application-button" colored>EXIT FROM APPLICATION</Button>
+                                </CardActions>
+                            </CardMenu>
+                        </Card>
                     </div>
-                </div>
-            </main>
+                </Content>
+            </Layout>
         }
     });
 

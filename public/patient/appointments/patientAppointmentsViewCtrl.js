@@ -136,7 +136,7 @@
                         },
                         resolve: {
                             event: function () {
-                                return event;
+                                //return event; //commented for mozila error
                             }
                         }
                     });

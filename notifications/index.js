@@ -63,6 +63,9 @@
 
             io.on('connection', function (socket) {
                 loggerProvider.getLogger().debug(NS+"::"+"Client connected...");
+
+                socket.emit('connected', socket.id);
+
                 socket.auth = false;
                 socket.on('authenticate', function (data) {
                     loggerProvider.getLogger().debug(NS+"::"+"Client authenticate...");
@@ -101,37 +104,25 @@
                     }
                 });
 
-                /*_.each(io.nsps, function(nsp){
-                 nsp.on('connect', function(socket){
-                 if (!socket.auth) {
-                 console.log("removing socket from", nsp.name)
-                 delete nsp.connected[socket.id];
-                 }
-                 });
-                 });*/
-
-                /* setTimeout(function(){
-                 //If the socket didn't authenticate, disconnect it
-                 if (!socket.auth) {
-                 console.log("Disconnecting socket ", socket.id);
-                 socket.disconnect('unauthorized');
-                 }
-                 }, 10000);*/
-
                 socket.on('call', function (data) {
                     var namespace = io.sockets;
                     usersRepository.findOneByEmail(data.recipient, function (err, user) {
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
-                                return aSocket.id === user.socketId;
-                            });
-                            if (recipientSocket && recipientSocket.connected) {
-                                recipientSocket.emit('call', data);
-                            } else {
-                                socket.emit('recipientOffline', data);
+                            if (user.socketIds && user.socketIds.length > 0) {
+                                for (var i = 0; i < user.socketIds.length; i ++) {
+                                    var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                        return aSocket.id === user.socketIds[i];//user.socketId;
+                                    });
+                                    if (recipientSocket && recipientSocket.connected) {
+                                        recipientSocket.emit('call', data);
+                                    } else {
+                                        socket.emit('recipientOffline', data);
+                                    }
+                                }
                             }
+
                         } else {
                             socket.emit('invalidRecipient', data);
                         }
@@ -145,19 +136,49 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
-                                return aSocket.id === user.socketId;
-                            });
+
+                            var recipientSocket = null;
+                            if (user.socketIds && user.socketIds.length > 0) {
+                                for (var i = 0; i < user.socketIds.length; i ++) {
+                                    recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                        return aSocket.id === user.socketIds[i];
+                                    });
+
+                                    if(recipientSocket) {
+                                        break;
+                                    }
+                                }
+                            }
+
                             if (recipientSocket && recipientSocket.connected) {
                                 usersRepository.findOneByEmail(data.caller, function (err, callerUser) {
                                     if (callerUser) {
-                                        var callerSocket = _.find(namespace.sockets, function (aCallerSocket) {
-                                            return aCallerSocket.id === callerUser.socketId;
-                                        });
-                                        if(callerSocket)
-                                        callerSocket.emit('cancelByRecipient', data);
+                                        if (callerUser.socketIds && callerUser.socketIds.length > 0) {
+                                            for (var i = 0; i < callerUser.socketIds.length; i ++) {
+                                                var callerSocket = _.find(namespace.sockets, function (aCallerSocket) {
+                                                    return aCallerSocket.id === callerUser.socketIds[i]; //callerUser.socketId;
+                                                });
+                                                if (callerSocket)
+                                                {
+                                                    callerSocket.emit('cancelByRecipient', data);
+                                                }
+                                            }
+                                        }
                                     }
                                 });
+
+                                //send cancelByCaller to other recipient sockets
+                                if (user.socketIds && user.socketIds.length > 0) {
+                                    for (var i = 0; i < user.socketIds.length; i ++) {
+                                        var recSocket = _.find(namespace.sockets, function (aSocket) {
+                                            return aSocket.id === user.socketIds[i];
+                                        });
+
+                                        if (recSocket) {
+                                            recSocket.emit('cancelByCaller', data);
+                                        }
+                                    }
+                                }
                                 //recipientSocket.emit('cancel', data);
                             } else {
                                 socket.emit('recipientOffline', data);
@@ -174,13 +195,17 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-                            var recipientSocket = _.find(namespace.sockets, function (aSocket) {
-                                return aSocket.id === user.socketId;
-                            });
-                            if (recipientSocket && recipientSocket.connected) {
-                                recipientSocket.emit('cancelByCaller', data);
-                            } else {
-                                socket.emit('recipientOffline', data);
+                            if (user.socketIds && user.socketIds.length > 0) {
+                                for (var i = 0; i < user.socketIds.length; i ++) {
+                                    var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                        return aSocket.id === user.socketIds[i];//user.socketId;
+                                    });
+                                    if (recipientSocket && recipientSocket.connected) {
+                                        recipientSocket.emit('cancelByCaller', data);
+                                    } else {
+                                        socket.emit('recipientOffline', data);
+                                    }
+                                }
                             }
                         } else {
                             socket.emit('invalidRecipient', data);
@@ -194,9 +219,11 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
+
                             var callerSocket = _.find(namespace.sockets, function (aSocket) {
                                 return aSocket.id === user.socketId;
                             });
+
                             if (callerSocket && callerSocket.connected) {
                                 videoService.createVideoMeeting(data.caller, function (err, meeting) {
                                     if (err) {
@@ -212,6 +239,24 @@
                             } else {
                                 socket.emit('recipientOffline', data);
                             }
+
+                            usersRepository.findOneByEmail(data.recipient, function (err, recipientUser) {
+                                if (recipientUser.socketIds && recipientUser.socketIds.length > 0) {
+                                    for (var i = 0; i < recipientUser.socketIds.length; i ++) {
+                                        var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                            return aSocket.id === recipientUser.socketIds[i];//user.socketId;
+                                        });
+                                        if (recipientSocket && recipientSocket.connected) {
+                                            if (recipientSocket.id === data.recipientSocketId) {
+                                                continue;
+                                            }
+                                            else {
+                                                recipientSocket.emit('cancelByCaller', data);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
                         } else {
                             socket.emit('invalidRecipient', data);
                         }
@@ -249,6 +294,7 @@
                         });
                     });
                 });
+
             });
         },
 

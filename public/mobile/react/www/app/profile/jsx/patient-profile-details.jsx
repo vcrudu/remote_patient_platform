@@ -83,21 +83,25 @@
         render: function() {
             return <div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtNhsNumberDiv">
+                    <i className="material-icons primary-icons md-36">fingerprint</i>
                     <input className="mdl-textfield__input" type="text" id="txtNhsNumber" ref="txtNhsNumber" />
                     <label className="mdl-textfield__label" htmlFor="txtNhsNumber">NHS Number</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtEthnicityDiv">
+                    <i className="material-icons primary-icons md-36">face</i>
                     <input className="mdl-textfield__input" type="text" id="txtEthnicity" ref="txtEthnicity" onClick={this.handleEthnicityClick}/>
                     <label className="mdl-textfield__label" htmlFor="txtEthnicity">Choose Ethnicity</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtHeightDiv">
+                    <i className="material-icons primary-icons md-36">accessibility</i>
                     <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight" />
                     <label className="mdl-textfield__label" htmlFor="txtHeight">Current Height</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtWeightDiv">
+                    <i className="material-icons primary-icons md-36">adb</i>
                     <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight" />
                     <label className="mdl-textfield__label" htmlFor="txtWeight">Current Weight</label>
                 </div>
@@ -320,41 +324,49 @@
         render: function() {
             return <div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtCountryDiv">
+                    <i className="material-icons primary-icons md-36">language</i>
                     <input className="mdl-textfield__input" type="text" id="txtCountry" ref="txtCountry" onClick={this.handleCountry}/>
                     <label className="mdl-textfield__label" htmlFor="txtCountry">Country</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtCountyDiv">
+                    <i className="material-icons primary-icons md-36">language</i>
                     <input className="mdl-textfield__input" type="text" id="txtCounty" ref="txtCounty"/>
                     <label className="mdl-textfield__label" htmlFor="txtCounty">County</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtTownDiv">
+                    <i className="material-icons primary-icons md-36">home</i>
                     <input className="mdl-textfield__input" type="text" id="txtTown" ref="txtTown"/>
                     <label className="mdl-textfield__label" htmlFor="txtTown">Town</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtPostCodeDiv">
+                    <i className="material-icons primary-icons md-36">place</i>
                     <input className="mdl-textfield__input" type="text" id="txtPostCode" ref="txtPostCode"/>
                     <label className="mdl-textfield__label" htmlFor="txtPostCode">Post Code</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtAddressLine1Div">
+                    <i className="material-icons primary-icons md-36">map</i>
                     <input className="mdl-textfield__input" type="text" id="txtAddressLine1" ref="txtAddressLine1"/>
                     <label className="mdl-textfield__label" htmlFor="txtAddressLine1">Address Line 1</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtAddressLine2Div">
+                    <i className="material-icons primary-icons md-36">map</i>
                     <input className="mdl-textfield__input" type="text" id="txtAddressLine2" ref="txtAddressLine2"/>
                     <label className="mdl-textfield__label" htmlFor="txtAddressLine2">Address Line 2</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtPhoneDiv">
+                    <i className="material-icons primary-icons md-36">local_phone</i>
                     <input className="mdl-textfield__input" type="text" id="txtPhone" ref="txtPhone"/>
                     <label className="mdl-textfield__label" htmlFor="txtPhone">Phone</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtMobileDiv">
+                    <i className="material-icons primary-icons md-36">stay_current_portrait</i>
                     <input className="mdl-textfield__input" type="text" id="txtMobile" ref="txtMobile"/>
                     <label className="mdl-textfield__label" htmlFor="txtMobile">Mobile</label>
                 </div>
@@ -657,26 +669,31 @@
         render: function() {
             return <div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtTitleDiv">
+                    <i className="material-icons primary-icons md-36">person</i>
                     <input className="mdl-textfield__input" type="text" id="txtTitle" ref="txtTitle" onClick={this.handleTitleClick} />
                     <label className="mdl-textfield__label" htmlFor="txtTitle">Title</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtFirstDiv">
+                    <i className="material-icons primary-icons md-36">person</i>
                     <input className="mdl-textfield__input" type="text" id="txtFirstName" ref="txtFirstName"/>
                     <label className="mdl-textfield__label" htmlFor="txtFirstName">First Name</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtSurnameDiv">
+                    <i className="material-icons primary-icons md-36">person</i>
                     <input className="mdl-textfield__input" type="text" id="txtSurname" ref="txtSurname"/>
                     <label className="mdl-textfield__label" htmlFor="txtSurname">Surname</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtGenderDiv">
+                    <i className="material-icons primary-icons md-36">person</i>
                     <input className="mdl-textfield__input" type="text" id="txtGender" ref="txtGender" onClick={this.handleGenderClick}/>
                     <label className="mdl-textfield__label" htmlFor="txtGender">Gender</label>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtBirthDayDiv">
+                    <i className="material-icons primary-icons md-36">cake</i>
                     <input className="mdl-textfield__input" type="text" id="txtBirthDay" ref="txtBirthDay" onClick={this.handleBirthDayClick}/>
                     <label className="mdl-textfield__label" htmlFor="txtBirthDay">Date of Birth</label>
                 </div>

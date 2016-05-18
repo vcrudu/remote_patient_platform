@@ -5,23 +5,17 @@
 (function () {
     "use strict";
 
-    var intObj = {
-        template: 3,
-        parent: ".progress-bar-indeterminate"
-    };
-    var indeterminateProgress = new Mprogress(intObj);
-
-    var APPOINTMENTS_PROGRESS = React.createClass({
-        displayName: "APPOINTMENTS_PROGRESS",
-
-        componentDidMount: function () {},
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-        },
-        render: function () {
-            return React.createElement("div", { className: "progress-bar-indeterminate" });
-        }
-    });
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var FABButton = ReactMDL.FABButton;
+    var Icon = ReactMDL.Icon;
+    var Button = ReactMDL.Button;
+    var Dialog = ReactMDL.Dialog;
+    var DialogTitle = ReactMDL.DialogTitle;
+    var DialogContent = ReactMDL.DialogContent;
+    var DialogActions = ReactMDL.DialogActions;
+    var Textfield = ReactMDL.Textfield;
+    var ProgressBar = ReactMDL.ProgressBar;
 
     var DateSelector = React.createClass({
         displayName: "DateSelector",
@@ -48,7 +42,9 @@
                 onSelect: function (valueText, inst) {
                     component.props.onSelectDateCallback(valueText, inst);
                 }
-            }).mobiscroll("setDate", new Date(), true);
+            });
+
+            changeDayPicker.mobiscroll("setDate", new Date(), true);
         },
         render: function () {
             return React.createElement(
@@ -56,13 +52,9 @@
                 { className: "show-appointments-mobiscroll-wrapper" },
                 React.createElement("input", { id: "changeDayPicker", ref: "changeDayPicker", className: "hide" }),
                 React.createElement(
-                    "button",
-                    { id: "show", ref: "show", onClick: this.handleShow, className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-appointments-mobiscroll" },
-                    React.createElement(
-                        "i",
-                        { className: "material-icons" },
-                        "event available"
-                    )
+                    FABButton,
+                    { colored: true, ripple: true, className: "show-appointments-mobiscroll", onClick: this.handleShow },
+                    React.createElement(Icon, { name: "event available" })
                 )
             );
         }
@@ -72,41 +64,42 @@
         displayName: "AppointmentsCalendar",
 
         handleBookAppointment: function () {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
-            var slotId = parseInt(appointmentModalDiv.attr("data-slot-id"));
-            var reasonText = $(this.refs.reasonText);
+            var slotId = this.state.slotId;
+            var reasonText = $("#reasonText").val();
 
             var slotDateTime = moment(slotId);
             var now = new Date();
+            var component = this;
             if (slotDateTime <= now.getTime()) {
-                document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+                $("#reasonText").val("");
+                component.setState({ openDialog: false, slotId: undefined });
                 return;
             } else {
                 Bridge.patientBookAnAppointment({
                     cancel: false,
                     slotDateTime: slotId,
-                    appointmentReason: reasonText.val()
+                    appointmentReason: reasonText
                 }, function (result) {
                     var event = Bridge.CalendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
                     if (event) {
                         appointmentsCalendarDiv.fullCalendar("updateEvent", Bridge.CalendarFactory.getBookedEvent(event, result.data));
                     }
 
-                    document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+                    $("#reasonText").val("");
+                    component.setState({ openDialog: false, slotId: undefined });
                     return;
                 });
             }
         },
         handleCancelAppointmentModal: function () {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
-            document.querySelector("#" + appointmentModalDiv.attr("id")).close();
+            this.setState({ openDialog: false, slotId: undefined });
+            $("#reasonText").val("");
 
             var actualHeight = $(".fc-scroller").height();
             $(".fc-scroller").height(actualHeight + 1);
             $(".fc-scroller").height(actualHeight - 1);
 
-            componentHandler.upgradeDom();
             return;
         },
         onDateChanged: function (valueText, inst) {
@@ -117,12 +110,8 @@
             var d = new Date();
             return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
         },
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-        },
+        componentDidUpdate: function () {},
         componentDidMount: function () {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
-            var reasonText = $(this.refs.reasonText);
             var component = this;
 
             $(component.refs.appointmentsCalendar).on("swipeleft", function (event) {
@@ -144,7 +133,7 @@
                 defaultTimedEventDuration: '00:15:00',
                 allDaySlot: false,
                 header: false,
-                height: $(window).height() - 3,
+                height: $(window).height() - 4,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -160,16 +149,22 @@
                     if (calEvent.id < now.getTime()) {
                         return;
                     }
-                    if (calEvent.slot.countOfProviders == 0 /* && calEvent.status !== "appointment"*/) {
-                            return;
-                        }
+                    if (calEvent.slot.countOfProviders == 0) {
+                        return;
+                    }
 
-                    $("#" + appointmentModalDiv.attr("id")).attr("data-slot-id", calEvent.id);
-                    reasonText.val("");
-                    document.querySelector("#" + appointmentModalDiv.attr("id")).showModal();
+                    if (view.name == 'nursesGrid') {
+                        setTimeout(function () {
+                            $('.fc-scroller').animate({
+                                scrollTop: jsEvent.currentTarget.offsetTop
+                            }, 300, function () {
+                                component.setState({ openDialog: true, slotId: calEvent.id, slotReason: "" });
+                            });
+                        }, 0);
+                    }
                 },
                 events: function (start, end, timezone, callback) {
-                    indeterminateProgress.start();
+                    $(".mdl-progress").css('visibility', 'visible');
                     var events = [];
                     Bridge.getSlots(start.format("MM/DD"), function (slotsResult) {
                         if (!slotsResult.success) return;
@@ -184,7 +179,7 @@
                             }
                             callback(events);
 
-                            indeterminateProgress.end();
+                            $(".mdl-progress").css('visibility', 'hidden');
                         });
                     });
 
@@ -194,53 +189,59 @@
                 loading: function (isLoading, view) {}
             });
         },
+        getInitialState: function () {
+            return {
+                openDialog: false,
+                slotId: undefined
+            };
+        },
+        onReasonChange: function () {},
         render: function () {
             return React.createElement(
-                "div",
-                { ref: "appointmentsCalendarWrapper" },
-                React.createElement("div", { ref: "appointmentsCalendar" }),
+                Layout,
+                null,
                 React.createElement(
-                    "dialog",
-                    { className: "mdl-dialog", ref: "appointmentModal", id: "appointmentModal" },
-                    React.createElement(
-                        "h4",
-                        null,
-                        "Book an appointment"
-                    ),
+                    Content,
+                    null,
+                    React.createElement(ProgressBar, { indeterminate: true, ref: "progressBar", id: "progressBar" }),
                     React.createElement(
                         "div",
-                        { className: "mdl-dialog__content book-appointment-content" },
+                        { ref: "appointmentsCalendarWrapper" },
+                        React.createElement("div", { ref: "appointmentsCalendar" }),
                         React.createElement(
-                            "div",
-                            { className: "mdl-textfield mdl-js-textfield mdl-textfield--floating-label" },
-                            React.createElement("textarea", { className: "mdl-textfield__input", type: "text", rows: "3", id: "reasonText", name: "reasonText", ref: "reasonText" }),
+                            Dialog,
+                            { ref: "appointmentModal", id: "appointmentModal", open: this.state.openDialog },
                             React.createElement(
-                                "label",
-                                { className: "mdl-textfield__label mdl-textfield__label--accent", htmlFor: "reasonText" },
-                                "Reason"
+                                DialogTitle,
+                                null,
+                                "Book an appointment"
+                            ),
+                            React.createElement(
+                                DialogContent,
+                                { className: "book-appointment-content" },
+                                React.createElement(Textfield, { floatingLabel: true, id: "reasonText", name: "reasonText", ref: "reasonText", label: "Reason", rows: 3, onChange: this.onReasonChange })
+                            ),
+                            React.createElement(
+                                DialogActions,
+                                null,
+                                React.createElement(
+                                    Button,
+                                    { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleBookAppointment },
+                                    "Submit"
+                                ),
+                                React.createElement(
+                                    Button,
+                                    { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleCancelAppointmentModal },
+                                    "Close"
+                                )
                             )
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "mdl-dialog__actions" },
-                        React.createElement(
-                            "button",
-                            { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleBookAppointment },
-                            "Submit"
                         ),
-                        React.createElement(
-                            "button",
-                            { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleCancelAppointmentModal },
-                            "Close"
-                        )
+                        React.createElement(DateSelector, { ref: "dateSelector", onSelectDateCallback: this.onDateChanged })
                     )
-                ),
-                React.createElement(DateSelector, { ref: "dateSelector", onSelectDateCallback: this.onDateChanged })
+                )
             );
         }
     });
 
-    ReactDOM.render(React.createElement(APPOINTMENTS_PROGRESS, null), document.getElementById("patient-appointments-progress"));
     ReactDOM.render(React.createElement(AppointmentsCalendar, null), document.getElementById("patient-appointments"));
 })();

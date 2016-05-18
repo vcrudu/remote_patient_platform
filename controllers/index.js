@@ -16,6 +16,7 @@ var slotsController = require('./slotsController');
 
 var providerAppointmentsController = require('./providerAppointmentsController');
 var patientAppointmentsController = require('./patientAppointmentsController');
+var notificationsController = require('./notificationsController');
 
 var logging     = require('../logging');
 
@@ -62,6 +63,8 @@ var logging     = require('../logging');
 
         patientAppointmentsController.init(apiRoutes);
         providerAppointmentsController.init(apiRoutes);
+        notificationsController.init(apiRoutes);
+
         app.use('/v1/api', apiRoutes);
 
     };

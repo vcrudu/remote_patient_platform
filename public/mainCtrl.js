@@ -16,11 +16,14 @@
                     $scope.containerClass="";
                 }
             }
-            setLayout();
+
         $scope.$on('signin', function(){
-            $scope.extr_page="";
+            setLayout();
             $scope.userName = authService.getUserName();
             $scope.containerClass="";
+        });
+        $scope.$on('login', function(){
+            $scope.extr_page="extr-page";
         });
 
         $scope.logOut = function(){
@@ -28,7 +31,6 @@
                     $scope.containerClass="container";
                     toastr.info('Logged out!','Information');
                 });
-
 
                 $scope.extr_page="extr-page";
                 $state.go('login');

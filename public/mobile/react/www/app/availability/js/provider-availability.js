@@ -10,27 +10,29 @@
     var TimeSelector = React.createClass({
         displayName: "TimeSelector",
 
-        setTime: function (date) {
-            //var changeTimePicker = $(this.refs.changeTimePicker);
-            //changeTimePicker.mobiscroll("setVal", date);
-            //changeTimePicker.mobiscroll("setDate", date, true)
-        },
+
         handleShow: function () {
+
             var changeTimePicker = $(this.refs.changeTimePicker);
-            changeTimePicker.mobiscroll('show');
+            var inst = changeTimePicker.mobiscroll('getInst');
+            if (changeTimePicker && changeTimePicker.length > 0) {
+                inst.haveRange = null;
+                inst.show();
+            }
+
             return false;
         },
         componentDidMount: function () {
             var changeTimePicker = $(this.refs.changeTimePicker);
             var component = this;
-            var strt = new Date(new Date().setHours(8, 0, 0, 0));
-            var nd = new Date(new Date().setHours(12, 0, 0, 0));
+            var initRange1 = new Date(new Date().setHours(8));
+            var initRange2 = new Date(new Date().setHours(17));
             changeTimePicker.mobiscroll().range({
                 theme: "material",
                 display: "bottom",
                 controls: ['time'],
                 timeFormat: 'HH',
-                defaultValue: [strt, nd],
+                defaultValue: [initRange1, initRange2],
                 steps: {
                     minute: 60,
                     zeroBased: true
@@ -38,7 +40,19 @@
                 onSelect: function (valueText, inst) {
                     component.props.onSelectTimeCallback(valueText, inst);
                 },
-                maxWidth: 100
+                maxWidth: 100,
+                onBeforeShow: function (inst) {
+
+                    if (inst.haveRange) {
+                        var first = inst.haveRange.intervals.split(':');
+                        var start = new Date(new Date().setHours(first[0], 0, 0, 0));
+                        var second = first[1].split('-');
+                        var end = new Date(new Date().setHours(second[1], 0, 0, 0));
+                        inst.setVal([start, end]);
+                    } else {
+                        inst.setVal([initRange1, initRange2]);
+                    }
+                }
 
             });
         },
@@ -89,48 +103,50 @@
             var dateString = moment(availabilityCalendarDiv.fullCalendar("getDate")).format("DD[.]MM[.]YYYY");
             var inputTimeRange = valueText.split(" ");
             var availabilityString = inputTimeRange[0] + ':00-' + inputTimeRange[2] + ':00';
-            Bridge.providerSetAvailability({ availabilityString: availabilityString, dateString: dateString }, function (result) {
-                availabilityCalendarDiv.fullCalendar("refetchEvents");
-            });
-
-            //console.log(timeRange,dateString);
-            // $(this.refs.avalabilityCalendar).fullCalendar("gotoDate", date);
-        },
-        handleProviderAvailability: function () {
-            var availabilityModalDiv = $(this.refs.appointmentModal);
-            var availabilityCalendarDiv = $(this.refs.availabilityCalendar);
-            var availabilityText = $(this.refs.availabilityText);
-
-            var modalTitle = $(".modal-title").html();
-            var oldAvailability = $("#currentSchedule").html();
-            var availabilityString = availabilityText.val();
-            var dateString = moment(availabilityCalendarDiv.fullCalendar("getDate")).format("DD[.]MM[.]YYYY");
-            var submitMode = modalTitle.split(" ");
-
-            if (submitMode[0] == "Set") {
-                Bridge.providerSetAvailability({ availabilityString: availabilityString, dateString: dateString }, function (result) {
+            if (!inst.haveRange) {
+                Bridge.Provider.providerSetAvailability({
+                    availabilityString: availabilityString,
+                    dateString: dateString
+                }, function (result) {
                     availabilityCalendarDiv.fullCalendar("refetchEvents");
-                    availabilityModalDiv.modal('hide');
                 });
             } else {
-                Bridge.providerUpdateAvailability({ availabilityString: availabilityString, dateString: dateString, oldAvailabilityString: oldAvailability }, function (result) {
+                var oldAvailability = inst.haveRange.intervals;
+                Bridge.Provider.providerUpdateAvailability({
+                    availabilityString: availabilityString,
+                    dateString: dateString,
+                    oldAvailabilityString: oldAvailability
+                }, function (result) {
                     availabilityCalendarDiv.fullCalendar('refetchEvents');
-                    availabilityModalDiv.modal('hide');
                 });
             }
         },
+        isToday: function (td) {
+            var d = new Date();
+            return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+        },
         componentDidMount: function () {
-            var appointmentModalDiv = $(this.refs.appointmentModal);
-            var availabilityModal = $(this.refs.appointmentModal).modal('hide');
-            var availabilityTextInput = $(this.refs.availabilityText);
+            var component = this;
+
+            $(component.refs.availabilityCalendar).on("swipeleft", function (event) {
+                $(component.refs.availabilityCalendar).fullCalendar("next");
+            });
+
+            $(component.refs.availabilityCalendar).on("swiperight", function (event) {
+                var defDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
+                if (component.isToday(defDate)) {
+                    return;
+                }
+                $(component.refs.availabilityCalendar).fullCalendar("prev");
+            });
 
             var currentDate = new Date();
-            var component = this;
             $(this.refs.availabilityCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
+                height: $(window).height() - 3,
                 header: {
                     left: 'prev,next',
                     center: 'title',
@@ -147,15 +163,22 @@
                 },
                 scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
                 eventClick: function (calEvent, jsEvent, view) {
-                    //var dateTitle="Edit availability "+moment(calEvent._start._d).format("DD[/]MM[/]YYYY");
-                    console.log('apare mobi');
-                    //var calendarDate = $(component.refs.availabilityCalendar).fullCalendar("getDate")._d;
-                    //var availabilityText = component.getTodayAvailability(calendarDate);
+
+                    var range = calEvent.availability;
+                    var timeSelector = component.refs.timeSelector;
+                    if (timeSelector) {
+                        var changeTimePicker = $(timeSelector.refs.changeTimePicker);
+                        var inst = $(timeSelector.refs.changeTimePicker).mobiscroll('getInst');
+                        if (changeTimePicker && changeTimePicker.length > 0) {
+                            inst.haveRange = range;
+                            inst.show();
+                        }
+                    }
                 },
 
                 events: function (start, end, timezone, callback) {
                     var events = [];
-                    Bridge.getProviderSlots(start, end, function (result) {
+                    Bridge.Provider.getProviderSlots(start, end, function (result) {
                         if (result.success) {
                             for (var i = 0; i < result.data.length; i++) {
                                 var intervals = result.data[i].intervals.split("-");
@@ -174,7 +197,6 @@
                             callback(events);
                         }
                     });
-                    //component.refs["dateSelector"].setTime(start._d);
                 },
                 eventRender: function (event, element) {
                     element.find('.fc-event-title').append("<br/>" + event.location);

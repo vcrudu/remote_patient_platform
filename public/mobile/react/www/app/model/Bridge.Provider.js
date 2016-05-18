@@ -102,5 +102,90 @@ Bridge.Provider = {
                 return;
             }
         }
+    },
+    getProviderSlots: function(start,end,callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            function getCurrentTimeString(dateTime) {
+                var momentInstance = moment(dateTime);
+                return momentInstance.format("YYYY-MM-DD HH:mm:ss");
+            }
+
+            var startDate=getCurrentTimeString(start._d);
+            var endDate=getCurrentTimeString(end._d);
+
+            var message = {method:"Bridge.Provider.getProviderSlots", data: {start:startDate, end: endDate}};
+            prompt("bridge_key", JSON.stringify(message));
+
+        } else {
+            var apiUrl = Bridge.serverApiUrl + "provider_availability_period";
+
+            function getCurrentTimeString(dateTime) {
+                var momentInstance = moment(dateTime);
+                return momentInstance.format("YYYY-MM-DD HH:mm:ss");
+            }
+
+            var startDate=getCurrentTimeString(start._d);
+            var endDate=getCurrentTimeString(end._d);
+            getFakeWhoProvider(function (data) {
+                $.ajax({
+                    url: apiUrl + '?token=' + data.token+'&startDate=' + startDate + '&endDate=' + endDate,
+                    type: 'GET',
+                    crossDomain: true
+                }).done(function(result) {
+                    Bridge.resultCallback({success:true, data: result.result, error: undefined});
+                }).fail(function() {
+                    Bridge.resultCallback({success:false, data: undefined, error: "error"});
+                });
+            });
+        }
+    },
+    providerSetAvailability: function(slot, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Provider.setAvailability", data: slot};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            var apiUrl = Bridge.serverApiUrl + "availability";
+            getFakeWhoProvider(function (data) {
+                var dataToSend = JSON.stringify(slot);
+                $.ajax({
+                    url: apiUrl + '?token=' + data.token,
+                    type: 'POST',
+                    crossDomain: true,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: dataToSend
+                }).done(function (result) {
+                    Bridge.resultCallback({success: true, data: result, error: undefined});
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                });
+            });
+        }
+    },
+    providerUpdateAvailability: function(slot, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Provider.updateAvailability", data: slot};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            var apiUrl = Bridge.serverApiUrl + "availability";
+            getFakeWhoProvider(function (data) {
+                var dataToSend = JSON.stringify(slot);
+                $.ajax({
+                    url: apiUrl + '?token=' + data.token,
+                    type: 'PUT',
+                    crossDomain: true,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: dataToSend
+                }).done(function (result) {
+                    Bridge.resultCallback({success: true, data: result, error: undefined});
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                });
+            });
+        }
     }
 }
