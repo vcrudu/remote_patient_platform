@@ -247,15 +247,22 @@
         },
         showAddDeviceOverlay: function () {
             var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
-            addDeviceOverlayDiv.slideDown();
-            Bridge.DeviceInstaller.showDevicePopup(function () {
-                addDeviceOverlayDiv.slideUp();
+
+            addDeviceOverlayDiv.slideDown(250, "linear", function () {
+                /*setTimeout(function() {*/
+                Bridge.DeviceInstaller.showDevicePopup(function () {
+                    addDeviceOverlayDiv.slideUp();
+                });
+                /*}, 200);*/
             });
         },
         hideAddDeviceOverlay: function () {
             var appointmentModalDiv = $(this.refs.addDeviceOverlay);
-            appointmentModalDiv.slideUp();
-            Bridge.DeviceInstaller.closeDevicePopup(function () {});
+            appointmentModalDiv.slideUp(250, "linear", function () {
+                /*setTimeout(function() {*/
+                Bridge.DeviceInstaller.closeDevicePopup(function () {});
+                /*}, 200);*/
+            });
         },
         render: function () {
             return React.createElement(

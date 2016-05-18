@@ -1,31 +1,28 @@
 /**
- * Created by Victor on 5/13/2016.
+ * Created by Victor on 5/16/2016.
  */
 
 (function() {
+
     "use strict";
 
-    var intObj = {
-        template: 3,
-        parent: ".progress-bar-indeterminate"
-    };
-    var indeterminateProgress = new Mprogress(intObj);
-
-    var USER_TIMELINE_PROGRESS = React.createClass({
-        componentDidMount: function() {
-            indeterminateProgress.start();
-        },
-        componentDidUpdate: function() {
-            componentHandler.upgradeDom();
-        },
-        render: function() {
-            return <div className="progress-bar-indeterminate"></div>
-        }
-    });
+    var Layout = ReactMDL.Layout;
+    var Header = ReactMDL.Header;
+    var HeaderRow = ReactMDL.HeaderRow;
+    var HeaderTabs = ReactMDL.HeaderTabs;
+    var Tab = ReactMDL.Tab;
+    var Content = ReactMDL.Content;
+    var Card = ReactMDL.Card;
+    var CardTitle  = ReactMDL.CardTitle;
+    var CardText  = ReactMDL.CardText;
+    var CardMenu   = ReactMDL.CardMenu;
+    var IconButton   = ReactMDL.IconButton;
+    var Menu = ReactMDL.Menu;
+    var MenuItem = ReactMDL.MenuItem;
+    var ProgressBar  = ReactMDL.ProgressBar;
 
     var DateCard = React.createClass({
         componentDidUpdate: function() {
-            componentHandler.upgradeDom();
         },
         componentDidMount: function() {
         },
@@ -36,42 +33,33 @@
 
     var InfoCard = React.createClass({
         componentDidUpdate: function() {
-            componentHandler.upgradeDom();
-            var viewButton = this.refs.viewButton;
-            viewButton.addEventListener('click', this.handleView);
         },
         componentDidMount: function() {
-
         },
         handleView: function() {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <div className="message-card-wide mdl-card mdl-shadow--2dp">
-                <div className="mdl-card__title">
+            return <Card className="message-card-wide">
+                <CardTitle>
                     <h6 className="mdl-card__title-text">{this.props.title}</h6>
-                </div>
-                <div className="mdl-card__supporting-text">
+                </CardTitle>
+                <CardText>
                     {this.props.message}
-                </div>
-                <div className="mdl-card__menu">
-                    <button id={"card-menu-lower-right-" + this.props.cardId} className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        <i className="material-icons">more_vert</i>
-                    </button>
-                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor={"card-menu-lower-right-" + this.props.cardId}>
-                        <li className="mdl-menu__item" ref="viewButton" onClick={this.handleView}>View</li>
-                        <li className="mdl-menu__item">Delete</li>
-                    </ul>
-                </div>
-            </div>
+                </CardText>
+                <CardMenu>
+                    <IconButton name="more_vert" id={"card-menu-lower-right-" + this.props.cardId}/>
+                    <Menu target={"card-menu-lower-right-" + this.props.cardId} align="right">
+                        <MenuItem onClick={this.handleView}>View</MenuItem>
+                        <MenuItem>Delete</MenuItem>
+                    </Menu>
+                </CardMenu>
+            </Card>
         }
     });
 
     var AlarmCard = React.createClass({
         componentDidUpdate: function() {
-            componentHandler.upgradeDom();
-            var viewButton = this.refs.viewButton;
-            viewButton.addEventListener('click', this.handleView);
         },
         componentDidMount: function() {
         },
@@ -79,36 +67,36 @@
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <div className="message-card-wide mdl-card mdl-shadow--2dp">
-                <div className="mdl-card__title">
+            return <Card className="message-card-wide">
+                <CardTitle>
                     <h6 className="mdl-card__title-text">{this.props.title}</h6>
-                </div>
-                <div className="mdl-card__supporting-text">
+                </CardTitle>
+                <CardText>
                     {this.props.message}
-                </div>
-                <div className="mdl-card__menu">
-                    <button id={"card-menu-lower-right-" + this.props.cardId} className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        <i className="material-icons">more_vert</i>
-                    </button>
-                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor={"card-menu-lower-right-" + this.props.cardId}>
-                        <li className="mdl-menu__item" ref="viewButton" onClick={this.handleView}>View</li>
-                        <li className="mdl-menu__item">Delete</li>
-                    </ul>
-                </div>
-            </div>
+                </CardText>
+                <CardMenu>
+                    <IconButton name="more_vert" id={"card-menu-lower-right-" + this.props.cardId}/>
+                    <Menu target={"card-menu-lower-right-" + this.props.cardId} align="right">
+                        <MenuItem onClick={this.handleView}>View</MenuItem>
+                        <MenuItem>Delete</MenuItem>
+                    </Menu>
+                </CardMenu>
+            </Card>
         }
     });
 
     var PatientTimeline = React.createClass({
-        getInitialState: function(){
+        getInitialState: function() {
             return {
+                activeTab: 0,
                 cards: [],
+                allCards: [],
                 alarmCards: [],
-                infoCards: []
+                infoCards: [],
+                readingsCards: []
             }
         },
         componentDidUpdate: function() {
-            componentHandler.upgradeDom();
         },
         formatCardDate: function(timeStamp) {
             return moment(timeStamp).format("dddd Do MMM");
@@ -230,25 +218,40 @@
                         }
                     }
                 }
-                indeterminateProgress.end();
 
-                component.setState({cards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards});
+                component.setState({cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards});
+
+                $(".mdl-progress").css('visibility', 'hidden');
             });
+        },
+        onChange: function(tabId) {
+            if (tabId == 0) {
+                this.setState({ activeTab: tabId, cards: this.state.allCards });
+            }
+            else if (tabId == 1) {
+                this.setState({ activeTab: tabId, cards: this.state.infoCards });
+            }
+            else if (tabId == 2) {
+                this.setState({ activeTab: tabId, cards: this.state.alarmCards });
+            }
+            else if (tabId == 3) {
+                this.setState({ activeTab: tabId, cards: this.state.readingsCards });
+            }
         },
         render : function() {
             var component = this;
-            return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
-                <header className="mdl-layout__header">
-                    <USER_TIMELINE_PROGRESS />
-                    <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
-                        <a href="#tab-all" className="mdl-layout__tab is-active">All</a>
-                        <a href="#tab-info" className="mdl-layout__tab">Info</a>
-                        <a href="#tab-alarms" className="mdl-layout__tab">Alarms</a>
-                        <a href="#tab-readings" className="mdl-layout__tab">Readings</a>
-                    </div>
-                </header>
-                <main className="mdl-layout__content">
-                    <section className="mdl-layout__tab-panel is-active" id="tab-all">
+            return  <Layout fixedHeader fixedTabs>
+                <Header>
+                    <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
+                    <HeaderTabs activeTab={this.state.activeTab} onChange={this.onChange} ripple>
+                        <Tab href="#tab1">All</Tab>
+                        <Tab href="#tab2">Info</Tab>
+                        <Tab href="#tab3">Alarms</Tab>
+                        <Tab href="#tab4">Readings</Tab>
+                    </HeaderTabs>
+                </Header>
+                <Content>
+                    <section id="tab1">
                         <div className="page-content">
                             <div className="page-content-wrapper">
                                 {
@@ -266,46 +269,13 @@
                             </div>
                         </div>
                     </section>
-                    <section className="mdl-layout__tab-panel" id="tab-info">
-                        <div className="page-content">
-                            <div className="page-content-wrapper">
-                                {
-                                    component.state.infoCards.map(function (card) {
-                                        switch (card.category) {
-                                            case "date":
-                                                return <DateCard key={card.id + "_date_info"} title={card.title} cardId={card.id + "_date_info"}/>
-                                            case "info":
-                                                return <InfoCard key={card.dateTime + "_info"} serverId={card.dateTime} title={card.title} message={card.summary} cardId={card.dateTime + "_info"}/>
-                                        }
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </section>
-                    <section className="mdl-layout__tab-panel" id="tab-alarms">
-                        <div className="page-content">
-                            <div className="page-content-wrapper">
-                                {
-                                    component.state.alarmCards.map(function (card) {
-                                        switch (card.category) {
-                                            case "date":
-                                                return <DateCard key={card.id + "_date_alarm"} title={card.title} cardId={card.id + "_date_alarm"}/>
-                                            case "alarm":
-                                                return <AlarmCard key={card.dateTime + "_alarm"} serverId={card.dateTime} title={card.title} message={card.summary} cardId={card.dateTime + "_alarm"}/>
-                                        }
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </section>
-                    <section className="mdl-layout__tab-panel" id="tab-readings">
-                        <div className="page-content">
-                        </div>
-                    </section>
-                </main>
-            </div>;
+                    <section id="tab2" className="hide"></section>
+                    <section id="tab3" className="hide"></section>
+                    <section id="tab4" className="hide"></section>
+                </Content>
+            </Layout>
         }
     });
 
-    ReactDOM.render(<PatientTimeline />, document.getElementById("patient-timeline"));
+    ReactDOM.render(<PatientTimeline />, document.getElementById("patient-timeline-2"));
 })();

@@ -186,7 +186,7 @@
                                     allDay:true,
                                     icon: 'fa fa-calendar',
                                     className: ["event", 'bg-color-' + 'greenLight'],
-                                    backgroundColor:'green'
+                                    backgroundColor: '#9575CD'
                                 });
                             }
 

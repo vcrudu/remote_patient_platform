@@ -14,6 +14,126 @@ body {
     font-family:"Roboto-Regular";
 }
 
+/*Overrides*/
+
+/*Buttons*/
+.mdl-button--fab.mdl-button--colored {
+    background: rgb(103, 58, 183);
+}
+
+.mdl-button--fab.mdl-button--colored:hover,
+.mdl-button--fab.mdl-button--colored:focus:not(:active){
+    background: rgb(103,58,183);
+}
+
+/*Calendar*/
+
+.mdl-layout__content {
+    margin: 0;
+}
+
+.fc-time-grid-event {
+    border: 0;
+    border-top: solid 1px #d5d5d5 !important;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin-left: 20px;
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover,
+.fc-unthemed .fc-row,
+.fc-unthemed tbody,
+.fc-unthemed td,
+.fc-unthemed th,
+.fc-unthemed thead {
+    border-color: #d5d5d5;
+}
+
+.fc-content .fc-time,
+.fc-content .fc-title {
+    font-size: 15px;
+}
+.fc-event .fc-bg
+{
+    background-color: transparent;
+    opacity: 1;
+}
+.fc-time-grid .fc-slats td {
+    vertical-align: top;
+    font-size: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-align: left;
+}
+
+.fc-content .fc-time {
+    display: none;
+}
+
+.fc-time-grid .fc-slats td.fc-widget-content {
+    border-top: solid 1px #d5d5d5;
+}
+
+.fc-time-grid .fc-slats td,
+.fc-time-grid .fc-slats td.fc-time {
+    height: 65px;
+    border: 0;
+    border-top: solid 1px transparent;
+}
+
+.fc-unthemed tbody {
+    border-color: transparent;
+    background-color: #F5F5F5;
+}
+
+.fc-time-grid-event .fc-time,
+.fc-time-grid-event .fc-title {
+    padding: 5px 0;
+}
+
+/*Mobiscoll*/
+.mbsc-material .dw-cal-btn-txt,
+.mbsc-material .dwb,
+.mbsc-material .dw-hl-now .dw-cal-today{
+    color: #673AB7;
+}
+
+.mbsc-material .dw-cal .dw-sel .dw-cal-day-fg {
+    background: rgba(103,58,183,.3);
+}
+
+.mbsc-mobiscroll .dwb,
+.mbsc-material .dwb,
+.mbsc-mobiscroll .dwl,
+.mbsc-material .dwl{
+    color: #673AB7;
+    font-weight: bold;
+}
+
+.mbsc-mobiscroll .dwwol,
+.mbsc-material .dwwol{
+    border-top: 2px solid #673AB7;
+    border-bottom: 2px solid #673AB7;
+}
+
+.mbsc-mobiscroll .dwb-a,
+.mbsc-material .dwb-a {
+    background-color: rgba(0,0,0,.12);
+}
+
+.mbsc-material .dw-sel .dw-dr {
+    border-color: #673AB7;
+    color: #673AB7;
+
+}
+
+.mbsc-mobiscroll .dw-li {
+    font-size: 16px;
+    font-family: Roboto-Regular;
+}
+
 .progress-bar-indeterminate {
     height: 4px;
 }
@@ -118,8 +238,6 @@ body {
     background:none;
     border:none;
     border-radius:0;
-
-
 }
 
 .btn {

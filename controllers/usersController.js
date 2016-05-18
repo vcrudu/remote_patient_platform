@@ -7,6 +7,7 @@
 
 var userDetailsRepository     = require('../repositories').UsersDetails;
 var usersRepository     = require('../repositories').Users;
+var domainModel = require('@vcrudu/hcm.domainmodel');
 var logging = require("../logging");
 var _ = require("underscore");
 
@@ -63,6 +64,33 @@ var _ = require("underscore");
                     });
                 }
             });
+        });
+
+        router.post('/patient', function(req, res){
+
+            if(!req.body.model){
+                res.status(400).json({
+                    success: false,
+                    error: "The request should contain patient model details."
+                });
+            }
+            else {
+                userDetailsRepository.update(req.body.model, function(err, savedUserDetails){
+                    if(err){
+                        var incidentTicket = logging.getIncidentTicketNumber('us');
+                        logging.getLogger().error({incidentTicket:incidentTicket},err);
+                        res.status(500).json({
+                            success:false,
+                            message:logging.getUserErrorMessage(incidentTicket)
+                        });
+                    }else {
+                        res.send({
+                            success:true,
+                            result:req.body.model
+                        });
+                    }
+                });
+            }
         });
 
         router.get('/contacts/:userId', function(req, res){

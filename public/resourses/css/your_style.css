@@ -145,3 +145,6 @@ background-color: #f4f411;
 .selected-conditions {
     list-style-type: none;
 }
+#left-panel {
+    padding-top:79px;
+}
