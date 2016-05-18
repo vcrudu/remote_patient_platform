@@ -5,50 +5,61 @@
 (function () {
     "use strict";
 
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var Card = ReactMDL.Card;
+    var CardTitle = ReactMDL.CardTitle;
+    var CardText = ReactMDL.CardText;
+    var CardMenu = ReactMDL.CardMenu;
+    var CardActions = ReactMDL.CardActions;
+    var Button = ReactMDL.Button;
+
     var NoNetworkConnection = React.createClass({
         displayName: "NoNetworkConnection",
 
         handleExitClick: function () {
             Bridge.Redirect.exitFromApplication();
         },
-        componentDidUpdate: function () {
-            componentHandler.upgradeDom();
-
-            var button = this.refs.btnExitFromApplication;
-            button.addEventListener('click', this.handleExitClick);
-        },
         render: function () {
             var component = this;
             return React.createElement(
-                "main",
-                { className: "mdl-layout__content" },
+                Layout,
+                null,
                 React.createElement(
-                    "div",
-                    { className: "page-content" },
+                    Content,
+                    null,
                     React.createElement(
                         "div",
-                        { className: "mdl-card mdl-shadow--2dp" },
+                        { className: "page-content-wrapper" },
                         React.createElement(
-                            "div",
-                            { className: "mdl-card__title" },
+                            Card,
+                            { className: "message-card-wide" },
                             React.createElement(
-                                "h2",
-                                { className: "mdl-card__title-text" },
-                                "No Internet Connection"
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "mdl-card__supporting-text" },
-                            "Sorry, no Internet connectivity detected. Please reconnect."
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "buttons-container-right" },
+                                CardTitle,
+                                null,
+                                React.createElement(
+                                    "h6",
+                                    { className: "mdl-card__title-text" },
+                                    "No Internet Connection"
+                                )
+                            ),
                             React.createElement(
-                                "button",
-                                { onClick: this.handleExitClick, ref: "btnExitFromApplication", className: "mdl-button mdl-js-button mdl-button--accent exit-from-application-button" },
-                                "EXIT FROM APPLICATION"
+                                CardText,
+                                null,
+                                "Sorry, no Internet connectivity detected. Please reconnect."
+                            ),
+                            React.createElement(
+                                CardMenu,
+                                null,
+                                React.createElement(
+                                    CardActions,
+                                    null,
+                                    React.createElement(
+                                        Button,
+                                        { onClick: this.handleExitClick, className: "mdl-button--accent exit-from-application-button", colored: true },
+                                        "EXIT FROM APPLICATION"
+                                    )
+                                )
                             )
                         )
                     )

@@ -44,6 +44,7 @@
                 }
             });
         },
+
         getUserDetailsByNhsNumber : function(nhsNumber, callback){
             var filterExpression='';
             var params = {
@@ -80,6 +81,7 @@
                 }
             });
         },
+
         findPatient : function(email, callback){
 
             var params = {
@@ -126,6 +128,42 @@
                 }
 
                 loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been inserted successfully.");
+                callback(null, data);
+            });
+        },
+
+        update : function(patientDetails, callback) {
+            var dynamodb = getDb();
+
+            var patientDbEntity = dynamoDbMapper.createUserDetailsDbEntityFromPatient(patientDetails)
+
+            var params = {
+                Key: { /* required */
+                    email: { S: patientDetails.email }
+                },
+                TableName: TABLE_NAME,
+                ExpressionAttributeNames: {"#uname": "name"},
+                ExpressionAttributeValues: {
+                    ":ud_name": patientDbEntity.name,
+                    ":ud_surname": patientDbEntity.surname,
+                    ":ud_title": patientDbEntity.title,
+                    ":ud_date_of_birth": patientDbEntity.dateOfBirth,
+                    ":ud_gender": patientDbEntity.gender,
+                    ":ud_address": patientDbEntity.address
+                },
+                ReturnConsumedCapacity: 'TOTAL',
+                ReturnValues: 'NONE',
+                UpdateExpression: 'SET #uname=:ud_name, surname=:ud_surname, title=:ud_title, dateOfBirth=:ud_date_of_birth, gender=:ud_gender, address=:ud_address'
+            };
+
+            dynamodb.updateItem(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been updated successfully.");
                 callback(null, data);
             });
         },

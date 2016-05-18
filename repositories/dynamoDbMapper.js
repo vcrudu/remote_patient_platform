@@ -203,8 +203,14 @@
 
             if (patient.title) { patientDbEntity.title = {S:patient.title}; }
             if (patient.dateOfBirth) {
-                var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
-                patientDbEntity.dateOfBirth = {N:dateOfBirthNumber};
+                try {
+                    var dateOfBirthNumber = patient.dateOfBirth.getTime().toString();
+                    patientDbEntity.dateOfBirth = {N:dateOfBirthNumber};
+                }catch(e) {
+                    var dateOfBirthNumber = new Date(patient.dateOfBirth).getTime().toString();
+                    patientDbEntity.dateOfBirth = {N:dateOfBirthNumber};
+                }
+
             }
            // if (patient.sex) { patientDbEntity.dateOfBirth = {S:patient.sex}; } //not such field
             if (patient.gender) { patientDbEntity.gender = {S:patient.gender}; }
@@ -238,32 +244,7 @@
             }
 
             return patientDbEntity;
-
-            /*return {
-                    //id: {S:patient.id},
-                    //name:{S:patient.name},
-                    //surname: {S:patient.surname},
-                    //title: {S:patient.title},
-                    //dateOfBirth: {N:dateOfBirthNumber},
-                    //sex: {S:patient.sex},
-                    //gender: {S:patient.gender},
-                    //ethnicity: {S:patient.ethnicity},
-                    //nhsNumber: {S:patient.nhsNumber},
-                    //otherIdentifiers: {L:allOtherIdentifiers},
-                    //phone: buildDynamoDbString(patient.phone),
-                    //mobile: buildDynamoDbString(patient.mobile),
-                    //fax: buildDynamoDbString(patient.fax),
-                    //email: {S:patient.email},
-                    //relevantContacts: {L:allRelevantContacts},
-                    //communicationPreference:buildDynamoDbString(patient.communicationPreference),
-                    //address: {M:fullAddress},
-                    //avatar: buildDynamoDbString(patient.avatar),
-                    //externalId: buildDynamoDbString(patient.externalId),
-                    //devices: {L:allDevices},
-                    //healthProblems : {L:allHealthProblems}
-            };*/
         },
-
 
         mapPatientFromUserDetailsDbEntity: function(dbEntity)
         {
