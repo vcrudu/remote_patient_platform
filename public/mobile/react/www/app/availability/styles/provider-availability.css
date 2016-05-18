@@ -14,3 +14,11 @@
 .fc-event-container {
     width: 100%;
 }
+
+.show-avaialbility-mobiscroll-wrapper {
+    height: 0px;
+    position: absolute;
+    margin-top: -65px;
+    right: 0;
+    margin-right: 56px;
+}

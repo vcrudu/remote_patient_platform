@@ -21,7 +21,8 @@ body {
     background: rgb(103, 58, 183);
 }
 
-.mdl-button--fab.mdl-button--colored:hover {
+.mdl-button--fab.mdl-button--colored:hover,
+.mdl-button--fab.mdl-button--colored:focus:not(:active){
     background: rgb(103,58,183);
 }
 
@@ -66,14 +67,22 @@ body {
     padding-right: 16px;
     text-align: left;
 }
+
 .fc-content .fc-time {
     display: none;
 }
-.fc-time-grid .fc-slats td {
+
+.fc-time-grid .fc-slats td.fc-widget-content {
+    border-top: solid 1px #d5d5d5;
+}
+
+.fc-time-grid .fc-slats td,
+.fc-time-grid .fc-slats td.fc-time {
     height: 65px;
     border: 0;
     border-top: solid 1px transparent;
 }
+
 .fc-unthemed tbody {
     border-color: transparent;
     background-color: #F5F5F5;
