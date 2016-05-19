@@ -40,8 +40,9 @@
             var component = this;
             Bridge.Timeline.getById(messageId, function(result) {
                 component.setState({message: result.data});
-
-                indeterminateProgress.end();
+                Bridge.Timeline.read(messageId, true, function(readResult) {
+                    indeterminateProgress.end();
+                });
             });
         },
         render: function() {
@@ -55,7 +56,7 @@
                                 <h2 className="mdl-card__title-text">{this.state.message.title}</h2>
                             </div>
                             <div className="mdl-card__supporting-text">
-                                {this.state.message.message}
+                                {this.state.message.content}
                             </div>
                             <div className="buttons-container-right">
                                 <button className="mdl-button mdl-js-button mdl-button--accent exit-from-application-button">

@@ -45,7 +45,10 @@
             Bridge.Timeline.getById(messageId, function (result) {
                 component.setState({ message: result.data });
 
-                indeterminateProgress.end();
+                Bridge.Timeline.read(messageId, true, function (readResult) {
+                    debugger;
+                    indeterminateProgress.end();
+                });
             });
         },
         render: function () {
@@ -75,7 +78,7 @@
                             React.createElement(
                                 "div",
                                 { className: "mdl-card__supporting-text" },
-                                this.state.message.message
+                                this.state.message.content
                             ),
                             React.createElement(
                                 "div",
