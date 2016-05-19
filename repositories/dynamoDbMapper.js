@@ -24,8 +24,10 @@
     function mapOtherIdentifiersToDbEntity(identifier)
     {
         return {
-            otherIdentifierType: {S: identifier.otherIdentifierType},
-            otherIdentifier: {S: identifier.otherIdentifier}
+            M: {
+                otherIdentifierType: {S: identifier.otherIdentifierType},
+                otherIdentifier: {S: identifier.otherIdentifier}
+            }
         };
     }
 

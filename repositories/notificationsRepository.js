@@ -46,6 +46,57 @@
             });
         },
 
+        getByUserIdAndDateTime:function(userId, dateTime, callback){
+            var params = {
+                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                TableName:TABLE_NAME,
+                ReturnConsumedCapacity: 'TOTAL'
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.getItem(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The notification has been found successfully.");
+                if(data.Item) {
+                    var notification = notificationDbMapper.mapNotificationFromDbEntity(data.Item);
+                    callback(null, notification);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
+
+        notificationRead : function(userId, dateTime, read, callback){
+            var params = {
+                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                ExpressionAttributeNames: {"#read": "read"},
+                TableName:TABLE_NAME,
+                ExpressionAttributeValues: {
+                    ":p_read": { BOOL: read }
+                },
+                ReturnConsumedCapacity: "TOTAL",
+                ReturnValues: "NONE",
+                UpdateExpression: "SET #read=:p_read"
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.updateItem(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                callback(null, null);
+            });
+        },
+
         getList : function(userId, category, startTime, endTime, callback){
 
             var filterExpression='';

@@ -17,13 +17,13 @@
                 title: {S: notification.title},
                 type: {S: notification.type},
                 category:{S: notification.category},
-                userId: {S: notification.userId}
+                userId: {S: notification.userId},
+                read: {BOOL: notification.read}
             };
 
         },
 
         mapNotificationFromDbEntity: function (dbEntity) {
-
             return {
                 content: dbEntity.content.S,
                 defaultAction: dbEntity.defaultAction.S,
@@ -33,11 +33,9 @@
                 title: dbEntity.title.S,
                 type: dbEntity.type.S,
                 category: dbEntity.category.S,
-                userId: dbEntity.userId.S
+                userId: dbEntity.userId.S,
+                read: dbEntity.read.BOOL
             };
-
         }
-
     };
-
 })();
