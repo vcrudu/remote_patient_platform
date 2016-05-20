@@ -106,9 +106,9 @@ a.offline {
 }
 
 .buttons-container-right {
-    position: absolute;
+    /*position: absolute;
     bottom: 0;
-    right: 0;
+    right: 0;*/
     margin-bottom: 8px;
 }
 

@@ -41,7 +41,12 @@
             var component = this;
             Bridge.Timeline.getById(messageId, function(result) {
                 component.setState({message: result.data});
-                Bridge.Timeline.read(messageId, true, action, function(readResult) {
+
+                if (!action) {
+                    action = result.data.responseAction;
+                }
+
+                Bridge.Timeline.read(messageId, result.data.read, action, function(readResult) {
                     indeterminateProgress.end();
                 });
             });
@@ -60,7 +65,7 @@
                                 {this.state.message.content}
                             </div>
                             <div className="buttons-container-right">
-                                <button className="mdl-button mdl-js-button mdl-button--accent exit-from-application-button">
+                                <button className="mdl-button mdl-js-button mdl-button--accent">
                                     sample action
                                 </button>
                             </div>
