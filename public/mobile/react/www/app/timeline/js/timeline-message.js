@@ -41,12 +41,11 @@
         },
         componentDidMount: function () {
             var messageId = Bridge.Redirect.getQueryStringParam()["messageId"];
+            var action = Bridge.Redirect.getQueryStringParam()["action"];
             var component = this;
             Bridge.Timeline.getById(messageId, function (result) {
                 component.setState({ message: result.data });
-
-                Bridge.Timeline.read(messageId, true, function (readResult) {
-                    debugger;
+                Bridge.Timeline.read(messageId, true, action, function (readResult) {
                     indeterminateProgress.end();
                 });
             });
