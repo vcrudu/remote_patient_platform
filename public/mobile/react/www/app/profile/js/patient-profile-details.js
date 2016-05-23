@@ -2030,7 +2030,6 @@
                     $(this.refs.basicMedical).removeClass("is-active");
                     $(this.refs.basicMedicalContent).removeClass("is-active");
                 }
-
                 return;
             }
 
@@ -2049,7 +2048,6 @@
                     $(this.refs.basicMedical).addClass("is-active");
                     $(this.refs.basicMedicalContent).addClass("is-active");
                 }
-
                 return;
             }
 
