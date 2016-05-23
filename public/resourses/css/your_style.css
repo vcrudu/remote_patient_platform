@@ -31,7 +31,7 @@
 }
 
 #logo{
-    width: 200px;
+    width: 300px;
 }
 
 #header{
@@ -147,4 +147,15 @@ background-color: #f4f411;
 }
 #left-panel {
     padding-top:79px;
+}
+#logo img{
+    height: 32px;
+    float: left;
+}
+#logo h4{
+    padding-left:44px;
+    font-size: 22px;
+}
+.down a{
+    margin-top:20px!important;
 }
