@@ -84,6 +84,49 @@
             this.setRefElementValue(this.state.height, this.refs.txtHeight, this.refs.txtHeightDiv);
             this.setRefElementValue(this.state.weight, this.refs.txtWeight, this.refs.txtWeightDiv);
         },
+        isValid: function () {
+            var valid = true;
+            this.setState({
+                nhsNumber: $(this.refs.txtNhsNumber).val(),
+                ethnicity: $(this.refs.txtEthnicity).val(),
+                height: $(this.refs.txtHeight).val(),
+                weight: $(this.refs.txtWeight).val()
+            });
+
+            if ($(this.refs.txtNhsNumber).val() == "") {
+                $(this.refs.txtNhsNumberDiv).addClass("is-invalid");
+                $(this.refs.txtNhsNumberDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ nhsNumber: $(this.refs.txtNhsNumber).val() });
+            }
+
+            if ($(this.refs.txtEthnicity).val() == "") {
+                $(this.refs.txtEthnicityDiv).addClass("is-invalid");
+                $(this.refs.txtEthnicityDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ ethnicity: $(this.refs.txtEthnicity).val() });
+            }
+
+            if ($(this.refs.txtHeight).val() == "") {
+                $(this.refs.txtHeightDiv).addClass("is-invalid");
+                $(this.refs.txtHeightDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ height: $(this.refs.txtHeight).val() });
+            }
+
+            if ($(this.refs.txtWeight).val() == "") {
+                $(this.refs.txtWeightDiv).addClass("is-invalid");
+                $(this.refs.txtWeightDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ weight: $(this.refs.txtWeight).val() });
+            }
+
+            return valid;
+        },
         render: function () {
             return React.createElement(
                 "div",
@@ -101,6 +144,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtNhsNumber" },
                         "NHS Number"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "NHS Number required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -117,6 +165,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtEthnicity" },
                         "Choose Ethnicity"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Choose Ethnicity required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -133,6 +186,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtHeight" },
                         "Current Height"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Current Height required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -149,6 +207,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtWeight" },
                         "Current Weight"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Current Weight required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -523,11 +586,74 @@
             this.setRefElementValue(this.state.country, this.refs.txtCountry, this.refs.txtCountryDiv);
             this.setRefElementValue(this.state.county, this.refs.txtCounty, this.refs.txtCountyDiv);
             this.setRefElementValue(this.state.town, this.refs.txtTown, this.refs.txtTownDiv);
-            this.setRefElementValue(this.state.postCode, this.refs.txtPostCode, this.refs.txtPostCodeDiv);
+            this.setRefElementValue(this.state.postCode, this.refs.txtPostCode, this.refs.txtPostCodeDiv);txtMobile;
             this.setRefElementValue(this.state.addressLine1, this.refs.txtAddressLine1, this.refs.txtAddressLine1Div);
             this.setRefElementValue(this.state.addressLine2, this.refs.txtAddressLine2, this.refs.txtAddressLine2Div);
             this.setRefElementValue(this.state.mobile, this.refs.txtMobile, this.refs.txtMobileDiv);
             this.setRefElementValue(this.state.phone, this.refs.txtPhone, this.refs.txtPhoneDiv);
+        },
+        isValid: function () {
+            var valid = true;
+            this.setState({
+                country: $(this.refs.txtCountry).val(),
+                county: $(this.refs.txtCounty).val(),
+                town: $(this.refs.txtTown).val(),
+                postCode: $(this.refs.txtPostCode).val(),
+                addressLine1: $(this.refs.txtAddressLine1).val(),
+                addressLine2: $(this.refs.txtAddressLine2).val(),
+                mobile: $(this.refs.txtMobile).val(),
+                phone: $(this.refs.txtPhone).val()
+            });
+
+            if ($(this.refs.txtCountry).val() == "") {
+                $(this.refs.txtCountryDiv).addClass("is-invalid");
+                $(this.refs.txtCountryDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ country: $(this.refs.txtCountry).val() });
+            }
+
+            if ($(this.refs.txtCounty).val() == "") {
+                $(this.refs.txtCountyDiv).addClass("is-invalid");
+                $(this.refs.txtCountyDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ county: $(this.refs.txtCounty).val() });
+            }
+
+            if ($(this.refs.txtTown).val() == "") {
+                $(this.refs.txtTownDiv).addClass("is-invalid");
+                $(this.refs.txtTownDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ town: $(this.refs.txtTown).val() });
+            }
+
+            if ($(this.refs.txtPostCode).val() == "") {
+                $(this.refs.txtPostCodeDiv).addClass("is-invalid");
+                $(this.refs.txtPostCodeDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ postCode: $(this.refs.txtPostCode).val() });
+            }
+
+            if ($(this.refs.txtAddressLine1).val() == "") {
+                $(this.refs.txtAddressLine1Div).addClass("is-invalid");
+                $(this.refs.txtAddressLine1Div).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ addressLine1: $(this.refs.txtAddressLine1).val() });
+            }
+
+            if ($(this.refs.txtMobile).val() == "") {
+                $(this.refs.txtMobileDiv).addClass("is-invalid");
+                $(this.refs.txtMobileDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ mobile: $(this.refs.txtMobile).val() });
+            }
+
+            return valid;
         },
         render: function () {
             return React.createElement(
@@ -546,6 +672,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtCountry" },
                         "Country"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Country required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -562,6 +693,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtCounty" },
                         "County"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "County required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -578,6 +714,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtTown" },
                         "Town"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Town required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -594,6 +735,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtPostCode" },
                         "Post Code"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Post Code required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -610,6 +756,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtAddressLine1" },
                         "Address Line 1"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Address Line 1 required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -658,6 +809,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtMobile" },
                         "Mobile"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Mobile required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1550,6 +1706,59 @@
             this.setRefElementValue(this.state.gender, this.refs.txtGender, this.refs.txtGenderDiv);
             this.setRefElementValue(this.state.dateOfBirth, this.refs.txtBirthDay, this.refs.txtBirthDayDiv);
         },
+        isValid: function () {
+            var valid = true;
+            this.setState({
+                title: $(this.refs.txtTitle).val(),
+                firstName: $(this.refs.txtFirstName).val(),
+                surname: $(this.refs.txtSurname).val(),
+                gender: $(this.refs.txtGender).val(),
+                dateOfBirth: $(this.refs.txtBirthDay).val()
+
+            });
+
+            if ($(this.refs.txtTitle).val() == "") {
+                $(this.refs.txtTitleDiv).addClass("is-invalid");
+                $(this.refs.txtTitleDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ title: $(this.refs.txtTitle).val() });
+            }
+
+            if ($(this.refs.txtFirstName).val() == "") {
+                $(this.refs.txtFirstDiv).addClass("is-invalid");
+                $(this.refs.txtFirstDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ firstName: $(this.refs.txtFirstName).val() });
+            }
+
+            if ($(this.refs.txtSurname).val() == "") {
+                $(this.refs.txtSurnameDiv).addClass("is-invalid");
+                $(this.refs.txtSurnameDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ surname: $(this.refs.txtSurname).val() });
+            }
+
+            if ($(this.refs.txtGender).val() == "") {
+                $(this.refs.txtGenderDiv).addClass("is-invalid");
+                $(this.refs.txtGenderDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ gender: $(this.refs.txtGender).val() });
+            }
+
+            if ($(this.refs.txtBirthDay).val() == "") {
+                $(this.refs.txtBirthDayDiv).addClass("is-invalid");
+                $(this.refs.txtBirthDayDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ dateOfBirth: $(this.refs.txtBirthDay).val() });
+            }
+
+            return valid;
+        },
         render: function () {
             return React.createElement(
                 "div",
@@ -1567,6 +1776,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtTitle" },
                         "Title"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Title required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1583,6 +1797,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtFirstName" },
                         "First Name"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "First Name required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1599,6 +1818,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtSurname" },
                         "Surname"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Surname required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1615,6 +1839,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtGender" },
                         "Gender"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Gender required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1631,6 +1860,11 @@
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtBirthDay" },
                         "Date of Birth"
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: "mdl-textfield__error" },
+                        "Date of Birth required!"
                     )
                 ),
                 React.createElement("div", { className: "clear" }),
@@ -1764,6 +1998,61 @@
             return uuid;
         },
         handleDone: function () {
+            if (!this.refs.patientInfoComponent.isValid()) {
+                if ($(this.refs.basicAddress).hasClass("is-active")) {
+                    $(this.refs.basicAddress).removeClass("is-active");
+                    $(this.refs.basicAddressContent).removeClass("is-active");
+                }
+                if ($(this.refs.basicMedical).hasClass("is-active")) {
+                    $(this.refs.basicMedical).removeClass("is-active");
+                    $(this.refs.basicMedicalContent).removeClass("is-active");
+                }
+
+                if (!$(this.refs.basicInfoTab).hasClass("is-active")) {
+                    $(this.refs.basicInfoTab).addClass("is-active");
+                    $(this.refs.basicInfoTabContent).addClass("is-active");
+                }
+                return;
+            }
+
+            if (!this.refs.patientAddress.isValid()) {
+                if ($(this.refs.basicInfoTab).hasClass("is-active")) {
+                    $(this.refs.basicInfoTab).removeClass("is-active");
+                    $(this.refs.basicInfoTabContent).removeClass("is-active");
+                }
+
+                if (!$(this.refs.basicAddress).hasClass("is-active")) {
+                    $(this.refs.basicAddress).addClass("is-active");
+                    $(this.refs.basicAddressContent).addClass("is-active");
+                }
+
+                if ($(this.refs.basicMedical).hasClass("is-active")) {
+                    $(this.refs.basicMedical).removeClass("is-active");
+                    $(this.refs.basicMedicalContent).removeClass("is-active");
+                }
+
+                return;
+            }
+
+            if (!this.refs.patientMedicalInfo.isValid()) {
+                if ($(this.refs.basicInfoTab).hasClass("is-active")) {
+                    $(this.refs.basicInfoTab).removeClass("is-active");
+                    $(this.refs.basicInfoTabContent).removeClass("is-active");
+                }
+
+                if ($(this.refs.basicAddress).hasClass("is-active")) {
+                    $(this.refs.basicAddress).removeClass("is-active");
+                    $(this.refs.basicAddressContent).removeClass("is-active");
+                }
+
+                if (!$(this.refs.basicMedical).hasClass("is-active")) {
+                    $(this.refs.basicMedical).addClass("is-active");
+                    $(this.refs.basicMedicalContent).addClass("is-active");
+                }
+
+                return;
+            }
+
             var objectToPost = {
                 "id": this.state.userDetails.id,
                 "name": this.refs.patientInfoComponent.state.firstName,
@@ -1826,17 +2115,17 @@
                         { className: "mdl-layout__tab-bar mdl-js-ripple-effect" },
                         React.createElement(
                             "a",
-                            { href: "#basic-info", className: "mdl-layout__tab is-active" },
+                            { href: "#basic-info", className: "mdl-layout__tab is-active", ref: "basicInfoTab" },
                             "Basic Info"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#address", className: "mdl-layout__tab" },
+                            { href: "#address", className: "mdl-layout__tab", ref: "basicAddress" },
                             "Address"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#medical", className: "mdl-layout__tab" },
+                            { href: "#medical", className: "mdl-layout__tab", ref: "basicMedical" },
                             "Medical"
                         )
                     ),
@@ -1877,7 +2166,7 @@
                     { className: "mdl-layout__content" },
                     React.createElement(
                         "section",
-                        { className: "mdl-layout__tab-panel is-active", id: "basic-info" },
+                        { className: "mdl-layout__tab-panel is-active", id: "basic-info", ref: "basicInfoTabContent" },
                         React.createElement(
                             "div",
                             { className: "page-content" },
@@ -1886,7 +2175,7 @@
                     ),
                     React.createElement(
                         "section",
-                        { className: "mdl-layout__tab-panel", id: "address" },
+                        { className: "mdl-layout__tab-panel", id: "address", ref: "basicAddressContent" },
                         React.createElement(
                             "div",
                             { className: "page-content" },
@@ -1895,7 +2184,7 @@
                     ),
                     React.createElement(
                         "section",
-                        { className: "mdl-layout__tab-panel", id: "medical" },
+                        { className: "mdl-layout__tab-panel", id: "medical", ref: "basicMedicalContent" },
                         React.createElement(
                             "div",
                             { className: "page-content" },
