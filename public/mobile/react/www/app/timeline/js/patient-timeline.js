@@ -68,14 +68,32 @@
                     null,
                     React.createElement(
                         "div",
-                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                        this.props.title
+                        { className: "notification-title-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: "notification-icon" },
+                            React.createElement(
+                                "i",
+                                { className: "material-icons mdl-list__item-avatar" },
+                                "error_outline"
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "notification-title-summary" },
+                            React.createElement(
+                                "div",
+                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                this.props.title
+                            ),
+                            React.createElement(
+                                "div",
+                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                this.props.summary
+                            )
+                        )
                     ),
-                    React.createElement(
-                        "div",
-                        { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
-                        this.props.summary
-                    ),
+                    React.createElement("div", { className: "clear" }),
                     React.createElement(
                         "div",
                         { ref: "cardMessage", className: "notification-message" },
@@ -122,14 +140,32 @@
                     null,
                     React.createElement(
                         "div",
-                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                        this.props.title
+                        { className: "notification-title-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: "notification-icon" },
+                            React.createElement(
+                                "i",
+                                { className: "material-icons mdl-list__item-avatar" },
+                                "error_outline"
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "notification-title-summary" },
+                            React.createElement(
+                                "div",
+                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                this.props.title
+                            ),
+                            React.createElement(
+                                "div",
+                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                this.props.summary
+                            )
+                        )
                     ),
-                    React.createElement(
-                        "div",
-                        { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
-                        this.props.summary
-                    ),
+                    React.createElement("div", { className: "clear" }),
                     React.createElement(
                         "div",
                         { ref: "cardMessage", className: "notification-message" },

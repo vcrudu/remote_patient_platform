@@ -53,12 +53,20 @@
         render: function() {
             return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText>
-                    <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
-                        {this.props.title}
+                    <div className="notification-title-wrapper">
+                        <div className="notification-icon">
+                            <i className="material-icons mdl-list__item-avatar">error_outline</i>
+                        </div>
+                        <div className="notification-title-summary">
+                            <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
+                                {this.props.title}
+                            </div>
+                            <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
+                                {this.props.summary}
+                            </div>
+                        </div>
                     </div>
-                    <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
-                        {this.props.summary}
-                    </div>
+                    <div className="clear"></div>
                     <div ref="cardMessage" className="notification-message">
                         {this.props.message}
                     </div>
@@ -85,12 +93,20 @@
         render: function() {
             return <Card className="message-card-wide">
                 <CardText>
-                    <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
-                        {this.props.title}
+                    <div className="notification-title-wrapper">
+                        <div className="notification-icon">
+                            <i className="material-icons mdl-list__item-avatar">error_outline</i>
+                        </div>
+                        <div className="notification-title-summary">
+                            <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
+                                {this.props.title}
+                            </div>
+                            <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
+                                {this.props.summary}
+                            </div>
+                        </div>
                     </div>
-                    <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
-                        {this.props.summary}
-                    </div>
+                    <div className="clear"></div>
                     <div ref="cardMessage" className="notification-message">
                         {this.props.message}
                     </div>

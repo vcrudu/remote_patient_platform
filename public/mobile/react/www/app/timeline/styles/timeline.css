@@ -40,3 +40,16 @@ h6.mdl-card__title-text {
 {
     font-family: Roboto-Bold;
 }
+
+.notification-icon {
+    float: left;
+    margin-right: 16px;
+}
+
+.notification-title-summary {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
