@@ -25,7 +25,13 @@
         displayName: "DateCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         render: function () {
             return React.createElement(
                 "div",
@@ -43,27 +49,38 @@
         displayName: "InfoCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
-                React.createElement(
-                    CardTitle,
-                    null,
-                    React.createElement(
-                        "h6",
-                        { className: "mdl-card__title-text" },
-                        this.props.title
-                    )
-                ),
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     null,
-                    this.props.message
+                    React.createElement(
+                        "div",
+                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                        this.props.title
+                    ),
+                    React.createElement(
+                        "div",
+                        { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                        this.props.summary
+                    ),
+                    React.createElement(
+                        "div",
+                        { ref: "cardMessage", className: "notification-message" },
+                        this.props.message
+                    )
                 ),
                 React.createElement(
                     CardMenu,
@@ -101,18 +118,23 @@
                 Card,
                 { className: "message-card-wide" },
                 React.createElement(
-                    CardTitle,
-                    null,
-                    React.createElement(
-                        "h6",
-                        { className: "mdl-card__title-text" },
-                        this.props.title
-                    )
-                ),
-                React.createElement(
                     CardText,
                     null,
-                    this.props.message
+                    React.createElement(
+                        "div",
+                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                        this.props.title
+                    ),
+                    React.createElement(
+                        "div",
+                        { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                        this.props.summary
+                    ),
+                    React.createElement(
+                        "div",
+                        { ref: "cardMessage", className: "notification-message" },
+                        this.props.message
+                    )
                 ),
                 React.createElement(
                     CardMenu,
@@ -336,9 +358,9 @@
                                         case "date":
                                             return React.createElement(DateCard, { key: card.id + "_date", title: card.title, cardId: card.id + "_date" });
                                         case "info":
-                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.summary, cardId: card.dateTime + "_all" });
+                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
                                         case "alarm":
-                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.summary, cardId: card.dateTime + "_all" });
+                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
                                     }
                                 })
                             )

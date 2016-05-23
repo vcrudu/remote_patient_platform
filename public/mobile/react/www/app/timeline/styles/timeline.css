@@ -12,10 +12,31 @@
 }
 
 .mdl-card {
-    min-height: 170px;
+    min-height: 120px;
     margin-bottom: 8px;
 }
 
 h6.mdl-card__title-text {
     font-size: 20px;
+}
+
+.notification-summary {
+    height: 20px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 4px;
+}
+
+.notification-message {
+    height: 40px;
+}
+
+.notification-title {
+    font-size: 16px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 8px;
+}
+
+.unread
+{
+    font-family: Roboto-Bold;
 }

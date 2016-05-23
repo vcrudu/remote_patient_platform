@@ -25,6 +25,11 @@
         componentDidUpdate: function() {
         },
         componentDidMount: function() {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
         },
         render: function() {
             return <div className="group-separator" cl><h2 className="mdl-card__title-text">{this.props.title}</h2></div>;
@@ -33,19 +38,30 @@
 
     var InfoCard = React.createClass({
         componentDidUpdate: function() {
+
         },
         componentDidMount: function() {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
         },
         handleView: function() {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <Card className="message-card-wide">
-                <CardTitle>
-                    <h6 className="mdl-card__title-text">{this.props.title}</h6>
-                </CardTitle>
+            return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText>
-                    {this.props.message}
+                    <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
+                        {this.props.title}
+                    </div>
+                    <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
+                        {this.props.summary}
+                    </div>
+                    <div ref="cardMessage" className="notification-message">
+                        {this.props.message}
+                    </div>
                 </CardText>
                 <CardMenu>
                     <IconButton name="more_vert" id={"card-menu-lower-right-" + this.props.cardId}/>
@@ -68,11 +84,16 @@
         },
         render: function() {
             return <Card className="message-card-wide">
-                <CardTitle>
-                    <h6 className="mdl-card__title-text">{this.props.title}</h6>
-                </CardTitle>
                 <CardText>
-                    {this.props.message}
+                    <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
+                        {this.props.title}
+                    </div>
+                    <div ref="cardSummary" className={this.props.isNew ? "notification-summary unread" : "notification-summary read"}>
+                        {this.props.summary}
+                    </div>
+                    <div ref="cardMessage" className="notification-message">
+                        {this.props.message}
+                    </div>
                 </CardText>
                 <CardMenu>
                     <IconButton name="more_vert" id={"card-menu-lower-right-" + this.props.cardId}/>
@@ -260,9 +281,9 @@
                                             case "date":
                                                 return <DateCard key={card.id + "_date"} title={card.title} cardId={card.id + "_date"}/>
                                             case "info":
-                                                return <InfoCard key={card.dateTime + "_all"} serverId={card.dateTime} title={card.title} message={card.summary} cardId={card.dateTime + "_all"}/>
+                                                return <InfoCard key={card.dateTime + "_all"} serverId={card.dateTime} title={card.title} message={card.content} summary={card.summary} cardId={card.dateTime + "_all"} isNew={!card.read}/>
                                             case "alarm":
-                                                return <AlarmCard key={card.dateTime + "_all"} serverId={card.dateTime} title={card.title} message={card.summary} cardId={card.dateTime + "_all"}/>
+                                                return <AlarmCard key={card.dateTime + "_all"} serverId={card.dateTime} title={card.title} message={card.content} summary={card.summary} cardId={card.dateTime + "_all"} isNew={!card.read}/>
                                         }
                                     })
                                 }
