@@ -11,7 +11,7 @@ angular.module('app').directive('checkExistsNhs',function($q,$http){
                 var def = $q.defer();
                 var req = {
                     method: 'GET',
-                    url: 'http://localhost:8081/checkExistsNhs?nhsNumber='+modelValue,
+                    url: 'checkExistsNhs?nhsNumber='+modelValue,
                     headers: {
                         'Access-Control-Allow-Origin':'*'
                     }

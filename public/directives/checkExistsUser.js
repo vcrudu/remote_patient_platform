@@ -13,7 +13,7 @@ angular.module('app').directive('checkExistsUser',function($q,$http){
                 var def = $q.defer();
                 var req = {
                     method: 'GET',
-                    url: 'http://localhost:8081/checkExistsUser?email='+modelValue,
+                    url: 'checkExistsUser?email='+modelValue,
                     headers: {
                         'Access-Control-Allow-Origin':'*'
                     }
