@@ -65,7 +65,7 @@
                 { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
-                    null,
+                    { onClick: this.handleView },
                     React.createElement(
                         "div",
                         { className: "notification-title-wrapper" },

@@ -52,7 +52,7 @@
         },
         render: function() {
             return <Card className="message-card-wide mdl-shadow--2dp">
-                <CardText>
+                <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
                             <i className="material-icons mdl-list__item-avatar">error_outline</i>
