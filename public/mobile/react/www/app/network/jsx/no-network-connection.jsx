@@ -23,7 +23,7 @@
             return <Layout>
                 <Content>
                     <div className="page-content-wrapper">
-                        <Card className="message-card-wide">
+                        <Card className="message-card-wide mdl-shadow--2dp">
                             <CardTitle>
                                 <h6 className="mdl-card__title-text">No Internet Connection</h6>
                             </CardTitle>

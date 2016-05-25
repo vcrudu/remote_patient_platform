@@ -6,6 +6,7 @@ var eventsRepository     = require('../repositories').Events;
 var EventFactory = require('../model').EventFactory;
 var logging = require("../logging");
 var notification = require('../notifications');
+const vm = require('vm');
 
 
 (function(){
@@ -69,6 +70,17 @@ var notification = require('../notifications');
                 });
                 return;
             }
+
+            /*var conditions = [{ factTemplate: "factResult = temperature >= 36.5" }];
+
+            var sandbox = {
+                temperature: 36.5,
+            };
+
+            var context = new vm.createContext(sandbox);
+            var script = new vm.Script(conditions[0].factTemplate);
+
+            script.runInContext(context);*/
 
             eventsRepository.getOne(req.decoded.email, eventToSave.getMeasurementDateTime(), function(err, event){
                 if(err){

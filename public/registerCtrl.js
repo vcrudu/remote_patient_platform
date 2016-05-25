@@ -6,8 +6,8 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
     function($scope, $log, $state, toastr, authService, $timeout, $localStorage){
         $scope.newUser ={type:"patient"};
         $scope.states = [];
-        $scope.successMessage = "Done"
-        $scope.successSubMessage = "Click next to finish registration"
+        $scope.successMessage = "Done";
+        $scope.successSubMessage = "Click next to finish registration";
 
         $scope.moveNext = function(){
             if($state.$current.data.nextState){
