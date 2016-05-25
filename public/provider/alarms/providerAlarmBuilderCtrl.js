@@ -4,6 +4,16 @@
 (function() {
     angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal",
         function ($scope, $http, $modal) {
+            $scope.alarmTemplateModel = {
+                alarmName: ""
+            };
+
+            $scope.formWasSubmitted = false;
+
+            $scope.submitForm = function(isValid) {
+                $scope.formWasSubmitted = true;
+            }
+            
             $scope.booleanConditions = [{id: "Where", value: "where"}, {id: "WhereNot", value: "where not"}];
             $scope.operatorValues = [
                 {id: "Equal", value: "equal"},
