@@ -5,18 +5,33 @@
     </header>
     <div>
         <div class="widget-body">
-            <div class="row">
-                <div class="col-xs-12">
-                    <section>
-                        <ul>
-                            <li ng-repeat="alarmTemplate in alarmTemplates"><a href="javascript:void(0)" ng-click="handleAlarmTemplateSelected(alarmTemplate)">{{alarmTemplate.alarmName}}</a> </li>
-                        </ul>
-                    </section>
-                    <section>
-                        <button ui-sref="provider.alarm_builder" type="button" class="btn btn-primary push-right" style="float: right">New Alarm</button>
-                    </section>
+            <section>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Template Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="alarmTemplate in alarmTemplates">
+                        <td><a href="javascript:void(0)" ng-click="handleAlarmTemplateSelected(alarmTemplate)">{{alarmTemplate.alarmName}}</a></td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="ruleText in alarmTemplate.rulesText">
+                                    <div ng-bind-html="ruleText | rawHtml"></div>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12"><button ui-sref="provider.alarm_builder" type="button" class="btn btn-primary push-right" style="float: right">New Alarm</button></div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </div>

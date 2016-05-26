@@ -95,7 +95,7 @@ angular.module('app').factory('alarmBuilderFactoryService',
                     return parseInt(valueString);
                 case "TemperatureBetween":
                 case "Temperature":
-                    return parseFloat(valueString.value1);
+                    return parseFloat(valueString);
                 default:
                     return undefined;
 

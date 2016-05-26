@@ -2,8 +2,8 @@
  * Created by Victor on 5/6/2016.
  */
 (function() {
-    angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal", "alarmBuilderFactoryService", "appSettings", "$localStorage", "$state", "_",
-        function ($scope, $http, $modal, alarmBuilderFactoryService, appSettings, $localStorage, $state, _) {
+    angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal", "alarmBuilderFactoryService", "appSettings", "$localStorage", "$state", "_", "toastr",
+        function ($scope, $http, $modal, alarmBuilderFactoryService, appSettings, $localStorage, $state, _, toastr) {
             $scope.alarmTemplateModel = {
                 alarmName: "",
                 alarmNameDisabled: false,
@@ -23,6 +23,11 @@
                     alarmName: $scope.alarmTemplateModel.alarmName,
                     rules: []
                 };
+
+                if (!$scope.conditions || $scope.conditions.length == 0) {
+                    $scope.alarmTemplateModel.conditionsInvalid = true;
+                    return;
+                }
 
                 if ($scope.conditions && $scope.conditions.length > 0) {
                     for(var i=0;i<$scope.conditions.length;i++) {
@@ -49,6 +54,7 @@
                 $http(req).success(function (res) {
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
+                        toastr.success('Alarm Template saved!','Success');
                     } else {
                     }
                 }).error(function (err) {
