@@ -1,4 +1,19 @@
 <div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+    <style>
+        .has-errors {
+            border: 1px solid #A90329;
+        }
+
+        .has-error-message {
+            display: block;
+            margin-top: 6px;
+            padding: 0 1px;
+            font-style: normal;
+            font-size: 11px;
+            line-height: 15px;
+            color: #D56161;
+        }
+    </style>
     <header>
         <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
         <h2>Alarm Builder</h2>
@@ -14,7 +29,7 @@
                                     <label class="label">Alarm Name</label>
                                     <label class="input" ng-class="alarmBuilderForm.alarmName.$invalid && formWasSubmitted ? 'state-error' : ''">
                                         <i class="icon-append fa fa-bell-o" />
-                                        <input type="text" name="alarmName" placeholder="Alarm Name" ng-model="alarmTemplateModel.alarmName" required>
+                                        <input type="text" name="alarmName" placeholder="Alarm Name" ng-model="alarmTemplateModel.alarmName" required ng-disabled="alarmTemplateModel.alarmNameDisabled">
                                     </label>
                                     <em ng-show="alarmBuilderForm.alarmName.$invalid && formWasSubmitted" class="invalid">Alarm Name is reuired!</em>
                                 </section>
@@ -37,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
-                                        <div class="panel panel-success" style="">
+                                        <div class="panel panel-success" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-errors': ''">
                                             <div class="panel-heading">Alarm conditions</div>
                                             <div class="panel-body">
                                                 <ul class="selected-conditions">
@@ -45,6 +60,7 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <em ng-show="alarmTemplateModel.conditionsInvalid" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-error-message': ''">Conditions are invalid!</em>
                                     </div>
                                 </div>
                             </section>

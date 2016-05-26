@@ -28,8 +28,16 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.settings",
         templateUrl: "provider/settings/provider.settings.html",
         controller: 'providerSettingsCtrl'
+    }).state("provider.alarm_list", {
+        url: "/provider.alarm_list",
+        templateUrl: "provider/alarms/provider.alarm.list.html",
+        controller: "providerAlarmListCtrl"
     }).state("provider.alarm_builder", {
         url: "/provider.alarm_builder",
+        templateUrl: "provider/alarms/provider.alarm.builder.html",
+        controller: "providerAlarmBuilderCtrl"
+    }).state("provider.alarm_builder_edit", {
+        url: "/provider.alarm_builder/:alarmName",
         templateUrl: "provider/alarms/provider.alarm.builder.html",
         controller: "providerAlarmBuilderCtrl"
     }).state("provider.call", {

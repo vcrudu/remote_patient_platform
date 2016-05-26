@@ -1,0 +1,22 @@
+<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
+        <h2>Available Alarm Templates</h2>
+    </header>
+    <div>
+        <div class="widget-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <section>
+                        <ul>
+                            <li ng-repeat="alarmTemplate in alarmTemplates"><a href="javascript:void(0)" ng-click="handleAlarmTemplateSelected(alarmTemplate)">{{alarmTemplate.alarmName}}</a> </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <button ui-sref="provider.alarm_builder" type="button" class="btn btn-primary push-right" style="float: right">New Alarm</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

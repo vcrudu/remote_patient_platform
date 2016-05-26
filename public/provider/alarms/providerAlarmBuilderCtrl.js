@@ -2,80 +2,62 @@
  * Created by Victor on 5/6/2016.
  */
 (function() {
-    angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal",
-        function ($scope, $http, $modal) {
+    angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal", "alarmBuilderFactoryService", "appSettings", "$localStorage", "$state", "_",
+        function ($scope, $http, $modal, alarmBuilderFactoryService, appSettings, $localStorage, $state, _) {
             $scope.alarmTemplateModel = {
-                alarmName: ""
+                alarmName: "",
+                alarmNameDisabled: false,
+                conditionsInvalid: false
             };
 
             $scope.formWasSubmitted = false;
 
             $scope.submitForm = function(isValid) {
                 $scope.formWasSubmitted = true;
+
+                if (!isValid) {
+                    return;
+                }
+
+                var alarmTemplateToPost = {
+                    alarmName: $scope.alarmTemplateModel.alarmName,
+                    rules: []
+                };
+
+                if ($scope.conditions && $scope.conditions.length > 0) {
+                    for(var i=0;i<$scope.conditions.length;i++) {
+                        if (!alarmBuilderFactoryService.isValidCondition($scope.conditions[i])) {
+                            $scope.alarmTemplateModel.conditionsInvalid = true;
+                            return;
+                        }
+
+                        alarmTemplateToPost.rules.push(alarmBuilderFactoryService.translateCondition($scope.conditions[i]));
+                    }
+                }
+
+                $scope.alarmTemplateModel.conditionsInvalid = false;
+
+                var req = {
+                    method: 'POST',
+                    url: appSettings.getServerUrl() + '/v1/api/globalalarm',
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    },
+                    data: {alarmTemplate: alarmTemplateToPost}
+                };
+
+                $http(req).success(function (res) {
+                    if (res.success) {
+                        $scope.alarmTemplateModel.alarmNameDisabled = true;
+                    } else {
+                    }
+                }).error(function (err) {
+                    
+                });
             }
-            
-            $scope.booleanConditions = [{id: "Where", value: "where"}, {id: "WhereNot", value: "where not"}];
-            $scope.operatorValues = [
-                {id: "Equal", value: "equal"},
-                {id: "NotEqual", value: "not equal"},
-                {id: "GreaterThan", value: "greater than"},
-                {id: "GreaterThanOrEqual", value: "greater than or equal to"},
-                {id: "LessThan", value: "less than"},
-                {id: "LessThanOrEqual", value: "less than or equal to"},
-            ];
 
             $scope.availableTemplates = [];
             $scope.conditions = [];
-
-            $scope.getValidationRegex = function(conditionName) {
-                switch (conditionName) {
-                    case "BloodPressureSystolicBetween":
-                    case "BloodPressureSystolic":
-                    case "BloodPressureDiastolicBetween":
-                    case "BloodPressureDiastolic":
-                    case "HeartRateBetween":
-                    case "HeartRate":
-                    case "BloodOxygenBetween":
-                    case "BloodOxygen":
-                        return /^[0-9]*$/;
-                    case "TemperatureBetween":
-                    case "Temperature":
-                        return /^[+-]?\d+(\.\d+)?$/;
-                    default:
-                        return /.*$/;
-
-                }
-            };
-
-            $scope.getConditionValue = function(conditionObj, minValue) {
-                switch (conditionObj.name) {
-                    case "BloodPressureSystolicBetween":
-                    case "BloodPressureSystolic":
-                    case "BloodPressureDiastolicBetween":
-                    case "BloodPressureDiastolic":
-                    case "HeartRateBetween":
-                    case "HeartRate":
-                    case "BloodOxygenBetween":
-                    case "BloodOxygen":
-                        if (minValue) {
-                            return parseInt(conditionObj.value1);
-                        }
-                        else {
-                            return parseInt(conditionObj.value2);
-                        }
-                    case "TemperatureBetween":
-                    case "Temperature":
-                        if (minValue) {
-                            return parseFloat(conditionObj.value1);
-                        }
-                        else {
-                            return parseInt(conditionObj.value2);
-                        }
-                    default:
-                        return undefined;
-
-                }
-            };
 
             $scope.resolveModalDependencies = function(conditionObj, label, minValue) {
                 return {
@@ -86,22 +68,12 @@
                         return label;
                     },
                     pattern: function () {
-                        return $scope.getValidationRegex(conditionObj.name);
+                        return alarmBuilderFactoryService.getValidationRegex(conditionObj.name);
                     },
                     value: function() {
-                        return $scope.getConditionValue(conditionObj, minValue);
+                        return alarmBuilderFactoryService.getConditionValue(conditionObj, minValue);
                     }
                 };
-            };
-
-            $scope.guid = function() {
-                function s4() {
-                    return Math.floor((1 + Math.random()) * 0x10000)
-                        .toString(16)
-                        .substring(1);
-                }
-                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                    s4() + '-' + s4() + s4() + s4();
             };
 
             $scope.changePrefix = function(scope) {
@@ -113,12 +85,12 @@
                     var booleanPrefixElement = element.find(".BooleanPrefix");
                     if (booleanPrefixElement && booleanPrefixElement.length > 0) {
                         if (conditionObj.prefix) {
-                            booleanPrefixElement.text($scope.booleanConditions[0].value);
-                            booleanPrefixElement.attr("data-prefix-value", $scope.booleanConditions[0].id);
+                            booleanPrefixElement.text(alarmBuilderFactoryService.booleanConditions[0].value);
+                            booleanPrefixElement.attr("data-prefix-value", alarmBuilderFactoryService.booleanConditions[0].id);
                         }
                         else {
-                            booleanPrefixElement.text($scope.booleanConditions[1].value);
-                            booleanPrefixElement.attr("data-prefix-value", $scope.booleanConditions[1].id);
+                            booleanPrefixElement.text(alarmBuilderFactoryService.booleanConditions[1].value);
+                            booleanPrefixElement.attr("data-prefix-value", alarmBuilderFactoryService.booleanConditions[1].id);
                         }
                     }
                 }
@@ -177,7 +149,7 @@
                     size: "sm",
                     resolve: {
                         operators: function() {
-                            return $scope.operatorValues;
+                            return alarmBuilderFactoryService.operatorValues;
                         },
                         selectedOperator: function () {
                             return conditionObj.operator;
@@ -201,7 +173,7 @@
             };
 
             $scope.moveToConditions = function(template) {
-                var parsedCondition = template.template.replace("$BooleanPrefix$", "<span data-param=\"$BooleanPrefix$\" class=\"BooleanPrefix\" ng-click=\"changePrefix(this)\">" + $scope.booleanConditions[0].value + "</span>");
+                var parsedCondition = template.template.replace("$BooleanPrefix$", "<span data-param=\"$BooleanPrefix$\" class=\"BooleanPrefix\" ng-click=\"changePrefix(this)\">" + alarmBuilderFactoryService.booleanConditions[0].value + "</span>");
 
                 switch (template.type){
                     case "BetweenCondition":
@@ -215,7 +187,7 @@
                 }
 
                 $scope.conditions.push({
-                    id: $scope.guid(),
+                    id: alarmBuilderFactoryService.guid(),
                     name: template.name,
                     parsedCondition: parsedCondition,
                     prefix: true,
@@ -228,6 +200,67 @@
             $scope.init = function() {
                 $http.get("/provider/alarms/availableTemplates.json").success(function(data) {
                     $scope.availableTemplates = data;
+
+                    if ($state && $state.params && $state.params.alarmName)
+                    {
+                        var req = {
+                            method: 'GET',
+                            url: appSettings.getServerUrl() + '/v1/api/globalalarms',
+                            headers: {
+                                'x-access-token': $localStorage.user.token
+                            },
+                        };
+
+                        $http(req).success(function (res) {
+                            if (res.success) {
+                                var foundAlarm = _.find(res.items, function (globalAlarm) { return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
+
+                                if (foundAlarm) {
+                                    $scope.alarmTemplateModel.alarmName = foundAlarm.alarmName;
+                                    $scope.alarmTemplateModel.alarmNameDisabled = true;
+
+                                    _.each(foundAlarm.rules, function(rule) {
+                                        var template = _.find($scope.availableTemplates, function (availableTemplate) { return availableTemplate.name === rule.ruleTemplate });
+                                        if (template) {
+
+                                            var condition = {
+                                                id: alarmBuilderFactoryService.guid(),
+                                                prefix: rule.prefix,
+                                                name: template.name
+                                            }
+
+                                            var booleanCondition = rule.prefix ? alarmBuilderFactoryService.booleanConditions[0].value : alarmBuilderFactoryService.booleanConditions[1].value;
+                                            var parsedCondition = template.template.replace("$BooleanPrefix$", "<span data-param=\"" + booleanCondition + "\" class=\"BooleanPrefix\" ng-click=\"changePrefix(this)\">" + booleanCondition + "</span>");
+
+                                            switch (template.type){
+                                                case "BetweenCondition":
+                                                    condition.operator = undefined;
+                                                    condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[1].textValue, template);
+                                                    condition.value2 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
+                                                    parsedCondition = parsedCondition.replace("$MinValue$", "<span data-param=\"" + rule.arguments[1].textValue + "\" class=\"MinValue\" ng-click=\"setValue(this, true, 'Min Value', 'MinValue')\">" + rule.arguments[1].textValue + "</span>");
+                                                    parsedCondition = parsedCondition.replace("$MaxValue$", "<span data-param=\"" + rule.arguments[2].textValue + "\" class=\"MaxValue\" ng-click=\"setValue(this, false, 'Max Value', 'MaxValue')\">" + rule.arguments[2].textValue + "</span>");
+                                                    break;
+                                                case "Condition":
+                                                    var operator = alarmBuilderFactoryService.getOperatorById(rule.arguments[1].textValue);
+                                                    condition.operator = operator;
+                                                    condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
+                                                    condition.value2 = undefined;
+                                                    parsedCondition = parsedCondition.replace("$Operator$", "<span data-param=\"" + operator.value + "\" class=\"Operator\" ng-click=\"setOperator(this)\">" + operator.value + "</span>");
+                                                    parsedCondition = parsedCondition.replace("$Value$", "<span data-param=\"" + rule.arguments[2].textValue + "\" class=\"Value\" ng-click=\"setValue(this, true, 'Value', 'Value')\">" + rule.arguments[2].textValue + "</span>");
+                                                    break;
+                                            }
+
+                                            condition.parsedCondition = parsedCondition;
+                                            $scope.conditions.push(condition);
+                                        }
+                                    });
+                                }
+                            } else {
+                            }
+                        }).error(function (err) {
+
+                        });
+                    }
                 });
             };
 
