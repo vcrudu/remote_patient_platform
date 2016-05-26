@@ -9,6 +9,13 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.successMessage = "Done";
         $scope.successSubMessage = "Click next to finish registration";
 
+        $scope.forward= function(){
+            if ($state.$current.data.order==4){
+                return "Sign in";
+            } else {
+                return "Next";
+            }
+        };
         $scope.moveNext = function(){
             if($state.$current.data.nextState){
                 $state.go($state.$current.data.nextState);
