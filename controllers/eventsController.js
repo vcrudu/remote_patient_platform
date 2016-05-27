@@ -6,7 +6,10 @@ var eventsRepository     = require('../repositories').Events;
 var EventFactory = require('../model').EventFactory;
 var logging = require("../logging");
 var notification = require('../notifications');
+var alarmsService = require('../services').AlarmService;
 const vm = require('vm');
+var _ = require('underscore');
+var snsClient = require('../snsClient');
 
 
 (function(){
@@ -108,6 +111,18 @@ const vm = require('vm');
                             res.status(200).json({
                                 success:true});
                             notification.sendEvent(req.decoded.email,'newMeasurement',eventToSave.getMeasurement());
+
+                            alarmsService.getSatisfiedAlarms(eventToSave, function(err, alarms) {
+                                var satisfiedAlarms = alarms;
+
+                                if (satisfiedAlarms && satisfiedAlarms.length > 0) {
+                                    _.forEach(satisfiedAlarms, function(globalAlarm){
+                                        var userId = eventToSave.userId;
+                                        var alarmName = globalAlarm.alarmName;
+                                        //call snsClient
+                                    });
+                                }
+                            });
                         }
                     });
                 }

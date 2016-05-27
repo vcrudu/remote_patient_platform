@@ -43,10 +43,10 @@ angular.module('app').factory('alarmBuilderFactoryService',
             switch (conditionObj.name) {
                 case "Sex":
                     if (minValue) {
-                        conditionObj.value1 = value;
+                        conditionObj.value1 = new String("'" + value + "'");
                     }
                     else {
-                        conditionObj.value2 = value;
+                        conditionObj.value2 = new String("'" + value + "'");
                     }
                     break;
                 default:
@@ -120,10 +120,24 @@ angular.module('app').factory('alarmBuilderFactoryService',
                     }
                 case "Sex":
                     if (minValue) {
-                        return conditionObj.value1;
+                        if (conditionObj.value1) {
+                            var replacedValue = conditionObj.value1.replace("'", "");
+                            replacedValue = replacedValue.replace("'", "");
+                            return replacedValue;
+                        }
+                        else {
+                            return conditionObj.value1;
+                        }
                     }
                     else {
-                        return conditionObj.value2;
+                        if (conditionObj.value1) {
+                            var replacedValue = conditionObj.value1.replace("'", "");
+                            replacedValue = replacedValue.replace("'", "");
+                            return replacedValue;
+                        }
+                        else {
+                            return conditionObj.value1;
+                        }
                     }
                 default:
                     return undefined;

@@ -97,8 +97,12 @@
                                                         var result = operatorValue.id === args[1].textValue;
                                                         return result;
                                                     });
+
+                                                    var textValue = args[2].textValue.replace("'", "");
+                                                    textValue = textValue.replace("'", "");
+
                                                     text = text.replace("<u><b>operator</b></u>", "<u><b>"+ operator.value +"</b></u>");
-                                                    text = text.replace("<u><b>value</b></u>", "<u><b>"+ args[2].textValue +"</b></u>");
+                                                    text = text.replace("<u><b>value</b></u>", "<u><b>"+ textValue +"</b></u>");
                                                     break;
                                             }
                                             

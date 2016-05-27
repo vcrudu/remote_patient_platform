@@ -248,9 +248,13 @@
                                                     var operator = alarmBuilderFactoryService.getOperatorById(rule.arguments[1].textValue);
                                                     condition.operator = operator;
                                                     condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
+
+                                                    var value = condition.value1.replace("'", "");
+                                                    value = value.replace("'", "");
+
                                                     condition.value2 = undefined;
                                                     parsedCondition = parsedCondition.replace("$Operator$", "<span data-param=\"" + operator.value + "\" class=\"Operator\" ng-click=\"setOperator(this)\">" + operator.value + "</span>");
-                                                    parsedCondition = parsedCondition.replace("$Value$", "<span data-param=\"" + rule.arguments[2].textValue + "\" class=\"Value\" ng-click=\"setValue(this, true, 'Value', 'Value')\">" + rule.arguments[2].textValue + "</span>");
+                                                    parsedCondition = parsedCondition.replace("$Value$", "<span data-param=\"" + rule.arguments[2].textValue + "\" class=\"Value\" ng-click=\"setValue(this, true, 'Value', 'Value')\">" + value + "</span>");
                                                     break;
                                             }
 
