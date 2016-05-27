@@ -68,7 +68,8 @@
                 socketId: socketId,
                 socketIds: socketIds,
                 avatar: avatar,
-                createdDateTime: createdDateTime
+                createdDateTime: createdDateTime,
+                userState: dbEntity.userState ? dbEntity.userState.S : null
             };
         },
         createUserDtoFromDbEntity : function(dbEntity){

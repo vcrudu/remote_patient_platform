@@ -3,7 +3,8 @@
  */
 
 (function() {
-    var userDetailsRepository = require('../repositories/usersDetailsRepository');
+    var userRepository = require('../repositories/usersRepository');
+    var usersDetailsRepository = require('../repositories/usersDetailsRepository');
     var moment = require('moment');
     var AWS = require('aws-sdk');
     var applicationArn = 'arn:aws:sns:eu-west-1:160466482332:app/GCM/trichrome_health_monitor';
@@ -17,7 +18,7 @@
     var util = require('util');
 
     function sendAppointmentEmail(toUser, slotDateTimeEpoch, callback) {
-        userDetailsRepository.findOneByEmail(toUser, function (err, data) {
+        userRepository.findOneByEmail(toUser, function (err, data) {
             var slotDateTime = new Date();
             slotDateTime.setTime(slotDateTimeEpoch);
             var momentSlotDateTime = moment(slotDateTime);
@@ -50,6 +51,25 @@
         });
     }
 
+    function sendInitStateMchineEvent(userId, callback) {
+        var params = {
+            Message: JSON.stringify({
+                userId: userId,
+                eventName: "initStateMachine"
+            }), /* required */
+            MessageAttributes: {
+                userId: {
+                    DataType: 'String',
+                    StringValue: userId /* required */
+                }
+            },
+            TopicArn: 'arn:aws:sns:eu-west-1:160466482332:hcm-registration'
+        };
+        snsClient.publish(params, function (err, data) {
+            if(callback)
+            callback(err, data);        // successful response
+        });
+    }
 
     function registerWithSNS(token, callback) {
 
@@ -118,6 +138,7 @@
         sendAppointmentEmail: sendAppointmentEmail,
         registerWithSNS: registerWithSNS,
         getSnsEndpointAttributes:getSnsEndpointAttributes,
-        setSnsEndpointAttributes:setSnsEndpointAttributes
+        setSnsEndpointAttributes:setSnsEndpointAttributes,
+        sendInitStateMchineEvent:sendInitStateMchineEvent
     };
 })();

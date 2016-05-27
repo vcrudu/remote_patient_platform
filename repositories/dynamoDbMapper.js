@@ -180,18 +180,19 @@
 
     module.exports  = {
         //Todo-here to move db mapper from user model to here
-        createUserFromDbEntity : function(dbEntity){
+        createUserFromDbEntity : function(dbEntity) {
             var createdDateTime = new Date();
             createdDateTime.setTime(dbEntity.createdDateTime.N);
             return {
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.token.S,
-                isActive:dbEntity.isActive.BOOL,
-                name:dbEntity.name.S,
-                surname:dbEntity.surname.S,
-                onlineStatus:dbEntity.onlineStatus.S,
-                createdDateTime:createdDateTime
+                isActive: dbEntity.isActive.BOOL,
+                name: dbEntity.name.S,
+                surname: dbEntity.surname.S,
+                onlineStatus: dbEntity.onlineStatus.S,
+                createdDateTime: createdDateTime,
+                userState: dbEntity.userState ? dbEntity.userState.S : null
             };
         },
 
