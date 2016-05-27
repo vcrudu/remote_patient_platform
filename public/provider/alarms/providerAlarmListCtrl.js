@@ -3,13 +3,46 @@
  */
 
 (function() {
-    angular.module('app').controller('providerAlarmListCtrl', ["$scope", "$http", "_", "appSettings", "$localStorage", "$state", "alarmBuilderFactoryService",
-        function ($scope, $http, _, appSettings, $localStorage, $state, alarmBuilderFactoryService) {
+    angular.module('app').controller('providerAlarmListCtrl', ["$scope", "$http", "_", "appSettings", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
+        function ($scope, $http, _, appSettings, $localStorage, $state, alarmBuilderFactoryService, toastr) {
             $scope.alarmTemplates = [];
             $scope.availableTemplates = [];
 
             $scope.handleAlarmTemplateSelected = function(template) {
                 $state.go("provider.alarm_builder_edit", {alarmName: template.alarmName});
+            };
+
+            $scope.deleteAlarmTemplate = function(template) {
+                var req = {
+                    method: 'DELETE',
+                    url: appSettings.getServerUrl() + '/v1/api//globalalarm/' + template.alarmName,
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    }
+                };
+
+                $http(req).success(function (res) {
+                    if (res.success) {
+                        toastr.success('Alarm Template deleted!','Success');
+
+                        var index = -1;
+                        for(var i=0; i<$scope.alarmTemplates.length;i++) {
+                            if (template.alarmName == $scope.alarmTemplates[0].alarmName) {
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        if (index > -1) {
+                            alert(index);
+                            $scope.alarmTemplates.splice(index, 1);
+                        }
+                    } else {
+                        toastr.success('Error happen!','Error');
+                    }
+                }).error(function (err) {
+                    toastr.success('Error happen!','Error');
+                });
             };
 
             $scope.init = function() {
@@ -47,6 +80,8 @@
                                                 case "HeartRateBetween":
                                                 case "BloodOxygenBetween":
                                                 case "TemperatureBetween":
+                                                case "AgeBetween":
+                                                case "WeightBetween":
                                                     text = text.replace("<u><b>min value</b></u>", "<u><b>"+ args[1].textValue +"</b></u>");
                                                     text = text.replace("<u><b>max value</b></u>", "<u><b>"+ args[2].textValue +"</b></u>");
                                                     break;
@@ -55,6 +90,9 @@
                                                 case "HeartRate":
                                                 case "BloodOxygen":
                                                 case "Temperature":
+                                                case "Age":
+                                                case "Sex":
+                                                case "Weight":
                                                     var operator = _.find(alarmBuilderFactoryService.operatorValues, function (operatorValue) {
                                                         var result = operatorValue.id === args[1].textValue;
                                                         return result;

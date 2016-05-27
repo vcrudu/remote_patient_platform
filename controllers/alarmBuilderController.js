@@ -86,5 +86,24 @@
                 }
             });
         });
+
+        router.delete('/globalalarm/:alarmName', function(req, res) {
+
+            logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.alarmName + " alarm requested to be deleted.");
+
+            globalAlarmRepository.delete(req.params.alarmName, function(err,data){
+                if(err){
+                    res.status(500).json({
+                        success:false,
+                        error:err
+                    });
+                }else{
+                    res.status(200).json({
+                        success:true
+                    });
+                }
+            });
+
+        });
     }
 })();

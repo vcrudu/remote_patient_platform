@@ -30,8 +30,18 @@
                                     <label class="input" ng-class="alarmBuilderForm.alarmName.$invalid && formWasSubmitted ? 'state-error' : ''">
                                         <i class="icon-append fa fa-bell-o" />
                                         <input type="text" name="alarmName" placeholder="Alarm Name" ng-model="alarmTemplateModel.alarmName" required ng-disabled="alarmTemplateModel.alarmNameDisabled">
+                                        <b class="tooltip tooltip-top-right">Please enter an alarm name.</b>
                                     </label>
                                     <em ng-show="alarmBuilderForm.alarmName.$invalid && formWasSubmitted" class="invalid">Alarm Name is reuired!</em>
+                                </section>
+                                <section>
+                                    <label class="label">Alarm Description</label>
+                                    <label class="textarea" ng-class="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted ? 'state-error' : ''">
+                                        <i class="icon-append fa fa-comments-o" />
+                                        <textarea rows="5" type="text" name="alarmDescription" placeholder="Alarm Description" ng-model="alarmTemplateModel.alarmDescription" required />
+                                        <b class="tooltip tooltip-top-right">Please enter an alarm description.</b>
+                                    </label>
+                                    <em ng-show="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted" class="invalid">Alarm Description is reuired!</em>
                                 </section>
                             </div>
 

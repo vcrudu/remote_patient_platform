@@ -58,5 +58,35 @@
     "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodOxygen\">$BooleanPrefix$ Blood Oxygen is $Operator$ $Value$</span>",
     "phrase": "Blood Oxygen is <u><b>operator</b></u> <u><b>value</b></u>",
     "type": "Condition"
+  },
+  {
+    "name": "AgeBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"AgeBetween\">$BooleanPrefix$ Age between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Age between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "Age",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"Age\">$BooleanPrefix$ Age is $Operator$ $Value$</span>",
+    "phrase": "Age is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "WeightBetween",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodOxygenBetween\">$BooleanPrefix$ Weight range between $MinValue$ and $MaxValue$</span>",
+    "phrase": "Weight range between <u><b>min value</b></u> and <u><b>max value</b></u>",
+    "type": "BetweenCondition"
+  },
+  {
+    "name": "Weight",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"BloodOxygen\">$BooleanPrefix$ Weight is $Operator$ $Value$</span>",
+    "phrase": "Weight is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
+  },
+  {
+    "name": "Sex",
+    "template": "<a ng-click=\"remove(this)\" class=\"close pull-left margin-right-5 txt-color-red\">×</a><span data-name=\"Age\">$BooleanPrefix$ Sex is $Operator$ $Value$</span>",
+    "phrase": "Sex is <u><b>operator</b></u> <u><b>value</b></u>",
+    "type": "Condition"
   }
 ]

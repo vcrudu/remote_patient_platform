@@ -6,6 +6,7 @@
         function ($scope, $http, $modal, alarmBuilderFactoryService, appSettings, $localStorage, $state, _, toastr) {
             $scope.alarmTemplateModel = {
                 alarmName: "",
+                alarmDescription: "",
                 alarmNameDisabled: false,
                 conditionsInvalid: false
             };
@@ -21,6 +22,7 @@
 
                 var alarmTemplateToPost = {
                     alarmName: $scope.alarmTemplateModel.alarmName,
+                    alarmDescription: $scope.alarmTemplateModel.alarmDescription,
                     rules: []
                 };
 
@@ -134,12 +136,7 @@
                         if (minValueSpan && minValueSpan.length > 0) {
                             minValueSpan.attr("data-value", value)
                             minValueSpan.text(value);
-                            if (minValue) {
-                                conditionObj.value1 = parseFloat(value);
-                            }
-                            else {
-                                conditionObj.value2 = parseFloat(value);
-                            }
+                            alarmBuilderFactoryService.setConditionValue(conditionObj, minValue, value);
                         }
                     }
                 }, function (arg) {
@@ -155,7 +152,7 @@
                     size: "sm",
                     resolve: {
                         operators: function() {
-                            return alarmBuilderFactoryService.operatorValues;
+                            return alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
                         },
                         selectedOperator: function () {
                             return conditionObj.operator;
@@ -223,6 +220,7 @@
 
                                 if (foundAlarm) {
                                     $scope.alarmTemplateModel.alarmName = foundAlarm.alarmName;
+                                    $scope.alarmTemplateModel.alarmDescription = foundAlarm.alarmDescription;
                                     $scope.alarmTemplateModel.alarmNameDisabled = true;
 
                                     _.each(foundAlarm.rules, function(rule) {

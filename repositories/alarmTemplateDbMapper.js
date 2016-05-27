@@ -74,6 +74,7 @@
         mapGlobalAlarmToDbEntity : function(globalAlarm) {
             var dbEntity = {
                 alarmName: {S: globalAlarm.alarmName},
+                alarmDescription: {S: globalAlarm.alarmDescription},
             };
 
             var rules = buildArray(globalAlarm.rules, mapRuleToDbEntity);
@@ -85,6 +86,7 @@
         mapGlobalAlarmFromDbEntity : function(globalAlarm) {
             var appEntity = {
                 alarmName: globalAlarm.alarmName.S,
+                alarmDescription: globalAlarm.alarmDescription ? globalAlarm.alarmDescription.S : "",
                 rules: []
             }
 

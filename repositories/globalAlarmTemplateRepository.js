@@ -106,11 +106,12 @@
                 TableName:TABLE_NAME,
                 ExpressionAttributeNames: {"#rules": "rules"},
                 ExpressionAttributeValues: {
-                    ":p_rules": dbEntity.rules
+                    ":p_rules": dbEntity.rules,
+                    ":p_alarmDescription": dbEntity.alarmDescription
                 },
                 ReturnConsumedCapacity: "TOTAL",
                 ReturnValues: "NONE",
-                UpdateExpression: "SET #rules=:p_rules"
+                UpdateExpression: "SET #rules=:p_rules, alarmDescription=:p_alarmDescription"
             };
 
             dynamodb.updateItem(params, function(err, data) {
@@ -121,6 +122,28 @@
                 }
 
                 callback(null, globalAlarm);
+            });
+        },
+
+        delete : function(alarmName, callback){
+            var dynamodb = getDb();
+
+            var params = {
+                Key: {
+                    alarmName: { S: alarmName}
+                },
+                TableName: TABLE_NAME
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                //loggerProvider.getLogger().log("The alarm template has been deleted successfully!");
+                callback(null, data);
             });
         }
     };

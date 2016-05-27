@@ -28,6 +28,38 @@ angular.module('app').factory('alarmBuilderFactoryService',
                 s4() + '-' + s4() + s4() + s4();
         };
 
+        self.getOperatorsByConditionName = function(conditionName) {
+            switch (conditionName) {
+                case "Sex":
+                    var array = [];
+                    array.push(self.operatorValues[0]);
+                    return array;
+                default:
+                    return self.operatorValues;
+            }
+        };
+        
+        self.setConditionValue = function(conditionObj, minValue, value) {
+            switch (conditionObj.name) {
+                case "Sex":
+                    if (minValue) {
+                        conditionObj.value1 = value;
+                    }
+                    else {
+                        conditionObj.value2 = value;
+                    }
+                    break;
+                default:
+                    if (minValue) {
+                        conditionObj.value1 = parseFloat(value);
+                    }
+                    else {
+                        conditionObj.value2 = parseFloat(value);
+                    }
+                    break;
+            }
+        };
+
         self.getValidationRegex = function(conditionName) {
             switch (conditionName) {
                 case "BloodPressureSystolicBetween":
@@ -38,10 +70,16 @@ angular.module('app').factory('alarmBuilderFactoryService',
                 case "HeartRate":
                 case "BloodOxygenBetween":
                 case "BloodOxygen":
+                case "AgeBetween":
+                case "Age":
                     return /^[0-9]*$/;
                 case "TemperatureBetween":
                 case "Temperature":
+                case "WeightBetween":
+                case "Weight":
                     return /^[+-]?\d+(\.\d+)?$/;
+                case "Sex":
+                    return /^((?:fe)?male)$/;
                 default:
                     return /.*$/;
 
@@ -62,6 +100,8 @@ angular.module('app').factory('alarmBuilderFactoryService',
                 case "HeartRate":
                 case "BloodOxygenBetween":
                 case "BloodOxygen":
+                case "AgeBetween":
+                case "Age":
                     if (minValue) {
                         return parseInt(conditionObj.value1);
                     }
@@ -70,11 +110,20 @@ angular.module('app').factory('alarmBuilderFactoryService',
                     }
                 case "TemperatureBetween":
                 case "Temperature":
+                case "WeightBetween":
+                case "Weight":
                     if (minValue) {
                         return parseFloat(conditionObj.value1);
                     }
                     else {
                         return parseInt(conditionObj.value2);
+                    }
+                case "Sex":
+                    if (minValue) {
+                        return conditionObj.value1;
+                    }
+                    else {
+                        return conditionObj.value2;
                     }
                 default:
                     return undefined;
@@ -92,10 +141,16 @@ angular.module('app').factory('alarmBuilderFactoryService',
                 case "HeartRate":
                 case "BloodOxygenBetween":
                 case "BloodOxygen":
+                case "AgeBetween":
+                case "Age":
                     return parseInt(valueString);
                 case "TemperatureBetween":
                 case "Temperature":
+                case "WeightBetween":
+                case "Weight":
                     return parseFloat(valueString);
+                case "Sex":
+                    return valueString;
                 default:
                     return undefined;
 
@@ -109,12 +164,17 @@ angular.module('app').factory('alarmBuilderFactoryService',
                 case "HeartRateBetween":
                 case "BloodOxygenBetween":
                 case "TemperatureBetween":
+                case "AgeBetween":
+                case "WeightBetween":
                     return condition.value1 && condition.value2;
                 case "BloodPressureSystolic":
                 case "BloodPressureDiastolic":
                 case "HeartRate":
                 case "BloodOxygen":
                 case "Temperature":
+                case "Age":
+                case "Sex":
+                case "Weight":
                     return condition.value1 && condition.operator;
             }
         }
@@ -162,6 +222,23 @@ angular.module('app').factory('alarmBuilderFactoryService',
                     break;
                 case "Temperature":
                     conditions.push({expression: "temperature " + self.getOperator(condition.operator) + " " + condition.value1});
+                    break;
+                case "AgeBetween":
+                    conditions.push({expression: "age >= " + condition.value1});
+                    conditions.push({expression: "age <= " + condition.value2});
+                    break;
+                case "Age":
+                    conditions.push({expression: "age " + self.getOperator(condition.operator) + " " + condition.value1});
+                    break;
+                case "Sex":
+                    conditions.push({expression: "sex " + self.getOperator(condition.operator) + " " + condition.value1});
+                    break;
+                case "WeightBetween":
+                    conditions.push({expression: "weight >= " + condition.value1});
+                    conditions.push({expression: "weight <= " + condition.value2});
+                    break;
+                case "Weight":
+                    conditions.push({expression: "weight " + self.getOperator(condition.operator) + " " + condition.value1});
                     break;
             }
 
