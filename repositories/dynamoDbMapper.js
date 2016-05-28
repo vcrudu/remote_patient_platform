@@ -70,9 +70,11 @@
     {
         var dateTemp = item.date.getTime().toString();
         return {
-            problemType : {S: item.problemType},
-            date : {N: dateTemp},
-            description : {S: item.description}
+            M: {
+                problemType : {S: item.problemType},
+                date : {N: dateTemp},
+                description : {S: item.description}
+            }
         };
     }
 
