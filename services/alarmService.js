@@ -195,6 +195,7 @@
                                             }
                                         }
                                     });
+                                    
                                     return callback(null, satisfiedAlarms);
                                 }
                             })

@@ -439,6 +439,15 @@
                 this.setState({mobile : $(this.refs.txtMobile).val()});
             }
 
+            if ($(this.refs.txtPhone).val() == "") {
+                $(this.refs.txtPhoneDiv).addClass("is-invalid");
+                $(this.refs.txtPhoneDiv).addClass("is-focused");
+                valid = false;
+            }
+            else {
+                this.setState({phone : $(this.refs.txtPhone).val()});
+            }
+
             return valid;
         },
         render: function() {
@@ -1045,6 +1054,7 @@
                 return;
             }
 
+            debugger;
             var objectToPost = {
                 "id":this.state.userDetails.id,
                 "name":this.refs.patientInfoComponent.state.firstName,
@@ -1064,7 +1074,11 @@
                 },
                 "ethnicity":this.refs.patientMedicalInfo.state.ethnicity,
                 "nhsNumber":this.refs.patientMedicalInfo.state.nhsNumber,
-                "otherIdentifiers": []
+                "otherIdentifiers": [],
+                "phone": this.refs.patientAddress.state.phone,
+                "mobile": this.refs.patientAddress.state.mobile,
+                "weight": this.refs.patientMedicalInfo.state.weight,
+                "height": this.refs.patientMedicalInfo.state.height
             };
 
             Bridge.Patient.saveDetails(objectToPost, function(result) {

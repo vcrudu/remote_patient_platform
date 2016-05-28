@@ -152,12 +152,16 @@
                     ":ud_address": patientDbEntity.address,
                     ":ud_ethnicity": patientDbEntity.ethnicity,
                     ":ud_nhsNumber": patientDbEntity.nhsNumber,
-                    ":ud_otherIdentifiers": patientDbEntity.otherIdentifiers
+                    ":ud_otherIdentifiers": patientDbEntity.otherIdentifiers,
+                    ":ud_mobile": patientDbEntity.mobile,
+                    ":ud_phone": patientDbEntity.phone,
+                    ":ud_weight": patientDbEntity.weight,
+                    ":ud_height": patientDbEntity.height,
                 },
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnValues: 'NONE',
                 UpdateExpression: 'SET #uname=:ud_name, surname=:ud_surname, title=:ud_title, dateOfBirth=:ud_date_of_birth, gender=:ud_gender, address=:ud_address, ethnicity=:ud_ethnicity, ' +
-                    "nhsNumber=:ud_nhsNumber, otherIdentifiers=:ud_otherIdentifiers"
+                    "nhsNumber=:ud_nhsNumber, otherIdentifiers=:ud_otherIdentifiers, mobile=:ud_mobile, phone=:ud_phone, weight=:ud_weight, height=:ud_height"
             };
 
             dynamodb.updateItem(params, function(err, data) {
