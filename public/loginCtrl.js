@@ -1,8 +1,8 @@
 /**
  * Created by Victor on 10/05/2015.
  */
-angular.module('app').controller('loginCtrl',['$scope', '$state', 'authService',
-    function($scope, $state, authService){
+angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'authService',
+    function($scope, $state, toastr, authService){
       $scope.userCredentials = {};
 
       if ($state && $state.params && $state.params.userName)
