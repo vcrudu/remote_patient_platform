@@ -87,8 +87,12 @@
             var providerId = Bridge.Redirect.getQueryStringParam()["providerId"];
             var slotId = Bridge.Redirect.getQueryStringParam()["slotId"];
 
-            Bridge.Provider.getProviderSlotById(slotId, function(slotResul) {
-                if (result.success) {
+            Bridge.Provider.getProviderSlotById(slotId, function(slotResult) {
+                if (slotResult.success) {
+                    component.setState({
+                        appointmentInfo: slotResult.data
+                    });
+                    
                     Bridge.Provider.getProviderDetails(providerId, function(result) {
                         if (result.success) {
                             component.setState({

@@ -183,7 +183,6 @@ Bridge.Provider = {
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                 }).done(function (result) {
-                    debugger;
                     Bridge.resultCallback({success: true, data: result, error: undefined});
                 }).fail(function () {
                     Bridge.resultCallback({success: false, data: undefined, error: "error"});
