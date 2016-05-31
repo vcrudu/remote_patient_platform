@@ -87,6 +87,34 @@ Bridge.Provider = {
             });
         }
     },
+    getProviderDetails: function(userId, callBack) {
+        Bridge.resultCallback = callBack;
+
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Provider.getProviderDetails", data: {userId: userId}};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            var apiUrl = Bridge.serverApiUrl + "provider/?providerId=" + userId;
+            getFakeWhoProvider(function (data) {
+                $.ajax({
+                    url: apiUrl + '&token=' + data.token,
+                    type: "GET",
+                    crossDomain: true,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                }).done(function (data) {
+                    if (data.success) {
+                        Bridge.resultCallback({success: true, data: data.result, error: undefined});
+                    }
+                    else {
+                        Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                    }
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                });
+            });
+        }
+    },
     callPatient: function(patientId, patientName, callBack) {
         Bridge.resultCallback = callBack;
         if ((/android/gi).test(navigator.userAgent)) {
@@ -136,6 +164,29 @@ Bridge.Provider = {
                     Bridge.resultCallback({success:true, data: result.result, error: undefined});
                 }).fail(function() {
                     Bridge.resultCallback({success:false, data: undefined, error: "error"});
+                });
+            });
+        }
+    },
+    getProviderSlotById: function(slotId, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Provider.getProviderSlotById", data: slot};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            var apiUrl = Bridge.serverApiUrl + "slots/" + slotId;
+            getFakeWhoProvider(function (data) {
+                $.ajax({
+                    url: apiUrl + '?token=' + data.token,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                }).done(function (result) {
+                    debugger;
+                    Bridge.resultCallback({success: true, data: result, error: undefined});
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
                 });
             });
         }

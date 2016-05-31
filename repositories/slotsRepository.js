@@ -114,7 +114,54 @@
 
             tryOne(startTime, callback);
         },
+        getBookedOne : function(startTime, callback) {
+            var dynamodb = getDb();
 
+            function tryOne(startTime, callback) {
+
+                var filterExpression = '';
+                var params;
+                filterExpression = 'attribute_exists (patientId)';
+                params = {
+                    KeyConditionExpression: '#slotDateTime=:startTime',
+
+                    ExpressionAttributeNames: {
+                        "#slotDateTime": "slotDateTime"
+                    },
+                    ExpressionAttributeValues: {
+                        ":startTime": {"N": startTime.getTime().toString()}
+                    },
+                    FilterExpression: filterExpression,
+                    TableName:connectionOptions.tablesSuffix + TABLE_NAME,
+                    Limit: 1
+                };
+
+                dynamodb.query(params, function (err, data) {
+                    if (err) {
+                        loggerProvider.getLogger().error(err);
+                        callback(err, null);
+                        return;
+                    }
+                    loggerProvider.getLogger().debug("The slot has been retrieved successfully.");
+                    var results = [];
+                    if (data.Items&&data.Items.length>0) {
+                        var time = parseInt(data.Items[0].slotDateTime.N);
+                        var slotDateTime = new Date();
+                        slotDateTime.setTime(time);
+                        var slot = {
+                            providerId: data.Items[0].providerId.S,
+                            slotDateTime: slotDateTime,
+                            appointmentReason: data.Items[0].appointmentReason ? data.Items[0].appointmentReason.S : ""
+                        };
+                        callback(null, slot);
+                    } else {
+                        tryOne(addMinutes(startTime,15),callback);
+                    }
+                });
+            }
+
+            tryOne(startTime, callback);
+        },
         updateSlot:function(patientId, providerId, dateTime,appointmentReason, callback) {
             var dynamodb = getDb();
             var params;
