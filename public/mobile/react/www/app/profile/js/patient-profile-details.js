@@ -1829,7 +1829,6 @@
                 return;
             }
 
-            debugger;
             var objectToPost = {
                 "id": this.state.userDetails.id,
                 "name": this.refs.patientInfoComponent.state.firstName,

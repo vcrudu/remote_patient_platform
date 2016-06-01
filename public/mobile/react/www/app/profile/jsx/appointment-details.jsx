@@ -23,7 +23,30 @@
     var ListItem  = ReactMDL.ListItem;
     var ListItemContent  = ReactMDL.ListItemContent;
 
-    var ProviderDetails = React.createClass({
+    var AppointmentInfo = React.createClass({
+        getInitialState: function() {
+            return {
+                appointmentTime: this.props.model ? this.props.model.slotDateTime : "",
+                reasonText: this.props.model ? this.props.model.appointmentReason : ""
+            };
+        },
+        render: function() {
+            return <List>
+                <ListItem twoLine>
+                    <ListItemContent avatar="alarm" subtitle="time">{this.state.appointmentTime}</ListItemContent>
+                </ListItem>
+                <div className="divider"></div>
+                <div className="clear"></div>
+                <ListItem twoLine>
+                    <ListItemContent avatar="message" subtitle="reason">{this.state.reasonText}</ListItemContent>
+                </ListItem>
+                <div className="divider"></div>
+                <div className="clear"></div>
+            </List>;
+        }
+    });
+
+    var ProviderInfo = React.createClass({
         render: function() {
             return <List>
                 <ListItem twoLine>
@@ -51,7 +74,7 @@
                     this.props.model.contactDetails.map(function (contact) {
                         switch (contact.contactType) {
                             case "Phone":
-                                return <div>
+                                return <div key="Phone">
                                     <ListItem twoLine>
                                         <ListItemContent avatar="local_phone" subtitle="phone">{contact.contact}</ListItemContent>
                                     </ListItem>
@@ -59,7 +82,7 @@
                                     <div className="clear"></div>
                                 </div>;
                             case "Mobile":
-                                return <div>
+                                return <div key="Mobile">
                                     <ListItem twoLine>
                                         <ListItemContent avatar="stay_current_portrait" subtitle="mobile">{contact.contact}</ListItemContent>
                                     </ListItem>
@@ -76,7 +99,7 @@
     var AppointmentDetails = React.createClass({
         getInitialState: function() {
             return {
-                activeTab: 0,
+                activeTab: undefined,
                 providerInfo: undefined,
                 appointmentInfo: undefined
             }
@@ -84,20 +107,26 @@
         componentDidMount: function() {
             var component = this;
 
-            var providerId = Bridge.Redirect.getQueryStringParam()["providerId"];
             var slotId = Bridge.Redirect.getQueryStringParam()["slotId"];
 
             Bridge.Provider.getProviderSlotById(slotId, function(slotResult) {
                 if (slotResult.success) {
+
+                    var slotDate = moment(slotResult.data.slotDateTime).format("YYYY-MM-DD hh:mm");
+
+                    slotResult.data.slotDateTime = slotDate;
+
                     component.setState({
                         appointmentInfo: slotResult.data
                     });
-                    
-                    Bridge.Provider.getProviderDetails(providerId, function(result) {
+
+                    Bridge.Provider.getProviderDetails(slotResult.data.providerId, function(result) {
                         if (result.success) {
                             component.setState({
                                 providerInfo: result.data
                             });
+
+                            component.setState({ activeTab: 0 });
                         }
 
                         $(".mdl-progress").css('visibility', 'hidden');
@@ -123,6 +152,11 @@
             return  <Layout fixedHeader fixedTabs>
                 <Header>
                     <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
+                    <div className="primary-bg profile-image-container">
+                        <img src="images/user.png" width="120" height="120" className="img-responsive center-block profile-user-photo" />
+                        <div className="userName"><h4>{component.state.providerInfo ? component.state.providerInfo.title + " " + component.state.providerInfo.name + " " + component.state.providerInfo.surname : ""}</h4>
+                        </div>
+                    </div>
                     <HeaderTabs activeTab={this.state.activeTab} onChange={this.onChange} ripple>
                         <Tab href="#tab1">Appointment Info</Tab>
                         <Tab href="#tab2">Provider Info</Tab>
@@ -134,8 +168,8 @@
                             <div className="page-content-wrapper">
                                 {(() => {
                                     switch (component.state.activeTab) {
-                                        case 0: return "Content for Tab 1";
-                                        case 1: return <ProviderDetails model={component.state.providerInfo}/>;
+                                        case 0: return <AppointmentInfo model={component.state.appointmentInfo}/>;
+                                        case 1: return <ProviderInfo model={component.state.providerInfo}/>;
                                     }
                                 })()}
                             </div>

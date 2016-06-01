@@ -23,8 +23,47 @@
     var ListItem = ReactMDL.ListItem;
     var ListItemContent = ReactMDL.ListItemContent;
 
-    var ProviderDetails = React.createClass({
-        displayName: "ProviderDetails",
+    var AppointmentInfo = React.createClass({
+        displayName: "AppointmentInfo",
+
+        getInitialState: function () {
+            return {
+                appointmentTime: this.props.model ? this.props.model.slotDateTime : "",
+                reasonText: this.props.model ? this.props.model.appointmentReason : ""
+            };
+        },
+        render: function () {
+            return React.createElement(
+                List,
+                null,
+                React.createElement(
+                    ListItem,
+                    { twoLine: true },
+                    React.createElement(
+                        ListItemContent,
+                        { avatar: "alarm", subtitle: "time" },
+                        this.state.appointmentTime
+                    )
+                ),
+                React.createElement("div", { className: "divider" }),
+                React.createElement("div", { className: "clear" }),
+                React.createElement(
+                    ListItem,
+                    { twoLine: true },
+                    React.createElement(
+                        ListItemContent,
+                        { avatar: "message", subtitle: "reason" },
+                        this.state.reasonText
+                    )
+                ),
+                React.createElement("div", { className: "divider" }),
+                React.createElement("div", { className: "clear" })
+            );
+        }
+    });
+
+    var ProviderInfo = React.createClass({
+        displayName: "ProviderInfo",
 
         render: function () {
             return React.createElement(
@@ -72,7 +111,7 @@
                         case "Phone":
                             return React.createElement(
                                 "div",
-                                null,
+                                { key: "Phone" },
                                 React.createElement(
                                     ListItem,
                                     { twoLine: true },
@@ -88,7 +127,7 @@
                         case "Mobile":
                             return React.createElement(
                                 "div",
-                                null,
+                                { key: "Mobile" },
                                 React.createElement(
                                     ListItem,
                                     { twoLine: true },
@@ -112,7 +151,7 @@
 
         getInitialState: function () {
             return {
-                activeTab: 0,
+                activeTab: undefined,
                 providerInfo: undefined,
                 appointmentInfo: undefined
             };
@@ -120,16 +159,26 @@
         componentDidMount: function () {
             var component = this;
 
-            var providerId = Bridge.Redirect.getQueryStringParam()["providerId"];
             var slotId = Bridge.Redirect.getQueryStringParam()["slotId"];
 
-            Bridge.Provider.getProviderSlotById(slotId, function (slotResul) {
-                if (result.success) {
-                    Bridge.Provider.getProviderDetails(providerId, function (result) {
+            Bridge.Provider.getProviderSlotById(slotId, function (slotResult) {
+                if (slotResult.success) {
+
+                    var slotDate = moment(slotResult.data.slotDateTime).format("YYYY-MM-DD hh:mm");
+
+                    slotResult.data.slotDateTime = slotDate;
+
+                    component.setState({
+                        appointmentInfo: slotResult.data
+                    });
+
+                    Bridge.Provider.getProviderDetails(slotResult.data.providerId, function (result) {
                         if (result.success) {
                             component.setState({
                                 providerInfo: result.data
                             });
+
+                            component.setState({ activeTab: 0 });
                         }
 
                         $(".mdl-progress").css('visibility', 'hidden');
@@ -155,6 +204,20 @@
                     Header,
                     null,
                     React.createElement(ProgressBar, { indeterminate: true, ref: "progressBar", id: "progressBar" }),
+                    React.createElement(
+                        "div",
+                        { className: "primary-bg profile-image-container" },
+                        React.createElement("img", { src: "images/user.png", width: "120", height: "120", className: "img-responsive center-block profile-user-photo" }),
+                        React.createElement(
+                            "div",
+                            { className: "userName" },
+                            React.createElement(
+                                "h4",
+                                null,
+                                component.state.providerInfo ? component.state.providerInfo.title + " " + component.state.providerInfo.name + " " + component.state.providerInfo.surname : ""
+                            )
+                        )
+                    ),
                     React.createElement(
                         HeaderTabs,
                         { activeTab: this.state.activeTab, onChange: this.onChange, ripple: true },
@@ -185,9 +248,9 @@
                                 (() => {
                                     switch (component.state.activeTab) {
                                         case 0:
-                                            return "Content for Tab 1";
+                                            return React.createElement(AppointmentInfo, { model: component.state.appointmentInfo });
                                         case 1:
-                                            return React.createElement(ProviderDetails, { model: component.state.providerInfo });
+                                            return React.createElement(ProviderInfo, { model: component.state.providerInfo });
                                     }
                                 })()
                             )
