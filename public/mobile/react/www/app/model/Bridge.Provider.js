@@ -171,7 +171,7 @@ Bridge.Provider = {
     getProviderSlotById: function(slotId, callBack) {
         Bridge.resultCallback = callBack;
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Provider.getProviderSlotById", data: slot};
+            var message = {method:"Bridge.Provider.getProviderSlotById", data: {slotId: slotId}};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = Bridge.serverApiUrl + "slots/" + slotId;
