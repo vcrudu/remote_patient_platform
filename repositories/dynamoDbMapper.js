@@ -241,7 +241,7 @@
             if (patient.externalId) { patientDbEntity.externalId = buildDynamoDbString(patient.externalId); }
             if (patient.devices) {
                 var allDevices = buildArray(patient.devices, mapDevicesToDbEntity);
-                patientDbEntity.devices = c;
+               // patientDbEntity.devices = c;
             }
             if (patient.healthProblems) {
                 var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
