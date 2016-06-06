@@ -35,7 +35,7 @@
               name: requestBody.name,
               surname: requestBody.surname,
               type: requestBody.type,
-              isActive: true,
+              isActive: false, //TO-DO was true
               socketId:'NULL',
               onlineStatus: "offline"
           };
@@ -68,7 +68,8 @@
                 socketId: socketId,
                 socketIds: socketIds,
                 avatar: avatar,
-                createdDateTime: createdDateTime
+                createdDateTime: createdDateTime,
+                userState: dbEntity.userState ? dbEntity.userState.S : null
             };
         },
         createUserDtoFromDbEntity : function(dbEntity){

@@ -127,6 +127,7 @@
                 allDaySlot: false,
                 header:false,
                 height: $(window).height() - 4,
+                allDay:false,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -142,6 +143,12 @@
                     if (calEvent.id < now.getTime()) {
                         return;
                     }
+
+                    if (calEvent.status == "appointment") {
+                        Bridge.Redirect.redirectToWithLevelsUp("profile/appointment-details.html?slotId=" + calEvent.id, 2);
+                        return;
+                    }
+
                     if (calEvent.slot.countOfProviders == 0) {
                         return;
                     }

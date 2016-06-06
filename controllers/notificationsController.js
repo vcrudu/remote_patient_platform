@@ -10,6 +10,13 @@ var _ = require('underscore');
 
     module.exports.init = function(router){
 
+        var parseBool = function(str) {
+            if (typeof str === "string" && str.toLowerCase() == "true")
+                return true;
+
+            return (parseInt(str) > 0);
+        }
+
         router.get('/notifications', function(req, res){
             logging.getLogger().trace({url:req.url,userId:req.decoded.email}, "Notifications list requested.");
 
@@ -68,6 +75,60 @@ var _ = require('underscore');
                         description: "The result contains the list of notifications."
                     });
                     logging.getLogger().trace({url:req.url,userId:req.decoded.email}, notifications.length + " notifications provided.");
+                }
+            });
+        });
+
+        router.get('/notification', function(req, res){
+            var userName = req.query.userName;
+            var dateTime = req.query.dateTime;
+
+            if (!userName)
+            {
+                userName = req.decoded.email;
+            }
+
+            notificationsRepository.getByUserIdAndDateTime(userName, dateTime, function(err, notification){
+                if(err)
+                {
+                    var incidentTicket = logging.getIncidentTicketNumber("nt");
+                    logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
+                    res.status(500).json({
+                        success:false,
+                        error:logging.getUserErrorMessage(incidentTicket)
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        item: notification,
+                    });
+                }
+            });
+        });
+
+        router.post('/notificationread', function(req, res){
+            var userName = req.query.userName;
+            var dateTime = req.query.dateTime;
+            var read = parseBool(req.query.read);
+
+            if (!userName)
+            {
+                userName = req.decoded.email;
+            }
+
+            notificationsRepository.notificationRead(userName, dateTime, read, function(err, notification){
+                if(err)
+                {
+                    var incidentTicket = logging.getIncidentTicketNumber("nt");
+                    logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
+                    res.status(500).json({
+                        success:false,
+                        error:logging.getUserErrorMessage(incidentTicket)
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                    });
                 }
             });
         });

@@ -84,6 +84,7 @@
                     }
                 }
                 else {
+                    $(component.props.carouselWizard).carousel("prev");
                     component.componentDidMount();
                     /*component.setState({
                         doneButtonVisibility: false,

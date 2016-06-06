@@ -12,6 +12,7 @@ angular.module('app').directive('isEthnicityValid',function(){
           case "British/Mixed British":
           case "Irish":
           case "Other White Background":
+          case "White Caucasian":
           case "White & BlackCaribbean":
           case "White & Black African":
           case "Other Mixed Background":

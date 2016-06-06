@@ -1,0 +1,39 @@
+<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
+        <h2>Available Alarm Templates</h2>
+    </header>
+    <div>
+        <div class="widget-body">
+            <section>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Template Name</th>
+                        <th>Description</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="alarmTemplate in alarmTemplates">
+                        <td><a href="javascript:void(0)" ng-click="handleAlarmTemplateSelected(alarmTemplate)">{{alarmTemplate.alarmName}}</a></td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="ruleText in alarmTemplate.rulesText">
+                                    <div ng-bind-html="ruleText | rawHtml"></div>
+                                </li>
+                            </ul>
+                        </td>
+                        <td style="vertical-align:middle;"><div style="text-align:center;"><button type="button" class="btn btn-warning" ng-click="deleteAlarmTemplate(alarmTemplate)">Delete</button></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12"><button ui-sref="provider.alarm_builder" type="button" class="btn btn-primary push-right" style="float: right">New</button></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

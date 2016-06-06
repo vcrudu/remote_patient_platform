@@ -33,7 +33,7 @@
                         { className: "page-content-wrapper" },
                         React.createElement(
                             Card,
-                            { className: "message-card-wide" },
+                            { className: "message-card-wide mdl-shadow--2dp" },
                             React.createElement(
                                 CardTitle,
                                 null,

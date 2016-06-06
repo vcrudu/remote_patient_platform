@@ -24,8 +24,10 @@
     function mapOtherIdentifiersToDbEntity(identifier)
     {
         return {
-            otherIdentifierType: {S: identifier.otherIdentifierType},
-            otherIdentifier: {S: identifier.otherIdentifier}
+            M: {
+                otherIdentifierType: {S: identifier.otherIdentifierType},
+                otherIdentifier: {S: identifier.otherIdentifier}
+            }
         };
     }
 
@@ -68,14 +70,16 @@
     {
         var dateTemp = item.date.getTime().toString();
         return {
-            problemType : {S: item.problemType},
-            date : {N: dateTemp},
-            description : {S: item.description}
+            M: {
+                problemType : {S: item.problemType},
+                date : {N: dateTemp},
+                description : {S: item.description}
+            }
         };
     }
 
     function buildDynamoDbString(str){
-        if(str) return {S:str};
+        if(str && str !== "") return {S:str};
         else return {NULL:true};
     }
 
@@ -178,18 +182,19 @@
 
     module.exports  = {
         //Todo-here to move db mapper from user model to here
-        createUserFromDbEntity : function(dbEntity){
+        createUserFromDbEntity : function(dbEntity) {
             var createdDateTime = new Date();
             createdDateTime.setTime(dbEntity.createdDateTime.N);
             return {
                 email: dbEntity.email.S,
                 passwordHash: dbEntity.passwordHash.S,
                 token: dbEntity.token.S,
-                isActive:dbEntity.isActive.BOOL,
-                name:dbEntity.name.S,
-                surname:dbEntity.surname.S,
-                onlineStatus:dbEntity.onlineStatus.S,
-                createdDateTime:createdDateTime
+                isActive: dbEntity.isActive.BOOL,
+                name: dbEntity.name.S,
+                surname: dbEntity.surname.S,
+                onlineStatus: dbEntity.onlineStatus.S,
+                createdDateTime: createdDateTime,
+                userState: dbEntity.userState ? dbEntity.userState.S : null
             };
         },
 
@@ -221,7 +226,7 @@
                 patientDbEntity.otherIdentifiers = {L:allOtherIdentifiers};
             }
             if (patient.phone) { patientDbEntity.phone = {S:patient.phone}; }
-            if (patient.mobile) { patientDbEntity.mobile = buildDynamoDbString(patient.mobile); }
+            /*if (patient.mobile)*/ { patientDbEntity.mobile = buildDynamoDbString(patient.mobile); }
             if (patient.fax) { patientDbEntity.fax = buildDynamoDbString(patient.fax); }
             if (patient.relevantContacts) {
                 var allRelevantContacts = buildArray(patient.relevantContacts, mapRelevantContactsToDbEntity);
@@ -236,11 +241,25 @@
             if (patient.externalId) { patientDbEntity.externalId = buildDynamoDbString(patient.externalId); }
             if (patient.devices) {
                 var allDevices = buildArray(patient.devices, mapDevicesToDbEntity);
-                patientDbEntity.devices = {L:allDevices};
+               // patientDbEntity.devices = c;
             }
             if (patient.healthProblems) {
                 var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
                 patientDbEntity.devices = {L:allHealthProblems};
+            }
+
+            if (patient.weight) {
+                patientDbEntity.weight = {N:patient.weight};
+            }
+            else {
+                patientDbEntity.weight = {NULL:true};
+            }
+
+            if (patient.height) {
+                patientDbEntity.height = {N:patient.height};
+            }
+            else {
+                patientDbEntity.height = {NULL:true};
             }
 
             return patientDbEntity;
@@ -309,6 +328,11 @@
                 else return undefined;
             };
 
+            var checkNumberNull = function(arg1){
+                if(arg1) return arg1.N;
+                else return undefined;
+            };
+
             var patient = domainModel.createPatient({
                     id: dbEntity.id.S,
                     name: dbEntity.name.S,
@@ -330,7 +354,9 @@
                     avatar: checkNull(dbEntity.avatar),
                     externalId: checkNull(dbEntity.externalId),
                     devices: allDevices,
-                    healthProblems: allHealthProblems
+                    healthProblems: allHealthProblems,
+                    weight: checkNumberNull(dbEntity.weight),
+                    height: checkNumberNull(dbEntity.height),
                 }
             );
             return patient;

@@ -5,12 +5,14 @@
 (function() {
     "use strict";
 
-    $.material.init();
+    var Layout = ReactMDL.Layout;
+    var Content = ReactMDL.Content;
+    var FABButton = ReactMDL.FABButton;
+    var Icon = ReactMDL.Icon;
+    var ProgressBar  = ReactMDL.ProgressBar;
 
     var TimeSelector = React.createClass({
-
         handleShow: function() {
-
                 var changeTimePicker = $(this.refs.changeTimePicker);
                 var inst = changeTimePicker.mobiscroll('getInst');
                 if (changeTimePicker && changeTimePicker.length > 0){
@@ -18,8 +20,6 @@
                     inst.show();
 
                 }
-
-
             return false;
         },
         componentDidMount: function() {
@@ -42,15 +42,12 @@
                 },
                 maxWidth: 100,
                 onBeforeShow:function(inst){
-
                     if(inst.haveRange) {
                         var first=inst.haveRange.intervals.split(':');
                         var start=new Date(new Date().setHours(first[0],0,0,0));
                         var second=first[1].split('-');
                         var end=new Date(new Date().setHours(second[1],0,0,0));
                         inst.setVal([start, end]);
-
-
                     }else{
                         inst.setVal([initRange1,initRange2]);
                     }
@@ -61,7 +58,9 @@
         render: function() {
             return <div className="show-avaialbility-mobiscroll-wrapper">
                 <input id="changeTimePicker" ref="changeTimePicker" className="hide"/>
-                <button id="show" ref="show" onClick={this.handleShow} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-availability-mobiscroll"><i className="material-icons">add</i></button>
+                <FABButton colored ripple className="show-availability-mobiscroll" onClick={this.handleShow}>
+                    <Icon name="add" />
+                </FABButton>
             </div>
         }
     });
@@ -139,12 +138,8 @@
                 defaultView: 'nursesGrid',
                 defaultTimedEventDuration: '01:00:00',
                 allDaySlot: false,
-                height: $(window).height() - 3,
-                header:{
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'today'
-                },
+                height: $(window).height() - 4,
+                header:false,
                 allDay:false,
                 views: {
                     nursesGrid: {
@@ -173,6 +168,7 @@
                 },
 
                 events: function (start, end, timezone, callback) {
+                    $(".mdl-progress").css('visibility', 'visible');
                     var events = [];
                     Bridge.Provider.getProviderSlots(start,end,function (result) {
                         if (result.success) {
@@ -191,6 +187,8 @@
                             }
 
                             callback(events);
+
+                            $(".mdl-progress").css('visibility', 'hidden');
                         }
                     });
 
@@ -207,11 +205,16 @@
             });
         },
         render: function() {
-            return <div ref="appointmentsCalendarWrapper">
-                <div ref="availabilityCalendar" id="calendar"></div>
+            return <Layout>
+                <Content>
+                    <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
+                    <div ref="appointmentsCalendarWrapper">
+                        <div ref="availabilityCalendar" id="calendar"></div>
 
-                <TimeSelector ref="timeSelector" onSelectTimeCallback={this.onTimeChanged}/>
-            </div>
+                        <TimeSelector ref="timeSelector" onSelectTimeCallback={this.onTimeChanged}/>
+                    </div>
+                </Content>
+            </Layout>
         }
     });
 

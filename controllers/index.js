@@ -17,6 +17,8 @@ var slotsController = require('./slotsController');
 var providerAppointmentsController = require('./providerAppointmentsController');
 var patientAppointmentsController = require('./patientAppointmentsController');
 var notificationsController = require('./notificationsController');
+var pushNotificationController = require('./pushNotificationController');
+var alarmBuilderController = require('./alarmBuilderController');
 
 var logging     = require('../logging');
 
@@ -64,6 +66,8 @@ var logging     = require('../logging');
         patientAppointmentsController.init(apiRoutes);
         providerAppointmentsController.init(apiRoutes);
         notificationsController.init(apiRoutes);
+        pushNotificationController.init(apiRoutes);
+        alarmBuilderController.init(apiRoutes);
 
         app.use('/v1/api', apiRoutes);
 

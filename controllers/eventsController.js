@@ -6,6 +6,10 @@ var eventsRepository     = require('../repositories').Events;
 var EventFactory = require('../model').EventFactory;
 var logging = require("../logging");
 var notification = require('../notifications');
+var alarmsService = require('../services').AlarmService;
+const vm = require('vm');
+var _ = require('underscore');
+var snsClient = require('../snsClient');
 
 
 (function(){
@@ -70,6 +74,17 @@ var notification = require('../notifications');
                 return;
             }
 
+            /*var conditions = [{ factTemplate: "factResult = temperature >= 36.5" }];
+
+            var sandbox = {
+                temperature: 36.5,
+            };
+
+            var context = new vm.createContext(sandbox);
+            var script = new vm.Script(conditions[0].factTemplate);
+
+            script.runInContext(context);*/
+
             eventsRepository.getOne(req.decoded.email, eventToSave.getMeasurementDateTime(), function(err, event){
                 if(err){
                     var incidentTicket = logging.getIncidentTicketNumber('ev');
@@ -96,6 +111,18 @@ var notification = require('../notifications');
                             res.status(200).json({
                                 success:true});
                             notification.sendEvent(req.decoded.email,'newMeasurement',eventToSave.getMeasurement());
+
+                            alarmsService.getSatisfiedAlarms(eventToSave, function(err, alarms) {
+                                var satisfiedAlarms = alarms;
+
+                                if (satisfiedAlarms && satisfiedAlarms.length > 0) {
+                                    _.forEach(satisfiedAlarms, function(globalAlarm){
+                                        var userId = eventToSave.userId;
+                                        var alarmName = globalAlarm.alarmName;
+                                        //call snsClient
+                                    });
+                                }
+                            });
                         }
                     });
                 }

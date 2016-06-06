@@ -6,9 +6,16 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
     function($scope, $log, $state, toastr, authService, $timeout, $localStorage){
         $scope.newUser ={type:"patient"};
         $scope.states = [];
-        $scope.successMessage = "Done"
-        $scope.successSubMessage = "Click next to finish registration"
+        $scope.successMessage = "Done";
+        $scope.successSubMessage = "Click next to finish registration";
 
+        $scope.forward= function(){
+            if ($state.$current.data.order==4){
+                return "Sign in";
+            } else {
+                return "Next";
+            }
+        };
         $scope.moveNext = function(){
             if($state.$current.data.nextState){
                 $state.go($state.$current.data.nextState);

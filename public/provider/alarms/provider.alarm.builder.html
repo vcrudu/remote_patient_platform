@@ -1,37 +1,90 @@
 <div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+    <style>
+        .has-errors {
+            border: 1px solid #A90329;
+        }
+
+        .has-error-message {
+            display: block;
+            margin-top: 6px;
+            padding: 0 1px;
+            font-style: normal;
+            font-size: 11px;
+            line-height: 15px;
+            color: #D56161;
+        }
+    </style>
     <header>
         <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
         <h2>Alarm Builder</h2>
     </header>
     <div>
         <div class="widget-body">
-            <fieldset>
-                <header>
-                    <h2>Available Conditions</h2>
-                </header>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Devices Conditions</div>
-                            <div class="panel-body">
-                                <ul>
-                                    <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
-                                </ul>
+            <div class="row">
+                <div class="col-xs-12">
+                    <form name="alarmBuilderForm" novalidate ng-submit="submitForm(alarmBuilderForm.$valid)">
+                        <fieldset>
+                            <div class="smart-form">
+                                <section>
+                                    <label class="label">Alarm Name</label>
+                                    <label class="input" ng-class="alarmBuilderForm.alarmName.$invalid && formWasSubmitted ? 'state-error' : ''">
+                                        <i class="icon-append fa fa-bell-o" />
+                                        <input type="text" name="alarmName" placeholder="Alarm Name" ng-model="alarmTemplateModel.alarmName" required ng-disabled="alarmTemplateModel.alarmNameDisabled">
+                                        <b class="tooltip tooltip-top-right">Please enter an alarm name.</b>
+                                    </label>
+                                    <em ng-show="alarmBuilderForm.alarmName.$invalid && formWasSubmitted" class="invalid">Alarm Name is reuired!</em>
+                                </section>
+                                <section>
+                                    <label class="label">Alarm Description</label>
+                                    <label class="textarea" ng-class="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted ? 'state-error' : ''">
+                                        <i class="icon-append fa fa-comments-o" />
+                                        <textarea rows="5" type="text" name="alarmDescription" placeholder="Alarm Description" ng-model="alarmTemplateModel.alarmDescription" required />
+                                        <b class="tooltip tooltip-top-right">Please enter an alarm description.</b>
+                                    </label>
+                                    <em ng-show="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted" class="invalid">Alarm Description is reuired!</em>
+                                </section>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">Alarm conditions</div>
-                            <div class="panel-body">
-                                <ul class="selected-conditions">
-                                    <li ng-repeat="condition in conditions"><div id="{{condition.id}}" bind-html-compile="condition.parsedCondition"></div></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+                            <section>
+                                <header>
+                                    <h2>Available Conditions</h2>
+                                </header>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="panel panel-primary" style="">
+                                            <div class="panel-heading">Devices Conditions</div>
+                                            <div class="panel-body">
+                                                <ul>
+                                                    <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="panel panel-success" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-errors': ''">
+                                            <div class="panel-heading">Alarm conditions</div>
+                                            <div class="panel-body">
+                                                <ul class="selected-conditions">
+                                                    <li ng-repeat="condition in conditions"><div id="{{condition.id}}" bind-html-compile="condition.parsedCondition"></div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <em ng-show="alarmTemplateModel.conditionsInvalid" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-error-message': ''">Conditions are invalid!</em>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <button type="submit" class="btn btn-primary push-right" style="float: right">Save Alarm</button>
+                            </section>
+
+                        </fieldset>
+                    </form>
+
+
                 </div>
-            </fieldset>
+            </div>
         </div>
     </div>
     <script type="text/ng-template" id="valueModal.html">

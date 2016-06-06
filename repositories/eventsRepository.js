@@ -47,7 +47,6 @@
         },
 
         getByTimeIntervalAndMeasureType : function(userId, measureType, startTime, endTime, callback){
-
             var filterExpression='';
             var params;
             if(measureType!='All') {
