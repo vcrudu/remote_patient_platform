@@ -37,17 +37,17 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         };
 
         var successSignIn = function(response){
-            toastr.success('redirecting to sign in...','Successful Registration!');
+            toastr.success('Successful Registration!','Please confirm the subscription from your email box!');
             $timeout(function() {
                 toastr.clear();
                 var localUser = $localStorage.user;
                 if (localUser)
                 {
-                    $state.go('login.username', {userName: localUser.email});
+                    $state.go('confirm', {userName: localUser.email});
                 }
                 else
                 {
-                    $state.go('login');
+                    $state.go('confirm');
                 }
             }, 3000);
             //$state.go('patient');
