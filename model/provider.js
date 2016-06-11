@@ -93,6 +93,13 @@ var Payment = require("./payment");
             return contactDetails.concat([]);
         };
 
+        hp.getMobileNumber = function(){
+            var result = _.filter(contactDetails, function(contactItem){
+                return contactItem.contactType === 'Mobile';
+            });
+            return _.first(result);
+        };
+
         hp.getAvailabilities = function(){
             return availabilities.concat([]);
         };
