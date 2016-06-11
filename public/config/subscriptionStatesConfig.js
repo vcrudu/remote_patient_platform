@@ -40,6 +40,20 @@
                     "mainView": {templateUrl: "confirmSubmit.html"}
                 }
             })
+            .state('confirm', {
+                url: "/confirm",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "confirm.html"}
+                }
+            })
+            .state('notfound', {
+                url: "/notfound",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "notfound.html"}
+                }
+            })
             .state('login.username', {
                 url: "/:userName",
                 views: {
@@ -108,7 +122,7 @@
                     }
                 },
             });
-
+        $urlRouterProvider.otherwise('/notfound');
         //Provider register
     }]);
 })();

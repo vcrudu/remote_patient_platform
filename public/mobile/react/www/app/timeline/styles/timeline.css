@@ -53,3 +53,15 @@ h6.mdl-card__title-text {
 .clear {
     clear: both;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.push-right {
+    float: right;
+}

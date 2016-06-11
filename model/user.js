@@ -35,7 +35,7 @@
               name: requestBody.name,
               surname: requestBody.surname,
               type: requestBody.type,
-              isActive: true,
+              isActive: false, //TO-DO was true
               socketId:'NULL',
               onlineStatus: "offline"
           };
