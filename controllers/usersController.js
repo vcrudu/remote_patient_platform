@@ -10,6 +10,7 @@ var usersRepository     = require('../repositories').Users;
 var domainModel = require('@vcrudu/hcm.domainmodel');
 var logging = require("../logging");
 var _ = require("underscore");
+var snsClient = require('../snsClient');
 
 
 (function(){
@@ -84,6 +85,12 @@ var _ = require("underscore");
                             message:logging.getUserErrorMessage(incidentTicket)
                         });
                     }else {
+                        snsClient.sendOnProvideDetailsEvent(req.decoded.email, function (err, data) {
+                            if(err){
+                                logging.getLogger().error(err);
+                                logging.getLogger().error(new Error("Failed to send OnProvideDetailsEvent"));
+                            }
+                        });
                         res.send({
                             success:true,
                             result:req.body.model
