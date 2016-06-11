@@ -20,7 +20,7 @@ var util = require('util');
         assert.ok(args.orderItems, "Order items are mandatory!");
         assert.ok(util.isArray(args.orderItems), "Order items list is mandatory. Apparently the orderItems is not a list.");
 
-        var orderStatuses = ['New', 'Paid', 'Cancelled', 'Shipped', 'Delivered'];
+        var orderStatuses = ['New', 'Paid', 'Cancelled', 'Dispatched', 'Delivered'];
         var orderStatus = 'New';
         var orderStatusHistory = [];
         var orderItems = [];
