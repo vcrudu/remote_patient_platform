@@ -96,7 +96,8 @@
             return isValid;
         },
         onChange: function (component) {
-            this.validateComponent(component);
+            var isValid = this.validateComponent(component);
+            this.props.lostFocusCallBack(component, isValid);
         },
         onBlur: function (component) {
             var isValid = this.validateComponent(component);
