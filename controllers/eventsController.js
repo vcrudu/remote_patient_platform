@@ -98,28 +98,37 @@ var snsClient = require('../snsClient');
                         success:false,
                         message:'Event has been provided already.'
                     });
-                }else{
-                    eventsRepository.save(eventToSave, function(err, data){
-                        if(err){
+                }else {
+                    eventsRepository.save(eventToSave, function (err, data) {
+                        if (err) {
                             var incidentTicket = logging.getIncidentTicketNumber('ev');
-                            logging.getLogger().error({incidentTicket:incidentTicket},err);
+                            logging.getLogger().error({incidentTicket: incidentTicket}, err);
                             res.status(500).json({
-                                success:false,
-                                message:logging.getUserErrorMessage(incidentTicket)
+                                success: false,
+                                message: logging.getUserErrorMessage(incidentTicket)
                             });
-                        }else{
+                        } else {
                             res.status(200).json({
-                                success:true});
-                            notification.sendEvent(req.decoded.email,'newMeasurement',eventToSave.getMeasurement());
-
-                            alarmsService.getSatisfiedAlarms(eventToSave, function(err, alarms) {
+                                success: true
+                            });
+                            notification.sendEvent(req.decoded.email, 'newMeasurement', eventToSave.getMeasurement());
+                            snsClient.sendOnMeasurementReceivedEvent(req.decoded.email, eventToSave.getMeasurement(),function (err) {
+                                if (err) {
+                                    logging.getLogger().error("The system failed to send OnMeasurementReceivedEvent for the event: "
+                                        + eventToSave.getMeasurement().measurementType + " for the patient " + req.decoded.email);
+                                }
+                            });
+                            alarmsService.getSatisfiedAlarms(eventToSave, function (err, alarms) {
                                 var satisfiedAlarms = alarms;
 
                                 if (satisfiedAlarms && satisfiedAlarms.length > 0) {
-                                    _.forEach(satisfiedAlarms, function(globalAlarm){
-                                        var userId = eventToSave.userId;
-                                        var alarmName = globalAlarm.alarmName;
-                                        //call snsClient
+                                    _.forEach(satisfiedAlarms, function (globalAlarm) {
+                                        snsClient.sendOnAlarmEvent(req.decoded.email, globalAlarm, eventToSave.getMeasurement(), function (err) {
+                                            if (err) {
+                                                logging.getLogger().error("The system failed to send OnAlarmEvent for the alarm: "
+                                                    + globalAlarm.alarmName + " for the patient " + req.decoded.email);
+                                            }
+                                        });
                                     });
                                 }
                             });
