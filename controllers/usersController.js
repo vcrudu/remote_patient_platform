@@ -5,15 +5,18 @@
  * Created by Victor on 06/08/2015.
  */
 
-var userDetailsRepository     = require('../repositories').UsersDetails;
-var usersRepository     = require('../repositories').Users;
-var domainModel = require('@vcrudu/hcm.domainmodel');
-var logging = require("../logging");
-var _ = require("underscore");
-var snsClient = require('../snsClient');
 
 
 (function(){
+
+
+    var userDetailsRepository     = require('../repositories').UsersDetails;
+    var usersRepository     = require('../repositories').Users;
+    var domainModel = require('@vcrudu/hcm.domainmodel');
+    var logging = require("../logging");
+    var _ = require("underscore");
+    var snsClient = require('../snsClient');
+    var utils = require('../utils');
 
     function sendError(res, error) {
         var statusCode;
@@ -60,7 +63,7 @@ var snsClient = require('../snsClient');
                 }else {
                     res.send({
                         success:true,
-                        count:data.length,
+                        count:data?data.length:0,
                         result:data
                     });
                 }

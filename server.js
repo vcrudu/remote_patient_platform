@@ -69,6 +69,11 @@ var notifications = require('./notifications');
 notifications.init(server);
 gridCacheClient.init();
 
-//server.listen(PORT, "192.168.0.12");
-server.listen(PORT);
+process.on('uncaughtException', function (err) {
+    logging.getLogger().error(err);
+    process.exit(1);
+});
+
+server.listen(PORT, "192.168.1.219");
+//server.listen(PORT);
 

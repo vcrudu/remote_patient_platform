@@ -11,14 +11,14 @@
 
     module.exports = {
         cleanUser: function (userId) {
-            paymentService.deleteCustomer(req, userId, function () {
-                videoService.deleteVideoUser(userId, function () {
-                    usersDetailsRepository.delete(userId, function () {
-                        usersRepository.delete(userId, function () {
+            //paymentService.deleteCustomer(req, userId, function (err) {
+                videoService.deleteVideoUser(userId, function (err) {
+                    usersDetailsRepository.delete(userId, function (err) {
+                        usersRepository.delete(userId, function (err) {
                         });
                     });
                 });
-            });
+            //});
         }
     };
 })();

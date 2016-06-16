@@ -249,14 +249,14 @@
             }
 
             if (patient.weight) {
-                patientDbEntity.weight = {N:patient.weight};
+                patientDbEntity.weight = {S:patient.weight};
             }
             else {
                 patientDbEntity.weight = {NULL:true};
             }
 
             if (patient.height) {
-                patientDbEntity.height = {N:patient.height};
+                patientDbEntity.height = {S:patient.height};
             }
             else {
                 patientDbEntity.height = {NULL:true};
@@ -265,71 +265,72 @@
             return patientDbEntity;
         },
 
-        mapPatientFromUserDetailsDbEntity: function(dbEntity)
-        {
+        mapPatientFromUserDetailsDbEntity: function(dbEntity) {
             var dateOfBirthOriginal = new Date();
             if (dbEntity.dateOfBirth) {
                 dateOfBirthOriginal.setTime(parseInt(dbEntity.dateOfBirth.N));
             }
-            if (!dbEntity.otherIdentifiers){
-                dbEntity.otherIdentifiers={L:[]};
+            if (!dbEntity.otherIdentifiers) {
+                dbEntity.otherIdentifiers = {L: []};
             }
             var allOtherIdentifiers = buildArray(dbEntity.otherIdentifiers.L, mapOtherIdentifiersFromDbEntity);
-            if (!dbEntity.relevantContacts){
-                dbEntity.relevantContacts={L:[]};
+            if (!dbEntity.relevantContacts) {
+                dbEntity.relevantContacts = {L: []};
             }
             var allRelevantContacts = buildArray(dbEntity.relevantContacts.L, mapRelevantContactsFromDbEntity);
-            if (!dbEntity.address){
-                dbEntity.address={M:{
-                    "id": {
-                        "S": ""
-                    },
-                    "county": {
-                        "S": ""
-                    },
-                    "postCode": {
-                        "S": ""
-                    },
-                    "town": {
-                        "S": ""
-                    },
-                    "addressLine2": {
-                        "S": ""
-                    },
-                    "addressLine1": {
-                        "S": ""
-                    },
-                    "country": {
-                        "S": ""
-                    },
-                    "longitude": {
-                        "NULL": true
-                    },
+            if (!dbEntity.address) {
+                dbEntity.address = {
+                    M: {
+                        "id": {
+                            "S": ""
+                        },
+                        "county": {
+                            "S": ""
+                        },
+                        "postCode": {
+                            "S": ""
+                        },
+                        "town": {
+                            "S": ""
+                        },
+                        "addressLine2": {
+                            "S": ""
+                        },
+                        "addressLine1": {
+                            "S": ""
+                        },
+                        "country": {
+                            "S": ""
+                        },
+                        "longitude": {
+                            "NULL": true
+                        },
 
-                    "latitude": {
-                        "NULL": true
+                        "latitude": {
+                            "NULL": true
+                        }
                     }
-                }};
+                };
             }
 
             var fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
 
-            if (!dbEntity.devices){
-                dbEntity.devices={L:[]};
+            if (!dbEntity.devices) {
+                dbEntity.devices = {L: []};
             }
             var allDevices = buildArray(dbEntity.devices.L, mapDevicesFromDbEntity);
-            if (!dbEntity.healthProblems){
-                dbEntity.healthProblems=[];
+            if (!dbEntity.healthProblems) {
+                dbEntity.healthProblems = [];
             }
             var allHealthProblems = buildArray(dbEntity.healthProblems, mapHealthProblemsFromDbEntity);
 
-            var checkNull = function(arg1){
-                if(arg1) return arg1.S;
+            var checkNull = function (arg1) {
+                if (arg1) return arg1.S;
                 else return undefined;
             };
 
-            var checkNumberNull = function(arg1){
-                if(arg1) return arg1.N;
+            var checkNumberNull = function (arg1) {
+                if (arg1) return arg1.N;
                 else return undefined;
             };
 
@@ -337,26 +338,26 @@
                     id: dbEntity.id.S,
                     name: dbEntity.name.S,
                     surname: dbEntity.surname.S,
-                    title: dbEntity.title?dbEntity.title.S:dbEntity.title={S:""},
+                    title: dbEntity.title ? dbEntity.title.S : dbEntity.title = " ",
                     dateOfBirth: dateOfBirthOriginal,
                     sex: checkNull(dbEntity.sex),
-                    gender:dbEntity.gender?dbEntity.gender.S:dbEntity.gender={S:""},
-                    ethnicity: dbEntity.ethnicity?dbEntity.ethnicity.S:dbEntity.ethnicity={S:""},
-                    nhsNumber: dbEntity.nhsNumber?dbEntity.nhsNumber.S:dbEntity.nhsNumber={S:""},
+                    gender: dbEntity.gender ? dbEntity.gender.S : dbEntity.gender = "",
+                    ethnicity: dbEntity.ethnicity ? dbEntity.ethnicity.S : dbEntity.ethnicity = "",
+                    nhsNumber: dbEntity.nhsNumber ? dbEntity.nhsNumber.S : dbEntity.nhsNumber = "",
                     otherIdentifiers: allOtherIdentifiers,
                     phone: checkNull(dbEntity.phone),
                     mobile: checkNull(dbEntity.mobile),
                     fax: checkNull(dbEntity.fax),
                     email: dbEntity.email.S,
                     relevantContacts: allRelevantContacts,
-                    communicationPreference: dbEntity.communicationPreference?dbEntity.communicationPreference.S:dbEntity.communicationPreference={S:""},
+                    communicationPreference: dbEntity.communicationPreference ? dbEntity.communicationPreference.S : dbEntity.communicationPreference = "",
                     address: fullAddress,
                     avatar: checkNull(dbEntity.avatar),
                     externalId: checkNull(dbEntity.externalId),
                     devices: allDevices,
                     healthProblems: allHealthProblems,
-                    weight: checkNumberNull(dbEntity.weight),
-                    height: checkNumberNull(dbEntity.height),
+                    weight: checkNull(dbEntity.weight),
+                    height: checkNull(dbEntity.height)
                 }
             );
             return patient;

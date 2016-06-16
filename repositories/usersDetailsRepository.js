@@ -109,7 +109,10 @@
         },
 
         save : function(patient, callback) {
-
+            if(!patient){
+                callback(null, null);
+                return;
+            }
             var dynamodb = getDb();
 
             var params = {
