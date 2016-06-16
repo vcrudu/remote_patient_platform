@@ -88,7 +88,7 @@
         },
         render: function() {
             return <Card className="message-card-wide">
-                <CardText>
+                <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
                             <i className="material-icons mdl-list__item-avatar">alarm</i>
@@ -124,7 +124,7 @@
         },
         render: function() {
             return <Card className="message-card-wide">
-                <CardText>
+                <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
                             <i className="material-icons mdl-list__item-avatar">timeline</i>
@@ -205,24 +205,36 @@
         },
         componentDidMount: function() {
             var component = this;
-            Bridge.Timeline.getNotifications(function(result) {
+            Bridge.Timeline.getNotifications(function (result) {
                 var allCards = _.sortBy(result.data, "dateTime").reverse();
                 var groupedAllCards = [];
-                component.groupCards(groupedAllCards, allCards)
+                component.groupCards(groupedAllCards, allCards);
 
-                var infoCards = _.filter(allCards, function(card){
+                var infoCards = _.filter(allCards, function (card) {
                     return card.category == "info";
                 });
                 var groupedInfoCards = [];
-                component.groupCards(groupedInfoCards, infoCards)
+                component.groupCards(groupedInfoCards, infoCards);
 
-                var alarmCards = _.filter(allCards, function(card){
+                var alarmCards = _.filter(allCards, function (card) {
                     return card.category == "alarm";
                 });
                 var groupedAlarmCards = [];
-                component.groupCards(groupedAlarmCards, alarmCards)
+                component.groupCards(groupedAlarmCards, alarmCards);
 
-                component.setState({cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards});
+                var readingsCards = _.filter(allCards, function (card) {
+                    return card.category == "reading";
+                });
+                var groupedReadingsCards = [];
+                component.groupCards(groupedReadingsCards, readingsCards);
+
+                component.setState({
+                    cards: groupedAllCards,
+                    allCards: groupedAllCards,
+                    infoCards: groupedInfoCards,
+                    alarmCards: groupedAlarmCards,
+                    readingsCards: groupedReadingsCards
+                });
 
                 $(".mdl-progress").css('visibility', 'hidden');
             });

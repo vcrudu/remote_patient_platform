@@ -66,6 +66,11 @@
                                 actionButtons: ["devicesAvailable"]
                             });
                             break;
+                        case "provideDetails":
+                            component.setState({
+                                actionButtons: ["goToProvideDetails"]
+                            });
+                            break;
                         default:
                             component.setState({
                                 actionButtons: ["goToTimeline"]
@@ -86,6 +91,9 @@
             switch (action) {
                 case "goToAppointments":
                     Bridge.Redirect.redirectToWithLevelsUp("appointments/patient-appointments.html", 2);
+                    break;
+                case "goToProvideDetails":
+                    Bridge.Redirect.redirectToWithLevelsUp("profile/patient-profile-details.html", 2);
                     break;
                 case "goToDevices":
                     Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
@@ -146,6 +154,12 @@
                                                 "button",
                                                 { "data-action-name": "goToDevices", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
                                                 "BUY A DEVICE"
+                                            );
+                                        case "goToProvideDetails":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToProvideDetails", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "PROVIDE DETAILS"
                                             );
                                     }
                                 })

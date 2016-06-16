@@ -127,7 +127,7 @@
                 { className: "message-card-wide" },
                 React.createElement(
                     CardText,
-                    null,
+                    { onClick: this.handleView },
                     React.createElement(
                         "div",
                         { className: "notification-title-wrapper" },
@@ -189,7 +189,7 @@
                 { className: "message-card-wide" },
                 React.createElement(
                     CardText,
-                    null,
+                    { onClick: this.handleView },
                     React.createElement(
                         "div",
                         { className: "notification-title-wrapper" },
@@ -309,7 +309,19 @@
                 var groupedAlarmCards = [];
                 component.groupCards(groupedAlarmCards, alarmCards);
 
-                component.setState({ cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards });
+                var readingsCards = _.filter(allCards, function (card) {
+                    return card.category == "reading";
+                });
+                var groupedReadingsCards = [];
+                component.groupCards(groupedReadingsCards, readingsCards);
+
+                component.setState({
+                    cards: groupedAllCards,
+                    allCards: groupedAllCards,
+                    infoCards: groupedInfoCards,
+                    alarmCards: groupedAlarmCards,
+                    readingsCards: groupedReadingsCards
+                });
 
                 $(".mdl-progress").css('visibility', 'hidden');
             });
