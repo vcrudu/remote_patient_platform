@@ -51,21 +51,40 @@
             });
         });
 
-        router.get('/patients/:userId', function(req, res){
-            userDetailsRepository.findPatient(req.params.userId, function(err,data){
-                if(err){
+        router.get('/patients/:userId', function(req, res) {
+            userDetailsRepository.findPatient(req.params.userId, function (err, data) {
+                if (err) {
                     var incidentTicket = logging.getIncidentTicketNumber('us');
-                    logging.getLogger().error({incidentTicket:incidentTicket},err);
+                    logging.getLogger().error({incidentTicket: incidentTicket}, err);
                     res.status(500).json({
-                        success:false,
-                        message:logging.getUserErrorMessage(incidentTicket)
+                        success: false,
+                        message: logging.getUserErrorMessage(incidentTicket)
                     });
-                }else {
-                    res.send({
-                        success:true,
-                        count:data?data.length:0,
-                        result:data
-                    });
+                } else {
+                    if (data) {
+                        res.send({
+                            success: true,
+                            count: data ? data.length : 0,
+                            result: data
+                        });
+                    } else {
+                        usersRepository.findOneByEmail(req.params.userId, function (err, data) {
+                            if (err) {
+                                var incidentTicket = logging.getIncidentTicketNumber('us');
+                                logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                                res.status(500).json({
+                                    success: false,
+                                    message: logging.getUserErrorMessage(incidentTicket)
+                                });
+                            } else {
+                                res.send({
+                                    success: true,
+                                    count: data ? data.length : 0,
+                                    result: data
+                                });
+                            }
+                        });
+                    }
                 }
             });
         });

@@ -55,7 +55,7 @@
             var component = this;
 
             $(this.refs.sEthnicity).mobiscroll().select({
-                theme: 'mobiscrol',
+                theme: 'mobiscroll',
                 display: 'bottom',
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtEthnicity, component.refs.txtEthnicityDiv);
@@ -68,10 +68,14 @@
             var component = this;
 
             $(this.refs.sDiseases).mobiscroll().select({
-                theme: 'mobiscrol',
+                theme: 'mobiscroll',
                 display: 'bottom',
+                select: 'multiple',
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtDiseases, component.refs.txtDiseasesDiv);
+                    if (valueText === "") {
+                        this.refs.labelTxtDiseases.htmlFor = 'txtDiseases';
+                    }
                 }
             });
 
@@ -81,7 +85,7 @@
             var component = this;
 
             $(this.refs.txtHeight).mobiscroll().distance({
-                theme: 'mobiscrol',
+                theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'm',
                 units: ['m', 'in', 'ft'],
@@ -94,7 +98,7 @@
             var component = this;
 
             $(this.refs.txtWeight).mobiscroll().mass({
-                theme: 'mobiscrol',
+                theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'kg',
                 max: 300,
@@ -143,6 +147,8 @@
             this.setRefElementValue(this.state.diseases, this.refs.txtDiseases, this.refs.txtDiseasesDiv);
             this.setRefElementValue(this.state.height, this.refs.txtHeight, this.refs.txtHeightDiv);
             this.setRefElementValue(this.state.weight, this.refs.txtWeight, this.refs.txtWeightDiv);
+
+            $(this.refs.sDiseases).mobiscroll('setVal', this.state.diseasesArray, true);
         },
         isValid: function () {
             var valid = true;
@@ -249,12 +255,12 @@
                         { className: "material-icons primary-icons md-36" },
                         "warning"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtDiseases", ref: "txtDiseases", onClick: this.handleDiseasesClick }),
                     React.createElement(
                         "label",
-                        { className: "mdl-textfield__label", htmlFor: "txtDiseases" },
+                        { className: "mdl-textfield__label", ref: "labelTxtDiseases", htmlFor: "txtDiseases" },
                         "Diseases if any"
-                    )
+                    ),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtDiseases", ref: "txtDiseases", onClick: this.handleDiseasesClick })
                 ),
                 React.createElement("div", { className: "clear" }),
                 React.createElement(
@@ -265,7 +271,7 @@
                         { className: "material-icons primary-icons md-36" },
                         "accessibility"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight", onClick: this.handleHeightClick() }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight", onClick: this.handleHeightClick }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtHeight" },
@@ -286,7 +292,7 @@
                         { className: "material-icons primary-icons md-36" },
                         "adb"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight", onClick: this.handleWeightClick() }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight", onClick: this.handleWeightClick }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtWeight" },
@@ -576,13 +582,14 @@
                 this.setState({ mobile: $(this.refs.txtMobile).val() });
             }
 
-            if ($(this.refs.txtPhone).val() == "") {
+            /*if ($(this.refs.txtPhone).val() == "") {
                 $(this.refs.txtPhoneDiv).addClass("is-invalid");
                 $(this.refs.txtPhoneDiv).addClass("is-focused");
                 valid = false;
-            } else {
-                this.setState({ phone: $(this.refs.txtPhone).val() });
             }
+            else {
+                this.setState({phone : $(this.refs.txtPhone).val()});
+            }*/
 
             return valid;
         },
@@ -1241,11 +1248,26 @@
                         phone: result.data.phone ? result.data.phone : "",
                         mobile: result.data.mobile ? result.data.mobile : ""
                     });
+
+                    var healthProblemsText = "";
+                    if (result.data.healthProblems) {
+                        healthProblemsText = result.data.healthProblems.reduce(function (all, healthProblem) {
+                            if (all === "") {
+                                all = healthProblem;
+                            } else {
+                                all = all + ", " + healthProblem;
+                            }
+                            return all;
+                        }, "");
+                    }
+
                     component.refs.patientMedicalInfo.updateState({
                         nhsNumber: result.data.nhsNumber ? result.data.nhsNumber : "",
                         ethnicity: result.data.ethnicity ? result.data.ethnicity : "",
                         height: result.data.height ? result.data.height : "",
-                        weight: result.data.weight ? result.data.weight : ""
+                        weight: result.data.weight ? result.data.weight : "",
+                        diseases: healthProblemsText,
+                        diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
                     });
                 }
             });
@@ -1318,6 +1340,8 @@
                 return;
             }
 
+            var healthProblems = this.refs.patientMedicalInfo.state.diseases.split(", ");
+
             var objectToPost = {
                 "id": this.state.userDetails.id,
                 "name": this.refs.patientInfoComponent.state.firstName,
@@ -1338,6 +1362,7 @@
                 "ethnicity": this.refs.patientMedicalInfo.state.ethnicity,
                 "nhsNumber": this.refs.patientMedicalInfo.state.nhsNumber,
                 "otherIdentifiers": [],
+                "healthProblems": healthProblems,
                 "phone": this.refs.patientAddress.state.phone,
                 "mobile": this.refs.patientAddress.state.mobile,
                 "weight": this.refs.patientMedicalInfo.state.weight,
