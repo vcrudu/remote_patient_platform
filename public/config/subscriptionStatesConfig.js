@@ -45,7 +45,9 @@
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
                     "mainView": {templateUrl: "confirm.html"}
-                }
+                },
+                params:{userName:null},
+                controller: 'confirmCtrl'
             })
             .state('notfound', {
                 url: "/notfound",
