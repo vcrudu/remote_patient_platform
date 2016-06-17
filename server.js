@@ -74,6 +74,6 @@ process.on('uncaughtException', function (err) {
     process.exit(1);
 });
 
-server.listen(PORT, "192.168.1.219");
-//server.listen(PORT);
+//server.listen(PORT, "192.168.1.219");
+server.listen(PORT);
 
