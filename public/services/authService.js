@@ -268,6 +268,21 @@ angular.module('app')
                     }).error(function(res){
                         error(res);
                     });
+                },
+                submitConfirm : function (email, success, error) {
+                    var req = {
+                        method: 'POST',
+                        url: appSettings.getServerUrl() + '/confirm',
+                        data: {email : email}
+                    };
+                    $http(req).success(function (res) {
+                        if (!res.error) {
+                            success(res);
+                        }else
+                            error(res.error);
+                    }).error(function(res){
+                        error(res);
+                    });
                 }
             };
 
