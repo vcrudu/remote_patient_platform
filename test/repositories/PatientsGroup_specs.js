@@ -1,7 +1,7 @@
 (function() {
 
   var connectionOptions = require('../../repositories/awsOptions1');
-  var patientsGroup = require('../../repositories/patientsGroupRepository');
+  var patientsGroupRepository = require('../../repositories/patientsGroupRepository');
   var AWS = require('aws-sdk');
   var _ = require("underscore");
   var uuid = require('node-uuid');
@@ -26,13 +26,13 @@
 
       before(function (done) {
         var db = getDb();
-        patientsGroup.setDependencies(db);
+        patientsGroupRepository.setDependencies(db);
         done();
       });
 
       after(function (done) {
 
-      patientsGroup.deleteTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.deleteTable("PatientsGroup", function (err, data) {
 
         if (data) {
           done();
@@ -47,7 +47,7 @@
 
     it("It will be create PatientsGroup table\n", function (done) {
 
-      patientsGroup.createTable("PatientsGroup", function (err, data) {
+      patientsGroupRepository.createTable("PatientsGroup", function (err, data) {
 
         if (data) {
           expect(data.TableDescription).to.have.property('TableName', 'PatientsGroup');
@@ -66,9 +66,9 @@
 
       before(function (done) {
         var db = getDb();
-        patientsGroup.setDependencies(db);
+        patientsGroupRepository.setDependencies(db);
 
-    patientsGroup.createTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.createTable("PatientsGroup", function (err, data) {
 
       if (data) {
         done();
@@ -83,7 +83,7 @@
 
       afterEach(function (done) {
 
-        patientsGroup.getList({providerId: "First Provider"}, function (err, data) {
+        patientsGroupRepository.getList({providerId: "First Provider"}, function (err, data) {
 
           if (data) {
             expect(data).to.be.a('array');
@@ -101,7 +101,7 @@
 
       after(function (done) {
 
-        patientsGroup.deleteTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.deleteTable("PatientsGroup", function (err, data) {
 
           if (data) {
             done();
@@ -117,7 +117,7 @@
 
     it("It will save an Item to PatientsGroup table\n", function (done) {
 
-      patientsGroup.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
+      patientsGroupRepository.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
 
         if (data) {
           expect(data).to.be.eql({});
@@ -137,12 +137,12 @@
       before(function (done) {
 
         var db = getDb();
-        patientsGroup.setDependencies(db);
-        patientsGroup.createTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.setDependencies(db);
+        patientsGroupRepository.createTable("PatientsGroup", function (err, data) {
 
           if (data) {
 
-            patientsGroup.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
+            patientsGroupRepository.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
 
               if (data) {
                 done();
@@ -164,7 +164,7 @@
 
       after(function (done) {
 
-        patientsGroup.deleteTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.deleteTable("PatientsGroup", function (err, data) {
 
           if (err) {
             throw err;
@@ -175,7 +175,7 @@
 
     it("It will Get Item from PatientsGroup table\n", function (done) {
 
-      patientsGroup.getOne({
+      patientsGroupRepository.getOne({
         providerId: "First Provider",
         groupName: "First Group Name"
         }, function (err, data) {
@@ -197,21 +197,21 @@
 
       before(function (done) {
         var db = getDb();
-        patientsGroup.setDependencies(db);
-        patientsGroup.createTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.setDependencies(db);
+        patientsGroupRepository.createTable("PatientsGroup", function (err, data) {
 
           if (data) {
-            patientsGroup.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
+            patientsGroupRepository.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
 
               if (data) {
-                patientsGroup.save({
+                patientsGroupRepository.save({
                   providerId: "First Provider",
                   groupName: "Second Group Name"
                 }, function (err, data) {
 
                   if (data) {
 
-                    patientsGroup.save({
+                    patientsGroupRepository.save({
                       providerId: "First Provider",
                       groupName: "Third Group Name"
                     }, function (err, data) {
@@ -251,7 +251,7 @@
 
       after(function (done) {
 
-        patientsGroup.deleteTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.deleteTable("PatientsGroup", function (err, data) {
 
           if (data) {
             done();
@@ -266,7 +266,7 @@
 
     it("It will get a list of items by providerId from PatientsGroup table\n", function (done) {
 
-        patientsGroup.getList({providerId: "First Provider"}, function (err, data) {
+      patientsGroupRepository.getList({providerId: "First Provider"}, function (err, data) {
 
           if (data) {
             expect(data).to.be.a('array');
@@ -287,11 +287,11 @@
 
       before(function (done) {
         var db = getDb();
-        patientsGroup.setDependencies(db);
-        patientsGroup.createTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.setDependencies(db);
+        patientsGroupRepository.createTable("PatientsGroup", function (err, data) {
 
           if (data) {
-            patientsGroup.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
+            patientsGroupRepository.save({providerId: "First Provider", groupName: "First Group Name"}, function (err, data) {
 
               if (data) {
                 done();
@@ -313,7 +313,7 @@
 
       afterEach(function (done) {
 
-        patientsGroup.getList({providerId: "First Provider"}, function (err, data) {
+        patientsGroupRepository.getList({providerId: "First Provider"}, function (err, data) {
 
           if (data) {
             expect(data).to.be.a('array');
@@ -330,7 +330,7 @@
 
       after(function (done) {
 
-        patientsGroup.deleteTable("PatientsGroup", function (err, data) {
+        patientsGroupRepository.deleteTable("PatientsGroup", function (err, data) {
 
           if (data) {
             done();
@@ -345,7 +345,7 @@
 
     it("It will delete item from PatientsGroup table\n", function (done) {
 
-      patientsGroup.delete({
+      patientsGroupRepository.delete({
 
         providerId: "First Provider",
         groupName: "First Group Name"

@@ -1,7 +1,8 @@
 (function() {
 
+  var PatientsGroupMemberRepository = require('../../repositories/PatientsGroupMemberRepository');
   var connectionOptions = require('../../repositories/awsOptions1');
-  var PatientsGroupMember = require('../../repositories/PatientsGroupMemberRepository');
+
   var AWS = require('aws-sdk');
   var _ = require("underscore");
   var uuid = require('node-uuid');
@@ -18,21 +19,21 @@
   };
 
 
-  describe("Test operations on PatientsGroupMember table", function () {
+  describe("Test operations on Repository table", function () {
 
     this.timeout(20000);
-    
+
     describe("Creating PatientsGroupMember table", function () {
 
       before(function (done) {
         var db = getDb();
-        PatientsGroupMember.setDependencies(db);
+        PatientsGroupMemberRepository.setDependencies(db);
         done();
       });
 
       after(function (done) {
 
-        PatientsGroupMember.deleteTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.deleteTable("PatientsGroupMemberRepository", function (err, data) {
 
           if (data) {
             done();
@@ -45,17 +46,17 @@
         });
       });
 
-    it("It will be create PatientsGroupMember table\n", function (done) {
+      it("It will be create PatientsGroupMemberRepository table\n", function (done) {
 
-      PatientsGroupMember.createTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.createTable("PatientsGroupMemberRepository", function (err, data) {
 
-        if (data) {
-          expect(data.TableDescription).to.have.property('TableName', 'PatientsGroupMember');
-          expect(data.TableDescription).to.have.property('TableStatus', 'ACTIVE');
-          done();
+          if (data) {
+            expect(data.TableDescription).to.have.property('TableName', 'PatientsGroupMemberRepository');
+            expect(data.TableDescription).to.have.property('TableStatus', 'ACTIVE');
+            done();
           }
 
-        if (err) {
+          if (err) {
             done();
           }
         });
@@ -66,9 +67,9 @@
 
       before(function (done) {
         var db = getDb();
-        PatientsGroupMember.setDependencies(db);
+        PatientsGroupMemberRepository.setDependencies(db);
 
-        PatientsGroupMember.createTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.createTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
             done();
@@ -84,7 +85,7 @@
 
       afterEach(function (done) {
 
-        PatientsGroupMember.getList({
+        PatientsGroupMemberRepository.getList({
 
           providerId: "First Provider",
           groupName: "First Group Name",
@@ -110,7 +111,7 @@
 
       after(function (done) {
 
-        PatientsGroupMember.deleteTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.deleteTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
             done();
@@ -123,21 +124,21 @@
         });
       });
 
-    it("It will save an Item to PatientsGroupMember table\n", function (done) {
+      it("It will save an Item to PatientsGroupMember table\n", function (done) {
 
-      PatientsGroupMember.save({
+        PatientsGroupMemberRepository.save({
 
-        providerId: "First Provider",
-        groupName: "First Group Name",
-        patientId: "First Patient ID",
-        createDateTime: +new Date(),
-        createdBy: "First CreatedBy"
+          providerId: "First Provider",
+          groupName: "First Group Name",
+          patientId: "First Patient ID",
+          createDateTime: +new Date(),
+          createdBy: "First CreatedBy"
 
         }, function (err, data) {
 
-        if (data) {
-          expect(data).to.be.eql({});
-          done();
+          if (data) {
+            expect(data).to.be.eql({});
+            done();
           }
 
           if (err) {
@@ -154,12 +155,12 @@
       before(function (done) {
 
         var db = getDb();
-        PatientsGroupMember.setDependencies(db);
-        PatientsGroupMember.createTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.setDependencies(db);
+        PatientsGroupMemberRepository.createTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
 
-            PatientsGroupMember.save({
+            PatientsGroupMemberRepository.save({
 
               providerId: "First Provider",
               groupName: "First Group Name",
@@ -190,7 +191,7 @@
 
       after(function (done) {
 
-        PatientsGroupMember.deleteTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.deleteTable("PatientsGroupMember", function (err, data) {
 
           if (err) {
             throw err;
@@ -199,15 +200,15 @@
         });
       });
 
-    it("It will Get Item from PatientsGroupMember table\n", function (done) {
+      it("It will Get Item from PatientsGroupMember table\n", function (done) {
 
-      PatientsGroupMember.getOne({
+        PatientsGroupMemberRepository.getOne({
 
-        providerId: "First Provider",
-        groupName: "First Group Name",
-        patientId: "First Patient ID",
-        createDateTime: +new Date(),
-        createdBy: "First CreatedBy"
+          providerId: "First Provider",
+          groupName: "First Group Name",
+          patientId: "First Patient ID",
+          createDateTime: +new Date(),
+          createdBy: "First CreatedBy"
 
         }, function (err, data) {
           if (data) {
@@ -227,11 +228,11 @@
 
       before(function (done) {
         var db = getDb();
-        PatientsGroupMember.setDependencies(db);
-        PatientsGroupMember.createTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.setDependencies(db);
+        PatientsGroupMemberRepository.createTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
-            PatientsGroupMember.save({
+            PatientsGroupMemberRepository.save({
 
               providerId: "First Provider",
               groupName: "First Group Name",
@@ -242,7 +243,7 @@
             }, function (err, data) {
 
               if (data) {
-                PatientsGroupMember.save({
+                PatientsGroupMemberRepository.save({
 
                   providerId: "First Provider",
                   groupName: "First Group Name",
@@ -253,7 +254,7 @@
                 }, function (err, data) {
 
                   if (data) {
-                    PatientsGroupMember.save({
+                    PatientsGroupMemberRepository.save({
 
                       providerId: "First Provider",
                       groupName: "First Group Name",
@@ -296,7 +297,7 @@
 
       after(function (done) {
 
-        PatientsGroupMember.deleteTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.deleteTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
             done();
@@ -309,28 +310,28 @@
         });
       });
 
-    it("It will get a list of items by providerId from PatientsGroupMember table\n", function (done) {
+      it("It will get a list of items by providerId from PatientsGroupMember table\n", function (done) {
 
-      PatientsGroupMember.getList({
+        PatientsGroupMemberRepository.getList({
 
-        providerId: "First Provider",
-        groupName: "First Group Name",
-        patientId: "First Patient ID",
-        createDateTime: +new Date(),
-        createdBy: "First CreatedBy"
+          providerId: "First Provider",
+          groupName: "First Group Name",
+          patientId: "First Patient ID",
+          createDateTime: +new Date(),
+          createdBy: "First CreatedBy"
 
         }, function (err, data) {
 
-        if (data) {
-          expect(data).to.be.a('array');
-          expect(data).to.have.deep.property('[0].groupId', 'First Provider#First Group Name');
-          expect(data).to.have.property('length', 3);
-          done();
+          if (data) {
+            expect(data).to.be.a('array');
+            expect(data).to.have.deep.property('[0].groupId', 'First Provider#First Group Name');
+            expect(data).to.have.property('length', 3);
+            done();
           }
 
-        if (err) {
-          done();
-          throw err;
+          if (err) {
+            done();
+            throw err;
           }
         });
       });
@@ -340,11 +341,11 @@
 
       before(function (done) {
         var db = getDb();
-        PatientsGroupMember.setDependencies(db);
-        PatientsGroupMember.createTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.setDependencies(db);
+        PatientsGroupMemberRepository.createTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
-            PatientsGroupMember.save({
+            PatientsGroupMemberRepository.save({
 
               providerId: "First Provider",
               groupName: "First Group Name",
@@ -374,7 +375,7 @@
 
       afterEach(function (done) {
 
-        PatientsGroupMember.getList({
+        PatientsGroupMemberRepository.getList({
 
           providerId: "First Provider",
           groupName: "First Group Name",
@@ -399,37 +400,37 @@
 
       after(function (done) {
 
-        PatientsGroupMember.deleteTable("PatientsGroupMember", function (err, data) {
+        PatientsGroupMemberRepository.deleteTable("PatientsGroupMember", function (err, data) {
 
           if (data) {
             done();
           }
 
-         if (err) {
+          if (err) {
             done();
             throw err;
           }
         });
       });
 
-    it("It will delete item from PatientsGroupMember table\n", function (done) {
+      it("It will delete item from PatientsGroupMember table\n", function (done) {
 
-      PatientsGroupMember.delete({
+        PatientsGroupMemberRepository.delete({
 
-        providerId: "First Provider",
-        groupName: "First Group Name",
-        patientId: "First Patient ID",
-        createDateTime: +new Date(),
-        createdBy: "First CreatedBy"
+          providerId: "First Provider",
+          groupName: "First Group Name",
+          patientId: "First Patient ID",
+          createDateTime: +new Date(),
+          createdBy: "First CreatedBy"
 
         }, function (err, data) {
 
-        if (data) {
-         expect(data).to.be.eql({});
-         done();
+          if (data) {
+            expect(data).to.be.eql({});
+            done();
           }
 
-        if (err) {
+          if (err) {
             done();
             throw err;
           }
