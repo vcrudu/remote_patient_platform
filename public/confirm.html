@@ -25,12 +25,13 @@
                             <label class="label">Please submit your e-mail address and we'll send you the email message again.</label>
                             <label class="label">E-mail</label>
                             <label class="input"> <i class="icon-append fa fa-user"></i>
-                                <input type="email" name="email" ng-model="userConfirm.email" required>
+                                <input type="email" name="email" ng-model="email" required>
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address</b></label>
-                            <em ng-show="confirmForm.email.$error.$dirty && confirmForm.email.$error.required" class="invalid">The email is required!</em>
+                            <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.required" class="invalid">The email is required!</em>
+                            <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.email" class="invalid">Invalid email!</em>
                         </section>
                         <a ui-sref="confirmSubmit">
-                            <button ng-click="" class="btn btn-primary">
+                            <button ng-click="submitSendConfirm()" class="btn btn-primary" ng-disabled="confirmForm.email.$dirty && confirmForm.email.$invalid">
                                 Submit
                             </button>
                         </a>

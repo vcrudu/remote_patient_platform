@@ -14,6 +14,7 @@ var gridCacheClient = require('./services/gridCacheClient');
 var checkExistsNhs = require("./controllers/checkExistsNhs");
 var reset = require("./controllers/reset");
 var resetPasswordController = require("./controllers/resetPasswordController");
+var confirmSubscriptionController = require("./controllers/confirmSubscription");
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -40,6 +41,7 @@ resetPasswordController.init(app);
 checkExistsUserController.init(app);
 checkExistsNhs.init(app);
 controllers.init(app);
+confirmSubscriptionController.init(app);
 
 
 app.get('/',function(req, res){
