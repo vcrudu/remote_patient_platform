@@ -1,37 +1,6 @@
 <form name="checkoutform" class="smart-form" novalidate ng-submit="vm.submitForm(checkoutform)">
 
     <legend>Checkout</legend>
-    <fieldset>
-        <div class="row">
-            <section class="col col-6">
-                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.fname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
-                    <input type="text" name="fname" placeholder="First name" ng-model="vm.firstname" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.fname.$invalid"
-                    class="invalid">First name is required</em>
-            </section>
-            <section class="col col-6">
-                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.lname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
-                    <input type="text" name="lname" placeholder="Last name"  ng-model="vm.lastname" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.lname.$invalid"
-                    class="invalid">Last name is required</em>
-            </section>
-        </div>
-
-        <div class="row" ng-if="false">
-            <section class="col col-6">
-                <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                    <input type="email" name="email" placeholder="E-mail">
-                </label>
-            </section>
-            <section class="col col-6">
-                <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                    <input type="tel" name="phone" placeholder="Phone" is-phone>
-                </label>
-            </section>
-        </div>
-    </fieldset>
 
     <fieldset>
         <div class="row">
