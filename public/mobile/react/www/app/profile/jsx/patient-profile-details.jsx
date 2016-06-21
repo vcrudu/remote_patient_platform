@@ -42,10 +42,10 @@
             $(this.refs.sDiseases).mobiscroll("show");
         },
         handleHeightClick: function() {
-            $(this.refs.txtHeight).mobiscroll("show");
+            $(this.refs.txtHeight_Hidden).mobiscroll("show");
         },
         handleWeightClick: function() {
-            $(this.refs.txtWeight).mobiscroll("show");
+            $(this.refs.txtWeight_Hidden).mobiscroll("show");
         },
         setupEthnicityClick: function() {
             var component = this;
@@ -80,7 +80,7 @@
         setupHeightClick: function() {
             var component = this;
 
-            $(this.refs.txtHeight).mobiscroll().distance({
+            $(this.refs.txtHeight_Hidden).mobiscroll().distance({
                 theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'm',
@@ -94,7 +94,7 @@
         setupWeightClick: function() {
             var component = this;
 
-            $(this.refs.txtWeight).mobiscroll().mass({
+            $(this.refs.txtWeight_Hidden).mobiscroll().mass({
                 theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'kg',
@@ -120,23 +120,55 @@
 
             $(refElement).blur();
         },
+        scrollTo: function(offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function() {
+            var component = this;
+
             this.setupEthnicityClick();
 
             var txtEthnicity = this.refs.txtEthnicity;
-            txtEthnicity.addEventListener("focus", this.handleEthnicityClick);
+            txtEthnicity.addEventListener("focus", function() {
+                /*var offsetTop = $(txtEthnicity).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleEthnicityClick();
+            });
 
             this.setupDiseasesClick();
 
             var txtDiseases = this.refs.txtDiseases;
-            txtDiseases.addEventListener("focus", this.handleDiseasesClick);
+            txtDiseases.addEventListener("focus", function() {
+                /*var offsetTop = $(txtDiseases).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleDiseasesClick();
+            });
 
             this.setupHeightClick();
+
+            var txtHeight = this.refs.txtHeight;
+            txtHeight.addEventListener("focus", function() {
+                /*var offsetTop = $(txtHeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleHeightClick();
+            });
+
             this.setupWeightClick();
 
-           // var txtHeight = this.refs.txtHeight;
-           // txtHeight.addEventListener("focus", this.handleHeightClick);
+            var txtWeight = this.refs.txtWeight;
+            txtWeight.addEventListener("focus", function() {
+                /*var offsetTop = $(txtWeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleWeightClick();
+            });
 
+            /*var txtNhsNumber = this.refs.txtNhsNumber;
+            txtNhsNumber.addEventListener("focus", function() {
+                var offsetTop = $(txtNhsNumber).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
@@ -217,26 +249,28 @@
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtEthnicityDiv">
                     <i className="material-icons primary-icons md-36">face</i>
-                    <input className="mdl-textfield__input" type="text" id="txtEthnicity" ref="txtEthnicity" onClick={this.handleEthnicityClick}/>
+                    <input className="mdl-textfield__input" type="text" id="txtEthnicity" ref="txtEthnicity"/>
                     <label className="mdl-textfield__label" htmlFor="txtEthnicity">Choose Ethnicity</label>
                     <span className="mdl-textfield__error">Choose Ethnicity required!</span>
                 </div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtDiseasesDiv">
                     <i className="material-icons primary-icons md-36">warning</i>
                     <label className="mdl-textfield__label" ref="labelTxtDiseases" htmlFor="txtDiseases">Diseases if any</label>
-                    <input className="mdl-textfield__input" type="text" id="txtDiseases" ref="txtDiseases" onClick={this.handleDiseasesClick}/>
+                    <input className="mdl-textfield__input" type="text" id="txtDiseases" ref="txtDiseases"/>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtHeightDiv">
                     <i className="material-icons primary-icons md-36">accessibility</i>
-                    <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight" onClick={this.handleHeightClick}/>
+                    <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight"/>
+                    <input className="mdl-textfield__input hide" type="text" id="txtHeight_Hidden" ref="txtHeight_Hidden"/>
                     <label className="mdl-textfield__label" htmlFor="txtHeight">Current Height</label>
                     <span className="mdl-textfield__error">Current Height required!</span>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtWeightDiv">
                     <i className="material-icons primary-icons md-36">adb</i>
-                    <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight" onClick={this.handleWeightClick}/>
+                    <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight"/>
+                    <input className="mdl-textfield__input hide" type="text" id="txtWeight_Hidden" ref="txtWeight_Hidden"/>
                     <label className="mdl-textfield__label" htmlFor="txtWeight">Current Weight</label>
                     <span className="mdl-textfield__error">Current Weight required!</span>
                 </div>
@@ -326,11 +360,64 @@
 
             $(refElement).blur();
         },
+        scrollTo: function(offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function() {
+            var component = this;
+
             this.setupCountrySelect();
 
             var txtCountry = this.refs.txtCountry;
-            txtCountry.addEventListener("focus", this.handleCountry);
+            txtCountry.addEventListener("focus", function() {
+                /*var offsetTop = $(txtCountry).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleCountry();
+            });
+
+            /*var txtCounty = this.refs.txtCounty;
+            txtCounty.addEventListener("focus", function() {
+                var offsetTop = $(txtCounty).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtTown = this.refs.txtTown;
+            txtTown.addEventListener("focus", function() {
+                var offsetTop = $(txtTown).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtPostCode = this.refs.txtPostCode;
+            txtPostCode.addEventListener("focus", function() {
+                var offsetTop = $(txtPostCode).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtAddressLine1 = this.refs.txtAddressLine1;
+            txtAddressLine1.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine1).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtAddressLine2 = this.refs.txtAddressLine2;
+            txtAddressLine2.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine2).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtMobile = this.refs.txtMobile;
+            txtMobile.addEventListener("focus", function() {
+                var offsetTop = $(txtMobile).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtPhone = this.refs.txtPhone;
+            txtPhone.addEventListener("focus", function() {
+                var offsetTop = $(txtPhone).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
@@ -571,22 +658,57 @@
                 max: new Date(),
                 onSelect: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtBirthDay, component.refs.txtBirthDayDiv);
+                },
+                onClosed: function (valueText, inst) {
+                    if ($(component.refs.txtBirthDayDiv).hasClass("is-focused")) {
+                        $(component.refs.txtBirthDayDiv).removeClass("is-focused");
+                    }
                 }
             });
         },
+        scrollTo: function(offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function() {
+            var component = this;
             this.setupTitleSelect();
             this.setupGenderSelect();
             this.setupBirthDayCalendar();
 
-            var txtTitle = this.refs.txtTitle;
-            txtTitle.addEventListener("focus", this.handleTitleClick);
+            var txtTitle = component.refs.txtTitle;
+            txtTitle.addEventListener("focus", function() {
+                /*var offsetTop = $(txtTitle).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleTitleClick();
+            });
+
+            var txtBirthDay = component.refs.txtBirthDay;
+            txtBirthDay.addEventListener("focus", function() {
+                /*var offsetTop = $(txtBirthDay).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleBirthDayClick();
+            });
 
             var txtGender = this.refs.txtGender;
-            txtGender.addEventListener("focus", this.handleGenderClick);
+            txtGender.addEventListener("focus", function() {
+                /*var offsetTop = $(txtGender).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleGenderClick();
+            });
 
-            var txtBirthDay = this.refs.txtBirthDay;
-            txtBirthDay.addEventListener("focus", this.handleBirthDayClick);
+            /*var txtFirstName = this.refs.txtFirstName;
+            txtFirstName.addEventListener("focus", function() {
+                var offsetTop = $(txtFirstName).offset().top;
+                component.scrollTo(offsetTop);
+            });
+
+            var txtSurname = this.refs.txtSurname;
+            txtSurname.addEventListener("focus", function() {
+                var offsetTop = $(txtSurname).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         setRefElementValue: function(valueText, refElement, refElementDiv) {
             $(refElement).val(valueText);
@@ -732,6 +854,22 @@
         },
         componentDidMount: function() {
             componentHandler.upgradeDom();
+
+            var doneButton = this.refs.doneButton;
+            doneButton.addEventListener("click", this.handleDone);
+
+            window.addEventListener('resize', function() {
+                is_keyboard = (window.innerHeight < initial_screen_size);
+                is_landscape = (screen.height < screen.width);
+
+                if ($(document.activeElement)) {
+                    var offsetTop = $(document.activeElement).offset().top;
+                    $('.mdl-layout').animate({
+                        scrollTop: offsetTop
+                    }, 200);
+                }
+            });
+
             var component = this;
             $(document).ready(function () {
                 $('#patient-details-collapse')
@@ -799,7 +937,6 @@
                             return all;
                         }, "");
                     }
-
 
                     component.refs.patientMedicalInfo.updateState({
                         nhsNumber: result.data.nhsNumber ? result.data.nhsNumber : "",
@@ -918,48 +1055,38 @@
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
-
-            var doneButton = this.refs.doneButton;
-            doneButton.addEventListener("click", this.handleDone);
         },
         render: function() {
-            return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-                <header className="mdl-layout__header">
-                    <USER_PROFILE_PROGRESS />
-                    <div className="primary-bg profile-image-container">
-                        <img src="images/user.png" width="120" height="20" className="img-responsive center-block profile-user-photo" />
-                        <div className="userName"><h4>{this.state.userName}</h4></div>
+            return <div className="mdl-layout mdl-js-layout mdl-layout--header primary-bg">
+                <button ref="doneButton" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect done-button">
+                    <i className="material-icons">done</i>
+                        <span className="mdl-button__ripple-container">
+                            <span className="mdl-ripple is-animating"></span>
+                        </span>
+                </button>
+                <USER_PROFILE_PROGRESS />
+                <div className="profile-image-container">
+                    <img src="images/user.png" width="120" height="20" className="img-responsive center-block profile-user-photo" />
+                </div>
+                <div className="userName"><h4>{this.state.userName}</h4></div>
+                <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                    <div className="mdl-tabs__tab-bar">
+                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab">Basic Info</a>
+                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress">Address</a>
+                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical">Medical</a>
                     </div>
-                    <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
-                        <a href="#basic-info" className="mdl-layout__tab is-active" ref="basicInfoTab">Basic Info</a>
-                        <a href="#address" className="mdl-layout__tab" ref="basicAddress">Address</a>
-                        <a href="#medical" className="mdl-layout__tab" ref="basicMedical">Medical</a>
-                    </div>
-                    <div className="mdl-card__menu">
-                        <button ref="doneButton" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                            <i className="material-icons">done</i>
-                            <span className="mdl-button__ripple-container"><span className="mdl-ripple is-animating"></span>
-                            </span>
-                        </button>
-                    </div>
-                </header>
-                <main className="mdl-layout__content">
-                    <section className="mdl-layout__tab-panel is-active" id="basic-info" ref="basicInfoTabContent">
-                        <div className="page-content">
+                    <main>
+                        <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
                             <PatientBasicInfo ref="patientInfoComponent"/>
                         </div>
-                    </section>
-                    <section className="mdl-layout__tab-panel" id="address" ref="basicAddressContent">
-                        <div className="page-content">
+                        <div className="mdl-tabs__panel" id="address" ref="basicAddressContent">
                             <PatientAddress ref="patientAddress"/>
                         </div>
-                    </section>
-                    <section className="mdl-layout__tab-panel" id="medical" ref="basicMedicalContent">
-                        <div className="page-content">
+                        <div className="mdl-tabs__panel" id="medical" ref="basicMedicalContent">
                             <PatientMedicalInfo ref="patientMedicalInfo"/>
                         </div>
-                    </section>
-                </main>
+                    </main>
+                </div>
             </div>
         }
     });

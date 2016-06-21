@@ -46,10 +46,10 @@
             $(this.refs.sDiseases).mobiscroll("show");
         },
         handleHeightClick: function () {
-            $(this.refs.txtHeight).mobiscroll("show");
+            $(this.refs.txtHeight_Hidden).mobiscroll("show");
         },
         handleWeightClick: function () {
-            $(this.refs.txtWeight).mobiscroll("show");
+            $(this.refs.txtWeight_Hidden).mobiscroll("show");
         },
         setupEthnicityClick: function () {
             var component = this;
@@ -84,7 +84,7 @@
         setupHeightClick: function () {
             var component = this;
 
-            $(this.refs.txtHeight).mobiscroll().distance({
+            $(this.refs.txtHeight_Hidden).mobiscroll().distance({
                 theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'm',
@@ -97,7 +97,7 @@
         setupWeightClick: function () {
             var component = this;
 
-            $(this.refs.txtWeight).mobiscroll().mass({
+            $(this.refs.txtWeight_Hidden).mobiscroll().mass({
                 theme: 'mobiscroll',
                 display: 'bottom',
                 defaultUnit: 'kg',
@@ -122,22 +122,55 @@
 
             $(refElement).blur();
         },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function () {
+            var component = this;
+
             this.setupEthnicityClick();
 
             var txtEthnicity = this.refs.txtEthnicity;
-            txtEthnicity.addEventListener("focus", this.handleEthnicityClick);
+            txtEthnicity.addEventListener("focus", function () {
+                /*var offsetTop = $(txtEthnicity).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleEthnicityClick();
+            });
 
             this.setupDiseasesClick();
 
             var txtDiseases = this.refs.txtDiseases;
-            txtDiseases.addEventListener("focus", this.handleDiseasesClick);
+            txtDiseases.addEventListener("focus", function () {
+                /*var offsetTop = $(txtDiseases).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleDiseasesClick();
+            });
 
             this.setupHeightClick();
+
+            var txtHeight = this.refs.txtHeight;
+            txtHeight.addEventListener("focus", function () {
+                /*var offsetTop = $(txtHeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleHeightClick();
+            });
+
             this.setupWeightClick();
 
-            // var txtHeight = this.refs.txtHeight;
-            // txtHeight.addEventListener("focus", this.handleHeightClick);
+            var txtWeight = this.refs.txtWeight;
+            txtWeight.addEventListener("focus", function () {
+                /*var offsetTop = $(txtWeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleWeightClick();
+            });
+
+            /*var txtNhsNumber = this.refs.txtNhsNumber;
+            txtNhsNumber.addEventListener("focus", function() {
+                var offsetTop = $(txtNhsNumber).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
@@ -235,7 +268,7 @@
                         { className: "material-icons primary-icons md-36" },
                         "face"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtEthnicity", ref: "txtEthnicity", onClick: this.handleEthnicityClick }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtEthnicity", ref: "txtEthnicity" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtEthnicity" },
@@ -260,7 +293,7 @@
                         { className: "mdl-textfield__label", ref: "labelTxtDiseases", htmlFor: "txtDiseases" },
                         "Diseases if any"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtDiseases", ref: "txtDiseases", onClick: this.handleDiseasesClick })
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtDiseases", ref: "txtDiseases" })
                 ),
                 React.createElement("div", { className: "clear" }),
                 React.createElement(
@@ -271,7 +304,8 @@
                         { className: "material-icons primary-icons md-36" },
                         "accessibility"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight", onClick: this.handleHeightClick }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight" }),
+                    React.createElement("input", { className: "mdl-textfield__input hide", type: "text", id: "txtHeight_Hidden", ref: "txtHeight_Hidden" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtHeight" },
@@ -292,7 +326,8 @@
                         { className: "material-icons primary-icons md-36" },
                         "adb"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight", onClick: this.handleWeightClick }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight" }),
+                    React.createElement("input", { className: "mdl-textfield__input hide", type: "text", id: "txtWeight_Hidden", ref: "txtWeight_Hidden" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtWeight" },
@@ -503,11 +538,58 @@
 
             $(refElement).blur();
         },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function () {
+            var component = this;
+
             this.setupCountrySelect();
 
             var txtCountry = this.refs.txtCountry;
-            txtCountry.addEventListener("focus", this.handleCountry);
+            txtCountry.addEventListener("focus", function () {
+                /*var offsetTop = $(txtCountry).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleCountry();
+            });
+
+            /*var txtCounty = this.refs.txtCounty;
+            txtCounty.addEventListener("focus", function() {
+                var offsetTop = $(txtCounty).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtTown = this.refs.txtTown;
+            txtTown.addEventListener("focus", function() {
+                var offsetTop = $(txtTown).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtPostCode = this.refs.txtPostCode;
+            txtPostCode.addEventListener("focus", function() {
+                var offsetTop = $(txtPostCode).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtAddressLine1 = this.refs.txtAddressLine1;
+            txtAddressLine1.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine1).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtAddressLine2 = this.refs.txtAddressLine2;
+            txtAddressLine2.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine2).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtMobile = this.refs.txtMobile;
+            txtMobile.addEventListener("focus", function() {
+                var offsetTop = $(txtMobile).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtPhone = this.refs.txtPhone;
+            txtPhone.addEventListener("focus", function() {
+                var offsetTop = $(txtPhone).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
@@ -940,22 +1022,56 @@
                 max: new Date(),
                 onSelect: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtBirthDay, component.refs.txtBirthDayDiv);
+                },
+                onClosed: function (valueText, inst) {
+                    if ($(component.refs.txtBirthDayDiv).hasClass("is-focused")) {
+                        $(component.refs.txtBirthDayDiv).removeClass("is-focused");
+                    }
                 }
             });
         },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function () {
+            var component = this;
             this.setupTitleSelect();
             this.setupGenderSelect();
             this.setupBirthDayCalendar();
 
-            var txtTitle = this.refs.txtTitle;
-            txtTitle.addEventListener("focus", this.handleTitleClick);
+            var txtTitle = component.refs.txtTitle;
+            txtTitle.addEventListener("focus", function () {
+                /*var offsetTop = $(txtTitle).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleTitleClick();
+            });
+
+            var txtBirthDay = component.refs.txtBirthDay;
+            txtBirthDay.addEventListener("focus", function () {
+                /*var offsetTop = $(txtBirthDay).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleBirthDayClick();
+            });
 
             var txtGender = this.refs.txtGender;
-            txtGender.addEventListener("focus", this.handleGenderClick);
+            txtGender.addEventListener("focus", function () {
+                /*var offsetTop = $(txtGender).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleGenderClick();
+            });
 
-            var txtBirthDay = this.refs.txtBirthDay;
-            txtBirthDay.addEventListener("focus", this.handleBirthDayClick);
+            /*var txtFirstName = this.refs.txtFirstName;
+            txtFirstName.addEventListener("focus", function() {
+                var offsetTop = $(txtFirstName).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtSurname = this.refs.txtSurname;
+            txtSurname.addEventListener("focus", function() {
+                var offsetTop = $(txtSurname).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         setRefElementValue: function (valueText, refElement, refElementDiv) {
             $(refElement).val(valueText);
@@ -1197,6 +1313,22 @@
         socketCallback: function (message) {},
         componentDidMount: function () {
             componentHandler.upgradeDom();
+
+            var doneButton = this.refs.doneButton;
+            doneButton.addEventListener("click", this.handleDone);
+
+            window.addEventListener('resize', function () {
+                is_keyboard = window.innerHeight < initial_screen_size;
+                is_landscape = screen.height < screen.width;
+
+                if ($(document.activeElement)) {
+                    var offsetTop = $(document.activeElement).offset().top;
+                    $('.mdl-layout').animate({
+                        scrollTop: offsetTop
+                    }, 200);
+                }
+            });
+
             var component = this;
             $(document).ready(function () {
                 $('#patient-details-collapse').on('show.bs.collapse', function (a) {
@@ -1378,97 +1510,78 @@
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
-
-            var doneButton = this.refs.doneButton;
-            doneButton.addEventListener("click", this.handleDone);
         },
         render: function () {
             return React.createElement(
                 "div",
-                { className: "mdl-layout mdl-js-layout mdl-layout--fixed-header" },
+                { className: "mdl-layout mdl-js-layout mdl-layout--header primary-bg" },
                 React.createElement(
-                    "header",
-                    { className: "mdl-layout__header" },
-                    React.createElement(USER_PROFILE_PROGRESS, null),
+                    "button",
+                    { ref: "doneButton", className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect done-button" },
                     React.createElement(
-                        "div",
-                        { className: "primary-bg profile-image-container" },
-                        React.createElement("img", { src: "images/user.png", width: "120", height: "20", className: "img-responsive center-block profile-user-photo" }),
-                        React.createElement(
-                            "div",
-                            { className: "userName" },
-                            React.createElement(
-                                "h4",
-                                null,
-                                this.state.userName
-                            )
-                        )
+                        "i",
+                        { className: "material-icons" },
+                        "done"
                     ),
                     React.createElement(
+                        "span",
+                        { className: "mdl-button__ripple-container" },
+                        React.createElement("span", { className: "mdl-ripple is-animating" })
+                    )
+                ),
+                React.createElement(USER_PROFILE_PROGRESS, null),
+                React.createElement(
+                    "div",
+                    { className: "profile-image-container" },
+                    React.createElement("img", { src: "images/user.png", width: "120", height: "20", className: "img-responsive center-block profile-user-photo" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "userName" },
+                    React.createElement(
+                        "h4",
+                        null,
+                        this.state.userName
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "mdl-tabs mdl-js-tabs mdl-js-ripple-effect" },
+                    React.createElement(
                         "div",
-                        { className: "mdl-layout__tab-bar mdl-js-ripple-effect" },
+                        { className: "mdl-tabs__tab-bar" },
                         React.createElement(
                             "a",
-                            { href: "#basic-info", className: "mdl-layout__tab is-active", ref: "basicInfoTab" },
+                            { href: "#basic-info", className: "mdl-tabs__tab is-active", ref: "basicInfoTab" },
                             "Basic Info"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#address", className: "mdl-layout__tab", ref: "basicAddress" },
+                            { href: "#address", className: "mdl-tabs__tab", ref: "basicAddress" },
                             "Address"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#medical", className: "mdl-layout__tab", ref: "basicMedical" },
+                            { href: "#medical", className: "mdl-tabs__tab", ref: "basicMedical" },
                             "Medical"
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "mdl-card__menu" },
-                        React.createElement(
-                            "button",
-                            { ref: "doneButton", className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons" },
-                                "done"
-                            ),
-                            React.createElement(
-                                "span",
-                                { className: "mdl-button__ripple-container" },
-                                React.createElement("span", { className: "mdl-ripple is-animating" })
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    "main",
-                    { className: "mdl-layout__content" },
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel is-active", id: "basic-info", ref: "basicInfoTabContent" },
+                        "main",
+                        null,
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel is-active", id: "basic-info", ref: "basicInfoTabContent" },
                             React.createElement(PatientBasicInfo, { ref: "patientInfoComponent" })
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "address", ref: "basicAddressContent" },
+                        ),
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel", id: "address", ref: "basicAddressContent" },
                             React.createElement(PatientAddress, { ref: "patientAddress" })
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "medical", ref: "basicMedicalContent" },
+                        ),
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel", id: "medical", ref: "basicMedicalContent" },
                             React.createElement(PatientMedicalInfo, { ref: "patientMedicalInfo" })
                         )
                     )

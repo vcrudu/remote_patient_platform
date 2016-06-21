@@ -82,12 +82,17 @@
         componentDidUpdate: function() {
         },
         componentDidMount: function() {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
         },
         handleView: function() {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <Card className="message-card-wide">
+            return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
@@ -118,12 +123,17 @@
         componentDidUpdate: function() {
         },
         componentDidMount: function() {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
         },
         handleView: function() {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <Card className="message-card-wide">
+            return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
