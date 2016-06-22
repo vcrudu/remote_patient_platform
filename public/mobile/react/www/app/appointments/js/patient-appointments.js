@@ -16,6 +16,7 @@
     var DialogActions = ReactMDL.DialogActions;
     var Textfield = ReactMDL.Textfield;
     var ProgressBar = ReactMDL.ProgressBar;
+    var Snackbar = ReactMDL.Snackbar;
 
     var DateSelector = React.createClass({
         displayName: "DateSelector",
@@ -195,14 +196,21 @@
                 eventAfterAllRender: function (view) {},
                 loading: function (isLoading, view) {}
             });
+
+            component.setState({ isSnackbarActive: true });
         },
         getInitialState: function () {
             return {
                 openDialog: false,
-                slotId: undefined
+                slotId: undefined,
+                isSnackbarActive: true,
+                snackbarTimeOut: 10000
             };
         },
         onReasonChange: function () {},
+        handleTimeoutSnackbar() {
+            this.setState({ isSnackbarActive: false });
+        },
         render: function () {
             return React.createElement(
                 Layout,
@@ -245,6 +253,11 @@
                         ),
                         React.createElement(DateSelector, { ref: "dateSelector", onSelectDateCallback: this.onDateChanged })
                     )
+                ),
+                React.createElement(
+                    Snackbar,
+                    { active: this.state.isSnackbarActive, timeout: this.state.snackbarTimeOut, onTimeout: this.handleTimeoutSnackbar, action: "Close", onActionClick: this.handleTimeoutSnackbar },
+                    "Please click on an available time slot in order to book an appointment to the doctor."
                 )
             );
         }
