@@ -38,19 +38,73 @@
         handleEthnicityClick: function() {
             $(this.refs.sEthnicity).mobiscroll("show");
         },
+        handleDiseasesClick: function() {
+            $(this.refs.sDiseases).mobiscroll("show");
+        },
+        handleHeightClick: function() {
+            $(this.refs.txtHeight).mobiscroll("show");
+        },
+        handleWeightClick: function() {
+            $(this.refs.txtWeight).mobiscroll("show");
+        },
         setupEthnicityClick: function() {
             var component = this;
 
             $(this.refs.sEthnicity).mobiscroll().select({
                 theme: 'mobiscroll',
                 display: 'bottom',
-                minWidth: 200,
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtEthnicity, component.refs.txtEthnicityDiv);
                 }
             });
 
             $("#sEthnicity_dummy").hide();
+        },
+        setupDiseasesClick: function() {
+            var component = this;
+
+            $(this.refs.sDiseases).mobiscroll().select({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                select: 'multiple',
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtDiseases, component.refs.txtDiseasesDiv);
+                    if (valueText === "") {
+                        this.refs.labelTxtDiseases.htmlFor = 'txtDiseases';
+                    }
+                }
+            });
+
+            $("#sDiseases_dummy").hide();
+        },
+        setupHeightClick: function() {
+            var component = this;
+
+            $(this.refs.txtHeight).mobiscroll().distance({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                defaultUnit: 'm',
+                units: ['m', 'in', 'ft'],
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtHeight, component.refs.txtHeightDiv);
+                }
+            }).mobiscroll('setVal', '1.5 m');
+
+        },
+        setupWeightClick: function() {
+            var component = this;
+
+            $(this.refs.txtWeight).mobiscroll().mass({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                defaultUnit: 'kg',
+                max:300,
+                units: ['kg', 'lb'],
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtWeight, component.refs.txtWeightDiv);
+                }
+            }).mobiscroll('setVal', '60 kg');
+
         },
         setRefElementValue: function(valueText, refElement, refElementDiv) {
             $(refElement).val(valueText);
@@ -71,20 +125,36 @@
 
             var txtEthnicity = this.refs.txtEthnicity;
             txtEthnicity.addEventListener("focus", this.handleEthnicityClick);
+
+            this.setupDiseasesClick();
+
+            var txtDiseases = this.refs.txtDiseases;
+            txtDiseases.addEventListener("focus", this.handleDiseasesClick);
+
+            this.setupHeightClick();
+            this.setupWeightClick();
+
+           // var txtHeight = this.refs.txtHeight;
+           // txtHeight.addEventListener("focus", this.handleHeightClick);
+
         },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
 
             this.setRefElementValue(this.state.nhsNumber, this.refs.txtNhsNumber, this.refs.txtNhsNumberDiv);
             this.setRefElementValue(this.state.ethnicity, this.refs.txtEthnicity, this.refs.txtEthnicityDiv);
+            this.setRefElementValue(this.state.diseases, this.refs.txtDiseases, this.refs.txtDiseasesDiv);
             this.setRefElementValue(this.state.height, this.refs.txtHeight, this.refs.txtHeightDiv);
             this.setRefElementValue(this.state.weight, this.refs.txtWeight, this.refs.txtWeightDiv);
+
+            $(this.refs.sDiseases).mobiscroll('setVal', this.state.diseasesArray , true);
         },
         isValid: function() {
             var valid = true;
             this.setState({
                 nhsNumber: $(this.refs.txtNhsNumber).val(),
                 ethnicity: $(this.refs.txtEthnicity).val(),
+                diseases: $(this.refs.txtDiseases).val(),
                 height: $(this.refs.txtHeight).val(),
                 weight: $(this.refs.txtWeight).val(),
             });
@@ -105,6 +175,15 @@
             }
             else {
                 this.setState({ethnicity : $(this.refs.txtEthnicity).val()});
+            }
+
+            if ($(this.refs.txtDiseases).val() == "") {
+                $(this.refs.txtDiseasesDiv).addClass("is-invalid");
+                $(this.refs.txtDiseasesDiv).addClass("is-focused");
+                valid = false;
+            }
+            else {
+                this.setState({diseases : $(this.refs.txtDiseases).val()});
             }
 
             if ($(this.refs.txtHeight).val() == "") {
@@ -142,17 +221,22 @@
                     <label className="mdl-textfield__label" htmlFor="txtEthnicity">Choose Ethnicity</label>
                     <span className="mdl-textfield__error">Choose Ethnicity required!</span>
                 </div>
+                <div className="mdl-textfield mdl-js-textfield" ref="txtDiseasesDiv">
+                    <i className="material-icons primary-icons md-36">warning</i>
+                    <label className="mdl-textfield__label" ref="labelTxtDiseases" htmlFor="txtDiseases">Diseases if any</label>
+                    <input className="mdl-textfield__input" type="text" id="txtDiseases" ref="txtDiseases" onClick={this.handleDiseasesClick}/>
+                </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtHeightDiv">
                     <i className="material-icons primary-icons md-36">accessibility</i>
-                    <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight" />
+                    <input className="mdl-textfield__input" type="text" id="txtHeight" ref="txtHeight" onClick={this.handleHeightClick}/>
                     <label className="mdl-textfield__label" htmlFor="txtHeight">Current Height</label>
                     <span className="mdl-textfield__error">Current Height required!</span>
                 </div>
                 <div className="clear"></div>
                 <div className="mdl-textfield mdl-js-textfield" ref="txtWeightDiv">
                     <i className="material-icons primary-icons md-36">adb</i>
-                    <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight" />
+                    <input className="mdl-textfield__input" type="text" id="txtWeight" ref="txtWeight" onClick={this.handleWeightClick}/>
                     <label className="mdl-textfield__label" htmlFor="txtWeight">Current Weight</label>
                     <span className="mdl-textfield__error">Current Weight required!</span>
                 </div>
@@ -161,6 +245,7 @@
                     <option value="British / Mixed British">British / Mixed British</option>
                     <option value="Irish">Irish</option>
                     <option value="Other White Background">Other White Background</option>
+                    <option value="Other White Background">White Caucasian</option>
                     <option value="White & BlackCaribbean">White & BlackCaribbean</option>
                     <option value="White & Black African">White & Black African</option>
                     <option value="Other Mixed Background">Other Mixed Background</option>
@@ -172,6 +257,21 @@
                     <option value="Chinese">Chinese</option>
                     <option value="Other Black Background">Other Black Background</option>
                     <option value="Other ethnic group">Other ethnic group</option>
+                </select>
+
+                <select className="hide" name="Category" id="sDiseases" ref="sDiseases" multiple>
+                    <option value="Asthma (on medication)">Asthma (on medication)</option>
+                    <option value="Cancer">Cancer</option>
+                    <option value="Diabetes">Diabetes</option>
+                    <option value="Epilepsy">Epilepsy</option>
+                    <option value="Stroke/TIA">Stroke/TIA</option>
+                    <option value="Hypertension (high blood pressure)">Hypertension (high blood pressure)</option>
+                    <option value="Chronic heart disease">Chronic heart disease</option>
+                    <option value="Chronic kidney disease">Chronic kidney disease</option>
+                    <option value="Chronic lung disease">Chronic lung disease</option>
+                    <option value="Hypothyroidism (underactive thyroid)">Hypothyroidism (underactive thyroid)</option>
+                    <option value="Mental health concerns (give details)">Mental health concerns (give details)</option>
+                    <option value="Previous operations">Previous operations</option>
                 </select>
             </div>;
         }
@@ -202,14 +302,14 @@
             $(this.refs.sCountries).mobiscroll().select({
                 theme: 'mobiscroll',
                 display: 'bottom',
-                group: true,
-                minWidth: [50, 100],
-                maxWidth: [50, 230],
+                defaultValue: 'United Kingdom',
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtCountry, component.refs.txtCountryDiv);
                 }
             });
 
+            var inst = $(this.refs.sCountries).mobiscroll('getInst');
+            inst.setVal("United Kingdom", true, true);
             $("#sCountries_dummy").hide();
         },
         setRefElementValue: function(valueText, refElement, refElementDiv) {
@@ -311,14 +411,14 @@
                 this.setState({mobile : $(this.refs.txtMobile).val()});
             }
 
-            if ($(this.refs.txtPhone).val() == "") {
+            /*if ($(this.refs.txtPhone).val() == "") {
                 $(this.refs.txtPhoneDiv).addClass("is-invalid");
                 $(this.refs.txtPhoneDiv).addClass("is-focused");
                 valid = false;
             }
             else {
                 this.setState({phone : $(this.refs.txtPhone).val()});
-            }
+            }*/
 
             return valid;
         },
@@ -379,192 +479,28 @@
                 </div>
                 <div className="clear"></div>
                 <select id="sCountries" ref="sCountries" className="hide" name="Country">
-                    <optgroup label="A">
-                        <option value="Afganistan">Afganistan</option>
-                        <option value="Albania">Albania</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Austria">Austria</option>
-                        <option value="Azerbaijan">Azerbaijan</option>
-                    </optgroup>
-                    <optgroup label="B">
-                        <option value="Bahamas">Bahamas</option>
-                        <option value="Bahrain">Bahrain</option>
-                        <option value="Bolivia">Bolivia</option>
-                        <option value="Brazil">Brazil</option>
-                        <option value="Bulgaria">Bulgaria</option>
-                    </optgroup>
-                    <optgroup label="C">
-                        <option value="Cambodia">Cambodia</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Chile">Chile</option>
-                        <option value="China">China</option>
-                        <option value="Colombia">Colombia</option>
-                        <option value="Czech Republic">Czech Republic</option>
-                        <option value="Croatia">Croatia</option>
-                    </optgroup>
-                    <optgroup label="D">
-                        <option value="Denmark">Denmark</option>
-                        <option value="Djibouti">Djibouti</option>
-                        <option value="Dominica">Dominica</option>
-                        <option value="Dominican Republic">Dominican Republic</option>
-                    </optgroup>
-                    <optgroup label="E">
-                        <option value="Ecuador">Ecuador</option>
-                        <option value="Egypt">Egypt</option>
-                        <option value="El Salvador">El Salvador</option>
-                        <option value="Ethiopia">Ethiopia</option>
-                        <option value="Estonia">Estonia</option>
-                    </optgroup>
-                    <optgroup label="F">
-                        <option value="Falkland Islands">Falkland Islands</option>
-                        <option value="Faroe Islands">Faroe Islands</option>
-                        <option value="Finland">Finland</option>
-                        <option value="France">France</option>
-                        <option value="Fiji">Fiji</option>
-                    </optgroup>
-                    <optgroup label="G">
-                        <option value="Gambia">Gambia</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Ghana">Ghana</option>
-                        <option value="Guatemala">Guatemala</option>
-                        <option value="Guinea">Guinea</option>
-                        <option value="Guyana">Guyana</option>
-                    </optgroup>
-                    <optgroup label="H">
-                        <option value="Haiti">Haiti</option>
-                        <option value="Honduras">Honduras</option>
-                        <option value="Hong Kong">Hong Kong</option>
-                        <option value="Hungary">Hungary</option>
-                    </optgroup>
-                    <optgroup label="I">
-                        <option value="Iceland">Iceland</option>
-                        <option value="India">India</option>
-                        <option value="Indonesia">Indonesia</option>
-                        <option value="Iraq"Iraq></option>
-                        <option value="Ireland">Ireland</option>
-                        <option value="Israel">Israel</option>
-                        <option value="Italy">Italy</option>
-                    </optgroup>
-                    <optgroup label="J">
-                        <option value="Jamaica">Jamaica</option>
-                        <option value="Japan">Japan</option>
-                        <option value="Jordan">Jordan</option>
-                    </optgroup>
-                    <optgroup label="K">
-                        <option value="Kazakhstan">Kazakhstan</option>
-                        <option value="Kenya">Kenya</option>
-                        <option value="Kiribati">Kiribati</option>
-                        <option value="Korea">Korea</option>
-                        <option value="Kuwait">Kuwait</option>
-                    </optgroup>
-                    <optgroup label="L">
-                        <option value="Latvia">Latvia</option>
-                        <option value="Lebanon">Lebanon</option>
-                        <option value="Lesotho">Lesotho</option>
-                        <option value="Liberia">Liberia</option>
-                        <option value="Libya">Libya</option>
-                        <option value="Liechtenstein">Liechtenstein</option>
-                        <option value="Lithuania">Lithuania</option>
-                        <option value="Luxembourg">Luxembourg</option>
-                    </optgroup>
-                    <optgroup label="M">
-                        <option value="Macau">Macau</option>
-                        <option value="Macedonia">Macedonia</option>
-                        <option value="Madagascar">Madagascar</option>
-                        <option value="Malaysia">Malaysia</option>
-                        <option value="Mexico">Mexico</option>
-                        <option value="Monaco">Monaco</option>
-                        <option value="Mongolia">Mongolia</option>
-                        <option value="Montenegro">Montenegro</option>
-                        <option value="Montserrat">Montserrat</option>
-                        <option value="Morocco">Morocco</option>
-                    </optgroup>
-                    <optgroup label="N">
-                        <option value="Namibia">Namibia</option>
-                        <option value="Nauru">Nauru</option>
-                        <option value="Nepal">Nepal</option>
-                        <option value="Netherlands">Netherlands</option>
-                        <option value="New Caledonia">New Caledonia</option>
-                        <option value="New Zealand">New Zealand</option>
-                        <option value="Nigeria">Nigeria</option>
-                        <option value="Norway">Norway</option>
-                    </optgroup>
-                    <optgroup label="O">
-                        <option value="Oman">Oman</option>
-                    </optgroup>
-                    <optgroup label="P">
-                        <option value="Pakistan">Pakistan</option>
-                        <option value="Palau">Palau</option>
-                        <option value="Panama">Panama</option>
-                        <option value="Paraguay">Paraguay</option>
-                        <option value="Peru">Peru</option>
-                        <option value="Philippines">Philippines</option>
-                        <option value="Poland">Poland</option>
-                        <option value="Portugal">Portugal</option>
-                        <option value="Puerto Rico">Puerto Rico</option>
-                    </optgroup>
-                    <optgroup label="Q">
-                        <option value="Qatar">Qatar</option>
-                    </optgroup>
-                    <optgroup label="R">
-                        <option value="Reunion Island">Reunion Island</option>
-                        <option value="Romania">Romania</option>
-                        <option value="Russian Federation">Russian Federation</option>
-                        <option value="Rwanda">Rwanda</option>
-                    </optgroup>
-                    <optgroup label="S">
-                        <option value="Samoa">Samoa</option>
-                        <option value="San Marino">San Marino</option>
-                        <option value="Saudi Arabia">Saudi Arabia</option>
-                        <option value="Senegal">Senegal</option>
-                        <option value="Serbia">Serbia</option>
-                        <option value="Sierra Leone">Sierra Leone</option>
-                        <option value="Singapore">Singapore</option>
-                        <option value="Slovakia">Slovakia</option>
-                        <option value="Slovenia">Slovenia</option>
-                        <option value="Somalia">Somalia</option>
-                        <option value="South Africa">South Africa</option>
-                        <option value="Sweden">Sweden</option>
-                        <option value="Switzerland">Switzerland</option>
-                    </optgroup>
-                    <optgroup label="T">
-                        <option value="Taiwan">Taiwan</option>
-                        <option value="Tanzania">Tanzania</option>
-                        <option value="Thailand">Thailand</option>
-                        <option value="Togo">Togo</option>
-                        <option value="Tunisia">Tunisia</option>
-                        <option value="Turkey">Turkey</option>
-                    </optgroup>
-                    <optgroup label="U">
-                        <option value="Uganda">Uganda</option>
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="United Arab Emirates">United Arab Emirates</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="United States">United States</option>
-                        <option value="Uruguay">Uruguay</option>
-                        <option value="Uzbekistan">Uzbekistan</option>
-                    </optgroup>
-                    <optgroup label="V">
-                        <option value="Vanuatu">Vanuatu</option>
-                        <option value="Vatican">Vatican</option>
-                        <option value="Venezuela">Venezuela</option>
-                        <option value="Vietnam">Vietnam</option>
-                        <option value="Virgin Islands">Virgin Islands</option>
-                    </optgroup>
-                    <optgroup label="W">
-                        <option value="Wallis and Futuna Islands">Wallis and Futuna Islands</option>
-                        <option value="Western Sahara">Western Sahara</option>
-                    </optgroup>
-                    <optgroup label="Y">
-                        <option value="Yemen">Yemen</option>
-                    </optgroup>
-                    <optgroup label="Z">
-                        <option value="Zambia">Zambia</option>
-                        <option value="Zimbabwe">Zimbabwe</option>
-                    </optgroup>
+                    <option value="Austria">Austria</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Finland">Finland</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Moldova, Republic of">Moldova, Republic of</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Virgin Islands (British)">Virgin Islands (British)</option>
+                    <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
                 </select>
             </div>;
         }
@@ -625,16 +561,18 @@
             var birthDayPicker = $(this.refs.birthDayPicker);
             var component = this;
 
-            var maxDate = new Date();
-            birthDayPicker.mobiscroll().calendar({
+            var currYear = new Date().getFullYear();
+            var currentDate = new Date(new Date().setFullYear(currYear - 20));
+            birthDayPicker.mobiscroll().date({
                 theme: "material",
                 display: "bottom",
                 dateFormat: "mm/dd/yyyy",
-                maxDate: maxDate,
+                defaultValue: currentDate,
+                max: new Date(),
                 onSelect: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtBirthDay, component.refs.txtBirthDayDiv);
                 }
-            }).mobiscroll("setDate", maxDate, true);
+            });
         },
         componentDidMount: function() {
             this.setupTitleSelect();
@@ -795,17 +733,17 @@
         componentDidMount: function() {
             componentHandler.upgradeDom();
             var component = this;
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#patient-details-collapse')
-                    .on('show.bs.collapse', function(a) {
+                    .on('show.bs.collapse', function (a) {
                         $(a.target).prev('.panel-heading').addClass('active');
                     })
-                    .on('hide.bs.collapse', function(a) {
+                    .on('hide.bs.collapse', function (a) {
                         $(a.target).prev('.panel-heading').removeClass('active');
                     });
             });
 
-            Bridge.Patient.getDetails(function(result) {
+            Bridge.Patient.getDetails(function (result) {
                 indeterminateProgress.end();
                 if (result.success) {
                     component.setState({userDetails: result.data});
@@ -849,11 +787,27 @@
                         phone: result.data.phone ? result.data.phone : "",
                         mobile: result.data.mobile ? result.data.mobile : "",
                     });
+
+                    var healthProblemsText = "";
+                    if(result.data.healthProblems){
+                        healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
+                            if (all === "") {
+                                all = healthProblem;
+                            } else {
+                                all = all + ", " + healthProblem;
+                            }
+                            return all;
+                        }, "");
+                    }
+
+
                     component.refs.patientMedicalInfo.updateState({
                         nhsNumber: result.data.nhsNumber ? result.data.nhsNumber : "",
                         ethnicity: result.data.ethnicity ? result.data.ethnicity : "",
                         height: result.data.height ? result.data.height : "",
                         weight: result.data.weight ? result.data.weight : "",
+                        diseases: healthProblemsText,
+                        diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
                     });
                 }
             });
@@ -926,15 +880,17 @@
                 return;
             }
 
+            var healthProblems = this.refs.patientMedicalInfo.state.diseases.split(", ");
+
             var objectToPost = {
-                "id":this.state.userDetails.id,
-                "name":this.refs.patientInfoComponent.state.firstName,
-                "surname":this.refs.patientInfoComponent.state.surname,
-                "email":this.state.userDetails.email,
-                "title":this.refs.patientInfoComponent.state.title,
-                "dateOfBirth":moment(this.refs.patientInfoComponent.state.dateOfBirth, "MM/DD/YYYY").format("YYYY-MM-DD"),
-                "gender":this.refs.patientInfoComponent.state.gender,
-                "address":{
+                "id": this.state.userDetails.id,
+                "name": this.refs.patientInfoComponent.state.firstName,
+                "surname": this.refs.patientInfoComponent.state.surname,
+                "email": this.state.userDetails.email,
+                "title": this.refs.patientInfoComponent.state.title,
+                "dateOfBirth": moment(this.refs.patientInfoComponent.state.dateOfBirth, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                "gender": this.refs.patientInfoComponent.state.gender,
+                "address": {
                     "id": this.refs.patientAddress.state.id ? this.refs.patientAddress.state.id : this.createUUID(),
                     "country": this.refs.patientAddress.state.country,
                     "county": this.refs.patientAddress.state.county,
@@ -943,9 +899,10 @@
                     "addressLine2": this.refs.patientAddress.state.addressLine2 == "" ? undefined : this.refs.patientAddress.state.addressLine2,
                     "postCode": this.refs.patientAddress.state.postCode
                 },
-                "ethnicity":this.refs.patientMedicalInfo.state.ethnicity,
-                "nhsNumber":this.refs.patientMedicalInfo.state.nhsNumber,
+                "ethnicity": this.refs.patientMedicalInfo.state.ethnicity,
+                "nhsNumber": this.refs.patientMedicalInfo.state.nhsNumber,
                 "otherIdentifiers": [],
+                "healthProblems": healthProblems,
                 "phone": this.refs.patientAddress.state.phone,
                 "mobile": this.refs.patientAddress.state.mobile,
                 "weight": this.refs.patientMedicalInfo.state.weight,
@@ -970,18 +927,13 @@
                 <header className="mdl-layout__header">
                     <USER_PROFILE_PROGRESS />
                     <div className="primary-bg profile-image-container">
-                        <img src="images/user.png" width="120" height="120" className="img-responsive center-block profile-user-photo" />
+                        <img src="images/user.png" width="120" height="20" className="img-responsive center-block profile-user-photo" />
                         <div className="userName"><h4>{this.state.userName}</h4></div>
                     </div>
                     <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
                         <a href="#basic-info" className="mdl-layout__tab is-active" ref="basicInfoTab">Basic Info</a>
                         <a href="#address" className="mdl-layout__tab" ref="basicAddress">Address</a>
                         <a href="#medical" className="mdl-layout__tab" ref="basicMedical">Medical</a>
-                    </div>
-                    <div className="call-fab-container">
-                        <button ref="photoCamera" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i className="material-icons">photo_camera</i>
-                        </button>
                     </div>
                     <div className="mdl-card__menu">
                         <button ref="doneButton" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">

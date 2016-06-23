@@ -8,6 +8,7 @@ var Payment = require('../model').Payment;
 var logging     = require('../logging');
 var _ = require('underscore');
 var paymentService = require('./paymentService');
+var snsClient = require('../snsClient');
 
 (function() {
 
@@ -132,22 +133,14 @@ var paymentService = require('./paymentService');
                     } else {
                         order.changeOrderStatus('Paid');
                         saveOrder(req, order, function (error, savedOrder) {
+                            snsClient.sendOnDevicesOrderingEvent(req.decoded.email, savedOrder, function(err){
+                                if (err) {
+                                    logging.getLogger().error("Failed to send OnDevicesOrdering event!");
+                                }
+                            });
                             callback(error, savedOrder);
                         });
                     }
-                });
-            });
-        },
-
-        markOrderShipped: function (req, callback) {
-            ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
-                if(err) {
-                    processUnhandledError(req, err, callback);
-                    return;
-                }
-                order.changeOrderStatus('Shipped');
-                saveOrder(req, order, function (error, savedOrder) {
-                    callback(error, savedOrder);
                 });
             });
         },
@@ -178,13 +171,40 @@ var paymentService = require('./paymentService');
         },
 
         markOrderDelivered: function (req, callback) {
-            ordersRepository.getOrderByOrderId(req.body.orderId, function (err, order) {
-                if(err) {
+            ordersRepository.getOrderByOrderId(req.decoded.email, req.body.orderId, function (err, order) {
+                if (err) {
                     processUnhandledError(req, err, callback);
                     return;
                 }
                 order.changeOrderStatus('Delivered');
                 saveOrder(req, order, function (error, savedOrder) {
+                    if (!error) {
+                        snsClient.sendOnDevicesDeliveringEvent(req.decoded.email, savedOrder, function (err) {
+                            if (err) {
+                                logging.getLogger().error("Failed to send OnDevicesDelivering event!");
+                            }
+                        });
+                    }
+                    callback(error, savedOrder);
+                });
+            });
+        },
+
+        markOrderDispatched: function (req, callback) {
+            ordersRepository.getOrderByOrderId(req.decoded.email, req.body.orderId, function (err, order) {
+                if(err) {
+                    processUnhandledError(req, err, callback);
+                    return;
+                }
+                order.changeOrderStatus('Dispatched');
+                saveOrder(req, order, function (error, savedOrder) {
+                    if(!error){
+                        snsClient.sendOnDevicesDispatchingEvent(req.decoded.email, savedOrder, function (err) {
+                            if(err){
+                                logging.getLogger().error("Failed to send OnDevicesDispatching event!");
+                            }
+                        });
+                    }
                     callback(error, savedOrder);
                 });
             });

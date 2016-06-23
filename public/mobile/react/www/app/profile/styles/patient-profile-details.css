@@ -17,3 +17,8 @@
 .mdl-layout__content {
     margin: 16px 0 16px 16px;
 }
+
+
+.profile-image-container {
+    height: 120px;
+}

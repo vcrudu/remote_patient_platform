@@ -7,6 +7,7 @@
     var clientNotification = require('../notifications');
     var providersRepository = require('../repositories').Providers;
     var smsClient = require('../smsClient');
+    var snsClient = require('../snsClient');
     var loggerProvider = require('../logging');
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -25,23 +26,41 @@
                 slotsRepository.updateSlot(userId, providerId, slotEpoch, appointmentReason, function (err, result) {
                     if (!err) {
                         gridCacheClient.sendSlotBooked(slotEpoch, providerId);
-                        providersRepository.getOne(providerId, function (err, data) {
+                        providersRepository.getOne(providerId, function (err, providerDetails) {
                             if (!err) {
                                 clientNotification.sendEvent(userId,
                                     'slotBookedSuccessfully',
                                     {
                                         slotDateTime: slotEpoch,
                                         providerId: providerId,
-                                        providerName: data.title + ' ' + data.name + ' ' + data.surname
+                                        providerName: providerDetails.title + ' ' + providerDetails.name + ' ' + providerDetails.surname
                                     }
                                 );
-                                smsClient.sendAppointmentSms(userId, slotEpoch, function (err, data) {
-                                    if(err) {
+                                smsClient.sendAppointmentSms(userId, slotEpoch, function (err) {
+                                    if (err) {
                                         loggerProvider.getLogger().error(err);
                                     }
+                                    smsClient.sendProviderAppointmentSms(providerId, slotEpoch, function (err) {
+                                        if (err) {
+                                            loggerProvider.getLogger().error(err);
+                                        }
+                                        var appointmentDetails = {
+                                            providerId: providerId,
+                                            providerTitle: providerDetails.title,
+                                            providerFullName: providerDetails.name + ' ' + providerDetails.surname,
+                                            providerType: providerDetails.providerType,
+                                            appointmentDateTime: slotEpoch
+                                        };
+
+                                        snsClient.sendOnAppointmentBookingEvent(userId, appointmentDetails, function (err) {
+                                            if(err){
+                                                loggerProvider.getLogger().error(new Error("Failed to send OnAppointmentBookingEvent"));
+                                            }
+                                        });
+                                    });
                                 });
                             }
-                            callback(err, data);
+                            callback(err, providerDetails);
                         });
                     }
                 });

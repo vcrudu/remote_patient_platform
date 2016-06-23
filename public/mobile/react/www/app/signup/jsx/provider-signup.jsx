@@ -20,7 +20,7 @@
             inputRequired: React.PropTypes.bool,
             validators: React.PropTypes.array,
             validatorMessages: React.PropTypes.array,
-            lostFocusCallBack: React.PropTypes.func,
+            lostFocusCallBack: React.PropTypes.func
         },
         getDefaultProps: function() {
             return {
@@ -97,7 +97,8 @@
             return isValid;
         },
         onChange: function(component) {
-            this.validateComponent(component);
+            var isValid = this.validateComponent(component);
+            this.props.lostFocusCallBack(component, isValid);
         },
         onBlur: function(component) {
             var isValid = this.validateComponent(component);

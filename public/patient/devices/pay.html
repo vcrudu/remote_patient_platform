@@ -4,22 +4,13 @@
     <fieldset>
         <div class="row">
             <section class="col col-6">
-                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.fname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
-                    <input type="text" name="fname" placeholder="First name" ng-model="vm.firstname" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.fname.$invalid"
-                    class="invalid">First name is required</em>
-            </section>
-            <section class="col col-6">
-                <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.lname.$invalid}"> <i class="icon-prepend fa fa-user"></i>
-                    <input type="text" name="lname" placeholder="Last name"  ng-model="vm.lastname" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.lname.$invalid"
-                    class="invalid">Last name is required</em>
+                <label class="checkbox">
+                    <input type="checkbox" name="isAddressNeeded" ng-model="isAddressNeeded">
+                    <i></i>Send to alternative address</label>
             </section>
         </div>
 
-        <div class="row" ng-if="false">
+       <!-- <div class="row" ng-if="true" >
             <section class="col col-6">
                 <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
                     <input type="email" name="email" placeholder="E-mail">
@@ -30,10 +21,10 @@
                     <input type="tel" name="phone" placeholder="Phone" is-phone>
                 </label>
             </section>
-        </div>
+        </div>-->
     </fieldset>
 
-    <fieldset>
+    <fieldset ng-show="isAddressNeeded">
         <div class="row">
             <section class="col col-4">
                 <label class="select"
@@ -152,6 +143,13 @@
             </section>
         </div>
     </fieldset>
+
+    <div>
+        Overwritten Email:
+        <input type="email" ng-model="myEmail" overwrite-email name="overwrittenEmail" />
+        <span ng-show="form.overwrittenEmail.$error.email">This email format is invalid!</span><br>
+        Model: {{myEmail}}
+    </div>
 
     <footer>
         <button type="submit" class="btn btn-primary">

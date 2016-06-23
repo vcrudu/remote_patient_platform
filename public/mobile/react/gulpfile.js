@@ -124,6 +124,13 @@ gulp.task("babel-watch-timeline", function () {
         .pipe(gulp.dest("www/app/timeline/js"));
 });
 
+gulp.task("babel-watch-profile", function () {
+    return gulp.src("www/app/profile/jsx/*")
+        .pipe(watch("www/app/profile/jsx/*"))
+        .pipe(babel())
+        .pipe(gulp.dest("www/app/profile/js"));
+});
+
 // use default task to launch Browsersync and watch JS files
 gulp.task("serve", ["babel-landing",
                     "babel-signup",

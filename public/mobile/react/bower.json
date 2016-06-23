@@ -11,6 +11,7 @@
     "JSON-js": "json2-bower#^1.0.1",
     "d3": "^3.5.16",
     "bootstrap-material-design-icons": "bootstrap-material-icons#^2.2.0",
-    "mprogress": "^0.1.1"
+    "mprogress": "^0.1.1",
+    "material-design-lite": "^1.1.3"
   }
 }
