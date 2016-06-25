@@ -117,14 +117,20 @@
         displayName: "AlarmCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     { onClick: this.handleView },
@@ -179,14 +185,20 @@
         displayName: "ReadingCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     { onClick: this.handleView },
@@ -290,8 +302,44 @@
                 }
             }
         },
+        insertCard: function (cardCollection, notification) {
+            if (cardCollection.length === 0) {
+                cardCollection.push(notification);
+            } else {
+                var firstCard = cardCollection[0];
+                if (firstCard.dateString && moment(firstCard.dateString) < moment(notification.dateTime)) {
+                    cardCollection.splice(0, 0, notification);
+                } else {
+                    cardCollection.splice(1, 0, notification);
+                }
+            }
+        },
+        notificationCallback: function (data) {
+            var component = this;
+            var notification = data.notification;
+            component.setState(function (previousState) {
+                notification.timeString = moment(notification.dateTime).format("HH:mm");
+                this.insertCard(previousState.cards, notification);
+                this.insertCard(previousState.allCards, notification);
+                switch (notification.category) {
+                    case "info":
+                        this.insertCard(previousState.infoCards, notification);
+                        break;
+                    case "alarm":
+                        this.insertCard(previousState.alarmCards, notification);
+                        break;
+                    case "reading":
+                        this.insertCard(previousState.readingsCards, notification);
+                        break;
+                }
+
+                return previousState;
+            });
+        },
         componentDidMount: function () {
             var component = this;
+            Bridge.notificationCallback = this.notificationCallback;
+
             Bridge.Timeline.getNotifications(function (result) {
                 var allCards = _.sortBy(result.data, "dateTime").reverse();
                 var groupedAllCards = [];

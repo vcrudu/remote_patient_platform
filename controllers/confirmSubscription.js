@@ -4,10 +4,12 @@
 
 (function(){
 
-    var usersRepository     = require('../repositories').Users;
+    var usersRepository = require('../repositories').Users;
 
     module.exports.init = function(app) {
-        app.get('/confirm', function (req, res) {
+        app.post('/confirm', function (req, res) {
+            console.log(req.body.email);
+            console.log("test");
             usersRepository.findOneByEmail(req.body.email, function (err, user) {
                 if (err) {
                     res.json({
