@@ -242,9 +242,9 @@
     var AddDeviceOverlay = React.createClass({
         displayName: "AddDeviceOverlay",
 
-        getDefaultProps: function () {
-            devices: [];
-        },
+        /*getDefaultProps: function() {
+            devices: []
+        },*/
         showAddDeviceOverlay: function () {
             var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
 
@@ -265,6 +265,10 @@
             });
         },
         render: function () {
+            var component = this;
+            if (!component.devices) {
+                component.devices = [];
+            }
             return React.createElement(
                 "div",
                 { ref: "addDeviceOverlay", className: "addDeviceOverlay gray_200", onClick: this.hideAddDeviceOverlay },
@@ -272,7 +276,7 @@
                 React.createElement(
                     "div",
                     { className: "list-group", ref: "addDeviceOverlayList" },
-                    this.props.devices.map(function (device) {
+                    component.props.devices.map(function (device) {
                         return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
                     })
                 )

@@ -22,3 +22,35 @@
 .profile-image-container {
     height: 120px;
 }
+
+.mdl-textfield__label:after{
+    background-color: rgb(124,77,255) !important
+}
+
+.userName {
+    margin: 0 auto;
+}
+
+main {
+    padding: 16px;
+    background: #F5F5F5;
+}
+
+.done-button {
+    margin-top: 8px;
+    margin-right: 8px;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index: 1000;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+    background: rgb(103, 58, 183);
+}
+
+@media screen and (max-width: 1024px) {
+    .mdl-layout__header {
+        display: block !important;
+    }
+}

@@ -48,6 +48,11 @@
                         case "measure-taking":
                             $(component.props.carouselWizard).carousel("next");
                             break;
+                        case "measure-streaming":
+                            component.setState({
+                                value: result.data.value
+                            });
+                            break;
                         case "measure-received":
                             //indeterminateProgress.end();
                             component.setState({
@@ -56,7 +61,6 @@
                                 cancelButtonVisibility: false,
                                 value: result.data.value
                             });
-
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":

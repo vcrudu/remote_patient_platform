@@ -117,14 +117,20 @@
         displayName: "AlarmCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     { onClick: this.handleView },
@@ -179,14 +185,20 @@
         displayName: "ReadingCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     { onClick: this.handleView },

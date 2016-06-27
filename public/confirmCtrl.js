@@ -18,10 +18,14 @@ angular.module('app').controller('confirmCtrl',['$scope', '$state', '$stateParam
 
                 if($scope.confirmForm.$valid){
                     authService.submitConfirm($scope.email,
-                        function(success){
-
-                            $state.go('login');
-
+                        function(res){
+                            if (!res.data.success){
+                                toastr.info(res.data.message, 'Info',{timeOut: 3000});
+                                $state.go('login');
+                            } else {
+                                toastr.info(res.data.message, 'Info',{timeOut: 3000});
+                                $state.go('login')
+                            }
 
 
                         },function(error){
