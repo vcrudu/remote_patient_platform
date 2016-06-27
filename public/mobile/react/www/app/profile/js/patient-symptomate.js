@@ -28,7 +28,7 @@
         render: function () {
             return React.createElement(
                 Button,
-                { ripple: true, onClick: this.handleClick, className: "accent-color" },
+                { key: this.props.question.id + "_" + this.props.id + "_button", ripple: true, onClick: this.handleClick, className: "accent-color" },
                 this.props.label
             );
         }
@@ -87,7 +87,7 @@
             var question = component.props.question.items[0];
 
             var questionsButtons = question.choices.map(function (choise) {
-                return React.createElement(ChoiceButton, { key: choise.id, id: choise.id, label: choise.label, onClicked: component.handleNext });
+                return React.createElement(ChoiceButton, { key: choise.id + "_" + question.id, question: question, id: choise.id, label: choise.label, onClicked: component.handleNext });
             });
 
             return React.createElement(

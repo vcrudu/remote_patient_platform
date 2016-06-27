@@ -24,7 +24,7 @@
             this.props.onClicked(this.props.id);
         },
         render: function() {
-            return <Button ripple onClick={this.handleClick} className="accent-color">{this.props.label}</Button>
+            return <Button key={this.props.question.id + "_" + this.props.id + "_button"} ripple onClick={this.handleClick} className="accent-color">{this.props.label}</Button>
         }
     });
 
@@ -66,7 +66,7 @@
             var question = component.props.question.items[0];
 
             var questionsButtons = question.choices.map(function(choise) {
-                return <ChoiceButton key={choise.id} id={choise.id} label={choise.label} onClicked={component.handleNext}/>
+                return <ChoiceButton key={choise.id + "_" + question.id} question={question} id={choise.id} label={choise.label} onClicked={component.handleNext}/>
             });
 
             return <div className="group_multiple">

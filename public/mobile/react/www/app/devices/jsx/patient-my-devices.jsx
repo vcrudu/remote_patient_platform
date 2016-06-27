@@ -177,9 +177,9 @@
     });
 
     var AddDeviceOverlay = React.createClass({
-        getDefaultProps: function() {
+        /*getDefaultProps: function() {
             devices: []
-        },
+        },*/
         showAddDeviceOverlay: function() {
             var addDeviceOverlayDiv = $(this.refs.addDeviceOverlay);
 
@@ -202,10 +202,14 @@
             });
         },
         render: function() {
+            var component = this;
+            if (!component.devices) {
+                component.devices = [];
+            }
             return <div ref="addDeviceOverlay" className="addDeviceOverlay gray_200" onClick={this.hideAddDeviceOverlay}>
                 <div className="space_24"></div>
                 <div className="list-group" ref="addDeviceOverlayList">
-                    {this.props.devices.map(function(device) {
+                    {component.props.devices.map(function(device) {
                         return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
                     })}
                 </div>
