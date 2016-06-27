@@ -560,32 +560,32 @@
                 var offsetTop = $(txtCounty).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtTown = this.refs.txtTown;
+             var txtTown = this.refs.txtTown;
             txtTown.addEventListener("focus", function() {
                 var offsetTop = $(txtTown).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtPostCode = this.refs.txtPostCode;
+             var txtPostCode = this.refs.txtPostCode;
             txtPostCode.addEventListener("focus", function() {
                 var offsetTop = $(txtPostCode).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtAddressLine1 = this.refs.txtAddressLine1;
+             var txtAddressLine1 = this.refs.txtAddressLine1;
             txtAddressLine1.addEventListener("focus", function() {
                 var offsetTop = $(txtAddressLine1).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtAddressLine2 = this.refs.txtAddressLine2;
+             var txtAddressLine2 = this.refs.txtAddressLine2;
             txtAddressLine2.addEventListener("focus", function() {
                 var offsetTop = $(txtAddressLine2).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtMobile = this.refs.txtMobile;
+             var txtMobile = this.refs.txtMobile;
             txtMobile.addEventListener("focus", function() {
                 var offsetTop = $(txtMobile).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtPhone = this.refs.txtPhone;
+             var txtPhone = this.refs.txtPhone;
             txtPhone.addEventListener("focus", function() {
                 var offsetTop = $(txtPhone).offset().top;
                 component.scrollTo(offsetTop);
@@ -1067,7 +1067,7 @@
                 var offsetTop = $(txtFirstName).offset().top;
                 component.scrollTo(offsetTop);
             });
-              var txtSurname = this.refs.txtSurname;
+             var txtSurname = this.refs.txtSurname;
             txtSurname.addEventListener("focus", function() {
                 var offsetTop = $(txtSurname).offset().top;
                 component.scrollTo(offsetTop);

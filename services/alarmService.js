@@ -38,7 +38,7 @@
                         else {
                             var user = userResult;
 
-                            var gender = user.sex;
+                            var gender = user.gender?user.gender:user.sex;
                             var weight = user.weight;
 
                             globalAlarmsRepository.getAll(function(g_err, alarmsResult) {
