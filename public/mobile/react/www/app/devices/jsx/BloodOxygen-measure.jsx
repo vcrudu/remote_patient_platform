@@ -11,11 +11,11 @@
         template: 3,
         parent: ".progress-bar-indeterminate"
     };
-    var indeterminateProgress = new Mprogress(intObj);
+    //var indeterminateProgress = new Mprogress(intObj);
 
     var BLOOD_OXYGEN_PROGRESS = React.createClass({
         componentDidMount: function() {
-            indeterminateProgress.start();
+            //indeterminateProgress.start();
         },
         render: function() {
             return <div className="progress-bar-indeterminate"></div>
@@ -32,8 +32,15 @@
                 value: undefined
             }
         },
+        componentWillUnmount:function(){
+
+        },
         componentDidMount: function() {
             var component = this;
+
+            $(window).unload(function() {
+                Bridge.DeviceReceiver.stopMeasure();
+            });
 
             Bridge.DeviceReceiver.takeMeasure(component.props.deviceModelType, component.props.deviceModel, function(result) {
                 if (result.success) {
@@ -42,7 +49,7 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-received":
-                            indeterminateProgress.end();
+                            //indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -53,13 +60,19 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            component.handleTryAgain();
+                            //indeterminateProgress.end();
+                            component.setState({
+                                nextButtonVisibility: false,
+                                tryAgainButtonVisibility: true,
+                                cancelButtonVisibility: false
+                            });
                             break;
                     }
                 }
             });
         },
         handleTryAgain: function() {
+            //indeterminateProgress.start();
             this.setState(this.getInitialState());
             this.componentDidMount();
         },

@@ -105,19 +105,17 @@
                 filterExpression = '#category=:category';
 
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND ' +
-                    '#dateTime>=:startTime',
+                    KeyConditionExpression: 'userId=:userId',
 
                     ExpressionAttributeNames: {
-                        "#category": "category",
-                        "#dateTime": "dateTime"
+                        "#category": "category"
                     },
 
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId},
-                        ":category": {"S": category},
-                        ":startTime": {"N": startTime.getTime().toString()}
+                        ":category": {"S": category}
                     },
+                    ScanIndexForward:false,
 
                     FilterExpression: filterExpression,
                     TableName: TABLE_NAME,
@@ -125,16 +123,12 @@
                 };
             }else{
                 params = {
-                    KeyConditionExpression: 'userId=:userId AND ' +
-                    '#dateTime>=:startTime',
+                    KeyConditionExpression: 'userId=:userId',
 
-                    ExpressionAttributeNames: {
-                        "#dateTime": "dateTime"
-                    },
                     ExpressionAttributeValues: {
-                        ":userId": {"S": userId},
-                        ":startTime": {"N": startTime.getTime().toString()}
+                        ":userId": {"S": userId}
                     },
+                    ScanIndexForward:false,
                     TableName: TABLE_NAME,
                     Limit: 30
                 };
