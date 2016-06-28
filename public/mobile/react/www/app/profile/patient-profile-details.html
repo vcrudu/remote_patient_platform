@@ -17,7 +17,17 @@
 </head>
 <body>
 
-<div id="patient-profile-details-container"></div>
+<div id="patient-profile-details-container-wrapper">
+    <div id="patient-profile-details-container">
+
+    </div>
+
+    <div id="info-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+</div>
+
 
 <script type="text/javascript" src="../model/Bridge.js"></script>
 <script type="text/javascript" src="../model/Bridge.Provider.js"></script>
@@ -39,6 +49,25 @@
 <script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
 
 <script type="text/javascript" src="js/patient-profile-details.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var snackbarContainer = document.querySelector("#info-snackbar");
+        componentHandler.upgradeElement(snackbarContainer);
+
+        var closeHandler = function(event) {
+            $("#info-snackbar").hide();
+        };
+
+        var data = {
+            message: 'In order to save profile click on DONE button which is located top-right corner within picture area.',
+            timeout: 10000,
+            actionHandler: closeHandler,
+            actionText: 'Close'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
+</script>
 
 </body>
 </html>

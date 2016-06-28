@@ -8,22 +8,24 @@
 
     module.exports.init = function(app) {
         app.post('/confirm', function (req, res) {
-            console.log(req.body.email);
-            console.log("test");
             usersRepository.findOneByEmail(req.body.email, function (err, user) {
                 if (err) {
                     res.json({
                         success: false,
-                        data: err
+                        message: err
                     });
                 } else {
                     if (user) {
+                       if(user.isActive);
                         res.json({
-                            success: true
+                            success: false,
+                            message:"User is active, please login",
+                            email:req.body.email
                         });
                     } else {
                         res.json({
-                            success: false
+                            success: true,
+                            message:"Message was sent successful, please verify emailbox",
                         });
                     }
                 }

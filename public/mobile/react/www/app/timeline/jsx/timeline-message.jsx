@@ -67,6 +67,16 @@
                                 actionButtons: ["goToProvideDetails"]
                             });
                             break;
+                        case "takeMeasurement":
+                            component.setState({
+                                actionButtons: ["goToMyDevices"]
+                            });
+                            break;
+                        case "patientExpectMeasure":
+                            component.setState({
+                                actionButtons: ["goToMyDevices"]
+                            });
+                            break;
                         default:
                             component.setState({
                                 actionButtons: ["goToTimeline"]
@@ -90,6 +100,9 @@
                     break;
                 case "goToProvideDetails":
                     Bridge.Redirect.redirectToWithLevelsUp("profile/patient-profile-details.html", 2);
+                    break;
+                case "goToMyDevices":
+                    Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
                     break;
                 case "goToDevices":
                     Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
@@ -131,6 +144,10 @@
                                             case "goToProvideDetails":
                                                 return <button data-action-name="goToProvideDetails" className="mdl-button mdl-js-button mdl-button--accent push-right" onClick={component.handleActionClick}>
                                                     PROVIDE DETAILS
+                                                </button>
+                                            case "goToMyDevices":
+                                                return <button data-action-name="goToMyDevices" className="mdl-button mdl-js-button mdl-button--accent push-right" onClick={component.handleActionClick}>
+                                                    TAKE MEASUREMENT
                                                 </button>
                                         }
                                     })

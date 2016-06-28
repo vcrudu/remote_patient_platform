@@ -269,28 +269,36 @@
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
-            /*var line = d3.svg.line()
-                .interpolate("monotone")
-                .x(function(d) { return x(d.dateTime); })
-                .y(function(d) { return y(d.value); });*/
+            var zoom = d3.behavior.zoom().on("zoom", function () {
+                tip.hide();
+                focus.selectAll('circle').attr('cx', function (d) {
+                    return x(d.dateTime);
+                }).attr('cy', function (d) {
+                    return y(d.value);
+                });
 
-            /*var area = d3.svg.area()
-                .interpolate("monotone")
-                .x(function(d) { return x(d.dateTime); })
-                .y0(height)
-                .y1(function(d) { return y(d.value); });*/
+                if (props.type == "bloodPressure") {
+                    component.fillLines(focus, data, x, y, num_ticks, width);
+                }
 
-            /*var area2 = d3.svg.area()
-                .interpolate("monotone")
-                .x(function(d) { return x2(d.dateTime); })
-                .y0(height2)
-                .y1(function(d) { return y2(d.value); });*/
+                component.fillCircles(focus, tip, data, x, y);
 
-            var svg = d3.select(chartRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
+                focus.select(".x.grid").call(xAxis);
+
+                // Force changing brush range
+                brush.extent(x.domain());
+
+                svg1.select(".brush").call(brush);
+            });
+
+            var svg = d3.select(chartRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).call(zoom);
 
             svg.append("clipPath").attr("id", "clip").append("rect").attr("width", width).attr("height", height);
 
             var focus = svg.append("g").attr("class", "focus").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // Set up zoom behavior
+            zoom.x(x);
 
             var svg1 = d3.select(chartContextRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height2 + margin.top + margin.bottom);
 
@@ -305,8 +313,6 @@
             var brush = d3.svg.brush().x(x2).on("brush", function () {
                 tip.hide();
                 x.domain(brush.empty() ? x2.domain() : brush.extent());
-                /*focus.select(".area").attr("d", area);*/
-                /*focus.select(".line").attr("d", line);*/
 
                 if (props.type == "bloodPressure") {
                     component.fillLines(focus, data, x, y, num_ticks, width);
@@ -318,26 +324,6 @@
 
                 // Reset zoom scale', s domain
                 zoom.x(x);
-            });
-
-            var zoom = d3.behavior.zoom().on("zoom", function () {
-                /*focus.select(".area").attr("d", area);*/
-                /*focus.select(".line").attr("d", line);*/
-
-                focus.selectAll('circle').attr('cx', function (d) {
-                    return x(d.dateTime);
-                }).attr('cy', function (d) {
-                    return y(d.value);
-                });
-
-                /*focus.select(".line").attr("d", line);*/
-
-                focus.select(".x.grid").call(xAxis);
-
-                // Force changing brush range
-                brush.extent(x.domain());
-
-                svg.select(".brush").call(brush);
             });
 
             //x.domain(d3.extent(data, function(d) { return d.dateTime; }));
@@ -362,17 +348,6 @@
                 var yAxisGrid = d3.svg.axis().scale(y).orient("right").ticks(num_ticks).tickSize(width, 0).tickFormat("");
 
                 focus.append("g").classed('y', true).classed('grid', true).call(yAxisGrid);
-
-                /*focus.append("path")
-                .datum(data)
-                .attr("class", "area")
-                .attr("d", area);
-                */
-                /*focus.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("width", width)
-                .attr("d", line);*/
             }
 
             if (props.type == "bloodPressure") {

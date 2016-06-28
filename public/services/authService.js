@@ -275,14 +275,7 @@ angular.module('app')
                         url: appSettings.getServerUrl() + '/confirm',
                         data: {email : email}
                     };
-                    $http(req).success(function (res) {
-                        if (!res.error) {
-                            success(res);
-                        }else
-                            error(res.error);
-                    }).error(function(res){
-                        error(res);
-                    });
+                    $http(req).then(success,error);
                 }
             };
 

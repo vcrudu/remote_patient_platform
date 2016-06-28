@@ -8,7 +8,7 @@
     $.material.init();
 
     var intObj = {
-        template: 3,
+        template: 2,
         parent: ".progress-bar-indeterminate"
     };
     var indeterminateProgress = new Mprogress(intObj);
@@ -53,13 +53,19 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            component.handleTryAgain();
+                            indeterminateProgress.end();
+                            component.setState({
+                                nextButtonVisibility: false,
+                                tryAgainButtonVisibility: true,
+                                cancelButtonVisibility: false
+                            });
                             break;
                     }
                 }
             });
         },
         handleTryAgain: function () {
+            indeterminateProgress.start();
             this.setState(this.getInitialState());
             this.componentDidMount();
         },

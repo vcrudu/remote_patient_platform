@@ -18,6 +18,10 @@
     <main class="mdl-layout__content vital-signs">
         <div id="patient-vital-sings-container"></div>
     </main>
+    <div id="info-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
 </div>
 
 <script type="text/javascript" src="../model/Bridge.js"></script>
@@ -40,7 +44,22 @@
 <script>
     $(document).ready(function () {
         $("#patient-vital-sings-container").width($(window).width() - 17);
-    })
+
+        var snackbarContainer = document.querySelector("#info-snackbar");
+        componentHandler.upgradeElement(snackbarContainer);
+
+        var closeHandler = function(event) {
+            $("#info-snackbar").hide();
+        };
+
+        var data = {
+            message: 'In order to scroll up/down please hold finger on chart title and move up/down.',
+            timeout: 10000,
+            actionHandler: closeHandler,
+            actionText: 'Close'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
 </script>
 </body>
 </html>
