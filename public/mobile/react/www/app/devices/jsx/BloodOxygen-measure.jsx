@@ -8,14 +8,14 @@
     $.material.init();
 
     var intObj = {
-        template: 3,
+        template: 2,
         parent: ".progress-bar-indeterminate"
     };
-    //var indeterminateProgress = new Mprogress(intObj);
+    var indeterminateProgress = new Mprogress(intObj);
 
     var BLOOD_OXYGEN_PROGRESS = React.createClass({
         componentDidMount: function() {
-            //indeterminateProgress.start();
+            indeterminateProgress.start();
         },
         render: function() {
             return <div className="progress-bar-indeterminate"></div>
@@ -54,7 +54,7 @@
                             });
                             break;
                         case "measure-received":
-                            //indeterminateProgress.end();
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: true,
                                 tryAgainButtonVisibility: false,
@@ -64,7 +64,7 @@
                             $(component.props.carouselWizard).carousel("next");
                             break;
                         case "measure-timeout":
-                            //indeterminateProgress.end();
+                            indeterminateProgress.end();
                             component.setState({
                                 nextButtonVisibility: false,
                                 tryAgainButtonVisibility: true,
@@ -76,7 +76,7 @@
             });
         },
         handleTryAgain: function() {
-            //indeterminateProgress.start();
+            indeterminateProgress.start();
             this.setState(this.getInitialState());
             this.componentDidMount();
         },

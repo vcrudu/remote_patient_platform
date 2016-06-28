@@ -8,7 +8,7 @@
     $.material.init();
 
     var intObj = {
-        template: 3,
+        template: 2,
         parent: ".progress-bar-indeterminate"
     };
     var indeterminateProgress = new Mprogress(intObj);
@@ -29,7 +29,7 @@
                 tryAgainButtonVisibility: false,
                 cancelButtonVisibility: false,
                 doneButtonVisibility: false,
-                value: undefined,
+                value: undefined
             }
         },
         componentDidMount: function() {
