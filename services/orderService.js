@@ -9,6 +9,8 @@ var logging     = require('../logging');
 var _ = require('underscore');
 var paymentService = require('./paymentService');
 var snsClient = require('../snsClient');
+var userDetailsRepository = require('../repositories').UsersDetails;
+
 
 (function() {
 
@@ -58,48 +60,67 @@ var snsClient = require('../snsClient');
                     return;
                 }
 
-                var orderEntityToCreate;
+                userDetailsRepository.findOneByEmail(req.decoded.email, function(error, userDetails){
+                    if(!error){
 
-                try {
-                    orderEntityToCreate = orderFactory.BuildObject(_.extend(req.body, {
-                        userId: req.decoded.email, devices: devices
-                    }));
-                } catch (error) {
-                    logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
-                    callback(error, null);
-                    return;
-                }
+                        if(!req.body.shippingAddress.addressLine1
+                        || !req.body.shippingAddress.town
+                        || !req.body.shippingAddress.country
+                        || !req.body.shippingAddress.county
+                        || !req.body.shippingAddress.postCode) {
+                            req.body.shippingAddress.addressLine1 = userDetails.address.addressLine1;
+                            req.body.shippingAddress.town = userDetails.address.town;
+                            req.body.shippingAddress.country = userDetails.address.country;
+                            req.body.shippingAddress.county = userDetails.address.county;
+                            req.body.shippingAddress.postCode = userDetails.address.postCode;
+                        }
+                        var orderEntityToCreate;
 
-                if (req.body.payment) {
-                    var payment;
+                        try {
+                            orderEntityToCreate = orderFactory.BuildObject(_.extend(req.body, {
+                                userId: req.decoded.email, devices: devices
+                            }));
+                        } catch (error) {
+                            logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
+                            callback(error, null);
+                            return;
+                        }
 
-                    try{
-                        payment = new Payment(req.body.payment);
-                    }catch(error){
-                        logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
-                        callback(error, null);
-                    }
-                    paymentService.chargeNonCustomer(payment, orderEntityToCreate, function (error, charge) {
-                        if (error) {
-                            if (error.type == 'StripeCardError') {
+                        if (req.body.payment) {
+                            var payment;
+
+                            try{
+                                payment = new Payment(req.body.payment);
+                            }catch(error){
+                                logging.getLogger().error({url: req.url, userId: req.decoded.email, err: error});
                                 callback(error, null);
-                                return;
-                            } else {
-                                processUnhandledError(req, error, callback);
-                                return;
                             }
+                            paymentService.chargeNonCustomer(payment, orderEntityToCreate, function (error, charge) {
+                                if (error) {
+                                    if (error.type == 'StripeCardError') {
+                                        callback(error, null);
+                                        return;
+                                    } else {
+                                        processUnhandledError(req, error, callback);
+                                        return;
+                                    }
+                                } else {
+                                    orderEntityToCreate.changeOrderStatus('Paid');
+                                    saveOrder(req, orderEntityToCreate, function (error, createdOrder) {
+                                        callback(error, createdOrder);
+                                    });
+                                }
+                            });
                         } else {
-                            orderEntityToCreate.changeOrderStatus('Paid');
                             saveOrder(req, orderEntityToCreate, function (error, createdOrder) {
                                 callback(error, createdOrder);
                             });
                         }
-                    });
-                } else {
-                    saveOrder(req, orderEntityToCreate, function (error, createdOrder) {
-                        callback(error, createdOrder);
-                    });
-                }
+                    }
+                });
+
+
+
             });
         },
 

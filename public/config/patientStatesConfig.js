@@ -115,6 +115,10 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             templateUrl: "patient/devices/pay-confirm.html",
             controller: 'patientDevicesCheckoutPayConfirmCtrl as vm'
         })
+        .state("patient.devices.payment-successful", {
+            url: "/patient.devices.payment-successful",
+            templateUrl: "patient/devices/payment-successful.html"
+        })
         .state("patient.messages", {
             url: "/patient.messages",
             templateUrl: "patient/messages/patient.messages.html",

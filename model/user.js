@@ -25,6 +25,21 @@
         }
     }
 
+    function mapAddressFromDbEntity(dbEntity){
+        if(!dbEntity.address || dbEntity.address.NULL)
+            return null;
+
+        return {
+            addressLine1: dbEntity.address.M.addressLine1.S,
+            addressLine2: dbEntity.address.M.addressLine2.S,
+            country: dbEntity.address.M.country.S,
+            county: dbEntity.address.M.county.S,
+            id: dbEntity.address.M.id.S,
+            postCode: dbEntity.address.M.postCode.S,
+            town: dbEntity.address.M.town.S
+        }
+    }
+
     module.exports  = {
       createUserFromBody : function(requestBody){
          var salt = bcrypt.genSaltSync(10);
@@ -100,8 +115,8 @@
                 ethnicity: tryGetStringProperty(dbEntity.ethnicity),
                 nhsNumber: tryGetStringProperty(dbEntity.nhsNumber),
                 phone: tryGetStringProperty(dbEntity.phone),
-                mobile: tryGetStringProperty(dbEntity.mobile)
-
+                mobile: tryGetStringProperty(dbEntity.mobile),
+                address: mapAddressFromDbEntity(dbEntity)
                 /* address: dbEntity.fullAddress.M,
                 avatar: buildDynamoDbString(patient.avatar),
                 externalId: buildDynamoDbString(patient.externalId),
@@ -109,6 +124,7 @@
                 healthProblems : {L:allHealthProblems}*/
             };
         },
+
         createUserDetailsFromBody : function(requestBody){
             return domainModel.createPatient(requestBody);
         },

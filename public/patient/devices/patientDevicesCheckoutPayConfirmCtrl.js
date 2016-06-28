@@ -17,7 +17,7 @@ angular.module('app')
                                 Messaging.errHandle(result.data);
                             }else{
                                 BasketService.clearBasket();
-                                $state.go('patient.devices');
+                                $state.go('patient.devices.payment-successful');
                             }
 
                         }
