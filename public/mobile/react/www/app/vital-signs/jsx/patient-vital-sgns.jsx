@@ -124,7 +124,7 @@
             g.selectAll("circle").data(data).enter().append("circle")
                 .attr("cx", function(d) { return x(d.dateTime); })
                 .attr("cy", function(d) { return y(d.value); })
-                .attr("r", 9)
+                .attr("r", 12)
                 .attr("class", 'circle')
                 .attr("data-legend",function(d) { return d.label})
                 .style("fill", function(d) { return d.color; })
