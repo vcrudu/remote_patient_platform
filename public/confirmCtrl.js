@@ -19,7 +19,7 @@ angular.module('app').controller('confirmCtrl',['$scope', '$state', '$stateParam
                 if($scope.confirmForm.$valid){
                     authService.submitConfirm($scope.email,
                         function(res){
-                            if (!res.data.success){
+                            if (res.data.success){
                                 toastr.info(res.data.message, 'Info',{timeOut: 3000});
                                 $state.go('login');
                             } else {

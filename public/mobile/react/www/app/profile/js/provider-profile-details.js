@@ -157,6 +157,7 @@
                 zoom: undefined,
                 focus: undefined,
                 brush: undefined,
+                /*area: undefined,*/
                 svg: undefined
             };
         },
@@ -183,7 +184,7 @@
                 return x(d.dateTime);
             }).attr("cy", function (d) {
                 return y(d.value);
-            }).attr("r", 9).attr("class", 'circle').attr("data-legend", function (d) {
+            }).attr("r", 12).attr("class", 'circle').attr("data-legend", function (d) {
                 return d.label;
             }).style("fill", function (d) {
                 return d.color;
@@ -319,11 +320,36 @@
 
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(num_ticks);
 
-            var svg = d3.select(chartRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
+            var zoom = d3.behavior.zoom().on("zoom", function () {
+                tip.hide();
+                focus.selectAll('circle').attr('cx', function (d) {
+                    return x(d.dateTime);
+                }).attr('cy', function (d) {
+                    return y(d.value);
+                });
+
+                if (props.type == "bloodPressure") {
+                    component.fillLines(focus, data, x, y, num_ticks, width);
+                }
+
+                component.fillCircles(focus, tip, data, x, y);
+
+                focus.select(".x.grid").call(xAxis);
+
+                // Force changing brush range
+                brush.extent(x.domain());
+
+                svg1.select(".brush").call(brush);
+            });
+
+            var svg = d3.select(chartRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).call(zoom);
 
             svg.append("clipPath").attr("id", "clip").append("rect").attr("width", width).attr("height", height);
 
             var focus = svg.append("g").attr("class", "focus").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // Set up zoom behavior
+            zoom.x(x);
 
             var svg1 = d3.select(chartContextRef[0]).append("svg").attr("width", width + margin.left + margin.right).attr("height", height2 + margin.top + margin.bottom);
 
@@ -349,22 +375,6 @@
 
                 // Reset zoom scale', s domain
                 zoom.x(x);
-            });
-
-            var zoom = d3.behavior.zoom().on("zoom", function () {
-
-                focus.selectAll('circle').attr('cx', function (d) {
-                    return x(d.dateTime);
-                }).attr('cy', function (d) {
-                    return y(d.value);
-                });
-
-                focus.select(".x.grid").call(xAxis);
-
-                // Force changing brush range
-                brush.extent(x.domain());
-
-                svg.select(".brush").call(brush);
             });
 
             //x.domain(d3.extent(data, function(d) { return d.dateTime; }));

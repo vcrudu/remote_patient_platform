@@ -5,6 +5,9 @@
 (function(){
 
     var usersRepository = require('../repositories').Users;
+    var sendConfirmLink =require ('../services/emailService').sendSubscriptionConfirmation;
+    var jwt = require('jsonwebtoken');
+    var secret = 'shhhhh';//to-do insert in config secret
 
     module.exports.init = function(app) {
         app.post('/confirm', function (req, res) {
@@ -15,22 +18,42 @@
                         message: err
                     });
                 } else {
-                    if (user) {
-                       if(user.isActive);
+                       if(user.isActive){
                         res.json({
                             success: false,
                             message:"User is active, please login",
                             email:req.body.email
                         });
-                    } else {
-                        res.json({
-                            success: true,
-                            message:"Message was sent successful, please verify emailbox",
-                        });
-                    }
+                       } else {
+                           sendConfirmLink(req.body.email, function () {
+                               res.json({
+                                   success: true,
+                                   message: "Message was sent successful, please verify emailbox",
+                               });
+                               console.log('send email1 ' + user.email);
+                           });
+                       }
+
+
                 }
             });
+        });
+        app.get('/confirm',function(req,res){
+            var token=req.query.token;
+            if (token){
+                jwt.verify(token, secret, function (err, decoded) {
+                    if (err) {
+                        res.status(403).json({
+                            success: false,
+                            message: 'not found',
+                            error: err
+                        });
+                    } else {
+                        console.log(decoded);
+                    }
+                    });
+            }
 
         });
-    };
+    }
 })();

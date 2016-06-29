@@ -36,67 +36,61 @@ Bridge.Symptomate = {
     },
     getSymptoms: function(callBack) {
         Bridge.resultCallback = callBack;
-        var apiUrl = this.apiUrl + "symptoms";
 
-        $.ajax({
-            url: apiUrl,
-            type: "GET",
-            crossDomain: true,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"}
-        }).done(function (result) {
-            if (result) {
-                Bridge.resultCallback({success: true, data: result, error: undefined});
-            }
-            else {
-                Bridge.resultCallback({success: false, data: undefined, error: "error"});
-            }
-        }).fail(function () {
-            Bridge.resultCallback({success: false, data: undefined, error: "error"});
-        });
-
-        /*if ((/android/gi).test(navigator.userAgent)) {
+        if ((/android/gi).test(navigator.userAgent)) {
             var message = {method:"Bridge.Symptomate.getSymptoms"};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = this.apiUrl + "symptoms";
-            getFakeUser(function (data) {*/
-
-            /*});
-        }*/
+            getFakeUser(function (data) {
+                $.ajax({
+                    url: apiUrl,
+                    type: "GET",
+                    crossDomain: true,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"}
+                }).done(function (result) {
+                    if (result) {
+                        Bridge.resultCallback({success: true, data: result, error: undefined});
+                    }
+                    else {
+                        Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                    }
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                });
+            });
+        }
     },
     sendDiagnosis: function(diagnostic, callBack) {
         Bridge.resultCallback = callBack;
-        var apiUrl = this.apiUrl + "diagnosis";
 
-        $.ajax({
-            url: apiUrl,
-            type: 'POST',
-            crossDomain: true,
-            contentType: "application/json",
-            headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"},
-            data: JSON.stringify(diagnostic)
-        }).done(function (result) {
-            if (result) {
-                Bridge.resultCallback({success: true, data: result, error: undefined});
-            }
-            else {
-                Bridge.resultCallback({success: false, data: undefined, error: "error"});
-            }
-        }).fail(function () {
-            Bridge.resultCallback({success: false, data: undefined, error: "error"});
-        });
-
-        /*if ((/android/gi).test(navigator.userAgent)) {
+        if ((/android/gi).test(navigator.userAgent)) {
             var message = {method:"Bridge.Symptomate.sendDiagnosis", data: diagnostic};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = this.apiUrl + "diagnosis";
-            getFakeUser(function (data) {*/
-
-            /*});
-        }*/
+            getFakeUser(function (data) {
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    crossDomain: true,
+                    contentType: "application/json",
+                    headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"},
+                    data: JSON.stringify(diagnostic)
+                }).done(function (result) {
+                    if (result) {
+                        Bridge.resultCallback({success: true, data: result, error: undefined});
+                    }
+                    else {
+                        Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                    }
+                }).fail(function () {
+                    Bridge.resultCallback({success: false, data: undefined, error: "error"});
+                });
+            });
+        }
     },
     explainDiagnosis: function(diagnostic, callBack) {
         Bridge.resultCallback = callBack;
