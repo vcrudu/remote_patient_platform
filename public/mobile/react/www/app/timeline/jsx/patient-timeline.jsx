@@ -285,6 +285,9 @@
                 $(".mdl-progress").css('visibility', 'hidden');
             });
         },
+        componentWillUnmount: function () {
+            Bridge.notificationCallback = undefined;
+        },
         onChange: function(tabId) {
             if (tabId == 0) {
                 this.setState({ activeTab: tabId, cards: this.state.allCards });

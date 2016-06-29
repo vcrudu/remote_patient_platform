@@ -107,6 +107,11 @@ var userDetailsRepository = require('../repositories').UsersDetails;
                                 } else {
                                     orderEntityToCreate.changeOrderStatus('Paid');
                                     saveOrder(req, orderEntityToCreate, function (error, createdOrder) {
+                                        snsClient.sendOnDevicesOrderingEvent(req.decoded.email, createdOrder, function(err){
+                                            if (err) {
+                                                logging.getLogger().error("Failed to send OnDevicesOrdering event!");
+                                            }
+                                        });
                                         callback(error, createdOrder);
                                     });
                                 }
