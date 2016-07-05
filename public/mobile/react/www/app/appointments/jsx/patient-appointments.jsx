@@ -117,8 +117,6 @@
         componentDidMount: function() {
             var component = this;
 
-
-
             $(component.refs.appointmentsCalendar).on("swipeleft" , function(event) {
                 $(component.refs.appointmentsCalendar).fullCalendar("next");
             });
@@ -219,9 +217,6 @@
                 loading: function(isLoading, view ) {
                 }
             });
-
-
-            component.setState({ isSnackbarActive: true })
         },
         getInitialState: function() {
             return {

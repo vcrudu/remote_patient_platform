@@ -220,8 +220,6 @@
                 eventAfterAllRender: function (view) {},
                 loading: function (isLoading, view) {}
             });
-
-            component.setState({ isSnackbarActive: true });
         },
         getInitialState: function () {
             return {
