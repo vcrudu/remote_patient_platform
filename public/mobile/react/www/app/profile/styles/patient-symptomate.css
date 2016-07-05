@@ -36,3 +36,9 @@
 .condition-cards {
     margin-top: 14px;
 }
+
+.book-appointment-button {
+    position: fixed;
+    right: 32px;
+    top: 10px;
+}

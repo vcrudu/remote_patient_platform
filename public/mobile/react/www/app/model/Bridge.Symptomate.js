@@ -120,5 +120,18 @@ Bridge.Symptomate = {
                 });
             });
         }
+    },
+    saveResultToStorage: function(slotId, result, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Symptomate.saveResultToStorage", data: {slotId: slotId, result: result}};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            getFakeUser(function (data) {
+                localStorage.setItem( 'symptomResult', JSON.stringify(dataToSave));
+                var dataToSave = {slotId: slotId, userId: data.email, result: result, };
+                Bridge.resultCallback({success: true, data: dataToSave, error: undefined});
+            });
+        }
     }
 }

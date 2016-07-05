@@ -56,6 +56,13 @@
     });
 
     var AppointmentsCalendar = React.createClass({
+        handleSymptomCheckerSuggestion: function() {
+            var slotId = this.state.slotId;
+            Bridge.Redirect.redirectToWithLevelsUp("profile/patient-symptomate.html?slotId=" + slotId, 2);
+        },
+        handleSkipSymptomCheckerSuggestion: function() {
+            this.setState({openDialog: true, openSymptomateDialog:false});
+        },
         handleBookAppointment: function() {
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var slotId = this.state.slotId;
@@ -110,6 +117,8 @@
         componentDidMount: function() {
             var component = this;
 
+
+
             $(component.refs.appointmentsCalendar).on("swipeleft" , function(event) {
                 $(component.refs.appointmentsCalendar).fullCalendar("next");
             });
@@ -120,7 +129,9 @@
                 $(component.refs.appointmentsCalendar).fullCalendar("prev");
             });
 
-            var currentDate = new Date();
+            var slotId = Bridge.Redirect.getQueryStringParam("slotId");
+
+            var currentDate = slotId && slotId.slotId ? new Date(parseFloat(slotId.slotId)) : new Date();
             $(this.refs.appointmentsCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
@@ -129,6 +140,7 @@
                 header:false,
                 height: $(window).height() - 4,
                 allDay:false,
+                defaultDate: currentDate,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -160,7 +172,7 @@
                             $('.fc-scroller').animate({
                                 scrollTop:  jsEvent.currentTarget.offsetTop
                             }, 300, function () {
-                                component.setState({openDialog: true, slotId: calEvent.id, slotReason: ""});
+                                component.setState({openDialog: false, openSymptomateDialog:true, slotId: calEvent.id, slotReason: ""});
                             });
                         }, 0);
                     }
@@ -181,6 +193,21 @@
                             }
                             callback(events);
 
+                            if (slotId && slotId.slotId) {
+                                var slotDate = moment(parseFloat(slotId.slotId));
+                                if (start <= slotDate && slotDate <= end) {
+                                    var event = Bridge.CalendarFactory.getEventById(parseFloat(slotId.slotId), events);
+                                    if (event && event.status != "appointment") {
+                                        setTimeout(function(){
+                                            component.setState({openDialog: true, openSymptomateDialog:false, slotId: parseFloat(slotId.slotId), slotReason: ""});
+                                        }, 500);
+                                    }
+                                }
+                            }
+                            else {
+                                component.setState({isSnackbarActive: true});
+                            }
+
                            $(".mdl-progress").css('visibility', 'hidden');
                         })
                     });
@@ -193,13 +220,15 @@
                 }
             });
 
+
             component.setState({ isSnackbarActive: true })
         },
         getInitialState: function() {
             return {
                 openDialog: false,
+                openSymptomateDialog: false,
                 slotId: undefined,
-                isSnackbarActive: true,
+                isSnackbarActive: false,
                 snackbarTimeOut: 10000
             }
         },
@@ -214,6 +243,13 @@
                         <ProgressBar indeterminate ref="progressBar" id="progressBar"/>
                         <div ref="appointmentsCalendarWrapper">
                             <div ref="appointmentsCalendar"></div>
+                            <Dialog ref="suggestSymptomateModal" id="appointmentModal" open={this.state.openSymptomateDialog}>
+                                <DialogTitle>Do you have any symptoms?</DialogTitle>
+                                <DialogActions>
+                                    <Button type="button" className="mdl-button mdl-button--accent" onClick={this.handleSymptomCheckerSuggestion}>Yes</Button >
+                                    <Button type="button" className="mdl-button mdl-button--accent" onClick={this.handleSkipSymptomCheckerSuggestion}>Skip</Button>
+                                </DialogActions>
+                            </Dialog>
                             <Dialog ref="appointmentModal" id="appointmentModal" open={this.state.openDialog}>
                                 <DialogTitle>Book an appointment</DialogTitle>
                                 <DialogContent className="book-appointment-content">

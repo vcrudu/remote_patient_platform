@@ -28,6 +28,8 @@
         }
     });
 
+    var numberOfPosts = 3;
+
     var ConditionResult = React.createClass({
         render: function() {
             return <div className="conditionCard">
@@ -314,6 +316,9 @@
     });
 
     var PatientSymptomateResult = React.createClass({
+        goToBookAppointment: function() {
+            Bridge.Redirect.redirectToWithLevelsUp("appointments/patient-appointments.html?slotId=" + this.props.slotId, 2);
+        },
         render: function() {
             var diagnosticResult = this.props.diagnosticResult;
 
@@ -330,8 +335,13 @@
                     return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability}></ConditionResult>
                 });
             }
+
             return <div className={this.props.show ? "show" : "hide"}>
-                <div className="question">Result</div>
+                <div className={this.props.slotId ? "show book-appointment-button" : "hide book-appointment-button"}><Button type="button" className="mdl-button mdl-button--accent" onClick={this.goToBookAppointment}>Book Appointment</Button></div>
+
+                <div className="question">
+                    Result
+                </div>
 
                 <div className="condition-cards">
                     {coditions}
@@ -352,7 +362,8 @@
                 showQuestion: false,
                 showResult: false,
                 evidences:[],
-                emptyEvidence: {}
+                emptyEvidence: {},
+                slotId: undefined
             }
         },
         getEmptyDiagnostic: function() {
@@ -373,12 +384,17 @@
                                     }
                                 }
                             }
-
                             component.setState({commonSymptoms: tempArray, showCommonSymptoms: true, emptyEvidence: result.data, diagnostic: result.data});
                         }
                         component.refs.commonSymptoms.setCommonSymptoms(tempArray);
 
                         $(".mdl-progress-top").css('visibility', 'hidden');
+
+                        var slotId = Bridge.Redirect.getQueryStringParam("slotId");
+
+                        if (slotId) {
+                            component.setState({slotId: slotId.slotId});
+                        }
                     });
                 }
                 else {
@@ -389,7 +405,7 @@
         handleNext: function(selections, updateQuestion) {
             var component = this;
             $(".mdl-progress-top").css('visibility', 'visible');
-            if (this.state.selectionStep < 8) {
+            if (this.state.selectionStep < numberOfPosts) {
                 var prevDiagnostics = jQuery.extend(true, {}, component.state.diagnostic);
 
                 var diagnostic = jQuery.extend(true, {}, prevDiagnostics);
@@ -425,7 +441,19 @@
             }
             else {
                 component.setState({showCommonSymptoms: false, showQuestion: false, showResult: true});
-                $(".mdl-progress-top").css('visibility', 'hidden');
+                var result = {};
+
+                if (this.state.diagnosticResponse && this.state.diagnosticResponse.conditions) {
+                    var sortedConditions = _.sortBy(this.state.diagnosticResponse.conditions, function(condition){
+                        return condition.probability * -1;
+                    }).slice(0, 5);
+
+                    result = sortedConditions;
+                }
+
+                Bridge.Symptomate.saveResultToStorage(component.slotId, result, function(data) {
+                    $(".mdl-progress-top").css('visibility', 'hidden');
+                });
             }
         },
         handlePrev: function(updateQuestion) {
@@ -464,7 +492,7 @@
                     <div className="page-content">
                         <CommonSymptoms show={this.state.showCommonSymptoms} ref="commonSymptoms" handleNext={this.handleNext} handlePrev={this.handlePrev}/>
                         <SymptomQuestions show={this.state.showQuestion} question={this.state.diagnosticResponse.question} ref="symptomQuestions" handleNext={this.handleNext} handlePrev={this.handlePrev}/>
-                        <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse}/>
+                        <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} slotId={this.state.slotId}/>
                     </div>
                 </Content>
             </Layout>
