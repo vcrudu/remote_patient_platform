@@ -20,6 +20,7 @@ var notificationsController = require('./notificationsController');
 var pushNotificationController = require('./pushNotificationController');
 var alarmBuilderController = require('./alarmBuilderController');
 var orderStatusController = require('./orderStatusController');
+var patientSymptomsController = require('./patientSymptomsController');
 
 var logging     = require('../logging');
 
@@ -70,6 +71,7 @@ var logging     = require('../logging');
         pushNotificationController.init(apiRoutes);
         alarmBuilderController.init(apiRoutes);
         orderStatusController.init(apiRoutes);
+        patientSymptomsController.init(apiRoutes);
         app.use('/v1/api', apiRoutes);
 
     };

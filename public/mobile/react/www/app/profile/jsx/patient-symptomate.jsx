@@ -178,15 +178,12 @@
             }
         },
         handleNext: function() {
-            var selectedAnswers = _.filter(this.state.question.items, function(answer) {
-                return answer.selected === true;
-            });
-
-            if (selectedAnswers && selectedAnswers.length > 0) {
+            if (this.state.question.items && this.state.question.items.length > 0) {
                 var answers = [];
 
-                for(var j=0; j < selectedAnswers.length; j++) {
-                    answers.push({ "id": selectedAnswers[j].id, "choice_id": "present" })
+                for(var j=0; j < this.state.question.items.length; j++) {
+                    var choice = this.state.question.items[j].selected ? "present" : "absent";
+                    answers.push({ "id": this.state.question.items[j].id, "choice_id": choice })
                 }
 
                 this.props.handleNext(answers, this.updateQuestion);
