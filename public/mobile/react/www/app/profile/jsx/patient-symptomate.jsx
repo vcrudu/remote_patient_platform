@@ -28,7 +28,7 @@
         }
     });
 
-    var numberOfPosts = 3;
+    var numberOfPosts = 10;
 
     var ConditionResult = React.createClass({
         render: function() {
@@ -52,7 +52,13 @@
         },
         handleNext: function(choice_id) {
             var answers = [];
-            answers.push({ "id": this.props.question.items[0].id, "choice_id": choice_id })
+            answers.push({
+                "id": this.props.question.items[0].id,
+                "choice_id": choice_id,
+                "name": this.props.question.items[0].name,
+                "type": this.props.question.type,
+                "text": this.props.question.text
+            })
             this.props.handleNext(answers, this.updateQuestion);
         },
         handlePrev: function() {
@@ -115,7 +121,13 @@
                 var answers = [];
 
                 for(var j=0; j < selectedAnswers.length; j++) {
-                    answers.push({ "id": selectedAnswers[j].id, "choice_id": "present" })
+                    answers.push({
+                        "id": selectedAnswers[j].id,
+                        "choice_id": "present",
+                        "name": selectedAnswers[j].name,
+                        "type": this.state.question.type,
+                        "text": this.state.question.text
+                    })
                 }
 
                 this.props.handleNext(answers, this.updateQuestion);
@@ -183,7 +195,13 @@
 
                 for(var j=0; j < this.state.question.items.length; j++) {
                     var choice = this.state.question.items[j].selected ? "present" : "absent";
-                    answers.push({ "id": this.state.question.items[j].id, "choice_id": choice })
+                    answers.push({
+                        "id": this.state.question.items[j].id,
+                        "choice_id": choice,
+                        "name": this.state.question.items[j].name,
+                        "type": this.state.question.type,
+                        "text": this.state.question.text
+                    })
                 }
 
                 this.props.handleNext(answers, this.updateQuestion);
@@ -286,7 +304,13 @@
                 var selections = [];
 
                 for(var j=0; j < selectedSymptoms.length; j++) {
-                    selections.push({ "id": selectedSymptoms[j].id, "choice_id": "present" })
+                    selections.push({
+                        "id": selectedSymptoms[j].id,
+                        "choice_id": "present",
+                        "name": selectedSymptoms[j].name,
+                        "text": "Do you have any of following symptoms?",
+                        "type": "group_multiple"
+                    });
                 }
 
                 this.props.handleNext(selections, undefined);
@@ -388,7 +412,6 @@
                         $(".mdl-progress-top").css('visibility', 'hidden');
 
                         var slotId = Bridge.Redirect.getQueryStringParam("slotId");
-
                         if (slotId) {
                             component.setState({slotId: slotId.slotId});
                         }
@@ -398,6 +421,22 @@
                     $(".mdl-progress-top").css('visibility', 'hidden');
                 }
             })
+        },
+        buildDiagnostic: function(diagnostic) {
+            var evidence = {
+                sex: diagnostic.sex,
+                age: diagnostic.age,
+                evidence: []
+            };
+
+            for(var i=0; i < diagnostic.evidence.length; i++) {
+                evidence.evidence.push({
+                    id: diagnostic.evidence[i].id,
+                    choice_id: diagnostic.evidence[i].choice_id
+                })
+            }
+
+            return evidence;
         },
         handleNext: function(selections, updateQuestion) {
             var component = this;
@@ -410,7 +449,7 @@
                     diagnostic.evidence.push(selections[i]);
                 }
 
-                Bridge.Symptomate.sendDiagnosis(diagnostic, function(diagnosisResult) {
+                Bridge.Symptomate.sendDiagnosis(this.buildDiagnostic(diagnostic), function(diagnosisResult) {
                     if (diagnosisResult.success) {
 
                         var step = component.state.selectionStep + 1;
@@ -448,7 +487,7 @@
                     result = sortedConditions;
                 }
 
-                Bridge.Symptomate.saveResultToStorage(component.slotId, result, function(data) {
+                Bridge.Symptomate.saveResultToStorage(component.state.slotId, result, component.state.diagnostic, function(data) {
                     $(".mdl-progress-top").css('visibility', 'hidden');
                 });
             }

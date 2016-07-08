@@ -17,7 +17,19 @@
         });
     }
 
+    function getLastEvidence(patientId, callback) {
+        patientSymptomsRepository.getLastEvidence(patientId, function (err, data) {
+            if (err) {
+                callback(err, null);
+            }
+            else {
+                callback(null, data);
+            }
+        });
+    }
+
     module.exports = {
-        addPatientSymptoms:addPatientSymptoms
+        addPatientSymptoms:addPatientSymptoms,
+        getLastEvidence:getLastEvidence
     }
 })();

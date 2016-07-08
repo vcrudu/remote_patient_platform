@@ -38,6 +38,33 @@
                 loggerProvider.getLogger().debug("The " + TABLE_NAME + " has been inserted successfully.");
                 callback(null, obj);
             });
+        },
+        getLastEvidence: function(patientId, callback) {
+            var params = {
+                TableName: TABLE_NAME, /* required */
+                ExpressionAttributeValues: {
+                    ":patientId":{"S":patientId}
+                },
+                ReturnConsumedCapacity: 'INDEXES',
+                KeyConditionExpression: 'patientId = :patientId',
+                ScanIndexForward: false,
+                Limit: 1
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                if(data.Items.length>0) {
+                    callback(null, patientSymptomsDbMapper.mapFromDbEntity(data.Items[0]));
+                }else{
+                    callback(null, null);
+                }
+            });
         }
     };
 })();

@@ -121,15 +121,23 @@ Bridge.Symptomate = {
             });
         }
     },
-    saveResultToStorage: function(slotId, result, callBack) {
+    saveResultToStorage: function(slotId, result, evidence, callBack) {
+        evidence.slotId = slotId;
+        evidence.conditions = result;
+
+        for(var i = 0; i < evidence.conditions.length; i++){
+            evidence.conditions[i].probability = evidence.conditions[i].probability.toString();
+        }
+
         Bridge.resultCallback = callBack;
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Symptomate.saveResultToStorage", data: {slotId: slotId, result: result}};
+            var message = {method:"Bridge.Symptomate.saveResultToStorage", data: evidence};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             getFakeUser(function (data) {
-                localStorage.setItem( 'symptomResult', JSON.stringify(dataToSave));
-                var dataToSave = {slotId: slotId, userId: data.email, result: result, };
+                evidence.patientId = data.email;
+                var dataToSave = evidence;
+                localStorage.setItem( "symptomResult", JSON.stringify(dataToSave));
                 Bridge.resultCallback({success: true, data: dataToSave, error: undefined});
             });
         }

@@ -7,7 +7,7 @@
     var patientSymptomsService = require('../services').PatientSymptomsService;
     
     module.exports.init = function(router) {
-        router.put('/symptoms/addPatientSymptoms', function (req, res) {
+        router.post('/symptoms/addPatientSymptoms', function (req, res) {
             if (!req.body.evidence) {
                 res.status(400).json({
                     success: false,
@@ -16,6 +16,24 @@
             }
 
             patientSymptomsService.addPatientSymptoms(req.body.evidence, function (err, data) {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        error: err,
+                        data: undefined
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        data: data,
+                        error: undefined
+                    });
+                }
+            });
+        });
+
+        router.get('/symptoms/:patientId', function (req, res) {
+            patientSymptomsService.getLastEvidence(req.params.patientId, function (err, data) {
                 if (err) {
                     res.status(500).json({
                         success: false,

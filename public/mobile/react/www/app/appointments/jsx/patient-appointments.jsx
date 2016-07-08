@@ -91,7 +91,7 @@
                     $("#reasonText").val("");
                     component.setState({openDialog: false, slotId: undefined});
                     return;
-                })
+                });
             }
         },
         handleCancelAppointmentModal: function() {
