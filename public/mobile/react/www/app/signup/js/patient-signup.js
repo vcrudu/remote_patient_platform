@@ -102,7 +102,8 @@
             });
         },
         onChange: function (component) {
-            this.validateComponent(component);
+            var isValid = this.validateComponent(component);
+            this.props.lostFocusCallBack(component, isValid);
         },
         onBlur: function (component) {
             var isValid = this.validateComponent(component);
@@ -305,7 +306,7 @@
                     lostFocusCallBack: this.givenNameOnBlur,
                     validators: ["required"],
                     validatorMessages: ["Given Name is required."] }),
-                React.createElement(ValidationInput, { inputLabel: "Phone",
+                React.createElement(ValidationInput, { inputLabel: "Mobile",
                     inputIconName: "phone",
                     inputType: "text",
                     inputName: "phoneNumber",
@@ -315,7 +316,7 @@
                     regexString: "(((\\+44\\s?|0044\\s?)?|(\\(?0))((2[03489]\\)?\\s?\\d{4}\\s?\\d{4})|(1[23456789]1\\)?\\s?\\d{3}\\s?\\d{4})|(1[23456789][234578][0234679]\\)?\\s?\\d{6})|(1[2579][0245][0467]\\)?\\s?\\d{5})|(11[345678]\\)?\\s?\\d{3}\\s?\\d{4})|(1[35679][234689]\\s?[46789][234567]\\)?\\s?\\d{4,5})|([389]\\d{2}\\s?\\d{3}\\s?\\d{4})|([57][0-9]\\s?\\d{4}\\s?\\d{4})|(500\\s?\\d{6})|(7[456789]\\d{2}\\s?\\d{6})))",
                     regex: /^(((\+44\s?|0044\s?)?|(\(?0))((2[03489]\)?\s?\d{4}\s?\d{4})|(1[23456789]1\)?\s?\d{3}\s?\d{4})|(1[23456789][234578][0234679]\)?\s?\d{6})|(1[2579][0245][0467]\)?\s?\d{5})|(11[345678]\)?\s?\d{3}\s?\d{4})|(1[35679][234689]\s?[46789][234567]\)?\s?\d{4,5})|([389]\d{2}\s?\d{3}\s?\d{4})|([57][0-9]\s?\d{4}\s?\d{4})|(500\s?\d{6})|(7[456789]\d{2}\s?\d{6})))$/,
                     validators: ["required", "pattern"],
-                    validatorMessages: ["Phone is required.", "Phone number is not valid."] }),
+                    validatorMessages: ["Mobile is required.", "Mobile number is not valid."] }),
                 React.createElement(
                     "div",
                     { className: "form-actions" },

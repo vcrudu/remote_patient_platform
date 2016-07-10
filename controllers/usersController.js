@@ -5,14 +5,18 @@
  * Created by Victor on 06/08/2015.
  */
 
-var userDetailsRepository     = require('../repositories').UsersDetails;
-var usersRepository     = require('../repositories').Users;
-var domainModel = require('@vcrudu/hcm.domainmodel');
-var logging = require("../logging");
-var _ = require("underscore");
 
 
 (function(){
+
+
+    var userDetailsRepository     = require('../repositories').UsersDetails;
+    var usersRepository     = require('../repositories').Users;
+    var domainModel = require('@vcrudu/hcm.domainmodel');
+    var logging = require("../logging");
+    var _ = require("underscore");
+    var snsClient = require('../snsClient');
+    var utils = require('../utils');
 
     function sendError(res, error) {
         var statusCode;
@@ -47,21 +51,40 @@ var _ = require("underscore");
             });
         });
 
-        router.get('/patients/:userId', function(req, res){
-            userDetailsRepository.findPatient(req.params.userId, function(err,data){
-                if(err){
+        router.get('/patients/:userId', function(req, res) {
+            userDetailsRepository.findPatient(req.params.userId, function (err, data) {
+                if (err) {
                     var incidentTicket = logging.getIncidentTicketNumber('us');
-                    logging.getLogger().error({incidentTicket:incidentTicket},err);
+                    logging.getLogger().error({incidentTicket: incidentTicket}, err);
                     res.status(500).json({
-                        success:false,
-                        message:logging.getUserErrorMessage(incidentTicket)
+                        success: false,
+                        message: logging.getUserErrorMessage(incidentTicket)
                     });
-                }else {
-                    res.send({
-                        success:true,
-                        count:data.length,
-                        result:data
-                    });
+                } else {
+                    if (data) {
+                        res.send({
+                            success: true,
+                            count: data ? data.length : 0,
+                            result: data
+                        });
+                    } else {
+                        usersRepository.findOneByEmail(req.params.userId, function (err, data) {
+                            if (err) {
+                                var incidentTicket = logging.getIncidentTicketNumber('us');
+                                logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                                res.status(500).json({
+                                    success: false,
+                                    message: logging.getUserErrorMessage(incidentTicket)
+                                });
+                            } else {
+                                res.send({
+                                    success: true,
+                                    count: data ? data.length : 0,
+                                    result: data
+                                });
+                            }
+                        });
+                    }
                 }
             });
         });
@@ -84,6 +107,12 @@ var _ = require("underscore");
                             message:logging.getUserErrorMessage(incidentTicket)
                         });
                     }else {
+                        snsClient.sendOnProvideDetailsEvent(req.decoded.email, function (err, data) {
+                            if(err){
+                                logging.getLogger().error(err);
+                                logging.getLogger().error(new Error("Failed to send OnProvideDetailsEvent"));
+                            }
+                        });
                         res.send({
                             success:true,
                             result:req.body.model

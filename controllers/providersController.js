@@ -7,6 +7,7 @@
 
 var ProviderFactory     = require('../model').ProviderFactory;
 var usersRepository     = require('../repositories').Users;
+var providerRepository     = require('../repositories').Providers;
 var logging = require("../logging");
 
 
@@ -47,6 +48,34 @@ var logging = require("../logging");
                         res.send({
                             success: true,
                             count: data.length,
+                            result: data
+                        });
+                    }
+                });
+            }
+        });
+
+        router.get('/provider', function (req, res) {
+            if (req.query.sample) {
+                var providerSample = ProviderFactory.getSample();
+                res.send({
+                    success: true,
+                    count: 1,
+                    result: providerSample
+                });
+            } else {
+                var providerId = req.query.providerId;
+                providerRepository.getOne(providerId,function (err, data) {
+                    if (err) {
+                        var incidentTicket = logging.getIncidentTicketNumber('pr');
+                        logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                        res.status(500).json({
+                            success: false,
+                            message: logging.getUserErrorMessage(incidentTicket)
+                        });
+                    } else {
+                        res.send({
+                            success: true,
                             result: data
                         });
                     }

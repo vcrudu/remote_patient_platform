@@ -14,6 +14,7 @@ var gridCacheClient = require('./services/gridCacheClient');
 var checkExistsNhs = require("./controllers/checkExistsNhs");
 var reset = require("./controllers/reset");
 var resetPasswordController = require("./controllers/resetPasswordController");
+var confirmSubscriptionController = require("./controllers/confirmSubscription");
 
 process.env.JWT_SECRET = "HABICARIA";
 
@@ -40,6 +41,7 @@ resetPasswordController.init(app);
 checkExistsUserController.init(app);
 checkExistsNhs.init(app);
 controllers.init(app);
+confirmSubscriptionController.init(app);
 
 
 app.get('/',function(req, res){
@@ -69,6 +71,11 @@ var notifications = require('./notifications');
 notifications.init(server);
 gridCacheClient.init();
 
-//server.listen(PORT, "192.168.1.219");
+process.on('uncaughtException', function (err) {
+    logging.getLogger().error(err);
+    process.exit(1);
+});
+
+//server.listen(PORT, "192.168.0.12");
 server.listen(PORT);
 

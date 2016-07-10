@@ -19,8 +19,13 @@ var patientAppointmentsController = require('./patientAppointmentsController');
 var notificationsController = require('./notificationsController');
 var pushNotificationController = require('./pushNotificationController');
 var alarmBuilderController = require('./alarmBuilderController');
+
 var patientsGroupController=require('./patientsGroupController');
 var patientsGroupMemberController=require('./patientsGroupMemberController');
+
+var orderStatusController = require('./orderStatusController');
+var patientSymptomsController = require('./patientSymptomsController');
+
 
 var logging     = require('../logging');
 
@@ -70,8 +75,13 @@ var logging     = require('../logging');
         notificationsController.init(apiRoutes);
         pushNotificationController.init(apiRoutes);
         alarmBuilderController.init(apiRoutes);
+
         patientsGroupController.init(apiRoutes);
         patientsGroupMemberController.init(apiRoutes);
+
+
+        orderStatusController.init(apiRoutes);
+        patientSymptomsController.init(apiRoutes);
 
         app.use('/v1/api', apiRoutes);
 

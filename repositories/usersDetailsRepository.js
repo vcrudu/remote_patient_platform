@@ -109,7 +109,10 @@
         },
 
         save : function(patient, callback) {
-
+            if(!patient){
+                callback(null, null);
+                return;
+            }
             var dynamodb = getDb();
 
             var params = {
@@ -135,7 +138,7 @@
         update : function(patientDetails, callback) {
             var dynamodb = getDb();
 
-            var patientDbEntity = dynamoDbMapper.createUserDetailsDbEntityFromPatient(patientDetails)
+            var patientDbEntity = dynamoDbMapper.createUserDetailsDbEntityFromPatient(patientDetails);
 
             var params = {
                 Key: { /* required */
@@ -154,14 +157,15 @@
                     ":ud_nhsNumber": patientDbEntity.nhsNumber,
                     ":ud_otherIdentifiers": patientDbEntity.otherIdentifiers,
                     ":ud_mobile": patientDbEntity.mobile,
-                    ":ud_phone": patientDbEntity.phone,
+                    ":ud_phone": patientDbEntity.phone?patientDbEntity.phone:{NULL:true},
                     ":ud_weight": patientDbEntity.weight,
                     ":ud_height": patientDbEntity.height,
+                    ":ud_healthProblems": patientDbEntity.healthProblems
                 },
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnValues: 'NONE',
                 UpdateExpression: 'SET #uname=:ud_name, surname=:ud_surname, title=:ud_title, dateOfBirth=:ud_date_of_birth, gender=:ud_gender, address=:ud_address, ethnicity=:ud_ethnicity, ' +
-                    "nhsNumber=:ud_nhsNumber, otherIdentifiers=:ud_otherIdentifiers, mobile=:ud_mobile, phone=:ud_phone, weight=:ud_weight, height=:ud_height"
+                    "nhsNumber=:ud_nhsNumber, otherIdentifiers=:ud_otherIdentifiers, mobile=:ud_mobile, phone=:ud_phone, weight=:ud_weight, height=:ud_height, healthProblems = :ud_healthProblems"
             };
 
             dynamodb.updateItem(params, function(err, data) {

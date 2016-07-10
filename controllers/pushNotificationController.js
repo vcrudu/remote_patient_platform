@@ -6,6 +6,7 @@
     var util = require('util');
     var logging = require("../logging");
     var snsEndpointsRepository = require('../repositories').SnsEndpoints;
+    var usersRepository = require('../repositories').Users;
     var snsClient = require('../snsClient');
 
     module.exports.init = function (router) {
@@ -17,7 +18,7 @@
                 });
             }
 
-//TODO-here to revise this logic
+            //TODO-here to revise this logic
             snsEndpointsRepository.findFirst(req.body.oldPnToken, req.body.pnToken, function (err, snsEndpoint) {
                 if (!err) {
                     if (snsEndpoint) {
@@ -73,31 +74,32 @@
                                     }
                                 });
                         }
-
                     } else {
-                        snsClient.registerWithSNS(req.body.pnToken, function (err, data) {
-                            if (!err && data) {
-                                var endpointArn = data;
-                                snsEndpointsRepository.save(req.body.pnToken, endpointArn, req.decoded.email, function (err) {
-                                    if (!err) {
-                                        res.status(200).end();
-                                    } else {
-                                        var incidentTicket = logging.getIncidentTicketNumber('pn');
-                                        logging.getLogger().error({incidentTicket: incidentTicket}, err);
-                                        res.status(500).json({
-                                            success: false,
-                                            message: logging.getUserErrorMessage(incidentTicket)
-                                        });
-                                    }
-                                });
-                            } else {
-                                var incidentTicket = logging.getIncidentTicketNumber('pn');
-                                logging.getLogger().error({incidentTicket: incidentTicket}, err || new Error('Failed to create SNS endpoint'));
-                                res.status(500).json({
-                                    success: false,
-                                    message: logging.getUserErrorMessage(incidentTicket)
-                                });
-                            }
+                        usersRepository.findOneByEmail(req.decoded.email, function (err, user) {
+                            snsClient.registerWithSNS(req.body.pnToken, user.type, function (err, data) {
+                                if (!err && data) {
+                                    var endpointArn = data;
+                                    snsEndpointsRepository.save(req.body.pnToken, endpointArn, req.decoded.email, function (err) {
+                                        if (!err) {
+                                            res.status(200).end();
+                                        } else {
+                                            var incidentTicket = logging.getIncidentTicketNumber('pn');
+                                            logging.getLogger().error({incidentTicket: incidentTicket}, err);
+                                            res.status(500).json({
+                                                success: false,
+                                                message: logging.getUserErrorMessage(incidentTicket)
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    var incidentTicket = logging.getIncidentTicketNumber('pn');
+                                    logging.getLogger().error({incidentTicket: incidentTicket}, err || new Error('Failed to create SNS endpoint'));
+                                    res.status(500).json({
+                                        success: false,
+                                        message: logging.getUserErrorMessage(incidentTicket)
+                                    });
+                                }
+                            });
                         });
                     }
                 } else {

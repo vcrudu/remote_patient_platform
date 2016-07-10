@@ -16,6 +16,7 @@
     var DialogActions = ReactMDL.DialogActions;
     var Textfield = ReactMDL.Textfield;
     var ProgressBar = ReactMDL.ProgressBar;
+    var Snackbar = ReactMDL.Snackbar;
 
     var DateSelector = React.createClass({
         displayName: "DateSelector",
@@ -63,6 +64,13 @@
     var AppointmentsCalendar = React.createClass({
         displayName: "AppointmentsCalendar",
 
+        handleSymptomCheckerSuggestion: function () {
+            var slotId = this.state.slotId;
+            Bridge.Redirect.redirectToWithLevelsUp("profile/patient-symptomate.html?slotId=" + slotId, 2);
+        },
+        handleSkipSymptomCheckerSuggestion: function () {
+            this.setState({ openDialog: true, openSymptomateDialog: false });
+        },
         handleBookAppointment: function () {
             var appointmentsCalendarDiv = $(this.refs.appointmentsCalendar);
             var slotId = this.state.slotId;
@@ -126,7 +134,9 @@
                 $(component.refs.appointmentsCalendar).fullCalendar("prev");
             });
 
-            var currentDate = new Date();
+            var slotId = Bridge.Redirect.getQueryStringParam("slotId");
+
+            var currentDate = slotId && slotId.slotId ? new Date(parseFloat(slotId.slotId)) : new Date();
             $(this.refs.appointmentsCalendar).fullCalendar({
                 schedulerLicenseKey: '0220103998-fcs-1447110034',
                 defaultView: 'nursesGrid',
@@ -135,6 +145,7 @@
                 header: false,
                 height: $(window).height() - 4,
                 allDay: false,
+                defaultDate: currentDate,
                 views: {
                     nursesGrid: {
                         type: 'agenda',
@@ -150,6 +161,12 @@
                     if (calEvent.id < now.getTime()) {
                         return;
                     }
+
+                    if (calEvent.status == "appointment") {
+                        Bridge.Redirect.redirectToWithLevelsUp("profile/appointment-details.html?slotId=" + calEvent.id, 2);
+                        return;
+                    }
+
                     if (calEvent.slot.countOfProviders == 0) {
                         return;
                     }
@@ -159,7 +176,7 @@
                             $('.fc-scroller').animate({
                                 scrollTop: jsEvent.currentTarget.offsetTop
                             }, 300, function () {
-                                component.setState({ openDialog: true, slotId: calEvent.id, slotReason: "" });
+                                component.setState({ openDialog: false, openSymptomateDialog: true, slotId: calEvent.id, slotReason: "" });
                             });
                         }, 0);
                     }
@@ -180,6 +197,20 @@
                             }
                             callback(events);
 
+                            if (slotId && slotId.slotId) {
+                                var slotDate = moment(parseFloat(slotId.slotId));
+                                if (start <= slotDate && slotDate <= end) {
+                                    var event = Bridge.CalendarFactory.getEventById(parseFloat(slotId.slotId), events);
+                                    if (event && event.status != "appointment") {
+                                        setTimeout(function () {
+                                            component.setState({ openDialog: true, openSymptomateDialog: false, slotId: parseFloat(slotId.slotId), slotReason: "" });
+                                        }, 500);
+                                    }
+                                }
+                            } else {
+                                component.setState({ isSnackbarActive: true });
+                            }
+
                             $(".mdl-progress").css('visibility', 'hidden');
                         });
                     });
@@ -193,10 +224,16 @@
         getInitialState: function () {
             return {
                 openDialog: false,
-                slotId: undefined
+                openSymptomateDialog: false,
+                slotId: undefined,
+                isSnackbarActive: false,
+                snackbarTimeOut: 10000
             };
         },
         onReasonChange: function () {},
+        handleTimeoutSnackbar() {
+            this.setState({ isSnackbarActive: false });
+        },
         render: function () {
             return React.createElement(
                 Layout,
@@ -209,6 +246,29 @@
                         "div",
                         { ref: "appointmentsCalendarWrapper" },
                         React.createElement("div", { ref: "appointmentsCalendar" }),
+                        React.createElement(
+                            Dialog,
+                            { ref: "suggestSymptomateModal", id: "appointmentModal", open: this.state.openSymptomateDialog },
+                            React.createElement(
+                                DialogTitle,
+                                null,
+                                "Do you have any symptoms?"
+                            ),
+                            React.createElement(
+                                DialogActions,
+                                null,
+                                React.createElement(
+                                    Button,
+                                    { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleSymptomCheckerSuggestion },
+                                    "Yes"
+                                ),
+                                React.createElement(
+                                    Button,
+                                    { type: "button", className: "mdl-button mdl-button--accent", onClick: this.handleSkipSymptomCheckerSuggestion },
+                                    "Skip"
+                                )
+                            )
+                        ),
                         React.createElement(
                             Dialog,
                             { ref: "appointmentModal", id: "appointmentModal", open: this.state.openDialog },
@@ -239,6 +299,11 @@
                         ),
                         React.createElement(DateSelector, { ref: "dateSelector", onSelectDateCallback: this.onDateChanged })
                     )
+                ),
+                React.createElement(
+                    Snackbar,
+                    { active: this.state.isSnackbarActive, timeout: this.state.snackbarTimeOut, onTimeout: this.handleTimeoutSnackbar, action: "Close", onActionClick: this.handleTimeoutSnackbar },
+                    "Please click on an available time slot in order to book an appointment to the doctor."
                 )
             );
         }

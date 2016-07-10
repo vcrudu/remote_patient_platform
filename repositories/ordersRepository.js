@@ -170,13 +170,16 @@
             var dynamodb = getDb();
 
             var params = {
-                Key: { userId: { S: order.userId }},
-                TableName:TABLE_NAME,
+                Key: {
+                    userId: {S: order.userId},
+                    orderId: {S: order.orderId}
+                },
+                TableName: TABLE_NAME,
                 ExpressionAttributeValues: {
-                    ":tokenString": {"S":order.token  }
+                    ":orderStatus": {"S": order.orderStatus}
                 },
                 ReturnConsumedCapacity: 'TOTAL',
-                UpdateExpression: 'SET tokenString=:tokenString'
+                UpdateExpression: 'SET orderStatus=:orderStatus'
             };
 
 

@@ -11,6 +11,7 @@ var providersRepository = require('./providersRepository');
 var slotsRepository = require('./slotsRepository');
 var snsEndpointsRepository = require('./snsEndpointsRepository');
 var globalAlarmTemplateRepository = require('./globalAlarmTemplateRepository');
+var patientSymptomsRepository = require('./patientSymptomsRepository');
 
 module.exports ={
     Users:usersRepository,
@@ -22,5 +23,6 @@ module.exports ={
     Slots:slotsRepository,
     Notifications:notificationsRepository,
     SnsEndpoints:snsEndpointsRepository,
-    GlobalAlarmTemplate:globalAlarmTemplateRepository
+    GlobalAlarmTemplate:globalAlarmTemplateRepository,
+    PatientSymptomsRepository:patientSymptomsRepository
 };

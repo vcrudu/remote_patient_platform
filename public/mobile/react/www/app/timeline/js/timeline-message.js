@@ -30,7 +30,9 @@
 
         getInitialState: function () {
             return {
-                message: {}
+                message: {},
+                isVisible: false,
+                actionButtons: []
             };
         },
         handleExitClick: function () {
@@ -50,16 +52,75 @@
                     action = result.data.responseAction;
                 }
 
-                Bridge.Timeline.read(messageId, result.data.read, action, function (readResult) {
+                var message = result.data;
+                Bridge.Timeline.read(messageId, message.read, action, function (readResult) {
+
+                    switch (message.type) {
+                        case "canMakeAppointment":
+                            component.setState({
+                                actionButtons: ["goToAppointments"]
+                            });
+                            break;
+                        case "devicesAvailable":
+                            component.setState({
+                                actionButtons: ["devicesAvailable"]
+                            });
+                            break;
+                        case "provideDetails":
+                            component.setState({
+                                actionButtons: ["goToProvideDetails"]
+                            });
+                            break;
+                        case "takeMeasurement":
+                            component.setState({
+                                actionButtons: ["goToMyDevices"]
+                            });
+                            break;
+                        case "patientExpectMeasure":
+                            component.setState({
+                                actionButtons: ["goToMyDevices"]
+                            });
+                            break;
+                        default:
+                            component.setState({
+                                actionButtons: ["goToTimeline"]
+                            });
+                            break;
+                    }
+
                     indeterminateProgress.end();
+
+                    component.setState({
+                        isVisible: true
+                    });
                 });
             });
+        },
+        handleActionClick: function (event) {
+            var action = $(event.currentTarget).attr("data-action-name");
+            switch (action) {
+                case "goToAppointments":
+                    Bridge.Redirect.redirectToWithLevelsUp("appointments/patient-appointments.html", 2);
+                    break;
+                case "goToProvideDetails":
+                    Bridge.Redirect.redirectToWithLevelsUp("profile/patient-profile-details.html", 2);
+                    break;
+                case "goToMyDevices":
+                    Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
+                    break;
+                case "goToDevices":
+                    Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
+                    break;
+                case "goToTimeline":
+                    history.go(-1);
+                    break;
+            }
         },
         render: function () {
             var component = this;
             return React.createElement(
                 "main",
-                { className: "mdl-layout__content" },
+                { className: this.state.isVisible ? "mdl-layout__content visible" : "mdl-layout__content hidden", ref: "messageCard" },
                 React.createElement(TIMELINE_MESSAGE_PROGRESS, null),
                 React.createElement(
                     "div",
@@ -86,12 +147,41 @@
                             ),
                             React.createElement(
                                 "div",
-                                { className: "buttons-container-right" },
-                                React.createElement(
-                                    "button",
-                                    { className: "mdl-button mdl-js-button mdl-button--accent" },
-                                    "sample action"
-                                )
+                                { className: "mdl-card__actions" },
+                                component.state.actionButtons.map(function (button) {
+                                    switch (button) {
+                                        case "goToAppointments":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToAppointments", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "GO TO APPOINTMENTS"
+                                            );
+                                        case "goToTimeline":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToTimeline", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "OK"
+                                            );
+                                        case "devicesAvailable":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToDevices", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "BUY A DEVICE"
+                                            );
+                                        case "goToProvideDetails":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToProvideDetails", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "PROVIDE DETAILS"
+                                            );
+                                        case "goToMyDevices":
+                                            return React.createElement(
+                                                "button",
+                                                { "data-action-name": "goToMyDevices", className: "mdl-button mdl-js-button mdl-button--accent push-right", onClick: component.handleActionClick },
+                                                "TAKE MEASUREMENT"
+                                            );
+                                    }
+                                })
                             )
                         )
                     )

@@ -22,7 +22,7 @@
 
     module.exports = {
 
-        getAll : function(callback){
+        getAll : function(callback) {
             var dynamodb = getDb();
 
             var params = {

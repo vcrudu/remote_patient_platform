@@ -123,7 +123,7 @@
             var allContactDetails = buildArray(dbEntity.contactDetails.L, mapContactDetailsFromDbEntity);
             var allAvailabilities = buildArray(dbEntity.availabilities.L, mapAvailabilitiesFromDbEntity);
 
-            return providerFactory.createProviderFromBody({
+            var provider = providerFactory.createProviderFromBody({
                 id : dbEntity.id.S,
                 email: dbEntity.email.S,
                 title: dbEntity.title.S,
@@ -138,6 +138,10 @@
                 availabilities: allAvailabilities
 
             });
+
+            provider.contactDetails = provider.getContactDetails();
+
+            return provider;
         }
     };
 })();

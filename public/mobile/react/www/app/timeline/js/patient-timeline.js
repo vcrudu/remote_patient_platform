@@ -75,7 +75,7 @@
                             React.createElement(
                                 "i",
                                 { className: "material-icons mdl-list__item-avatar" },
-                                "error_outline"
+                                "info_outline"
                             )
                         ),
                         React.createElement(
@@ -103,20 +103,10 @@
                 React.createElement(
                     CardMenu,
                     null,
-                    React.createElement(IconButton, { name: "more_vert", id: "card-menu-lower-right-" + this.props.cardId }),
                     React.createElement(
-                        Menu,
-                        { target: "card-menu-lower-right-" + this.props.cardId, align: "right" },
-                        React.createElement(
-                            MenuItem,
-                            { onClick: this.handleView },
-                            "View"
-                        ),
-                        React.createElement(
-                            MenuItem,
-                            null,
-                            "Delete"
-                        )
+                        "div",
+                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                        this.props.time
                     )
                 )
             );
@@ -127,17 +117,23 @@
         displayName: "AlarmCard",
 
         componentDidUpdate: function () {},
-        componentDidMount: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
-                    null,
+                    { onClick: this.handleView },
                     React.createElement(
                         "div",
                         { className: "notification-title-wrapper" },
@@ -147,7 +143,7 @@
                             React.createElement(
                                 "i",
                                 { className: "material-icons mdl-list__item-avatar" },
-                                "error_outline"
+                                "alarm"
                             )
                         ),
                         React.createElement(
@@ -175,20 +171,78 @@
                 React.createElement(
                     CardMenu,
                     null,
-                    React.createElement(IconButton, { name: "more_vert", id: "card-menu-lower-right-" + this.props.cardId }),
                     React.createElement(
-                        Menu,
-                        { target: "card-menu-lower-right-" + this.props.cardId, align: "right" },
+                        "div",
+                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                        this.props.time
+                    )
+                )
+            );
+        }
+    });
+
+    var ReadingCard = React.createClass({
+        displayName: "ReadingCard",
+
+        componentDidUpdate: function () {},
+        componentDidMount: function () {
+            var cardMessage = this.refs.cardMessage;
+            $(cardMessage).dotdotdot({});
+
+            var cardSummary = this.refs.cardSummary;
+            $(cardSummary).dotdotdot({});
+        },
+        handleView: function () {
+            Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
+        },
+        render: function () {
+            return React.createElement(
+                Card,
+                { className: "message-card-wide mdl-shadow--2dp" },
+                React.createElement(
+                    CardText,
+                    { onClick: this.handleView },
+                    React.createElement(
+                        "div",
+                        { className: "notification-title-wrapper" },
                         React.createElement(
-                            MenuItem,
-                            { onClick: this.handleView },
-                            "View"
+                            "div",
+                            { className: "notification-icon" },
+                            React.createElement(
+                                "i",
+                                { className: "material-icons mdl-list__item-avatar" },
+                                "timeline"
+                            )
                         ),
                         React.createElement(
-                            MenuItem,
-                            null,
-                            "Delete"
+                            "div",
+                            { className: "notification-title-summary" },
+                            React.createElement(
+                                "div",
+                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                this.props.title
+                            ),
+                            React.createElement(
+                                "div",
+                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                this.props.summary
+                            )
                         )
+                    ),
+                    React.createElement("div", { className: "clear" }),
+                    React.createElement(
+                        "div",
+                        { ref: "cardMessage", className: "notification-message" },
+                        this.props.message
+                    )
+                ),
+                React.createElement(
+                    CardMenu,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                        this.props.time
                     )
                 )
             );
@@ -212,125 +266,116 @@
         formatCardDate: function (timeStamp) {
             return moment(timeStamp).format("dddd Do MMM");
         },
-        componentDidMount: function () {
-            var component = this;
-            Bridge.Timeline.getNotifications(function (result) {
-                var allCards = _.sortBy(result.data, "dateTime").reverse();
+        groupCards: function (cards, filteredCards) {
+            if (filteredCards && filteredCards.length > 0) {
+                var cardDateTime = filteredCards[0].dateTime;
+                var momentDateTimeString = moment(cardDateTime).format("YYYYMMDD");
 
-                var groupedAllCards = [];
-                if (allCards && allCards.length > 0) {
-                    var cardDateTime = allCards[0].dateTime;
-                    var momentDateTimeString = moment(cardDateTime).format("YYYYMMDD");
+                var dateCard = {
+                    id: cardDateTime,
+                    title: this.formatCardDate(cardDateTime),
+                    dateString: momentDateTimeString,
+                    category: "date"
+                };
 
-                    var dateCard = {
-                        id: cardDateTime,
-                        title: component.formatCardDate(cardDateTime),
-                        dateString: momentDateTimeString,
-                        category: "date"
-                    };
+                cards.push(dateCard);
 
-                    groupedAllCards.push(dateCard);
+                for (var i = 0; i < filteredCards.length; i++) {
+                    cardDateTime = filteredCards[i].dateTime;
+                    momentDateTimeString = moment(cardDateTime).format("YYYYMMDD");
 
-                    for (var i = 0; i < allCards.length; i++) {
-                        cardDateTime = allCards[i].dateTime;
-                        momentDateTimeString = moment(cardDateTime).format("YYYYMMDD");
+                    filteredCards[i].timeString = moment(filteredCards[i].dateTime).format("HH:mm");
 
-                        if (momentDateTimeString == dateCard.dateString) {
-                            groupedAllCards.push(allCards[i]);
-                        } else {
-                            dateCard = {
-                                id: cardDateTime,
-                                title: component.formatCardDate(cardDateTime),
-                                dateString: momentDateTimeString,
-                                category: "date"
-                            };
+                    if (momentDateTimeString == dateCard.dateString) {
+                        cards.push(filteredCards[i]);
+                    } else {
+                        dateCard = {
+                            id: cardDateTime,
+                            title: this.formatCardDate(cardDateTime),
+                            dateString: momentDateTimeString,
+                            category: "date"
+                        };
 
-                            groupedAllCards.push(dateCard);
-                            groupedAllCards.push(allCards[i]);
-                        }
+                        cards.push(dateCard);
+                        cards.push(filteredCards[i]);
                     }
                 }
+            }
+        },
+        insertCard: function (cardCollection, notification) {
+            if (cardCollection.length === 0) {
+                cardCollection.push(notification);
+            } else {
+                var firstCard = cardCollection[0];
+                if (firstCard.dateString && moment(firstCard.dateString) < moment(notification.dateTime)) {
+                    cardCollection.splice(0, 0, notification);
+                } else {
+                    cardCollection.splice(1, 0, notification);
+                }
+            }
+        },
+        notificationCallback: function (data) {
+            var component = this;
+            var notification = data.notification;
+            component.setState(function (previousState) {
+                notification.timeString = moment(notification.dateTime).format("HH:mm");
+                this.insertCard(previousState.cards, notification);
+                this.insertCard(previousState.allCards, notification);
+                switch (notification.category) {
+                    case "info":
+                        this.insertCard(previousState.infoCards, notification);
+                        break;
+                    case "alarm":
+                        this.insertCard(previousState.alarmCards, notification);
+                        break;
+                    case "reading":
+                        this.insertCard(previousState.readingsCards, notification);
+                        break;
+                }
+
+                return previousState;
+            });
+        },
+        componentDidMount: function () {
+            var component = this;
+            Bridge.notificationCallback = this.notificationCallback;
+
+            Bridge.Timeline.getNotifications(function (result) {
+                var allCards = _.sortBy(result.data, "dateTime").reverse();
+                var groupedAllCards = [];
+                component.groupCards(groupedAllCards, allCards);
 
                 var infoCards = _.filter(allCards, function (card) {
                     return card.category == "info";
                 });
-
                 var groupedInfoCards = [];
-                if (infoCards && infoCards.length > 0) {
-                    var infoCardDateTime = infoCards[0].dateTime;
-                    var momentInfoDateTimeString = moment(infoCardDateTime).format("YYYYMMDD");
-
-                    var infoDateCard = {
-                        id: infoCardDateTime,
-                        title: component.formatCardDate(infoCardDateTime),
-                        dateString: momentInfoDateTimeString,
-                        category: "date"
-                    };
-
-                    groupedInfoCards.push(infoDateCard);
-
-                    for (var i = 0; i < infoCards.length; i++) {
-                        infoCardDateTime = infoCards[i].dateTime;
-                        momentInfoDateTimeString = moment(infoCardDateTime).format("YYYYMMDD");
-
-                        if (momentInfoDateTimeString == infoDateCard.dateString) {
-                            groupedInfoCards.push(infoCards[i]);
-                        } else {
-                            infoDateCard = {
-                                id: infoCardDateTime,
-                                title: component.formatCardDate(infoCardDateTime),
-                                dateString: momentInfoDateTimeString,
-                                category: "date"
-                            };
-
-                            groupedInfoCards.push(infoDateCard);
-                            groupedInfoCards.push(infoCards[i]);
-                        }
-                    }
-                }
+                component.groupCards(groupedInfoCards, infoCards);
 
                 var alarmCards = _.filter(allCards, function (card) {
                     return card.category == "alarm";
                 });
-
                 var groupedAlarmCards = [];
-                if (alarmCards && alarmCards.length > 0) {
-                    var alarmCardDateTime = alarmCards[0].dateTime;
-                    var momentAlarmDateTimeString = moment(alarmCardDateTime).format("YYYYMMDD");
+                component.groupCards(groupedAlarmCards, alarmCards);
 
-                    var alarmDateCard = {
-                        id: alarmCardDateTime,
-                        title: component.formatCardDate(alarmCardDateTime),
-                        dateString: momentAlarmDateTimeString,
-                        category: "date"
-                    };
+                var readingsCards = _.filter(allCards, function (card) {
+                    return card.category == "reading";
+                });
+                var groupedReadingsCards = [];
+                component.groupCards(groupedReadingsCards, readingsCards);
 
-                    groupedAlarmCards.push(alarmDateCard);
-
-                    for (var i = 0; i < alarmCards.length; i++) {
-                        alarmCardDateTime = alarmCards[i].dateTime;
-                        momentAlarmDateTimeString = moment(alarmCardDateTime).format("YYYYMMDD");
-
-                        if (momentAlarmDateTimeString == alarmDateCard.dateString) {
-                            groupedAlarmCards.push(alarmCards[i]);
-                        } else {
-                            alarmDateCard = {
-                                id: alarmCardDateTime,
-                                title: component.formatCardDate(alarmCardDateTime),
-                                dateString: momentAlarmDateTimeString,
-                                category: "date"
-                            };
-
-                            groupedAlarmCards.push(alarmDateCard);
-                            groupedAlarmCards.push(alarmCards[i]);
-                        }
-                    }
-                }
-
-                component.setState({ cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards });
+                component.setState({
+                    cards: groupedAllCards,
+                    allCards: groupedAllCards,
+                    infoCards: groupedInfoCards,
+                    alarmCards: groupedAlarmCards,
+                    readingsCards: groupedReadingsCards
+                });
 
                 $(".mdl-progress").css('visibility', 'hidden');
             });
+        },
+        componentWillUnmount: function () {
+            Bridge.notificationCallback = undefined;
         },
         onChange: function (tabId) {
             if (tabId == 0) {
@@ -394,9 +439,11 @@
                                         case "date":
                                             return React.createElement(DateCard, { key: card.id + "_date", title: card.title, cardId: card.id + "_date" });
                                         case "info":
-                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
                                         case "alarm":
-                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                        case "reading":
+                                            return React.createElement(ReadingCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
                                     }
                                 })
                             )

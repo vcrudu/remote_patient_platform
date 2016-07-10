@@ -7,6 +7,7 @@ var paymentService = require('./paymentService');
 var videoService = require('./videoService');
 var availabilityService = require('./availabilityService');
 var alarmService = require('./alarmService');
+var patientSymptomsService = require('./patientSymptomsService');
 
 (function(){
     module.exports={
@@ -14,6 +15,7 @@ var alarmService = require('./alarmService');
         PaymentService:paymentService,
         VideoService:videoService,
         AvailabilityService:availabilityService,
-        AlarmService:alarmService
+        AlarmService:alarmService,
+        PatientSymptomsService:patientSymptomsService
     };
 })();

@@ -42,19 +42,71 @@
         handleEthnicityClick: function () {
             $(this.refs.sEthnicity).mobiscroll("show");
         },
+        handleDiseasesClick: function () {
+            $(this.refs.sDiseases).mobiscroll("show");
+        },
+        handleHeightClick: function () {
+            $(this.refs.txtHeight_Hidden).mobiscroll("show");
+        },
+        handleWeightClick: function () {
+            $(this.refs.txtWeight_Hidden).mobiscroll("show");
+        },
         setupEthnicityClick: function () {
             var component = this;
 
             $(this.refs.sEthnicity).mobiscroll().select({
                 theme: 'mobiscroll',
                 display: 'bottom',
-                minWidth: 200,
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtEthnicity, component.refs.txtEthnicityDiv);
                 }
             });
 
             $("#sEthnicity_dummy").hide();
+        },
+        setupDiseasesClick: function () {
+            var component = this;
+
+            $(this.refs.sDiseases).mobiscroll().select({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                select: 'multiple',
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtDiseases, component.refs.txtDiseasesDiv);
+                    if (valueText === "") {
+                        this.refs.labelTxtDiseases.htmlFor = 'txtDiseases';
+                    }
+                }
+            });
+
+            $("#sDiseases_dummy").hide();
+        },
+        setupHeightClick: function () {
+            var component = this;
+
+            $(this.refs.txtHeight_Hidden).mobiscroll().distance({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                defaultUnit: 'm',
+                units: ['m', 'in', 'ft'],
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtHeight, component.refs.txtHeightDiv);
+                }
+            }).mobiscroll('setVal', '1.5 m');
+        },
+        setupWeightClick: function () {
+            var component = this;
+
+            $(this.refs.txtWeight_Hidden).mobiscroll().mass({
+                theme: 'mobiscroll',
+                display: 'bottom',
+                defaultUnit: 'kg',
+                max: 300,
+                units: ['kg', 'lb'],
+                onClosed: function (valueText, inst) {
+                    component.setRefElementValue(valueText, component.refs.txtWeight, component.refs.txtWeightDiv);
+                }
+            }).mobiscroll('setVal', '60 kg');
         },
         setRefElementValue: function (valueText, refElement, refElementDiv) {
             $(refElement).val(valueText);
@@ -70,25 +122,73 @@
 
             $(refElement).blur();
         },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function () {
+            var component = this;
+
             this.setupEthnicityClick();
 
             var txtEthnicity = this.refs.txtEthnicity;
-            txtEthnicity.addEventListener("focus", this.handleEthnicityClick);
+            txtEthnicity.addEventListener("focus", function () {
+                /*var offsetTop = $(txtEthnicity).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleEthnicityClick();
+            });
+
+            this.setupDiseasesClick();
+
+            var txtDiseases = this.refs.txtDiseases;
+            txtDiseases.addEventListener("focus", function () {
+                /*var offsetTop = $(txtDiseases).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleDiseasesClick();
+            });
+
+            this.setupHeightClick();
+
+            var txtHeight = this.refs.txtHeight;
+            txtHeight.addEventListener("focus", function () {
+                /*var offsetTop = $(txtHeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleHeightClick();
+            });
+
+            this.setupWeightClick();
+
+            var txtWeight = this.refs.txtWeight;
+            txtWeight.addEventListener("focus", function () {
+                /*var offsetTop = $(txtWeight).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleWeightClick();
+            });
+
+            /*var txtNhsNumber = this.refs.txtNhsNumber;
+            txtNhsNumber.addEventListener("focus", function() {
+                var offsetTop = $(txtNhsNumber).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
 
             this.setRefElementValue(this.state.nhsNumber, this.refs.txtNhsNumber, this.refs.txtNhsNumberDiv);
             this.setRefElementValue(this.state.ethnicity, this.refs.txtEthnicity, this.refs.txtEthnicityDiv);
+            this.setRefElementValue(this.state.diseases, this.refs.txtDiseases, this.refs.txtDiseasesDiv);
             this.setRefElementValue(this.state.height, this.refs.txtHeight, this.refs.txtHeightDiv);
             this.setRefElementValue(this.state.weight, this.refs.txtWeight, this.refs.txtWeightDiv);
+
+            $(this.refs.sDiseases).mobiscroll('setVal', this.state.diseasesArray, true);
         },
         isValid: function () {
             var valid = true;
             this.setState({
                 nhsNumber: $(this.refs.txtNhsNumber).val(),
                 ethnicity: $(this.refs.txtEthnicity).val(),
+                diseases: $(this.refs.txtDiseases).val(),
                 height: $(this.refs.txtHeight).val(),
                 weight: $(this.refs.txtWeight).val()
             });
@@ -107,6 +207,14 @@
                 valid = false;
             } else {
                 this.setState({ ethnicity: $(this.refs.txtEthnicity).val() });
+            }
+
+            if ($(this.refs.txtDiseases).val() == "") {
+                $(this.refs.txtDiseasesDiv).addClass("is-invalid");
+                $(this.refs.txtDiseasesDiv).addClass("is-focused");
+                valid = false;
+            } else {
+                this.setState({ diseases: $(this.refs.txtDiseases).val() });
             }
 
             if ($(this.refs.txtHeight).val() == "") {
@@ -160,7 +268,7 @@
                         { className: "material-icons primary-icons md-36" },
                         "face"
                     ),
-                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtEthnicity", ref: "txtEthnicity", onClick: this.handleEthnicityClick }),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtEthnicity", ref: "txtEthnicity" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtEthnicity" },
@@ -172,6 +280,21 @@
                         "Choose Ethnicity required!"
                     )
                 ),
+                React.createElement(
+                    "div",
+                    { className: "mdl-textfield mdl-js-textfield", ref: "txtDiseasesDiv" },
+                    React.createElement(
+                        "i",
+                        { className: "material-icons primary-icons md-36" },
+                        "warning"
+                    ),
+                    React.createElement(
+                        "label",
+                        { className: "mdl-textfield__label", ref: "labelTxtDiseases", htmlFor: "txtDiseases" },
+                        "Diseases if any"
+                    ),
+                    React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtDiseases", ref: "txtDiseases" })
+                ),
                 React.createElement("div", { className: "clear" }),
                 React.createElement(
                     "div",
@@ -182,6 +305,7 @@
                         "accessibility"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtHeight", ref: "txtHeight" }),
+                    React.createElement("input", { className: "mdl-textfield__input hide", type: "text", id: "txtHeight_Hidden", ref: "txtHeight_Hidden" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtHeight" },
@@ -203,6 +327,7 @@
                         "adb"
                     ),
                     React.createElement("input", { className: "mdl-textfield__input", type: "text", id: "txtWeight", ref: "txtWeight" }),
+                    React.createElement("input", { className: "mdl-textfield__input hide", type: "text", id: "txtWeight_Hidden", ref: "txtWeight_Hidden" }),
                     React.createElement(
                         "label",
                         { className: "mdl-textfield__label", htmlFor: "txtWeight" },
@@ -232,6 +357,11 @@
                         "option",
                         { value: "Other White Background" },
                         "Other White Background"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Other White Background" },
+                        "White Caucasian"
                     ),
                     React.createElement(
                         "option",
@@ -288,6 +418,70 @@
                         { value: "Other ethnic group" },
                         "Other ethnic group"
                     )
+                ),
+                React.createElement(
+                    "select",
+                    { className: "hide", name: "Category", id: "sDiseases", ref: "sDiseases", multiple: true },
+                    React.createElement(
+                        "option",
+                        { value: "Asthma (on medication)" },
+                        "Asthma (on medication)"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Cancer" },
+                        "Cancer"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Diabetes" },
+                        "Diabetes"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Epilepsy" },
+                        "Epilepsy"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Stroke/TIA" },
+                        "Stroke/TIA"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Hypertension (high blood pressure)" },
+                        "Hypertension (high blood pressure)"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Chronic heart disease" },
+                        "Chronic heart disease"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Chronic kidney disease" },
+                        "Chronic kidney disease"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Chronic lung disease" },
+                        "Chronic lung disease"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Hypothyroidism (underactive thyroid)" },
+                        "Hypothyroidism (underactive thyroid)"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Mental health concerns (give details)" },
+                        "Mental health concerns (give details)"
+                    ),
+                    React.createElement(
+                        "option",
+                        { value: "Previous operations" },
+                        "Previous operations"
+                    )
                 )
             );
         }
@@ -320,14 +514,14 @@
             $(this.refs.sCountries).mobiscroll().select({
                 theme: 'mobiscroll',
                 display: 'bottom',
-                group: true,
-                minWidth: [50, 100],
-                maxWidth: [50, 230],
+                defaultValue: 'United Kingdom',
                 onClosed: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtCountry, component.refs.txtCountryDiv);
                 }
             });
 
+            var inst = $(this.refs.sCountries).mobiscroll('getInst');
+            inst.setVal("United Kingdom", true, true);
             $("#sCountries_dummy").hide();
         },
         setRefElementValue: function (valueText, refElement, refElementDiv) {
@@ -344,11 +538,58 @@
 
             $(refElement).blur();
         },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
+        },
         componentDidMount: function () {
+            var component = this;
+
             this.setupCountrySelect();
 
             var txtCountry = this.refs.txtCountry;
-            txtCountry.addEventListener("focus", this.handleCountry);
+            txtCountry.addEventListener("focus", function () {
+                /*var offsetTop = $(txtCountry).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleCountry();
+            });
+
+            /*var txtCounty = this.refs.txtCounty;
+            txtCounty.addEventListener("focus", function() {
+                var offsetTop = $(txtCounty).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtTown = this.refs.txtTown;
+            txtTown.addEventListener("focus", function() {
+                var offsetTop = $(txtTown).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtPostCode = this.refs.txtPostCode;
+            txtPostCode.addEventListener("focus", function() {
+                var offsetTop = $(txtPostCode).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtAddressLine1 = this.refs.txtAddressLine1;
+            txtAddressLine1.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine1).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtAddressLine2 = this.refs.txtAddressLine2;
+            txtAddressLine2.addEventListener("focus", function() {
+                var offsetTop = $(txtAddressLine2).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtMobile = this.refs.txtMobile;
+            txtMobile.addEventListener("focus", function() {
+                var offsetTop = $(txtMobile).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtPhone = this.refs.txtPhone;
+            txtPhone.addEventListener("focus", function() {
+                var offsetTop = $(txtPhone).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
@@ -423,13 +664,14 @@
                 this.setState({ mobile: $(this.refs.txtMobile).val() });
             }
 
-            if ($(this.refs.txtPhone).val() == "") {
+            /*if ($(this.refs.txtPhone).val() == "") {
                 $(this.refs.txtPhoneDiv).addClass("is-invalid");
                 $(this.refs.txtPhoneDiv).addClass("is-focused");
                 valid = false;
-            } else {
-                this.setState({ phone: $(this.refs.txtPhone).val() });
             }
+            else {
+                this.setState({phone : $(this.refs.txtPhone).val()});
+            }*/
 
             return valid;
         },
@@ -599,780 +841,114 @@
                     "select",
                     { id: "sCountries", ref: "sCountries", className: "hide", name: "Country" },
                     React.createElement(
-                        "optgroup",
-                        { label: "A" },
-                        React.createElement(
-                            "option",
-                            { value: "Afganistan" },
-                            "Afganistan"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Albania" },
-                            "Albania"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Algeria" },
-                            "Algeria"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Argentina" },
-                            "Argentina"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Australia" },
-                            "Australia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Austria" },
-                            "Austria"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Azerbaijan" },
-                            "Azerbaijan"
-                        )
+                        "option",
+                        { value: "Austria" },
+                        "Austria"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "B" },
-                        React.createElement(
-                            "option",
-                            { value: "Bahamas" },
-                            "Bahamas"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Bahrain" },
-                            "Bahrain"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Bolivia" },
-                            "Bolivia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Brazil" },
-                            "Brazil"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Bulgaria" },
-                            "Bulgaria"
-                        )
+                        "option",
+                        { value: "Belgium" },
+                        "Belgium"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "C" },
-                        React.createElement(
-                            "option",
-                            { value: "Cambodia" },
-                            "Cambodia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Canada" },
-                            "Canada"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Chile" },
-                            "Chile"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "China" },
-                            "China"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Colombia" },
-                            "Colombia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Czech Republic" },
-                            "Czech Republic"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Croatia" },
-                            "Croatia"
-                        )
+                        "option",
+                        { value: "British Indian Ocean Territory" },
+                        "British Indian Ocean Territory"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "D" },
-                        React.createElement(
-                            "option",
-                            { value: "Denmark" },
-                            "Denmark"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Djibouti" },
-                            "Djibouti"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Dominica" },
-                            "Dominica"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Dominican Republic" },
-                            "Dominican Republic"
-                        )
+                        "option",
+                        { value: "Canada" },
+                        "Canada"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "E" },
-                        React.createElement(
-                            "option",
-                            { value: "Ecuador" },
-                            "Ecuador"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Egypt" },
-                            "Egypt"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "El Salvador" },
-                            "El Salvador"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Ethiopia" },
-                            "Ethiopia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Estonia" },
-                            "Estonia"
-                        )
+                        "option",
+                        { value: "Finland" },
+                        "Finland"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "F" },
-                        React.createElement(
-                            "option",
-                            { value: "Falkland Islands" },
-                            "Falkland Islands"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Faroe Islands" },
-                            "Faroe Islands"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Finland" },
-                            "Finland"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "France" },
-                            "France"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Fiji" },
-                            "Fiji"
-                        )
+                        "option",
+                        { value: "Germany" },
+                        "Germany"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "G" },
-                        React.createElement(
-                            "option",
-                            { value: "Gambia" },
-                            "Gambia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Georgia" },
-                            "Georgia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Germany" },
-                            "Germany"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Ghana" },
-                            "Ghana"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Guatemala" },
-                            "Guatemala"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Guinea" },
-                            "Guinea"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Guyana" },
-                            "Guyana"
-                        )
+                        "option",
+                        { value: "Greece" },
+                        "Greece"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "H" },
-                        React.createElement(
-                            "option",
-                            { value: "Haiti" },
-                            "Haiti"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Honduras" },
-                            "Honduras"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Hong Kong" },
-                            "Hong Kong"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Hungary" },
-                            "Hungary"
-                        )
+                        "option",
+                        { value: "Italy" },
+                        "Italy"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "I" },
-                        React.createElement(
-                            "option",
-                            { value: "Iceland" },
-                            "Iceland"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "India" },
-                            "India"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Indonesia" },
-                            "Indonesia"
-                        ),
-                        React.createElement("option", { value: "Iraq", Iraq: true }),
-                        React.createElement(
-                            "option",
-                            { value: "Ireland" },
-                            "Ireland"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Israel" },
-                            "Israel"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Italy" },
-                            "Italy"
-                        )
+                        "option",
+                        { value: "Luxembourg" },
+                        "Luxembourg"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "J" },
-                        React.createElement(
-                            "option",
-                            { value: "Jamaica" },
-                            "Jamaica"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Japan" },
-                            "Japan"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Jordan" },
-                            "Jordan"
-                        )
+                        "option",
+                        { value: "Moldova, Republic of" },
+                        "Moldova, Republic of"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "K" },
-                        React.createElement(
-                            "option",
-                            { value: "Kazakhstan" },
-                            "Kazakhstan"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Kenya" },
-                            "Kenya"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Kiribati" },
-                            "Kiribati"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Korea" },
-                            "Korea"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Kuwait" },
-                            "Kuwait"
-                        )
+                        "option",
+                        { value: "New Zealand" },
+                        "New Zealand"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "L" },
-                        React.createElement(
-                            "option",
-                            { value: "Latvia" },
-                            "Latvia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Lebanon" },
-                            "Lebanon"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Lesotho" },
-                            "Lesotho"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Liberia" },
-                            "Liberia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Libya" },
-                            "Libya"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Liechtenstein" },
-                            "Liechtenstein"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Lithuania" },
-                            "Lithuania"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Luxembourg" },
-                            "Luxembourg"
-                        )
+                        "option",
+                        { value: "Norway" },
+                        "Norway"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "M" },
-                        React.createElement(
-                            "option",
-                            { value: "Macau" },
-                            "Macau"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Macedonia" },
-                            "Macedonia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Madagascar" },
-                            "Madagascar"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Malaysia" },
-                            "Malaysia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Mexico" },
-                            "Mexico"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Monaco" },
-                            "Monaco"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Mongolia" },
-                            "Mongolia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Montenegro" },
-                            "Montenegro"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Montserrat" },
-                            "Montserrat"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Morocco" },
-                            "Morocco"
-                        )
+                        "option",
+                        { value: "Portugal" },
+                        "Portugal"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "N" },
-                        React.createElement(
-                            "option",
-                            { value: "Namibia" },
-                            "Namibia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Nauru" },
-                            "Nauru"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Nepal" },
-                            "Nepal"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Netherlands" },
-                            "Netherlands"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "New Caledonia" },
-                            "New Caledonia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "New Zealand" },
-                            "New Zealand"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Nigeria" },
-                            "Nigeria"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Norway" },
-                            "Norway"
-                        )
+                        "option",
+                        { value: "Romania" },
+                        "Romania"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "O" },
-                        React.createElement(
-                            "option",
-                            { value: "Oman" },
-                            "Oman"
-                        )
+                        "option",
+                        { value: "Spain" },
+                        "Spain"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "P" },
-                        React.createElement(
-                            "option",
-                            { value: "Pakistan" },
-                            "Pakistan"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Palau" },
-                            "Palau"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Panama" },
-                            "Panama"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Paraguay" },
-                            "Paraguay"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Peru" },
-                            "Peru"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Philippines" },
-                            "Philippines"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Poland" },
-                            "Poland"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Portugal" },
-                            "Portugal"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Puerto Rico" },
-                            "Puerto Rico"
-                        )
+                        "option",
+                        { value: "Sweden" },
+                        "Sweden"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "Q" },
-                        React.createElement(
-                            "option",
-                            { value: "Qatar" },
-                            "Qatar"
-                        )
+                        "option",
+                        { value: "Switzerland" },
+                        "Switzerland"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "R" },
-                        React.createElement(
-                            "option",
-                            { value: "Reunion Island" },
-                            "Reunion Island"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Romania" },
-                            "Romania"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Russian Federation" },
-                            "Russian Federation"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Rwanda" },
-                            "Rwanda"
-                        )
+                        "option",
+                        { value: "United Arab Emirates" },
+                        "United Arab Emirates"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "S" },
-                        React.createElement(
-                            "option",
-                            { value: "Samoa" },
-                            "Samoa"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "San Marino" },
-                            "San Marino"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Saudi Arabia" },
-                            "Saudi Arabia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Senegal" },
-                            "Senegal"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Serbia" },
-                            "Serbia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Sierra Leone" },
-                            "Sierra Leone"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Singapore" },
-                            "Singapore"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Slovakia" },
-                            "Slovakia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Slovenia" },
-                            "Slovenia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Somalia" },
-                            "Somalia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "South Africa" },
-                            "South Africa"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Sweden" },
-                            "Sweden"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Switzerland" },
-                            "Switzerland"
-                        )
+                        "option",
+                        { value: "United Kingdom" },
+                        "United Kingdom"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "T" },
-                        React.createElement(
-                            "option",
-                            { value: "Taiwan" },
-                            "Taiwan"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Tanzania" },
-                            "Tanzania"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Thailand" },
-                            "Thailand"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Togo" },
-                            "Togo"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Tunisia" },
-                            "Tunisia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Turkey" },
-                            "Turkey"
-                        )
+                        "option",
+                        { value: "United States" },
+                        "United States"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "U" },
-                        React.createElement(
-                            "option",
-                            { value: "Uganda" },
-                            "Uganda"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Ukraine" },
-                            "Ukraine"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "United Arab Emirates" },
-                            "United Arab Emirates"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "United Kingdom" },
-                            "United Kingdom"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "United States" },
-                            "United States"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Uruguay" },
-                            "Uruguay"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Uzbekistan" },
-                            "Uzbekistan"
-                        )
+                        "option",
+                        { value: "Virgin Islands (British)" },
+                        "Virgin Islands (British)"
                     ),
                     React.createElement(
-                        "optgroup",
-                        { label: "V" },
-                        React.createElement(
-                            "option",
-                            { value: "Vanuatu" },
-                            "Vanuatu"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Vatican" },
-                            "Vatican"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Venezuela" },
-                            "Venezuela"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Vietnam" },
-                            "Vietnam"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Virgin Islands" },
-                            "Virgin Islands"
-                        )
-                    ),
-                    React.createElement(
-                        "optgroup",
-                        { label: "W" },
-                        React.createElement(
-                            "option",
-                            { value: "Wallis and Futuna Islands" },
-                            "Wallis and Futuna Islands"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Western Sahara" },
-                            "Western Sahara"
-                        )
-                    ),
-                    React.createElement(
-                        "optgroup",
-                        { label: "Y" },
-                        React.createElement(
-                            "option",
-                            { value: "Yemen" },
-                            "Yemen"
-                        )
-                    ),
-                    React.createElement(
-                        "optgroup",
-                        { label: "Z" },
-                        React.createElement(
-                            "option",
-                            { value: "Zambia" },
-                            "Zambia"
-                        ),
-                        React.createElement(
-                            "option",
-                            { value: "Zimbabwe" },
-                            "Zimbabwe"
-                        )
+                        "option",
+                        { value: "Virgin Islands (U.S.)" },
+                        "Virgin Islands (U.S.)"
                     )
                 )
             );
@@ -1436,30 +1012,66 @@
             var birthDayPicker = $(this.refs.birthDayPicker);
             var component = this;
 
-            var maxDate = new Date();
-            birthDayPicker.mobiscroll().calendar({
+            var currYear = new Date().getFullYear();
+            var currentDate = new Date(new Date().setFullYear(currYear - 20));
+            birthDayPicker.mobiscroll().date({
                 theme: "material",
                 display: "bottom",
                 dateFormat: "mm/dd/yyyy",
-                maxDate: maxDate,
+                defaultValue: currentDate,
+                max: new Date(),
                 onSelect: function (valueText, inst) {
                     component.setRefElementValue(valueText, component.refs.txtBirthDay, component.refs.txtBirthDayDiv);
+                },
+                onClosed: function (valueText, inst) {
+                    if ($(component.refs.txtBirthDayDiv).hasClass("is-focused")) {
+                        $(component.refs.txtBirthDayDiv).removeClass("is-focused");
+                    }
                 }
-            }).mobiscroll("setDate", maxDate, true);
+            });
+        },
+        scrollTo: function (offsetTop) {
+            $('.mdl-layout').animate({
+                scrollTop: offsetTop
+            }, 200);
         },
         componentDidMount: function () {
+            var component = this;
             this.setupTitleSelect();
             this.setupGenderSelect();
             this.setupBirthDayCalendar();
 
-            var txtTitle = this.refs.txtTitle;
-            txtTitle.addEventListener("focus", this.handleTitleClick);
+            var txtTitle = component.refs.txtTitle;
+            txtTitle.addEventListener("focus", function () {
+                /*var offsetTop = $(txtTitle).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleTitleClick();
+            });
+
+            var txtBirthDay = component.refs.txtBirthDay;
+            txtBirthDay.addEventListener("focus", function () {
+                /*var offsetTop = $(txtBirthDay).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleBirthDayClick();
+            });
 
             var txtGender = this.refs.txtGender;
-            txtGender.addEventListener("focus", this.handleGenderClick);
+            txtGender.addEventListener("focus", function () {
+                /*var offsetTop = $(txtGender).offset().top;
+                component.scrollTo(offsetTop);*/
+                component.handleGenderClick();
+            });
 
-            var txtBirthDay = this.refs.txtBirthDay;
-            txtBirthDay.addEventListener("focus", this.handleBirthDayClick);
+            /*var txtFirstName = this.refs.txtFirstName;
+            txtFirstName.addEventListener("focus", function() {
+                var offsetTop = $(txtFirstName).offset().top;
+                component.scrollTo(offsetTop);
+            });
+              var txtSurname = this.refs.txtSurname;
+            txtSurname.addEventListener("focus", function() {
+                var offsetTop = $(txtSurname).offset().top;
+                component.scrollTo(offsetTop);
+            });*/
         },
         setRefElementValue: function (valueText, refElement, refElementDiv) {
             $(refElement).val(valueText);
@@ -1701,6 +1313,22 @@
         socketCallback: function (message) {},
         componentDidMount: function () {
             componentHandler.upgradeDom();
+
+            var doneButton = this.refs.doneButton;
+            doneButton.addEventListener("click", this.handleDone);
+
+            window.addEventListener('resize', function () {
+                is_keyboard = window.innerHeight < initial_screen_size;
+                is_landscape = screen.height < screen.width;
+
+                if ($(document.activeElement)) {
+                    var offsetTop = $(document.activeElement).offset().top;
+                    $('.mdl-layout').animate({
+                        scrollTop: offsetTop
+                    }, 200);
+                }
+            });
+
             var component = this;
             $(document).ready(function () {
                 $('#patient-details-collapse').on('show.bs.collapse', function (a) {
@@ -1752,11 +1380,26 @@
                         phone: result.data.phone ? result.data.phone : "",
                         mobile: result.data.mobile ? result.data.mobile : ""
                     });
+
+                    var healthProblemsText = "";
+                    if (result.data.healthProblems) {
+                        healthProblemsText = result.data.healthProblems.reduce(function (all, healthProblem) {
+                            if (all === "") {
+                                all = healthProblem;
+                            } else {
+                                all = all + ", " + healthProblem;
+                            }
+                            return all;
+                        }, "");
+                    }
+
                     component.refs.patientMedicalInfo.updateState({
                         nhsNumber: result.data.nhsNumber ? result.data.nhsNumber : "",
                         ethnicity: result.data.ethnicity ? result.data.ethnicity : "",
                         height: result.data.height ? result.data.height : "",
-                        weight: result.data.weight ? result.data.weight : ""
+                        weight: result.data.weight ? result.data.weight : "",
+                        diseases: healthProblemsText,
+                        diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
                     });
                 }
             });
@@ -1829,7 +1472,8 @@
                 return;
             }
 
-            debugger;
+            var healthProblems = this.refs.patientMedicalInfo.state.diseases.split(", ");
+
             var objectToPost = {
                 "id": this.state.userDetails.id,
                 "name": this.refs.patientInfoComponent.state.firstName,
@@ -1850,6 +1494,7 @@
                 "ethnicity": this.refs.patientMedicalInfo.state.ethnicity,
                 "nhsNumber": this.refs.patientMedicalInfo.state.nhsNumber,
                 "otherIdentifiers": [],
+                "healthProblems": healthProblems,
                 "phone": this.refs.patientAddress.state.phone,
                 "mobile": this.refs.patientAddress.state.mobile,
                 "weight": this.refs.patientMedicalInfo.state.weight,
@@ -1865,110 +1510,78 @@
         },
         componentDidUpdate: function () {
             componentHandler.upgradeDom();
-
-            var doneButton = this.refs.doneButton;
-            doneButton.addEventListener("click", this.handleDone);
         },
         render: function () {
             return React.createElement(
                 "div",
-                { className: "mdl-layout mdl-js-layout mdl-layout--fixed-header" },
+                { className: "mdl-layout mdl-js-layout mdl-layout--header primary-bg" },
                 React.createElement(
-                    "header",
-                    { className: "mdl-layout__header" },
-                    React.createElement(USER_PROFILE_PROGRESS, null),
+                    "button",
+                    { ref: "doneButton", className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect done-button" },
                     React.createElement(
-                        "div",
-                        { className: "primary-bg profile-image-container" },
-                        React.createElement("img", { src: "images/user.png", width: "120", height: "120", className: "img-responsive center-block profile-user-photo" }),
-                        React.createElement(
-                            "div",
-                            { className: "userName" },
-                            React.createElement(
-                                "h4",
-                                null,
-                                this.state.userName
-                            )
-                        )
+                        "i",
+                        { className: "material-icons" },
+                        "done"
                     ),
                     React.createElement(
+                        "span",
+                        { className: "mdl-button__ripple-container" },
+                        React.createElement("span", { className: "mdl-ripple is-animating" })
+                    )
+                ),
+                React.createElement(USER_PROFILE_PROGRESS, null),
+                React.createElement(
+                    "div",
+                    { className: "profile-image-container" },
+                    React.createElement("img", { src: "images/user.png", width: "120", height: "20", className: "img-responsive center-block profile-user-photo" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "userName" },
+                    React.createElement(
+                        "h4",
+                        null,
+                        this.state.userName
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "mdl-tabs mdl-js-tabs mdl-js-ripple-effect" },
+                    React.createElement(
                         "div",
-                        { className: "mdl-layout__tab-bar mdl-js-ripple-effect" },
+                        { className: "mdl-tabs__tab-bar" },
                         React.createElement(
                             "a",
-                            { href: "#basic-info", className: "mdl-layout__tab is-active", ref: "basicInfoTab" },
+                            { href: "#basic-info", className: "mdl-tabs__tab is-active", ref: "basicInfoTab" },
                             "Basic Info"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#address", className: "mdl-layout__tab", ref: "basicAddress" },
+                            { href: "#address", className: "mdl-tabs__tab", ref: "basicAddress" },
                             "Address"
                         ),
                         React.createElement(
                             "a",
-                            { href: "#medical", className: "mdl-layout__tab", ref: "basicMedical" },
+                            { href: "#medical", className: "mdl-tabs__tab", ref: "basicMedical" },
                             "Medical"
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "call-fab-container" },
-                        React.createElement(
-                            "button",
-                            { ref: "photoCamera", className: "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons" },
-                                "photo_camera"
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "mdl-card__menu" },
-                        React.createElement(
-                            "button",
-                            { ref: "doneButton", className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons" },
-                                "done"
-                            ),
-                            React.createElement(
-                                "span",
-                                { className: "mdl-button__ripple-container" },
-                                React.createElement("span", { className: "mdl-ripple is-animating" })
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    "main",
-                    { className: "mdl-layout__content" },
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel is-active", id: "basic-info", ref: "basicInfoTabContent" },
+                        "main",
+                        null,
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel is-active", id: "basic-info", ref: "basicInfoTabContent" },
                             React.createElement(PatientBasicInfo, { ref: "patientInfoComponent" })
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "address", ref: "basicAddressContent" },
+                        ),
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel", id: "address", ref: "basicAddressContent" },
                             React.createElement(PatientAddress, { ref: "patientAddress" })
-                        )
-                    ),
-                    React.createElement(
-                        "section",
-                        { className: "mdl-layout__tab-panel", id: "medical", ref: "basicMedicalContent" },
+                        ),
                         React.createElement(
                             "div",
-                            { className: "page-content" },
+                            { className: "mdl-tabs__panel", id: "medical", ref: "basicMedicalContent" },
                             React.createElement(PatientMedicalInfo, { ref: "patientMedicalInfo" })
                         )
                     )
