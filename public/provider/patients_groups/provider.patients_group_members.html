@@ -1,0 +1,51 @@
+
+
+<section id="widget-grid" widget-grid>
+
+    <div jarvis-widget data-widget-color="darken"
+         data-widget-custombutton="false"
+         data-widget-colorbutton="false"
+         data-widget-editbutton="false"
+         data-widget-togglebutton="false"
+         data-widget-deletebutton="false"
+    >
+        <header>
+            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+            <h2>patients Group Members</h2>
+
+        </header>
+        <div >
+
+
+<div class="widget-body" >
+
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Patient name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="patient in patientsGroupsMembers">
+                <td>{{patient.patientId}}</td>
+
+            </tr>
+
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+        </div>
+    </div>
+
+
+</section>
+

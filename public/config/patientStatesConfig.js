@@ -57,7 +57,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "patient/devices/patient.devices.html",
         controller: 'patientDevicesCtrl'
     })
-        .state("patient.devices.buy", {
+       .state("patient.devices.buy", {
             url: "/patient.devices.buy?token",
             templateUrl: "patient/devices/buy.html",
             controller: 'patientDevicesBuyCtrl as vm',
@@ -123,6 +123,10 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patient.call",
             templateUrl: "patient/appointments/patient.call.html",
             controller: 'patientCallCtrl as vm'
+        }).state("patients_groups_members", {
+            url: "/patientsgroupmember",
+            templateUrl: "patient/appointments/patient.call.html",
+            controller: 'patientsGroupsMembers'
             //resolve:{
             //    providers:function($http,$localStorage,appSettings){
             //

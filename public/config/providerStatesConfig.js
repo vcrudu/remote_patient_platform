@@ -44,5 +44,13 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.call",
         templateUrl: "provider/appointments/provider.call.html",
         controller: 'providerCallCtrl as vm'
+    }).state("provider.patients_groups", {
+        url: "/provider.patients_groups",
+        templateUrl: "provider/patients_groups/provider.patients_groups.html",
+        controller: 'providerPatientsGroupsCtrl'
+    }).state("provider.patients_group_members", {
+        url: "/provider.patients_group_members/:groupName",
+        templateUrl: "provider/patients_groups/provider.patients_group_members2.html",
+        controller: 'providerPatientsGroupMembersCtrl2'
     });
 }]);
