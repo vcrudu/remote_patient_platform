@@ -141,5 +141,62 @@ Bridge.Symptomate = {
                 Bridge.resultCallback({success: true, data: dataToSave, error: undefined});
             });
         }
+    },
+    getEvidenceBySlotId: function(userId, slotId, callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Symptomate.getEvidenceBySlotId", data: {userId: userId, slotId: slotId}};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+
+            getFakeWhoProvider(function (data) {
+                var apiUrl = Bridge.serverApiUrl + "symptoms/" + userId + "/" + slotId;
+
+                var req = {
+                    url: apiUrl + '?token=' + data.token,
+                    type: 'GET',
+                    crossDomain: true
+                };
+
+                $.ajax(req).done(function (response) {
+                    if (response.success) {
+                        Bridge.resultCallback(response);
+                    }
+                    else {
+                        Bridge.resultCallback(response);
+                    }
+                }).fail(function () {
+                    Bridge.resultCallback(response);
+                });
+            });
+        }
+    },
+    getLastEvidence: function(callBack) {
+        Bridge.resultCallback = callBack;
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Symptomate.getLastEvidence"};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            getFakeUser(function (data) {
+                var apiUrl = Bridge.serverApiUrl + "symptoms/" + data.email;
+
+                var req = {
+                    url: apiUrl + '?token=' + data.token,
+                    type: 'GET',
+                    crossDomain: true
+                };
+
+                $.ajax(req).done(function (response) {
+                    if (response.success) {
+                        Bridge.resultCallback(response);
+                    }
+                    else {
+                        Bridge.resultCallback(response);
+                    }
+                }).fail(function () {
+                    Bridge.resultCallback(response);
+                });
+            });
+        }
     }
 }

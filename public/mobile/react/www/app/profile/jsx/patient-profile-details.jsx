@@ -23,6 +23,94 @@
         }
     });
 
+    var Question = React.createClass({
+        componentDidMount: function() {
+        },
+        render: function() {
+            return <li className="question-answer">
+                <div className="question">{this.props.question}</div>
+                <div className="answers">
+                    {
+                        this.props.answers.map(function (answer) {
+                            return <div key={answer.id} className="answer">{answer.name +" - "+ answer.choice_id}</div>
+                        })
+                    }
+                </div>
+            </li>
+        }
+    });
+
+    var ConditionResult = React.createClass({
+        componentDidMount: function() {
+            var probability = (this.props.probability * 100);
+            var conditionId = "#progressBar_" + this.props.conditionId
+            document.querySelector(conditionId).MaterialProgress.setProgress(probability);
+        },
+        render: function() {
+            return <div className="conditionCard">
+                <div className="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div className="mdl-card__title">
+                        <h2 className="mdl-card__title-text">{this.props.label}</h2>
+                    </div>
+                    <div className="mdl-card__supporting-text">
+                        {(this.props.probability * 100).toFixed(2)} %
+                        <div ref="progressBar" id={"progressBar_" + this.props.conditionId} className="mdl-progress mdl-js-progress"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    });
+
+    var Symptoms = React.createClass({
+        render: function() {
+            var diagnosticResult = this.props.symptomResult;
+
+            var coditions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.conditions) {
+                var sortedConditions = _.sortBy(diagnosticResult.conditions, function(condition){
+                    return condition.probability * -1;
+                }).slice(0, 5);
+
+                coditions = sortedConditions.map(function (condition) {
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} conditionId={(condition.probability * 100000)}></ConditionResult>
+                });
+            }
+
+            var questions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.evidence) {
+                var groupedQuestions = _.groupBy(diagnosticResult.evidence, function(value){
+                    return value.type + '#' + value.text;
+                });
+
+                questions = _.map(groupedQuestions, function(group){
+                    var model = {
+                        question: group[0].text,
+                        id:group[0].text.replace(/\s/g, ''),
+                        answers: _.map(group, function(q, key){ return {name: q.name, choice_id: q.choice_id, id: q.id} })
+                    };
+
+                    return <Question key={model.id} question={model.question} answers={model.answers}></Question>
+                });
+
+            }
+
+            return <div>
+                <div className="condition-cards">
+                    <ul className="questions-list">
+                        {questions}
+                    </ul>
+                    {coditions}
+                </div>
+            </div>
+        }
+    });
+
     var PatientMedicalInfo = React.createClass({
         getInitialState: function() {
             return {
@@ -847,7 +935,8 @@
         getInitialState: function() {
             return {
                 userName: "",
-                userDetails: undefined
+                userDetails: undefined,
+                symptomResult: undefined
             };
         },
         socketCallback: function(message) {
@@ -945,6 +1034,12 @@
                         weight: result.data.weight ? result.data.weight : "",
                         diseases: healthProblemsText,
                         diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
+                    });
+
+                    Bridge.Symptomate.getLastEvidence(function (result) {
+                        if (result.success) {
+                            component.setState({symptomResult: result.data});
+                        }
                     });
                 }
             });
@@ -1074,6 +1169,7 @@
                         <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab">Basic Info</a>
                         <a href="#address" className="mdl-tabs__tab" ref="basicAddress">Address</a>
                         <a href="#medical" className="mdl-tabs__tab" ref="basicMedical">Medical</a>
+                        <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical">Symptoms</a>
                     </div>
                     <main>
                         <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
@@ -1084,6 +1180,9 @@
                         </div>
                         <div className="mdl-tabs__panel" id="medical" ref="basicMedicalContent">
                             <PatientMedicalInfo ref="patientMedicalInfo"/>
+                        </div>
+                        <div className="mdl-tabs__panel" id="symptoms" ref="symptoms">
+                            <Symptoms ref="symtoms" symptomResult={this.state.symptomResult}/>
                         </div>
                     </main>
                 </div>

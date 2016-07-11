@@ -25,6 +25,129 @@
         }
     });
 
+    var Question = React.createClass({
+        displayName: "Question",
+
+        componentDidMount: function () {},
+        render: function () {
+            return React.createElement(
+                "li",
+                { className: "question-answer" },
+                React.createElement(
+                    "div",
+                    { className: "question" },
+                    this.props.question
+                ),
+                React.createElement(
+                    "div",
+                    { className: "answers" },
+                    this.props.answers.map(function (answer) {
+                        return React.createElement(
+                            "div",
+                            { key: answer.id, className: "answer" },
+                            answer.name + " - " + answer.choice_id
+                        );
+                    })
+                )
+            );
+        }
+    });
+
+    var ConditionResult = React.createClass({
+        displayName: "ConditionResult",
+
+        componentDidMount: function () {
+            var probability = this.props.probability * 100;
+            var conditionId = "#progressBar_" + this.props.conditionId;
+            document.querySelector(conditionId).MaterialProgress.setProgress(probability);
+        },
+        render: function () {
+            return React.createElement(
+                "div",
+                { className: "conditionCard" },
+                React.createElement(
+                    "div",
+                    { className: "demo-card-wide mdl-card mdl-shadow--2dp" },
+                    React.createElement(
+                        "div",
+                        { className: "mdl-card__title" },
+                        React.createElement(
+                            "h2",
+                            { className: "mdl-card__title-text" },
+                            this.props.label
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "mdl-card__supporting-text" },
+                        (this.props.probability * 100).toFixed(2),
+                        " %",
+                        React.createElement("div", { ref: "progressBar", id: "progressBar_" + this.props.conditionId, className: "mdl-progress mdl-js-progress" })
+                    )
+                )
+            );
+        }
+    });
+
+    var Symptoms = React.createClass({
+        displayName: "Symptoms",
+
+        render: function () {
+            var diagnosticResult = this.props.symptomResult;
+
+            var coditions = [].map(function (item) {
+                return React.createElement("div", null);
+            });
+
+            if (diagnosticResult && diagnosticResult.conditions) {
+                var sortedConditions = _.sortBy(diagnosticResult.conditions, function (condition) {
+                    return condition.probability * -1;
+                }).slice(0, 5);
+
+                coditions = sortedConditions.map(function (condition) {
+                    return React.createElement(ConditionResult, { key: condition.name, label: condition.name, probability: condition.probability, conditionId: condition.probability * 100000 });
+                });
+            }
+
+            var questions = [].map(function (item) {
+                return React.createElement("div", null);
+            });
+
+            if (diagnosticResult && diagnosticResult.evidence) {
+                var groupedQuestions = _.groupBy(diagnosticResult.evidence, function (value) {
+                    return value.type + '#' + value.text;
+                });
+
+                questions = _.map(groupedQuestions, function (group) {
+                    var model = {
+                        question: group[0].text,
+                        id: group[0].text.replace(/\s/g, ''),
+                        answers: _.map(group, function (q, key) {
+                            return { name: q.name, choice_id: q.choice_id, id: q.id };
+                        })
+                    };
+
+                    return React.createElement(Question, { key: model.id, question: model.question, answers: model.answers });
+                });
+            }
+
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "div",
+                    { className: "condition-cards" },
+                    React.createElement(
+                        "ul",
+                        { className: "questions-list" },
+                        questions
+                    ),
+                    coditions
+                )
+            );
+        }
+    });
+
     var PatientMedicalInfo = React.createClass({
         displayName: "PatientMedicalInfo",
 
@@ -1307,7 +1430,8 @@
         getInitialState: function () {
             return {
                 userName: "",
-                userDetails: undefined
+                userDetails: undefined,
+                symptomResult: undefined
             };
         },
         socketCallback: function (message) {},
@@ -1400,6 +1524,12 @@
                         weight: result.data.weight ? result.data.weight : "",
                         diseases: healthProblemsText,
                         diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
+                    });
+
+                    Bridge.Symptomate.getLastEvidence(function (result) {
+                        if (result.success) {
+                            component.setState({ symptomResult: result.data });
+                        }
                     });
                 }
             });
@@ -1564,6 +1694,11 @@
                             "a",
                             { href: "#medical", className: "mdl-tabs__tab", ref: "basicMedical" },
                             "Medical"
+                        ),
+                        React.createElement(
+                            "a",
+                            { href: "#symptoms", className: "mdl-tabs__tab", ref: "basicMedical" },
+                            "Symptoms"
                         )
                     ),
                     React.createElement(
@@ -1583,6 +1718,11 @@
                             "div",
                             { className: "mdl-tabs__panel", id: "medical", ref: "basicMedicalContent" },
                             React.createElement(PatientMedicalInfo, { ref: "patientMedicalInfo" })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "mdl-tabs__panel", id: "symptoms", ref: "symptoms" },
+                            React.createElement(Symptoms, { ref: "symtoms", symptomResult: this.state.symptomResult })
                         )
                     )
                 )

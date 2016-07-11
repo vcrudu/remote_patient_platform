@@ -22,6 +22,94 @@
         }
     });
 
+    var Question = React.createClass({
+        componentDidMount: function() {
+        },
+        render: function() {
+            return <li className="question-answer">
+                <div className="question">{this.props.question}</div>
+                <div className="answers">
+                    {
+                        this.props.answers.map(function (answer) {
+                            return <div key={answer.id} className="answer">{answer.name +" - "+ answer.choice_id}</div>
+                        })
+                    }
+                </div>
+            </li>
+        }
+    });
+
+    var ConditionResult = React.createClass({
+        componentDidMount: function() {
+            var probability = (this.props.probability * 100);
+            var conditionId = "#progressBar_" + this.props.conditionId
+            document.querySelector(conditionId).MaterialProgress.setProgress(probability);
+        },
+        render: function() {
+            return <div className="conditionCard">
+                <div className="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div className="mdl-card__title">
+                        <h2 className="mdl-card__title-text">{this.props.label}</h2>
+                    </div>
+                    <div className="mdl-card__supporting-text">
+                        {(this.props.probability * 100).toFixed(2)} %
+                        <div ref="progressBar" id={"progressBar_" + this.props.conditionId} className="mdl-progress mdl-js-progress"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    });
+
+    var Symptoms = React.createClass({
+        render: function() {
+            var diagnosticResult = this.props.symptomResult;
+
+            var coditions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.conditions) {
+                var sortedConditions = _.sortBy(diagnosticResult.conditions, function(condition){
+                    return condition.probability * -1;
+                }).slice(0, 5);
+
+                coditions = sortedConditions.map(function (condition) {
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} conditionId={(condition.probability * 100000)}></ConditionResult>
+                });
+            }
+
+            var questions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.evidence) {
+                var groupedQuestions = _.groupBy(diagnosticResult.evidence, function(value){
+                    return value.type + '#' + value.text;
+                });
+
+                questions = _.map(groupedQuestions, function(group){
+                    var model = {
+                        question: group[0].text,
+                        id:group[0].text.replace(/\s/g, ''),
+                        answers: _.map(group, function(q, key){ return {name: q.name, choice_id: q.choice_id, id: q.id} })
+                    };
+
+                    return <Question key={model.id} question={model.question} answers={model.answers}></Question>
+                });
+
+            }
+
+            return <div>
+                <div className="condition-cards">
+                    <ul className="questions-list">
+                        {questions}
+                    </ul>
+                    {coditions}
+                </div>
+            </div>
+        }
+    });
+
     var VitalSignCharts = React.createClass({
         getInitState: function() {
             var emptyVitalSigns = VitalSignsFactory.createEmptyVitalSings();
@@ -583,6 +671,7 @@
                 bloodOxygenDef: emptyVitalSigns.bloodOxygenDef,
                 heartRateDef: emptyVitalSigns.heartRateDef,
                 weightDef: emptyVitalSigns.weightDef,
+                symptomResult: undefined,
                 user: undefined,
                 appointmentTime: "",
                 name: "",
@@ -665,6 +754,24 @@
             }
             Bridge.Provider.callPatient(patientId, this.state.name, function(callResult) {});
         },
+        handleSymptomsClick: function() {
+            var time = this.state.appointmentTime;
+            var userId = Bridge.Redirect.getQueryStringParam()["userId"];;
+            if (time && time != "" && userId) {
+                var unixTime = moment(time).valueOf();
+                var component = this;
+                if (unixTime) {
+                    indeterminateProgress.start();
+                    Bridge.Symptomate.getEvidenceBySlotId(userId, unixTime, function (result) {
+                        if (result.success) {
+                            component.setState({symptomResult: result.data});
+                        }
+
+                        indeterminateProgress.end();
+                    });
+                }
+            }
+        },
         componentDidUpdate: function() {
             componentHandler.upgradeDom();
             var button = this.refs.callButton;
@@ -672,6 +779,9 @@
 
             var vitalSignsLink = this.refs.vitalSignsLink;
             vitalSignsLink.addEventListener('click', this.handleChartsClick);
+
+            var symptomsLink = this.refs.symptomsLink;
+            symptomsLink.addEventListener('click', this.handleSymptomsClick);
         },
         render: function() {
             return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -684,6 +794,7 @@
                     <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
                         <a href="#user-info" className="mdl-layout__tab is-active">User Info</a>
                         <a href="#vital-signs" className="mdl-layout__tab" ref="vitalSignsLink">Vital Signs</a>
+                        <a href="#symptoms" className="mdl-layout__tab" ref="symptomsLink">Symptoms</a>
                     </div>
                     <div className="call-fab-container">
                         <button ref="callButton" className={this.state.onlineStatus == "offline" ? "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored offline" : "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"}>
@@ -700,6 +811,11 @@
                     <section className="mdl-layout__tab-panel" id="vital-signs">
                         <div className="page-content">
                             <VitalSignCharts ref="vitalSignCharts"/>
+                        </div>
+                    </section>
+                    <section className="mdl-layout__tab-panel" id="symptoms">
+                        <div className="page-content">
+                            <Symptoms ref="symtoms" symptomResult={this.state.symptomResult}/>
                         </div>
                     </section>
                 </main>

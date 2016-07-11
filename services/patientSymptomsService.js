@@ -28,8 +28,20 @@
         });
     }
 
+    function getEvidenceBySlotId(patientId, slotId, callback) {
+        patientSymptomsRepository.getEvidenceBySlotId(patientId, slotId, function (err, data) {
+            if (err) {
+                callback(err, null);
+            }
+            else {
+                callback(null, data);
+            }
+        });
+    }
+
     module.exports = {
         addPatientSymptoms:addPatientSymptoms,
-        getLastEvidence:getLastEvidence
+        getLastEvidence:getLastEvidence,
+        getEvidenceBySlotId: getEvidenceBySlotId
     }
 })();
