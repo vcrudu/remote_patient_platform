@@ -1683,22 +1683,58 @@
                         React.createElement(
                             "a",
                             { href: "#basic-info", className: "mdl-tabs__tab is-active", ref: "basicInfoTab" },
-                            "Basic Info"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "face"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Basic Info"
+                            )
                         ),
                         React.createElement(
                             "a",
                             { href: "#address", className: "mdl-tabs__tab", ref: "basicAddress" },
-                            "Address"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "home"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Address"
+                            )
                         ),
                         React.createElement(
                             "a",
                             { href: "#medical", className: "mdl-tabs__tab", ref: "basicMedical" },
-                            "Medical"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "gesture"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Medical"
+                            )
                         ),
                         React.createElement(
                             "a",
                             { href: "#symptoms", className: "mdl-tabs__tab", ref: "basicMedical" },
-                            "Symptoms"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "favorite"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Symptoms"
+                            )
                         )
                     ),
                     React.createElement(

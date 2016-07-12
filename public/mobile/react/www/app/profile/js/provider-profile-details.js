@@ -778,13 +778,13 @@
             var component = this;
             if (Modernizr.svg) {
                 // if svg is supported, draw dynamic chart
-                if (component.refs["vitalSignCharts"].loadCharts) {
+                /*if (component.refs["vitalSignCharts"].loadCharts) {
                     return;
-                }
+                }*/
 
-                if (component.state.chartsLoaded) {
+                /*if (component.state.chartsLoaded) {
                     return;
-                }
+                }*/
 
                 indeterminateProgress.start();
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
@@ -896,17 +896,44 @@
                         React.createElement(
                             "a",
                             { href: "#user-info", className: "mdl-layout__tab is-active" },
-                            "User Info"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "face"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "User Info"
+                            )
                         ),
                         React.createElement(
                             "a",
                             { href: "#vital-signs", className: "mdl-layout__tab", ref: "vitalSignsLink" },
-                            "Vital Signs"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "update"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Vital Signs"
+                            )
                         ),
                         React.createElement(
                             "a",
                             { href: "#symptoms", className: "mdl-layout__tab", ref: "symptomsLink" },
-                            "Symptoms"
+                            React.createElement(
+                                "i",
+                                { className: "material-icons tab-icon show-mobile" },
+                                "favorite"
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "hide-mobile" },
+                                "Symptoms"
+                            )
                         )
                     ),
                     React.createElement(

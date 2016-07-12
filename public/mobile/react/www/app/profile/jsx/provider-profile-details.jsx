@@ -690,13 +690,13 @@
         handleChartsClick: function () {
             var component = this;
             if (Modernizr.svg) { // if svg is supported, draw dynamic chart
-                if (component.refs["vitalSignCharts"].loadCharts) {
+                /*if (component.refs["vitalSignCharts"].loadCharts) {
                     return;
-                }
+                }*/
 
-                if (component.state.chartsLoaded) {
+                /*if (component.state.chartsLoaded) {
                     return;
-                }
+                }*/
 
                 indeterminateProgress.start();
                 var userId = Bridge.Redirect.getQueryStringParam()["userId"];
@@ -792,9 +792,9 @@
                         <div className="userName"><h4>{this.state.name ? this.state.name : name}</h4></div>
                     </div>
                     <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
-                        <a href="#user-info" className="mdl-layout__tab is-active">User Info</a>
-                        <a href="#vital-signs" className="mdl-layout__tab" ref="vitalSignsLink">Vital Signs</a>
-                        <a href="#symptoms" className="mdl-layout__tab" ref="symptomsLink">Symptoms</a>
+                        <a href="#user-info" className="mdl-layout__tab is-active"><i className="material-icons tab-icon show-mobile">face</i><span className="hide-mobile">User Info</span></a>
+                        <a href="#vital-signs" className="mdl-layout__tab" ref="vitalSignsLink"><i className="material-icons tab-icon show-mobile">update</i><span className="hide-mobile">Vital Signs</span></a>
+                        <a href="#symptoms" className="mdl-layout__tab" ref="symptomsLink"><i className="material-icons tab-icon show-mobile">favorite</i><span className="hide-mobile">Symptoms</span></a>
                     </div>
                     <div className="call-fab-container">
                         <button ref="callButton" className={this.state.onlineStatus == "offline" ? "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored offline" : "mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"}>

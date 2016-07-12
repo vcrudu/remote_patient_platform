@@ -1166,10 +1166,10 @@
                 <div className="userName"><h4>{this.state.userName}</h4></div>
                 <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                     <div className="mdl-tabs__tab-bar">
-                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab">Basic Info</a>
-                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress">Address</a>
-                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical">Medical</a>
-                        <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical">Symptoms</a>
+                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab"><i className="material-icons tab-icon show-mobile">face</i><span className="hide-mobile">Basic Info</span></a>
+                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress"><i className="material-icons tab-icon show-mobile">home</i><span className="hide-mobile">Address</span></a>
+                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">gesture</i><span className="hide-mobile">Medical</span></a>
+                        <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">favorite</i><span className="hide-mobile">Symptoms</span></a>
                     </div>
                     <main>
                         <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
