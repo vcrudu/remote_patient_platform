@@ -166,7 +166,7 @@
                     <section id="tab1">
                         <div className="page-content">
                             <div className="page-content-wrapper">
-                                {(() => {
+                                {(function() {
                                     switch (component.state.activeTab) {
                                         case 0: return <AppointmentInfo model={component.state.appointmentInfo}/>;
                                         case 1: return <ProviderInfo model={component.state.providerInfo}/>;

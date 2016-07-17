@@ -245,14 +245,14 @@
                             React.createElement(
                                 "div",
                                 { className: "page-content-wrapper" },
-                                (() => {
+                                function () {
                                     switch (component.state.activeTab) {
                                         case 0:
                                             return React.createElement(AppointmentInfo, { model: component.state.appointmentInfo });
                                         case 1:
                                             return React.createElement(ProviderInfo, { model: component.state.providerInfo });
                                     }
-                                })()
+                                }()
                             )
                         )
                     ),

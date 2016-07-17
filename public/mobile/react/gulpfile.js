@@ -131,6 +131,54 @@ gulp.task("babel-watch-profile", function () {
         .pipe(gulp.dest("www/app/profile/js"));
 });
 
+var eslint       = require('gulp-eslint');
+
+var jsFiles = {
+    vendor: [
+
+    ],
+    source: [
+        'www/app/landing/js/*',
+        'www/app/signup/js/*',
+        'www/app/appointments/js/*',
+        'www/app/vital-signs/js/*',
+        'www/app/devices/js/*',
+        'www/app/availability/js/*',
+        'www/app/network/js/*',
+        'www/app/timeline/js/*',
+        'www/app/patient_details/js/*',
+        'www/app/profile/js/*'
+    ]
+};
+
+// Lint JS/JSX files
+gulp.task('eslint', function() {
+    return gulp.src(jsFiles.source)
+        .pipe(eslint({
+            baseConfig: {
+                "ecmaFeatures": {
+                    "jsx": true,
+                    "arrowFunctions": true,
+                    "blockBindings": true,
+                    "defaultParams": true,
+                    "destructuring": true,
+                    "forOf": true,
+                    "generators": true,
+                    "objectLiteralComputedProperties": true,
+                    "objectLiteralShorthandMethods": true,
+                    "objectLiteralShorthandProperties": true,
+                    "restParams": true,
+                    "spread": true,
+                    "templateStrings": true,
+                    "modules": true,
+                    "classes": true
+                }
+            }
+        }))
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
 // use default task to launch Browsersync and watch JS files
 gulp.task("serve", ["babel-landing",
                     "babel-signup",
