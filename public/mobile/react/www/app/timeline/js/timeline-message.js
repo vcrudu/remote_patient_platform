@@ -120,11 +120,11 @@
             var component = this;
             return React.createElement(
                 "main",
-                { className: this.state.isVisible ? "mdl-layout__content visible" : "mdl-layout__content hidden", ref: "messageCard" },
+                { ref: "messageCard" },
                 React.createElement(TIMELINE_MESSAGE_PROGRESS, null),
                 React.createElement(
                     "div",
-                    { className: "page-content" },
+                    { className: "page-content", className: this.state.isVisible ? "mdl-layout__content visible" : "mdl-layout__content hidden" },
                     React.createElement(
                         "div",
                         { className: "page-content-wrapper" },

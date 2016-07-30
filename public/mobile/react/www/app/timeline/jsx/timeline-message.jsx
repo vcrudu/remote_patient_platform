@@ -114,9 +114,9 @@
         },
         render: function() {
             var component = this;
-            return <main className={this.state.isVisible ? "mdl-layout__content visible" : "mdl-layout__content hidden"} ref="messageCard">
+            return <main ref="messageCard">
                 <TIMELINE_MESSAGE_PROGRESS />
-                <div className="page-content">
+                <div className="page-content" className={this.state.isVisible ? "mdl-layout__content visible" : "mdl-layout__content hidden"}>
                     <div className="page-content-wrapper">
                         <div className="mdl-card mdl-shadow--2dp">
                             <div className="mdl-card__title">

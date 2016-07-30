@@ -151,7 +151,6 @@
                                 $modalInstance.dismiss(true);
                             };
 
-
                             $scope.apply = function () {
 
                                 var dateString = getDotDateString(event.date);
