@@ -51,7 +51,7 @@
                 component.setState({
                     user: result.data
                 });
-             });*/
+              });*/
         },
         formatDate: function (dateString) {
             var date = moment(dateString);

@@ -131,7 +131,7 @@ gulp.task("babel-watch-profile", function () {
         .pipe(gulp.dest("www/app/profile/js"));
 });
 
-var eslint       = require('gulp-eslint');
+/*var eslint       = require('gulp-eslint');*/
 
 var jsFiles = {
     vendor: [
@@ -152,7 +152,7 @@ var jsFiles = {
 };
 
 // Lint JS/JSX files
-gulp.task('eslint', function() {
+/*gulp.task('eslint', function() {
     return gulp.src(jsFiles.source)
         .pipe(eslint({
             baseConfig: {
@@ -177,7 +177,7 @@ gulp.task('eslint', function() {
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
-});
+});*/
 
 // use default task to launch Browsersync and watch JS files
 gulp.task("serve", ["babel-landing",

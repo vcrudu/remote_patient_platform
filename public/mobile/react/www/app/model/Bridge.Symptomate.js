@@ -138,7 +138,37 @@ Bridge.Symptomate = {
                 evidence.patientId = data.email;
                 var dataToSave = evidence;
                 localStorage.setItem( "symptomResult", JSON.stringify(dataToSave));
-                Bridge.resultCallback({success: true, data: dataToSave, error: undefined});
+
+                if (!evidence.slotId) {
+                    evidence.slotId = moment().valueOf().toString();
+                    try{
+                        evidence.symptomDateTime = moment().valueOf().toString();
+
+                        var symptomResultToSend = {evidence: evidence};
+                        var serverUrl = Bridge.serverApiUrl;
+
+                        $.ajax({
+                            url: serverUrl + "symptoms/addPatientSymptoms" + '?token=' + data.token,
+                            type: 'POST',
+                            crossDomain: true,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(symptomResultToSend)
+                        }).done(function(result) {
+                            localStorage.setItem("symptomResult", undefined);
+                            Bridge.resultCallback({success: true, data: undefined, error: undefined});
+                        }).fail(function() {
+                            localStorage.setItem("symptomResult", undefined);
+                            Bridge.resultCallback({success: true, data: undefined, error: undefined});
+                        });
+                    }
+                    catch(e) {
+                        Bridge.resultCallback({success: true, data: undefined, error: undefined});
+                    }
+                }
+                else {
+                    Bridge.resultCallback({success: true, data: dataToSave, error: undefined});
+                }
             });
         }
     },
