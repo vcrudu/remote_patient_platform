@@ -42,10 +42,11 @@
     var ConditionResult = React.createClass({
         componentDidMount: function() {
             var probability = (this.props.probability * 100);
-            var conditionId = "#progressBar_" + this.props.conditionId
+            var conditionId = "#progressBar_" + this.props.conditionId.toString().replace(".", "");
             document.querySelector(conditionId).MaterialProgress.setProgress(probability);
         },
         render: function() {
+            var progressBarId = this.props.conditionId.toString().replace(".", "");
             return <div className="conditionCard">
                 <div className="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div className="mdl-card__title">
@@ -53,7 +54,7 @@
                     </div>
                     <div className="mdl-card__supporting-text">
                         {(this.props.probability * 100).toFixed(2)} %
-                        <div ref="progressBar" id={"progressBar_" + this.props.conditionId} className="mdl-progress mdl-js-progress"></div>
+                        <div ref="progressBar" id={"progressBar_" + progressBarId} className="mdl-progress mdl-js-progress"></div>
                     </div>
                 </div>
             </div>

@@ -58,10 +58,11 @@
 
         componentDidMount: function () {
             var probability = this.props.probability * 100;
-            var conditionId = "#progressBar_" + this.props.conditionId;
+            var conditionId = "#progressBar_" + this.props.conditionId.toString().replace(".", "");
             document.querySelector(conditionId).MaterialProgress.setProgress(probability);
         },
         render: function () {
+            var progressBarId = this.props.conditionId.toString().replace(".", "");
             return React.createElement(
                 "div",
                 { className: "conditionCard" },
@@ -82,7 +83,7 @@
                         { className: "mdl-card__supporting-text" },
                         (this.props.probability * 100).toFixed(2),
                         " %",
-                        React.createElement("div", { ref: "progressBar", id: "progressBar_" + this.props.conditionId, className: "mdl-progress mdl-js-progress" })
+                        React.createElement("div", { ref: "progressBar", id: "progressBar_" + progressBarId, className: "mdl-progress mdl-js-progress" })
                     )
                 )
             );
