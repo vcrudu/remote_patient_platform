@@ -1,51 +1,211 @@
-
-
-<section id="widget-grid" widget-grid>
-
-    <div jarvis-widget data-widget-color="darken"
-         data-widget-custombutton="false"
-         data-widget-colorbutton="false"
-         data-widget-editbutton="false"
-         data-widget-togglebutton="false"
-         data-widget-deletebutton="false"
-    >
-        <header>
-            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-            <h2>patients Group Members</h2>
-
-        </header>
-        <div >
-
-
-<div class="widget-body" >
-
-
-    <div class="table-responsive">
-
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Patient name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="patient in patientsGroupsMembers">
-                <td>{{patient.patientId}}</td>
-
-            </tr>
+<!--
 
 
 
-            </tbody>
-        </table>
+<section class="mainbar" data-ng-controller="providerPatientsGroupMembersCtrl">
+    <section class="matter">
+        <div class="row">
+            <h1 class="pull-left">
 
-    </div>
+                <small>Patient Group Members</small>
+            </h1>
+        </div>
+        <div class="col-md-12">
 
-</div>
+            <div class="table-filters">
 
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="search for member"
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+
+                <button class="col-md-2  pull-right btn btn-primary" ng-click="addPatient()">Add member
+                </button>
+
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th class="col-sm-5" data-ng-click=" order('Names[0].GivenName') ">
+                        <div class="th">
+                            Member
+                        <span class="glyphicon glyphicon-chevron-up"
+                              data-ng-class="{hidden: row != 'Names[0].GivenName'}"></span>
+                        <span class="glyphicon glyphicon-chevron-down"
+                              data-ng-class="{hidden: row != '-Names[0].GivenName'}"></span>
+                        </div>
+                    </th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr data-ng-repeat="patient in patientsGroupsMembers">
+                    <td>
+
+                        <a href="" ng-click="openPatient(patient)">
+                            {{patient.patientId}}
+                        </a>
+                    </td>
+
+
+                </tr>
+                </tbody>
+
+                <tfoot>
+
+                   <div class="row">
+                      <div class="col-md-6 page-num-info">
+                       <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        entries per page
+                    </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    page="currentPage"
+                                    total-items="filteredPatients.length"
+                                    max-size="4"
+                                    on-select-page="select(page)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+
+                </tfoot>
+            </table>
+
+
+        </div>
+    </section>
+</section>
+
+
+-->
+
+<div ng-controller="providerPatientsGroupMembersCtrl">
+
+    <div class="row">
+
+        <div class=" col-xs-12 ">
+            <h3 class="page-title txt-color-blueDark">
+                <i class="fa fa-user-md "></i>
+                Patients Group Members
+            </h3>
         </div>
     </div>
 
+    <section>
+        <div class="row">
+            <article class="col-sm-12 sortable-grid ui-sortable">
+                <div class="jarviswidget jarviswidget-sortable" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="">
 
-</section>
+                    <header role="heading">
+                        <span class="widget-icon"> <i class="fa fa-user-md txt-color-darken"></i> </span>
+                        <h2>{{groupName}}</h2>
+
+                        <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                    </header>
+
+                    <div class="no-padding">
+                        <div class="widget-body">
+
+                            <div class="dataTables_wrapper form-inline" style="margin-left: 10px; margin-top: 10px; margin-right: 10px;">
+                                <div class="dt-toolbar">
+                                    <div class="col-xs-10 ">
+                                        <div class="dataTables_filter" id="datatable_filter">
+                                            <label>
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-search"></i>
+                                                </span>
+                                                <input class="form-control"
+                                                       aria-controls="datatable"
+                                                       type="search"
+                                                       data-ng-model="searchKeywords">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="toolbar">
+                                            <div class="text-right">
+                                                <button class="btn btn-primary pull-right" ng-click="addPatient()">Add member</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                                <table class="table-responsive  table table-striped table-bordered table-hover ">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-3" data-ng-click=" order('Names[0].GivenName') ">
+                                            <div class="th">
+                                                Member
+                                                    <span class="fa fa-sort-asc"
+                                                          data-ng-class="{hidden: row != 'Names[0].GivenName'}"></span>
+                                                    <span class="fa fa-sort-desc"
+                                                          data-ng-class="{hidden: row != '-Names[0].GivenName'}"></span>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-ng-repeat="patient in patientsGroupsMembers" ng-click="openPatient(patient)" class="hand">
+                                        <td>
+                                            <a href="" ng-click="openPatient(patient)">
+                                                {{patient.patientId}}
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="dt-toolbar-footer">
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-11">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+                                            <pagination class="pagination-sm "
+                                                        total-items="filteredPatients.length"
+                                                        max-size="4"
+                                                        ng-model="currentPage"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="false">
+
+                                            </pagination>
+                                        </div>
+
+                                        <div class="dataTables_length">
+                                            <label>
+                                                <select class="form-control "
+                                                        data-ng-model="numPerPage"
+                                                        data-ng-options="num for num in numPerPageOpt"
+                                                        data-ng-change="onNumPerPageChange()"></select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+</div>
 

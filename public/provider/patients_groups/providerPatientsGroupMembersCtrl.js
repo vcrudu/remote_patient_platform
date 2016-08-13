@@ -1,15 +1,15 @@
 
 
-angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', '$log', '$state',
-    'toastr', 'authService', '$localStorage', 'patientsGroupMembersService', '$modal','$rootScope','$stateParams',
-    function ($scope, $log, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams) {
+angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', '$log', '$http','$state',
+    'toastr', 'authService', '$localStorage', 'patientsGroupMembersService', '$modal','$rootScope','$stateParams', 'appSettings',
+    function ($scope, $log, $http, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams, appSettings) {
 
         
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
 
                     $scope.patientsGroupsMembers = data.items;
-                    //   = $stateParams.groupName;
+
 
                 }
 
@@ -17,37 +17,63 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
             },
             function(err) {});
 
+        $scope.addPatient = function () {
+
+            var modal = $modal.open({
+                templateUrl: 'provider/patients_groups/nhs.dialog.html',
+                controller: function ($scope, $modalInstance) {
 
 
-     //   patientsGroupsMembersService.getPatientsGroupsMembers(function(groupName, data){
-     //           if (data) {
 
-     //               $scope.patientsGroupsMembers = data.items;
+                   $scope.cancel = function () {
+                      
+                       $modalInstance.dismiss();
+                    };
 
-       //         }
+
+                    $scope.apply = function () {
+
+                       
+                      var post_data = {
+                            'patientId': $localStorage.patientId,
+                            'groupName': $stateParams.groupName,
+                            'providerId': $localStorage.user.email
+                        };
 
 
-       //     },
-        //    function(err) {});
-        //,
-        //function(err) {});
-        /**
-         * Created by Victor on 23/06/2015.
-         */
 
-  /*     angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', '$log', '$state', 'toastr', '$stateParams',
-            function ($scope, $log, $state, toastr, $stateParamse) {
 
-                var vm = this;
 
-                if ($stateParams.model) {
-                    vm.device = deviceService.get($stateParams.model);
-                } else {
-                    $window.history.back();
+
+
+                        var reqOptions = {
+                            path: "/v1/api/patient-member-group-invitation",
+                            method: "POST",
+                            body: post_data,
+                            headers: {
+                                'Accept':'application/json',
+                                'Content-Type': 'application/json',
+                                'x-access-token': $localStorage.user.token
+                            }
+                        };
+
+                        $http(reqOptions).then(function () {
+                            toastr.success('Invitation was sent successfully !');
+                        }, function () {
+                            toastr.error('Invitation was not sent !');
+                        });
+
+
+
+                       };
+                },
+                resolve: {
+                    event: function () {
+                        return event;
+                    }
                 }
+            });
+          
 
-
-            }
-        ]);*/
-
+        };
     }]);

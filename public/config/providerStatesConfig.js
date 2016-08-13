@@ -50,7 +50,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         controller: 'providerPatientsGroupsCtrl'
     }).state("provider.patients_group_members", {
         url: "/provider.patients_group_members/:groupName",
-        templateUrl: "provider/patients_groups/provider.patients_group_members2.html",
-        controller: 'providerPatientsGroupMembersCtrl2'
+        templateUrl: "provider/patients_groups/provider.patients_group_members.html",
+        controller: 'providerPatientsGroupMembersCtrl'
     });
 }]);

@@ -22,6 +22,7 @@ var alarmBuilderController = require('./alarmBuilderController');
 
 var patientsGroupController=require('./patientsGroupController');
 var patientsGroupMemberController=require('./patientsGroupMemberController');
+var checkExistsGroupMemberNhsController=require('./checkExistsGroupMemberNhsController')
 
 var orderStatusController = require('./orderStatusController');
 var patientSymptomsController = require('./patientSymptomsController');
@@ -78,6 +79,7 @@ var logging     = require('../logging');
 
         patientsGroupController.init(apiRoutes);
         patientsGroupMemberController.init(apiRoutes);
+        checkExistsGroupMemberNhsController.init(apiRoutes);
 
 
         orderStatusController.init(apiRoutes);

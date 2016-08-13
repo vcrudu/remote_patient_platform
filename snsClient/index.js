@@ -97,6 +97,7 @@
         });
     }
 
+
     function sendOnAppointmentBookingEvent(userId, appointmentDetails, callback) {
         var eventPayload =
         {
@@ -129,6 +130,45 @@
                 callback(err, data);        // successful response
         });
     }
+
+    function onPatientInvitedToGroupEvent(patientId, providerId, groupName, callback) {
+        var eventPayload =
+        {
+            userId: patientId,
+            providerId: providerId,
+            groupName: groupName
+        };
+
+        var params = {
+            Message: JSON.stringify({
+                name: "onPatientInvitedToGroup",
+                payload: eventPayload
+            }), /* required */
+            MessageAttributes: {
+                userId: {
+                    DataType: 'String',
+                    StringValue: patientId /* required */
+                },
+                providerId: {
+                    DataType: 'String',
+                    StringValue: providerId /* required */
+                },
+                groupName: {
+                    DataType: 'String',
+                    StringValue: groupName /* required */
+                }
+            },
+            TopicArn: 'arn:aws:sns:eu-west-1:160466482332:hcm-registration'
+        };
+        snsClient.publish(params, function (err, data) {
+            if (err) {
+                logging.getLogger().error(err);
+            }
+            if (callback)
+                callback(err, data);        // successful response
+        });
+    }
+
 
     function sendOnDevicesOrderingEvent(userId, orderDetails, callback) {
         var eventPayload = {
@@ -361,6 +401,7 @@
         sendAppointmentEmail: sendAppointmentEmail,
         registerWithSNS: registerWithSNS,
         getSnsEndpointAttributes: getSnsEndpointAttributes,
+        onPatientInvitedToGroupEvent:onPatientInvitedToGroupEvent,
         setSnsEndpointAttributes: setSnsEndpointAttributes,
         sendInitStateMchineEvent: sendInitStateMchineEvent,
         sendOnProvideDetailsEvent: sendOnProvideDetailsEvent,

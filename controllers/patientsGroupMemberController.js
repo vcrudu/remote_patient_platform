@@ -1,6 +1,8 @@
 var logging     = require('../logging');
 var _ = require('underscore');
+var snsClient = require('../snsClient');
 var patientsGroupMemberRepository = require('../repositories/patientsGroupMemberRepository');
+var userDetailsRepository     = require('../repositories').UsersDetails;
 var util = require('util');
 
 (function() {
@@ -36,18 +38,94 @@ var util = require('util');
                 } else {
 
                     var result = [];
+
+                    function sendResultToClient(result) {
+
+                        res.json({
+                            count: result.length,
+                            success: true,
+                            items: result,
+                            description: "The result contains the list of patientsGroupMember by providerId and groupName."
+                        });
+                    }
+
+
+                    /* old forEach */
+                    /*      _.forEach(data, function (patientsmembergroup) {
+
+                     result.push(patientsmembergroup);
+                     }); */
+
+                    /* new forEach */
+
+
                     _.forEach(data, function (patientsmembergroup) {
-                        result.push(patientsmembergroup);
+
+
+                        userDetailsRepository.findOneByEmail(patientsmembergroup.patientId, function (err, userDetails) {
+
+
+                            if (err) {
+
+                                console.log("Eroare email do not found")
+
+                            } else {
+
+
+                                result.push({patientId: userDetails.firstname + ' ' + userDetails.surname});
+                                if (data.length == result.length) {
+                                    sendResultToClient(result);
+                                }
+
+
+                            }
+                        });
+
+
                     });
-                    res.json({
-                        count: result.length,
-                        success: true,
-                        items: result,
-                        description: "The result contains the list of patientsGroupMember by providerId and groupName."
-                    });
+
+
+                    /*    });*/
+
+                    /*          res.json({
+                     count: result.length,
+                     success: true,
+                     items: result,
+                     description: "The result contains the list of patientsGroupMember by providerId and groupName."
+                     });*/
 
                 }
             });
+        });
+
+        router.post('/patient-member-group-invitation', function (req, res) {
+
+
+            snsClient.onPatientInvitedToGroupEvent(req.body.patientId, req.decoded.email, req.body.groupName,
+                function (err, data) {
+
+                    if (err) {
+
+                        res.status(500).json({
+                            success: false
+
+                        });
+
+                    }
+                    if (data) {
+
+
+                        res.status(200).json({
+                            success: true
+
+                        });
+
+                    }
+
+
+                });
+
+
         });
 
         router.post('/patientsgroupmember', function (req, res) {

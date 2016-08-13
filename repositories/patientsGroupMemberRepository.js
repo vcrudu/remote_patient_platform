@@ -79,11 +79,11 @@
           return;
         }
 
-        if (data.Item) {
+        if (data.Item!==undefined) {
           var mappedPatientsGroupMemberObject = mapPatientsGroupMemberFromDbEntity(data.Item);
           callback(null, mappedPatientsGroupMemberObject);
         } else {
-          callback(null, null);
+          callback(true, null);
         }
       });
     },
