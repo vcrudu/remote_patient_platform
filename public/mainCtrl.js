@@ -11,7 +11,7 @@
         $scope.containerClass="container";
 
         var hash = window.location.hash;
-        if (hash != "" && hash.indexOf("login") == -1) {
+        if (hash != "" && (hash.indexOf("login") == -1 && hash.indexOf("register") == -1)) {
             setLayout();
             $scope.userName = authService.getUserName();
             $scope.containerClass="";
