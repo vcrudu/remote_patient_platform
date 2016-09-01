@@ -1,0 +1,95 @@
+#extr-page {
+  height: 100%;
+}
+#extr-page body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+#extr-page body #header {
+  width: 1560px !important;
+  margin: 0 auto !important;
+  height: 92px;
+}
+#extr-page body #header .navbar {
+  width: 1560px !important;
+  margin: 0 auto !important;
+  height: 92px;
+}
+#extr-page body #header .navbar .navbar-nav {
+  height: 92px;
+  background-color: white !important;
+}
+#extr-page body #header .navbar .navbar-nav li.nav {
+  background-color: white !important;
+  position: relative;
+  display: block;
+}
+#extr-page body #header .navbar .navbar-nav li.nav a {
+  height: 92px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-top: 25px;
+  font-size: 17px;
+  font-weight: 400;
+}
+#extr-page body #header .navbar .navbar-nav li.nav a:hover {
+  border-top: 4px solid #8bc34a;
+  background-color: transparent;
+  color: #8bc34a;
+  padding-top: 21px;
+}
+#extr-page body #header .navbar .navbar-header {
+  background-color: #fff;
+  height: 92px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#extr-page body #header .navbar .navbar-header .navbar-brand {
+  margin-top: 8px;
+}
+#extr-page body #header .navbar .navbar-container {
+  width: 1560px !important;
+  margin: 0 auto !important;
+  border-bottom: 1px solid #8bc34a;
+  height: 93px;
+  background: white;
+}
+#extr-page body #header .navbar .navbar-right {
+  margin-right: 0;
+  margin-top: 0;
+}
+#extr-page body #header .navbar .navbar-toggle {
+  margin-top: 25px;
+}
+#extr-page body #header .navbar .navbar-toggle span.icon-bar {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  display: block;
+  margin-bottom: 5px;
+}
+#extr-page body #header .navbar .navbar-toggle span.icon-bar.green {
+  background: #8bc34a;
+}
+#extr-page body #header .navbar .navbar-toggle span.icon-bar.red {
+  background: #ff5252;
+}
+#extr-page body #header .navbar .navbar-toggle span.icon-bar.gold {
+  background: #ffbc00;
+}
+#extr-page body #main {
+  width: 1560px !important;
+  margin: 0 auto !important;
+}
+#extr-page body .page-footer {
+  width: 1560px !important;
+  margin: 0 auto !important;
+  position: relative;
+  padding-left: 15px;
+  padding-top: 20px;
+  height: 60px;
+}
