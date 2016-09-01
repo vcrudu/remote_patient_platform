@@ -23,6 +23,9 @@
                 $scope.userName = authService.getUserName();
                 $scope.containerClass="";
             }
+            else {
+                $scope.extr_page="extr-page";
+            }
         }
 
         $scope.$on('signin', function(){

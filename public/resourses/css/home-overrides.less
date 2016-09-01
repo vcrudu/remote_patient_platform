@@ -1,0 +1,121 @@
+@white:                  #fff;
+@black:                  #000;
+@green:                  #8bc34a;
+@green-hover-state:      #7daf43;
+@gray:                   #E5E5E4;
+@gray-strip:             #F8F8F9;
+@brand-red:              #ff5252;
+@brand-gold:             #ffbc00;
+
+
+@nav-height:             92px;
+@footer-height:          92px;
+@strip-content-padding:  52px;
+
+#extr-page{
+  height:100%;
+  body {
+    position:absolute; top:0; bottom:0; right:0; left:0;
+
+    #header {
+      width: 1560px !important;
+      margin: 0 auto !important;
+      height: 92px;
+
+      .navbar {
+        width: 1560px !important;
+        margin: 0 auto !important;
+        height: 92px;
+
+        .navbar-nav {
+          height: 92px;
+          background-color: white !important;
+
+          li.nav {
+            background-color: white !important;
+            position: relative;
+            display: block;
+
+            a {
+              height: 92px;
+              display: table-cell;
+              vertical-align: middle;
+              padding-top: 25px;
+              font-size: 17px;
+              font-weight: 400;
+            }
+
+            a:hover {
+              border-top: 4px solid @green;
+              background-color: transparent;
+              color: @green;
+              padding-top: 21px;
+            }
+          }
+        }
+
+        .navbar-header {
+          background-color: #fff;
+          height: @nav-height;
+          width: 100%;
+          padding-left: 15px;
+          padding-right: 15px;
+
+          .navbar-brand {
+            margin-top: 8px;
+          }
+        }
+
+        .navbar-container {
+          width: 1560px !important;
+          margin: 0 auto !important;
+          border-bottom: 1px solid @green;
+          height: 93px;
+          background: white;
+        }
+
+        .navbar-right {
+          margin-right: 0;
+          margin-top: 0;
+        }
+
+        .navbar-toggle {
+          margin-top: 25px;
+
+          span.icon-bar {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+            display: block;
+            margin-bottom: 5px;
+
+            &.green {
+              background: @green;
+            }
+
+            &.red {
+              background: @brand-red;
+            }
+
+            &.gold {
+              background: @brand-gold;
+            }
+          }
+        }
+      }
+    }
+    #main {
+      width: 1560px !important;
+      margin: 0 auto !important;
+    }
+
+    .page-footer {
+      width: 1560px !important;
+      margin: 0 auto !important;
+      position: relative;
+      padding-left: 15px;
+      padding-top: 20px;
+      height: 60px;
+    }
+  }
+}
