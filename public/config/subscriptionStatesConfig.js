@@ -113,7 +113,9 @@
             .state('provider-register', {
                 url: "/provider-register",
                 views: {
-                    "headerView": {templateUrl: "registerHeader.html"},
+                    "headerView": {
+                        templateUrl: "providerRegisterHeader.html",
+                    },
                     "mainView": {
                         templateUrl: "provider/register.html",
                         controller: 'ProviderRegisterCtrl as vm'

@@ -14,27 +14,62 @@
 
 #extr-page{
   height:100%;
+
+  .form-actions {
+    margin-bottom: 0 !important;
+  }
+
+  .jarviswidget
+  {
+    .widget-body {
+      padding-bottom: 0px;
+    }
+  }
+
+  .pager {
+    margin: 0 !important;
+  }
+
   body {
-    position:absolute; top:0; bottom:0; right:0; left:0;
+    background: none !important;
+    background-color: @gray !important;
+
+    /*position:absolute; top:0; bottom:0; right:0; left:0;*/
 
     #header {
-      width: 1560px !important;
       margin: 0 auto !important;
       height: 92px;
+      background: none !important;
+      background-color: @gray !important;
+      border-bottom: none !important;
+
+      .navbar-default {
+        border: none;
+      }
 
       .navbar {
-        width: 1560px !important;
         margin: 0 auto !important;
         height: 92px;
 
         .navbar-nav {
           height: 92px;
           background-color: white !important;
+          float: left;
 
           li.nav {
             background-color: white !important;
             position: relative;
             display: block;
+
+            &.active {
+              background-color: transparent !important;
+              a {
+                background-color: transparent !important;
+                border-top: 4px solid @green;
+                color: @green;
+                padding-top: 21px;
+              }
+            }
 
             a {
               height: 92px;
@@ -57,17 +92,22 @@
         .navbar-header {
           background-color: #fff;
           height: @nav-height;
-          width: 100%;
           padding-left: 15px;
           padding-right: 15px;
 
+          .navbar-collapse {
+            .in {
+              overflow-y: inherit;
+            }
+          }
+
           .navbar-brand {
             margin-top: 8px;
+            width: 300px;
           }
         }
 
         .navbar-container {
-          width: 1560px !important;
           margin: 0 auto !important;
           border-bottom: 1px solid @green;
           height: 93px;
@@ -105,17 +145,157 @@
       }
     }
     #main {
-      width: 1560px !important;
       margin: 0 auto !important;
     }
 
     .page-footer {
-      width: 1560px !important;
       margin: 0 auto !important;
       position: relative;
       padding-left: 15px;
       padding-top: 20px;
       height: 60px;
     }
+  }
+
+  .registration-wizard {
+    background-color: @brand-red;
+  }
+
+  .bootstrapWizard {
+    li.active {
+      .step {
+        background: @green !important;
+      }
+    }
+
+    li {
+      .step {
+        background: @brand-gold !important;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  #extr-page {
+    .navbar-nav {
+      float: left;
+      margin: -58.5px -15px;
+      /*width: 400px;*/
+      margin-left: 300px;
+    }
+  }
+}
+
+@media (min-width: 1560px) {
+  #extr-page {
+    #main {
+      width: 1560px !important;
+    }
+
+    .navbar {
+      width: 1560px !important;
+
+      .navbar-container {
+        width: 1560px !important;
+      }
+    }
+
+    .page-footer {
+      width: 1560px !important;
+    }
+
+    #header {
+      width: 1560px !important;
+    }
+  }
+}
+
+@media (max-width: 1559px) {
+  #extr-page {
+    #main {
+      width: 100% !important;
+
+      .navbar {
+        width: 100% !important;
+      }
+    }
+
+    .page-footer {
+      width: 100% !important;
+    }
+
+    #header {
+      width: 100% !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #extr-page {
+    #header {
+      overflow: inherit;
+      .navbar {
+        .navbar-container {
+          width: 100% !important;
+        }
+        .navbar-header {
+          width: 100% !important;
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+
+          .navbar-toggle {
+            border-color: transparent !important;
+          }
+
+          .navbar-toggle:hover {
+            background-color: transparent;
+          }
+
+          .navbar-toggle:active {
+            background-color: transparent;
+          }
+
+          .navbar-toggle:focus {
+            background-color: transparent;
+          }
+
+          .navbar-toggle:visited {
+            background-color: transparent;
+          }
+
+          .navbar-brand {
+            padding-left: 30px !important;
+          }
+
+          .navbar-collapse {
+            position: absolute;
+            width: 100%;
+            margin-top: 93px;
+            border: 0 transparent;
+            padding-left: 0px;
+            padding-right: 0px;
+          }
+        }
+
+        .navbar-nav {
+          width: 100%;
+          height: auto !important;
+          margin: 0 !important;
+          li.nav {
+            height: 80px;
+            a {
+              border-top: 0px!important;
+              border-bottom: 1px solid @green !important;
+              height: inherit !important;
+              display: inherit !important;
+              vertical-align: inherit !important;
+              padding-top: 30px !important;
+            }
+          }
+        }
+      }
+    }
+
   }
 }

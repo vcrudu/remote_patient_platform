@@ -8,6 +8,8 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.states = [];
         $scope.successMessage = "Done";
         $scope.successSubMessage = "Click next to finish registration";
+        $scope.isProviderMenuItemActive = false;
+        $scope.isPatientMenuItemActive = true;
 
         $scope.forward= function(){
             if ($state.$current.data.order==4){

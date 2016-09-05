@@ -4,6 +4,9 @@ angular.module('app')
 
         var vm = this;
 
+        vm.isProviderMenuItemActive = true;
+        vm.isPatientMenuItemActive = false;
+
         vm.goBack = function () {
             $window.history.back();
         };

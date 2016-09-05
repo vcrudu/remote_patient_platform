@@ -1,31 +1,52 @@
 #extr-page {
   height: 100%;
 }
+#extr-page .form-actions {
+  margin-bottom: 0 !important;
+}
+#extr-page .jarviswidget .widget-body {
+  padding-bottom: 0px;
+}
+#extr-page .pager {
+  margin: 0 !important;
+}
 #extr-page body {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  background: none !important;
+  background-color: #E5E5E4 !important;
+  /*position:absolute; top:0; bottom:0; right:0; left:0;*/
 }
 #extr-page body #header {
-  width: 1560px !important;
   margin: 0 auto !important;
   height: 92px;
+  background: none !important;
+  background-color: #E5E5E4 !important;
+  border-bottom: none !important;
+}
+#extr-page body #header .navbar-default {
+  border: none;
 }
 #extr-page body #header .navbar {
-  width: 1560px !important;
   margin: 0 auto !important;
   height: 92px;
 }
 #extr-page body #header .navbar .navbar-nav {
   height: 92px;
   background-color: white !important;
+  float: left;
 }
 #extr-page body #header .navbar .navbar-nav li.nav {
   background-color: white !important;
   position: relative;
   display: block;
+}
+#extr-page body #header .navbar .navbar-nav li.nav.active {
+  background-color: transparent !important;
+}
+#extr-page body #header .navbar .navbar-nav li.nav.active a {
+  background-color: transparent !important;
+  border-top: 4px solid #8bc34a;
+  color: #8bc34a;
+  padding-top: 21px;
 }
 #extr-page body #header .navbar .navbar-nav li.nav a {
   height: 92px;
@@ -44,15 +65,17 @@
 #extr-page body #header .navbar .navbar-header {
   background-color: #fff;
   height: 92px;
-  width: 100%;
   padding-left: 15px;
   padding-right: 15px;
 }
+#extr-page body #header .navbar .navbar-header .navbar-collapse .in {
+  overflow-y: inherit;
+}
 #extr-page body #header .navbar .navbar-header .navbar-brand {
   margin-top: 8px;
+  width: 300px;
 }
 #extr-page body #header .navbar .navbar-container {
-  width: 1560px !important;
   margin: 0 auto !important;
   border-bottom: 1px solid #8bc34a;
   height: 93px;
@@ -82,14 +105,115 @@
   background: #ffbc00;
 }
 #extr-page body #main {
-  width: 1560px !important;
   margin: 0 auto !important;
 }
 #extr-page body .page-footer {
-  width: 1560px !important;
   margin: 0 auto !important;
   position: relative;
   padding-left: 15px;
   padding-top: 20px;
   height: 60px;
+}
+#extr-page .registration-wizard {
+  background-color: #ff5252;
+}
+#extr-page .bootstrapWizard li.active .step {
+  background: #8bc34a !important;
+}
+#extr-page .bootstrapWizard li .step {
+  background: #ffbc00 !important;
+}
+@media (min-width: 768px) {
+  #extr-page .navbar-nav {
+    float: left;
+    margin: -58.5px -15px;
+    /*width: 400px;*/
+    margin-left: 300px;
+  }
+}
+@media (min-width: 1560px) {
+  #extr-page #main {
+    width: 1560px !important;
+  }
+  #extr-page .navbar {
+    width: 1560px !important;
+  }
+  #extr-page .navbar .navbar-container {
+    width: 1560px !important;
+  }
+  #extr-page .page-footer {
+    width: 1560px !important;
+  }
+  #extr-page #header {
+    width: 1560px !important;
+  }
+}
+@media (max-width: 1559px) {
+  #extr-page #main {
+    width: 100% !important;
+  }
+  #extr-page #main .navbar {
+    width: 100% !important;
+  }
+  #extr-page .page-footer {
+    width: 100% !important;
+  }
+  #extr-page #header {
+    width: 100% !important;
+  }
+}
+@media (max-width: 768px) {
+  #extr-page #header {
+    overflow: inherit;
+  }
+  #extr-page #header .navbar .navbar-container {
+    width: 100% !important;
+  }
+  #extr-page #header .navbar .navbar-header {
+    width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-toggle {
+    border-color: transparent !important;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-toggle:hover {
+    background-color: transparent;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-toggle:active {
+    background-color: transparent;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-toggle:focus {
+    background-color: transparent;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-toggle:visited {
+    background-color: transparent;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-brand {
+    padding-left: 30px !important;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-collapse {
+    position: absolute;
+    width: 100%;
+    margin-top: 93px;
+    border: 0 transparent;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  #extr-page #header .navbar .navbar-nav {
+    width: 100%;
+    height: auto !important;
+    margin: 0 !important;
+  }
+  #extr-page #header .navbar .navbar-nav li.nav {
+    height: 80px;
+  }
+  #extr-page #header .navbar .navbar-nav li.nav a {
+    border-top: 0px!important;
+    border-bottom: 1px solid #8bc34a !important;
+    height: inherit !important;
+    display: inherit !important;
+    vertical-align: inherit !important;
+    padding-top: 30px !important;
+  }
 }
