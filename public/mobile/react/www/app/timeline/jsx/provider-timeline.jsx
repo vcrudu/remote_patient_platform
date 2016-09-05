@@ -55,7 +55,7 @@
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar">info_outline</i>
+                            <i className="material-icons mdl-list__item-avatar info">info_outline</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
@@ -87,11 +87,11 @@
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <Card className="message-card-wide">
+            return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar">alarm</i>
+                            <i className="material-icons mdl-list__item-avatar alarm">alarm</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
@@ -123,11 +123,11 @@
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <Card className="message-card-wide">
+            return <Card className="message-card-wide mdl-shadow--2dp">
                 <CardText>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar">timeline</i>
+                            <i className="material-icons mdl-list__item-avatar reading">timeline</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
@@ -220,9 +220,15 @@
                     return card.category == "alarm";
                 });
                 var groupedAlarmCards = [];
-                component.groupCards(groupedAlarmCards, alarmCards)
+                component.groupCards(groupedAlarmCards, alarmCards);
 
-                component.setState({cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards});
+                var readingsCards = _.filter(allCards, function (card) {
+                    return card.category == "reading";
+                });
+                var groupedReadingsCards = [];
+                component.groupCards(groupedReadingsCards, readingsCards);
+
+                component.setState({cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards, readingsCards: groupedReadingsCards});
 
                 $(".mdl-progress").css('visibility', 'hidden');
             });

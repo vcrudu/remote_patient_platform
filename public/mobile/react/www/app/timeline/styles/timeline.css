@@ -47,6 +47,18 @@ h6.mdl-card__title-text {
     margin-right: 16px;
 }
 
+.notification-icon .info {
+    background: #8bc34a;
+}
+
+.notification-icon .reading {
+    background: #ffbc00;
+}
+
+.notification-icon .alarm {
+    background: #ff5252;
+}
+
 .notification-title-summary {
 }
 

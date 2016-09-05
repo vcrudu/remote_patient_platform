@@ -74,7 +74,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar info" },
                                 "info_outline"
                             )
                         ),
@@ -142,7 +142,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar alarm" },
                                 "alarm"
                             )
                         ),
@@ -210,7 +210,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar reading" },
                                 "timeline"
                             )
                         ),

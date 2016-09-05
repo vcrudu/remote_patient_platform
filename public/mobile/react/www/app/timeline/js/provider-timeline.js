@@ -74,7 +74,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar info" },
                                 "info_outline"
                             )
                         ),
@@ -124,7 +124,7 @@
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     null,
@@ -136,7 +136,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar alarm" },
                                 "alarm"
                             )
                         ),
@@ -186,7 +186,7 @@
         render: function () {
             return React.createElement(
                 Card,
-                { className: "message-card-wide" },
+                { className: "message-card-wide mdl-shadow--2dp" },
                 React.createElement(
                     CardText,
                     null,
@@ -198,7 +198,7 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar" },
+                                { className: "material-icons mdl-list__item-avatar reading" },
                                 "timeline"
                             )
                         ),
@@ -309,7 +309,13 @@
                 var groupedAlarmCards = [];
                 component.groupCards(groupedAlarmCards, alarmCards);
 
-                component.setState({ cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards });
+                var readingsCards = _.filter(allCards, function (card) {
+                    return card.category == "reading";
+                });
+                var groupedReadingsCards = [];
+                component.groupCards(groupedReadingsCards, readingsCards);
+
+                component.setState({ cards: groupedAllCards, allCards: groupedAllCards, infoCards: groupedInfoCards, alarmCards: groupedAlarmCards, readingsCards: groupedReadingsCards });
 
                 $(".mdl-progress").css('visibility', 'hidden');
             });
