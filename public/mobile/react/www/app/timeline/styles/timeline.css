@@ -48,11 +48,15 @@ h6.mdl-card__title-text {
 }
 
 .notification-icon .info {
-    background: #8bc34a;
+    background: #ffbc00;
+}
+
+.notification-icon .info-amber {
+    background: #ffc107;
 }
 
 .notification-icon .reading {
-    background: #ffbc00;
+    background: #8bc34a;
 }
 
 .notification-icon .alarm {

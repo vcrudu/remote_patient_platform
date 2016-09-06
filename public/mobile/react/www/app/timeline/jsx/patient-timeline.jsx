@@ -55,7 +55,7 @@
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar info">info_outline</i>
+                            <i className="material-icons mdl-list__item-avatar info-amber">alarm</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
@@ -96,7 +96,7 @@
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar alarm">alarm</i>
+                            <i className="material-icons mdl-list__item-avatar alarm">av_timer</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>
@@ -137,7 +137,7 @@
                 <CardText onClick={this.handleView}>
                     <div className="notification-title-wrapper">
                         <div className="notification-icon">
-                            <i className="material-icons mdl-list__item-avatar reading">timeline</i>
+                            <i className="material-icons mdl-list__item-avatar reading">done</i>
                         </div>
                         <div className="notification-title-summary">
                             <div className={this.props.isNew ? "notification-title unread" : "notification-title read"}>

@@ -74,8 +74,8 @@
                             { className: "notification-icon" },
                             React.createElement(
                                 "i",
-                                { className: "material-icons mdl-list__item-avatar info" },
-                                "info_outline"
+                                { className: "material-icons mdl-list__item-avatar info-amber" },
+                                "alarm"
                             )
                         ),
                         React.createElement(
@@ -137,7 +137,7 @@
                             React.createElement(
                                 "i",
                                 { className: "material-icons mdl-list__item-avatar alarm" },
-                                "alarm"
+                                "av_timer"
                             )
                         ),
                         React.createElement(
@@ -199,7 +199,7 @@
                             React.createElement(
                                 "i",
                                 { className: "material-icons mdl-list__item-avatar reading" },
-                                "timeline"
+                                "done"
                             )
                         ),
                         React.createElement(
