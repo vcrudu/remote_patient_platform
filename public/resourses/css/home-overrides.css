@@ -75,6 +75,9 @@
   margin-top: 8px;
   width: 300px;
 }
+#extr-page body #header .navbar .navbar-header .navbar-brand.small {
+  display: none;
+}
 #extr-page body #header .navbar .navbar-container {
   margin: 0 auto !important;
   border-bottom: 1px solid #8bc34a;
@@ -215,5 +218,14 @@
     display: inherit !important;
     vertical-align: inherit !important;
     padding-top: 30px !important;
+  }
+}
+@media (max-width: 356px) {
+  #extr-page #header .navbar .navbar-header .navbar-brand {
+    display: none !important;
+  }
+  #extr-page #header .navbar .navbar-header .navbar-brand.small {
+    display: inherit !important;
+    margin-top: -68px;
   }
 }

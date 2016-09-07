@@ -104,6 +104,10 @@
           .navbar-brand {
             margin-top: 8px;
             width: 300px;
+
+            &.small {
+              display: none;
+            }
           }
         }
 
@@ -297,5 +301,24 @@
       }
     }
 
+  }
+}
+
+@media (max-width: 356px) {
+  #extr-page {
+    #header {
+      .navbar {
+        .navbar-header {
+          .navbar-brand {
+            display: none !important;
+
+            &.small {
+              display: inherit !important;
+              margin-top: -68px;
+            }
+          }
+        }
+      }
+    }
   }
 }
