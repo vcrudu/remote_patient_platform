@@ -30,7 +30,32 @@ Bridge.Symptomate = {
                 age.setTime(ageMS);
                 var ageYear = age.getFullYear() - 1970;
 
-                Bridge.resultCallback({success: true, data: {"sex": sex.toLowerCase(), "age": ageYear.toString(), "evidence": []}, error: "error"});
+                Bridge.resultCallback({success: true, data: {"sex": sex.toLowerCase(), "age": ageYear.toString(), "evidence": []}, error: ""});
+            });
+        }
+    },
+    getExplainPortObjectEvidence: function(diagnostic, targetId, callBack) {
+        Bridge.resultCallback = callBack;
+
+        if ((/android/gi).test(navigator.userAgent)) {
+            var message = {method:"Bridge.Symptomate.getExplainPortObjectEvidence"};
+            prompt("bridge_key", JSON.stringify(message));
+        } else {
+            getFakeUser(function (data) {
+                var dateOfBirth = new Date(parseFloat(data.dateOfBirth));
+                var sex = data.sex;
+
+                var ageMS = Date.parse(Date()) - dateOfBirth;
+                var age = new Date();
+                age.setTime(ageMS);
+                var ageYear = age.getFullYear() - 1970;
+
+                var evidenceArray = [];
+                _.map(diagnostic.evidence, function (evidence) {
+                    evidenceArray.push({id: evidence.id, choice_id: evidence.choice_id});
+                });
+                
+                Bridge.resultCallback({success: true, data: {"sex": sex.toLowerCase(), "age": ageYear.toString(), "evidence": evidenceArray, "target": targetId}, error: ""});
             });
         }
     },
@@ -96,28 +121,26 @@ Bridge.Symptomate = {
         Bridge.resultCallback = callBack;
 
         if ((/android/gi).test(navigator.userAgent)) {
-            var message = {method:"Bridge.Symptomate.sendDiagnosis", data: diagnostic};
+            var message = {method:"Bridge.Symptomate.explainDiagnosis", data: diagnostic};
             prompt("bridge_key", JSON.stringify(message));
         } else {
             var apiUrl = this.apiUrl + "explain";
-            getFakeUser(function (data) {
-                $.ajax({
-                    url: apiUrl,
-                    type: 'POST',
-                    crossDomain: true,
-                    contentType: "application/json",
-                    headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"},
-                    data: JSON.stringify(diagnostic)
-                }).done(function (result) {
-                    if (result) {
-                        Bridge.resultCallback({success: true, data: result, error: undefined});
-                    }
-                    else {
-                        Bridge.resultCallback({success: false, data: undefined, error: "error"});
-                    }
-                }).fail(function () {
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                crossDomain: true,
+                contentType: "application/json",
+                headers: {"app_id": Bridge.Symptomate.app_id, "app_key": Bridge.Symptomate.app_key, "Accept": "application/json"},
+                data: JSON.stringify(diagnostic)
+            }).done(function (result) {
+                if (result) {
+                    Bridge.resultCallback({success: true, data: result, error: undefined});
+                }
+                else {
                     Bridge.resultCallback({success: false, data: undefined, error: "error"});
-                });
+                }
+            }).fail(function () {
+                Bridge.resultCallback({success: false, data: undefined, error: "error"});
             });
         }
     },

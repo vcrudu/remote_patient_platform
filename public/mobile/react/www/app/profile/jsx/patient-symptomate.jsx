@@ -31,8 +31,11 @@
     var numberOfPosts = 10;
 
     var ConditionResult = React.createClass({
+        handleConditionClick: function() {
+            alert("vasea");
+        },
         render: function() {
-            return <div className="conditionCard">
+            return <div className="conditionCard" onClick={this.handleConditionClick}>
                 <Card shadow={0}>
                     <CardTitle>{this.props.label}</CardTitle>
                     <CardText>
@@ -353,7 +356,7 @@
                 }).slice(0, 5);
 
                 coditions = sortedConditions.map(function (condition) {
-                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability}></ConditionResult>
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} slotId={this.props.slotId} targetId={condition.id}></ConditionResult>
                 });
             }
 

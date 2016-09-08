@@ -41,14 +41,45 @@
     });
 
     var ConditionResult = React.createClass({
+        getInitialState: function() {
+            return {
+                explanation: undefined
+            }
+        },
+        handleConditionClick: function() {
+            var explainContainer = this.refs.explainContainer;
+            if (!this.state.explanation) {
+                var component = this;
+                Bridge.Symptomate.getExplainPortObjectEvidence(this.props.diagnosticResult, this.props.targetId, function(result) {
+                    indeterminateProgress.start();
+                    if (result.success) {
+                        Bridge.Symptomate.explainDiagnosis(result.data, function(explanationResult) {
+                            if (explanationResult.success) {
+                                component.setState({explanation: explanationResult.data});
+                                $(explainContainer).slideToggle();
+                            }
+
+                            indeterminateProgress.end();
+                        })
+                    }
+                });
+            }
+            else {
+                $(explainContainer).slideToggle();
+            }
+        },
         componentDidMount: function() {
             var probability = (this.props.probability * 100);
             var conditionId = "#progressBar_" + this.props.conditionId.toString().replace(".", "");
             document.querySelector(conditionId).MaterialProgress.setProgress(probability);
+
+            componentHandler.upgradeDom();
+            var conditionCard = this.refs.conditionCard;
+            conditionCard.addEventListener("click", this.handleConditionClick);
         },
         render: function() {
             var progressBarId = this.props.conditionId.toString().replace(".", "");
-            return <div className="conditionCard">
+            return <div className="conditionCard" onClick={this.handleConditionClick} ref="conditionCard">
                 <div className="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div className="mdl-card__title">
                         <h2 className="mdl-card__title-text">{this.props.label}</h2>
@@ -56,6 +87,9 @@
                     <div className="mdl-card__supporting-text">
                         {(this.props.probability * 100).toFixed(2)} %
                         <div ref="progressBar" id={"progressBar_" + progressBarId} className="mdl-progress mdl-js-progress"></div>
+                        <div ref="explainContainer" className="explain-hide">
+                            Explain Container
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +110,7 @@
                 }).slice(0, 5);
 
                 coditions = sortedConditions.map(function (condition) {
-                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} conditionId={(condition.probability * 100000)}></ConditionResult>
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} conditionId={(condition.probability * 100000)} slotId={diagnosticResult.slotId} targetId={condition.id} diagnosticResult={diagnosticResult}></ConditionResult>
                 });
             }
 

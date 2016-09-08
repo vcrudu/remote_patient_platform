@@ -39,10 +39,13 @@
     var ConditionResult = React.createClass({
         displayName: "ConditionResult",
 
+        handleConditionClick: function () {
+            alert("vasea");
+        },
         render: function () {
             return React.createElement(
                 "div",
-                { className: "conditionCard" },
+                { className: "conditionCard", onClick: this.handleConditionClick },
                 React.createElement(
                     Card,
                     { shadow: 0 },
@@ -462,7 +465,7 @@
                 }).slice(0, 5);
 
                 coditions = sortedConditions.map(function (condition) {
-                    return React.createElement(ConditionResult, { key: condition.name, label: condition.name, probability: condition.probability });
+                    return React.createElement(ConditionResult, { key: condition.name, label: condition.name, probability: condition.probability, slotId: this.props.slotId, targetId: condition.id });
                 });
             }
 
