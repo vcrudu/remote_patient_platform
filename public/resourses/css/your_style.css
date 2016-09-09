@@ -159,3 +159,25 @@ background-color: #f4f411;
 .down a{
     margin-top:20px!important;
 }
+
+@media only screen and (max-width: 769px) and (min-width: 320px) {
+    .btn-header.transparent a {
+        margin-top: 16px !important;
+        color: #8bc34a;
+    }
+
+    .navbar-brand>img {
+        margin-top: 0px;
+    }
+
+    .navbar-toggle {
+        margin-right: 0px !important;
+        display: block !important;
+    }
+}
+
+@media only screen and (max-width: 479px) and (min-width: 320px) {
+    .navbar-brand>img {
+        margin-top: 10px;
+    }
+}
