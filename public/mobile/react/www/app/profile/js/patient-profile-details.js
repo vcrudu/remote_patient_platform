@@ -58,12 +58,15 @@
 
         getInitialState: function () {
             return {
-                explanation: undefined
+                explanation: {
+                    supporting_evidence: [],
+                    conflicting_evidence: []
+                }
             };
         },
         handleConditionClick: function () {
             var explainContainer = this.refs.explainContainer;
-            if (!this.state.explanation) {
+            if (!this.state.explanation.supporting_evidence || this.state.explanation.supporting_evidence.length === 0) {
                 var component = this;
                 Bridge.Symptomate.getExplainPortObjectEvidence(this.props.diagnosticResult, this.props.targetId, function (result) {
                     indeterminateProgress.start();
@@ -72,6 +75,8 @@
                             if (explanationResult.success) {
                                 component.setState({ explanation: explanationResult.data });
                                 $(explainContainer).slideToggle();
+                            } else {
+                                debugger;
                             }
 
                             indeterminateProgress.end();
@@ -88,14 +93,30 @@
             document.querySelector(conditionId).MaterialProgress.setProgress(probability);
 
             componentHandler.upgradeDom();
-            var conditionCard = this.refs.conditionCard;
-            conditionCard.addEventListener("click", this.handleConditionClick);
+            var explainMenuItem = this.refs.explainMenuItem;
+            explainMenuItem.addEventListener("click", this.handleConditionClick);
         },
         render: function () {
             var progressBarId = this.props.conditionId.toString().replace(".", "");
+            var component = this;
+            var supportingEvidenceClass = "visible";
+            var conflictingEvidenceClass = "visible";
+
+            if (!component.state.explanation.supporting_evidence || component.state.explanation.supporting_evidence == 0) {
+                supportingEvidenceClass = "hide";
+            } else {
+                supportingEvidenceClass = "visible";
+            }
+
+            if (!component.state.explanation.conflicting_evidence || component.state.explanation.conflicting_evidence == 0) {
+                conflictingEvidenceClass = "hide";
+            } else {
+                conflictingEvidenceClass = "visible";
+            }
+
             return React.createElement(
                 "div",
-                { className: "conditionCard", onClick: this.handleConditionClick, ref: "conditionCard" },
+                { className: "conditionCard" },
                 React.createElement(
                     "div",
                     { className: "demo-card-wide mdl-card mdl-shadow--2dp" },
@@ -117,7 +138,67 @@
                         React.createElement(
                             "div",
                             { ref: "explainContainer", className: "explain-hide" },
-                            "Explain Container"
+                            React.createElement(
+                                "h2",
+                                { className: "mdl-card__title-text explain" },
+                                "Explain"
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: supportingEvidenceClass },
+                                "I suggested this condition on the basis of the following symptoms:"
+                            ),
+                            React.createElement(
+                                "ul",
+                                { className: supportingEvidenceClass },
+                                component.state.explanation.supporting_evidence.map(function (sEvidence) {
+                                    var random = Math.random();
+                                    return React.createElement(
+                                        "li",
+                                        { key: random, className: "bullet" },
+                                        sEvidence.name
+                                    );
+                                })
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: conflictingEvidenceClass },
+                                "I have not found the presence of the following symptoms that could increase probability of this condition:"
+                            ),
+                            React.createElement(
+                                "ul",
+                                { className: conflictingEvidenceClass },
+                                component.state.explanation.conflicting_evidence.map(function (cEvidence) {
+                                    var random = Math.random();
+                                    return React.createElement(
+                                        "li",
+                                        { key: random, className: "bullet" },
+                                        cEvidence.name
+                                    );
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "mdl-card__menu" },
+                        React.createElement(
+                            "button",
+                            { id: "card_menu_" + component.props.conditionId + "_" + component.props.slotId, className: "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" },
+                            React.createElement(
+                                "i",
+                                { className: "material-icons" },
+                                "more_vert"
+                            )
+                        ),
+                        React.createElement(
+                            "ul",
+                            { className: "mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect", htmlFor: "card_menu_" + component.props.conditionId + "_" + component.props.slotId },
+                            React.createElement(
+                                "li",
+                                { className: "mdl-menu__item", onClick: this.handleConditionClick, ref: "explainMenuItem" },
+                                "Explain"
+                            )
                         )
                     )
                 )

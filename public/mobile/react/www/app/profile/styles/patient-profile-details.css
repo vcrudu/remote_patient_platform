@@ -54,7 +54,7 @@ main {
 }
 
 .mdl-progress {
-    height: 6px;
+    height: 16px;
 }
 
 .mdl-progress>.progressbar {
@@ -132,4 +132,14 @@ main {
 
 .explain-hide {
     display: none;
+}
+
+.explain {
+    color: rgba(0, 0, 0, 0.87) !important;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.bullet {
+    font-weight: 800;
 }
