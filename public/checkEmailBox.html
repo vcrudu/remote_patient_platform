@@ -1,0 +1,23 @@
+<div ng-controller="confirmCtrl" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+        <div class="well no-padding">
+            <form name="confirmForm" novalidate id="confirm-form" class="smart-form client-form">
+                <header>
+                    <b>Dear Friend</b>
+                </header>
+
+                <fieldset ng-show="hideSendAgain">
+
+                    <section>
+                        <p>You account is now active</p>
+                            <p>In order to sign in <a href="#" ng-click="setShowForm()">click here.</a></p>
+                    </section>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+</div>
