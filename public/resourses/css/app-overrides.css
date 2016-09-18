@@ -1,0 +1,46 @@
+#header {
+  height: 93px;
+  background: white;
+  border-bottom: 1px solid #8bc34a;
+}
+#header #logo-group .navbar-brand img {
+  max-width: 300px;
+  max-height: inherit !important;
+}
+#header .logout-container {
+  height: 100%;
+  padding-top: 24px;
+}
+#header .logout-container .navbar-toggle {
+  margin-top: 0;
+}
+#header .logout-container .logout-btn {
+  cursor: pointer;
+  color: #8bc34a;
+}
+#header .logout-container .logout-btn i.fa-sign-out {
+  font-size: 24px;
+  margin-top: 6px;
+}
+#header .navbar-brand.small {
+  display: none;
+}
+#left-panel {
+  padding-top: 93px;
+}
+@media (max-width: 480px) {
+  #header {
+    height: 93px !important;
+  }
+  .navbar-brand {
+    display: none;
+  }
+  .navbar-brand.small {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 479px) and (min-width: 320px) {
+  .navbar-brand > img {
+    margin-top: 0px !important;
+  }
+}
