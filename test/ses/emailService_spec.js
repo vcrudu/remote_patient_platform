@@ -11,7 +11,7 @@
     describe('Usage SES service', function() {
         it.only("Send Subscription Confirmation email\n", function (done) {
 
-            emailService.sendSubscriptionConfirmation(userId, function (err) {
+            emailService.sendPatientSubscriptionConfirmation(userId, function (err) {
                 should.not.exist(err);
                 done();
             });

@@ -1,4 +1,4 @@
-<div ng-controller="confirmCtrl" class="row">
+<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
 
     </div>
@@ -6,38 +6,35 @@
         <div class="well no-padding">
             <form name="confirmForm" novalidate id="confirm-form" class="smart-form client-form">
                 <header>
-                    <b>Confirm subscription</b>
+                    <b>Dear Friend</b>
                 </header>
 
-                <fieldset ng-show="hideSendAgain">
+                <fieldset ng-show="showSendAgain">
 
                     <section>
-                        <p>You account is not active.</p>
-                           <p> Please activate it by confirming you subscription from the email message we have sent to you.</p>
-                            <p>If you need to resend the email message again, <a href="#" ng-click="setShowForm()">Click here.</a></p>
+                        <p>Provide please you email address in order to resent the activation email again and press Send button.</p>
+                    </section>
+                    <section>
+                        <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                            <input type="email" name="email" placeholder="Email address" required ng-model="email">
+                        </label>
+                        <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.required" class="invalid">Email is required.</em>
+                        <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.email" class="invalid">Email is invalid</em>
+                    </section>
+                    <section>
+                        <a href='#' ng-disabled="!confirmForm.$valid" ng-click="submitSendConfirm()" style="border-radius:3px;background:#8bc34a;color:#fff;display:block;font-weight:700;font-size:16px;line-height:1.25em;margin:24px auto 24px;padding:10px 18px;text-decoration:none;width:180px;text-align:center"> Send </a>
                     </section>
                 </fieldset>
 
-                <footer>
-                    <fieldset ng-hide="hideSendAgain">
+                <fieldset ng-hide="showSendAgain">
 
-                        <section>
-                            <label class="label">Please submit your e-mail address and we'll send you the email message again.</label>
-                            <label class="label">E-mail</label>
-                            <label class="input"> <i class="icon-append fa fa-user"></i>
-                                <input type="email" name="email" ng-model="email" required>
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address</b></label>
-                            <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.required" class="invalid">The email is required!</em>
-                            <em ng-show="confirmForm.email.$dirty && confirmForm.email.$error.email" class="invalid">Invalid email!</em>
-                        </section>
-                        <a ui-sref="confirmSubmit">
-                            <button ng-click="submitSendConfirm()" class="btn btn-primary" ng-disabled="confirmForm.email.$dirty && confirmForm.email.$invalid">
-                                Submit
-                            </button>
-                        </a>
-                    </fieldset>
+                    <section>
+                        <p>You account is not active yet.</p>
+                           <p> Please activate it by confirming you subscription from the email message we have sent to you.</p>
+                            <p>If you need to resend the email message again, <a href="#" ng-click="setShowForm()">click here.</a></p>
+                    </section>
+                </fieldset>
 
-                </footer>
             </form>
 
         </div>

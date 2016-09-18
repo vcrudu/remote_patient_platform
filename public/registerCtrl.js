@@ -7,13 +7,13 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.newUser ={type:"patient"};
         $scope.states = [];
         $scope.successMessage = "Done";
-        $scope.successSubMessage = "Click next to finish registration";
+        $scope.successSubMessage = "Click submit to finish registration";
         $scope.isProviderMenuItemActive = false;
         $scope.isPatientMenuItemActive = true;
 
         $scope.forward= function(){
             if ($state.$current.data.order==4){
-                return "Sign in";
+                return "Submit";
             } else {
                 return "Next";
             }
@@ -45,11 +45,11 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
                 var localUser = $localStorage.user;
                 if (localUser)
                 {
-                    $state.go('confirm', {userName: localUser.email});
+                    $state.go('need-activate', {userName: localUser.email});
                 }
                 else
                 {
-                    $state.go('confirm');
+                    $state.go('need-activate');
                 }
             }, 3000);
             //$state.go('patient');

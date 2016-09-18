@@ -11,6 +11,7 @@
 
 
     var userDetailsRepository     = require('../repositories').UsersDetails;
+    var providersRepository     = require('../repositories').Providers;
     var usersRepository     = require('../repositories').Users;
     var domainModel = require('@vcrudu/hcm.domainmodel');
     var logging = require("../logging");
@@ -170,6 +171,41 @@
                         res.status(401).json({
                             success:false,
                             error:'The user is unauthorised!'
+                        });
+                    }
+                }
+            });
+        });
+
+        router.post('/provider_token_signin', function(req, res){
+            usersRepository.findOneByEmail(req.decoded.email,function(err, user){
+                if(err){
+                    res.json({
+                        success:false,
+                        error:err
+                    });
+                }else{
+                    if(user && user.isActive) {
+                        user.token = req.headers['x-access-token'];
+                        providersRepository.getOne(user.email, function (err, providerDetails) {
+                            if (err) {
+                                res.json({
+                                    success:false,
+                                    error:err
+                                });
+                            }
+                            else {
+                                res.json({
+                                    success: true,
+                                    data: _.extend(user, providerDetails),
+                                    token: user.token
+                                });
+                            }
+                        });
+                    } else{
+                        res.status(401).json({
+                            success:false,
+                            error:'The provider is unauthorised!'
                         });
                     }
                 }

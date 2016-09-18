@@ -27,12 +27,9 @@
                         <a href="#step2" data-toggle="tab"> <span class="step">2</span> <span
                                 class="title">Additional info</span> </a>
                     </li>
-                    <!--<li data-target="#step3" class="active">-->
-                        <!--<a href="#step3" data-toggle="tab"> <span class="step">3</span> <span-->
-                                <!--class="title">Availability</span> </a>-->
-                    <!--</li>-->
+
                     <li data-target="#finish">
-                        <a href="#finish" data-toggle="tab"> <span class="step">4</span> <span
+                        <a href="#finish" data-toggle="tab"> <span class="step">3</span> <span
                                 class="title">Finish</span> </a>
                     </li>
 
@@ -128,63 +125,13 @@
                             </section>
                         </div>
 
-                        <div class="row">
-                            <section class="col col-6">
-                                <label class="select"
-                                       ng-class="{'state-error': rc.sampleWizard.submitted()  && firstForm.gender.$invalid }">
-                                    <select name="gender" ng-model="vm.newProvider.gender"
-                                            ng-options="g.value as g.text for g in vm.genders" required>
-                                        <option style="display:none" value="">Gender</option>
-                                    </select> <i></i>
-                                </label>
-                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.gender.$error.required"
-                                    class="invalid">Gender is required.</em>
-                            </section>
-                            <section class="col col-6">
-
-                                <label class="input"
-                                       ng-class="{'state-error': rc.sampleWizard.submitted()   && firstForm.dateOfBirth.$invalid }">
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" id="dropdownDob" role="button"
-                                           data-toggle="dropdown">
-                                            <div class="input-group">
-                                                <input type="date" required name="dateOfBirth"
-                                                       placeholder="Date of birth" class="form-control"
-                                                       data-ng-model="vm.newProvider.dateOfBirth">
-                                                        <span class="input-group-addon"><i
-                                                                ng-class="{'text-danger': rc.sampleWizard.submitted() && firstForm.dateOfBirth.$invalid }"
-                                                                class="glyphicon glyphicon-calendar"></i></span>
-                                            </div>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                            <datetimepicker data-ng-model="vm.newProvider.dateOfBirth"
-                                                            ng-required="true"
-                                                            data-datetimepicker-config="{ dropdownSelector: '#dropdownDob',minView:'day',startView:'year' }"></datetimepicker>
-                                        </ul>
-                                    </div>
-                                </label>
-                                <em ng-show="rc.sampleWizard.submitted()  && firstForm.dateOfBirth.$error.required"
-                                    class="invalid">Please enter your birth date</em>
-                            </section>
-                        </div>
                     </fieldset>
 
                 </form>
                 <form class="tab-pane smart-form  margin-top-10 " id="step2" name="step2Form" rc-step novalidate>
-                    <br>
 
-                    <fieldset>
+                    <fieldset class=" margin-top-100 ">
                         <div class="row">
-                            <section class="col col-4">
-                                <label class="input"
-                                       ng-class="{'state-error': (step2Form.practiceName.$dirty || rc.sampleWizard.submitted())  && step2Form.practiceName.$invalid }">
-                                    <input type="text" name="practiceName" placeholder="Practice name" required
-                                           ng-model="vm.newProvider.practiceName">
-                                </label>
-                                <em class="invalid">
-                                    <span ng-show=" rc.sampleWizard.submitted() && step2Form.practiceName.$error.required">Practice name is required</span>
-                                </em>
-                            </section>
                             <section class="col col-4">
                                 <label class="select"
                                        ng-class="{'state-error': rc.sampleWizard.submitted()  && step2Form.providerType.$invalid }">
@@ -196,103 +143,14 @@
                                 <em ng-show="rc.sampleWizard.submitted()  && step2Form.providerType.$invalid"
                                     class="invalid">Health Professional Type is required.</em>
                             </section>
-                            <section class="col col-4">
-                                <label class="input"
-                                       ng-class="{'state-error': (step2Form.practiceIdentifier.$dirty || rc.sampleWizard.submitted())  && step2Form.practiceIdentifier.$invalid }">
-                                    <input type="text" name="practiceIdentifier" placeholder="Practice Identifier"
-                                           required
-                                           ng-model="vm.newProvider.practiceIdentifier">
-                                </label>
-                                <em class="invalid">
-                                    <span ng-show=" rc.sampleWizard.submitted() && step2Form.practiceIdentifier.$error.required">Practice Identifier is required</span>
-                                </em>
-                            </section>
                         </div>
-                    </fieldset>
-
-                    <fieldset>
                         <div class="row">
                             <section class="col col-4">
-                                <label class="select"
-                                       ng-class="{'state-error':  rc.sampleWizard.submitted() && step2Form.country.$invalid}">
-                                    <select name="country" ng-model="vm.newProvider.address.country"
-                                            ng-options="country.name as country.name for country in vm.countries"
-                                            required>
-                                        <option style="display:none" value="">Country</option>
-                                    </select> <i></i> </label>
-                                <em ng-show=" rc.sampleWizard.submitted() && step2Form.country.$invalid"
-                                    class="invalid">Please select country</em>
-                            </section>
-                            <section class="col col-3">
-                                <label class="input"
-                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.county.$invalid}">
-                                    <input type="text" name="county" placeholder="County"
-                                           ng-model="vm.newProvider.address.county" required>
-                                </label>
-                                <em ng-show=" rc.sampleWizard.submitted() && step2Form.county.$invalid"
-                                    class="invalid">County is required</em>
-                            </section>
-                            <section class="col col-3">
-                                <label class="input"
-                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.town.$invalid}">
-                                    <input type="text" name="town" placeholder="Town"
-                                           ng-model="vm.newProvider.address.town"
-                                           required>
-                                </label>
-                                <em ng-show="rc.sampleWizard.submitted() && step2Form.town.$invalid"
-                                    class="invalid">Town is required</em>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input"
-                                       ng-class="{'state-error': rc.sampleWizard.submitted() && step2Form.code.$invalid}">
-                                    <input type="text" name="code" placeholder="Post code"
-                                           ng-model="vm.newProvider.address.postCode"
-                                           required>
-                                </label>
-                                <em ng-show="rc.sampleWizard.submitted() && step2Form.code.$invalid"
-                                    class="invalid">Post code is required</em>
-                            </section>
-                        </div>
-
-                        <section>
-                            <label class="input"
-                                   ng-class="{'state-error': vm.submitted && step2Form.address.$invalid}">
-                                <input type="text" name="address" placeholder="Address"
-                                       ng-model="vm.newProvider.address.addressLine1"
-                                       required>
-                            </label>
-                            <em ng-show=" vm.submitted && step2Form.address.$invalid"
-                                class="invalid">Address is required</em>
-                        </section>
-
-                        <section>
-                            <label class="textarea">
-                                <textarea rows="3" name="info" placeholder="Additional info"
-                                          ng-model="vm.newProvider.address.addressLine2"></textarea>
-                            </label>
-                        </section>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="row">
-                            <section class="col col-6">
-                                <label class="input"
-                                       ng-class="{'state-error': (step2Form.phone.$dirty || rc.sampleWizard.submitted()) && step2Form.phone.$invalid}">
-                                    <i class="icon-prepend fa fa-phone"></i>
-                                    <input type="tel" name="phone" ng-model="vm.phone" is-phone placeholder="Phone"
-                                           ng-required="!vm.mobile && !vm.phone">
-                                </label>
-                                <em class="invalid">
-                                    <span ng-show="(step2Form.phone.$dirty && step2Form.phone.$error.isPhone)">Phone number format is invalid.</span>
-                                </em>
-                            </section>
-                            <section class="col col-6">
                                 <label class="input"
                                        ng-class="{'state-error': (step2Form.mobile.$dirty || rc.sampleWizard.submitted()) && step2Form.mobile.$invalid}">
                                     <i class="icon-prepend fa fa-phone"></i>
                                     <input type="tel" name="mobile" ng-model="vm.mobile" is-phone placeholder="Mobile"
-                                           ng-required="!vm.mobile && !vm.phone">
+                                           ng-required="!vm.mobile">
                                 </label>
                                 <em class="invalid">
                                     <span ng-show="(step2Form.mobile.$dirty && step2Form.mobile.$error.isPhone)">Mobile number format is invalid.</span>
@@ -312,10 +170,10 @@
                     <br>
                     <h2  class="txt-color-greenLight">
                         <i class="fa fa-fw fa-check"></i>
-                        <span class="semi-bold"  >Congratulations</span>
+                        <span class="semi-bold"  >Submit you details</span>
 
                         <p class="txt-color-darken">
-                            <small >You are one step away from creating a new provider</small>
+                            <small >By submitting this form we will receive the details provided by you.</small>
                         </p>
                     </h2>
                 </form>
@@ -340,7 +198,7 @@
                             <a class="btn btn-primary " ng-disabled="vm.saving"
                                ng-click="rc.sampleWizard.forward()"
                                ng-show="rc.sampleWizard.currentIndex == rc.sampleWizard.navigationLength "
-                                    >Create provider
+                                    >Submit
                                 <!--<span class="ladda-label" localize="Complete"></span>-->
                             </a>
                         </div>

@@ -40,8 +40,8 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.alarm_builder/:alarmName",
         templateUrl: "provider/alarms/provider.alarm.builder.html",
         controller: "providerAlarmBuilderCtrl"
-    }).state("provider.call", {
-        url: "/provider.call",
+    }).state("provider.home", {
+        url: "/provider.home",
         templateUrl: "provider/appointments/provider.call.html",
         controller: 'providerCallCtrl as vm'
     });

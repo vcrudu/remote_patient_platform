@@ -9,18 +9,6 @@ var bunyan = require('bunyan');
 
 module.exports = createCloudWatchStream;
 
-var localLogger = bunyan.createLogger({
-    name: 'hcm.registration.local',
-    streams: [
-        {
-            level: 'trace',
-            type: 'rotating-file',
-            path: './log/hcm.local.log',
-            period: '1d',   // daily rotation
-            count: 3        // keep 3 back copies
-        }]
-});
-
 function createCloudWatchStream(opts) {
     return new CloudWatchStream(opts);
 }
@@ -73,7 +61,7 @@ CloudWatchStream.prototype._writeLogs = function () {
             obj.writeQueued = false;
         });
     } catch (err) {
-        localLogger.error(err);
+
     }
 }
 
@@ -100,7 +88,7 @@ CloudWatchStream.prototype._getSequenceToken = function (done) {
             done();
         });
     } catch (err) {
-        localLogger.error(err);
+
     }
 
     function createStreamCb(err, res) {
@@ -112,7 +100,7 @@ CloudWatchStream.prototype._getSequenceToken = function (done) {
 
 CloudWatchStream.prototype._error = function (err) {
     if (this.onError) return this.onError(err);
-    localLogger.error(err);
+
     //throw err;
 }
 
@@ -125,7 +113,7 @@ function createLogGroupAndStream(cloudwatch, logGroupName, logStreamName, cb) {
             createLogStream(cloudwatch, logGroupName, logStreamName, cb);
         });
     } catch (err) {
-        localLogger.error(err);
+
     }
 }
 
@@ -136,7 +124,7 @@ function createLogStream(cloudwatch, logGroupName, logStreamName, cb) {
             logStreamName: logStreamName
         }, cb);
     } catch (err) {
-        localLogger.error(err);
+
     }
 }
 

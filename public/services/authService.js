@@ -221,11 +221,9 @@ angular.module('app')
 
                 getUserName: function () {
                     var result = '';
-                    if($localStorage.user){
-                        if($localStorage.user.firstname ){
-                            result += $localStorage.user.firstname;
-                        }
-                        if($localStorage.user.surname ){
+                    if ($localStorage.user) {
+                        result += $localStorage.user.firstname || $localStorage.user.name;
+                        if ($localStorage.user.surname) {
                             result += ' ' + $localStorage.user.surname;
                         }
                     }

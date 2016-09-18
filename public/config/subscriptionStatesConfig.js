@@ -40,14 +40,78 @@
                     "mainView": {templateUrl: "confirmSubmit.html"}
                 }
             })
-            .state('confirm', {
-                url: "/confirm",
+            .state('activate', {
+                url: "/activate",
+                views: {
+                    "headerView": {
+                        templateUrl: "activateHeader.html"
+                    },
+                    "mainView": {
+                        templateUrl: "activate.html",
+                        controller:'activateCtrl as ctrl'
+                    }
+                },
+                resolve: {
+                    activateState: function ($http, $state, $localStorage, $location, $rootScope, appSettings) {
+                        var params = $location.search();
+                        if (params.token) {
+                            var req = {
+                                method: 'POST',
+                                url: appSettings.getServerUrl() + '/v1/api/activate',
+                                headers: {
+                                    'x-access-token': params.token
+                                }
+                            };
+                            return $http(req).then(function (res) {
+                                if (!res.data.error) {
+                                    $localStorage.user = res.data.data;
+                                    if (window.socket) {
+                                        window.socket.connect();
+                                    } else {
+                                        window.socket = window.io.connect(appSettings.getServerUrl());
+                                        window.socket.on('connect', function () {
+                                            window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                            $rootScope.$broadcast('socket.connect', 'connected');
+                                        });
+
+                                        window.socket.on('disconnect', function () {
+                                            $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                        });
+                                    }
+                                } else{
+                                    return {isActive:false};
+                                }
+                            });
+                        } else {
+                            return {isActive:false};
+                        }
+                    }
+                }
+            })
+            .state('need-activate', {
+                url: "/need-activate",
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
-                    "mainView": {templateUrl: "confirm.html"}
+                    "mainView": {
+                        templateUrl: "needActivate.html",
+                        controller:"needActivateCtrl"
+                    }
                 },
-                params:{userName:null},
-                controller: 'confirmCtrl'
+                controller: 'needActivateCtrl'
+            })
+            .state('check-email-box', {
+                url: "/check-email-box",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "checkEmailBox.html"}
+                }
+            })
+            .state('provider-join', {
+                url: "/provider-join",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "providerJoin.html"}
+                }
             })
             .state('notfound', {
                 url: "/notfound",

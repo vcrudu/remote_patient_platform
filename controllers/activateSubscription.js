@@ -2,58 +2,75 @@
  * Created by home on 23.07.2015.
  */
 
-(function(){
+(function() {
 
     var usersRepository = require('../repositories').Users;
-    var sendConfirmLink =require ('../services/emailService').sendPatientSubscriptionConfirmation;
-    var jwt = require('jsonwebtoken');
-    var secret = 'shhhhh';//to-do insert in config secret
+    var userDetailsRepository = require('../repositories').UsersDetails;
+    var providersRepository = require('../repositories').Providers;
+    var _ = require('underscore');
 
-    module.exports.init = function(app) {
-        app.post('/confirm', function (req, res) {
-            usersRepository.findOneByEmail(req.body.email, function (err, user) {
+    module.exports.init = function (app) {
+        app.post('/activate', function (req, res) {
+            usersRepository.findOneByEmail(req.decoded.email, function (err, user) {
+                var SendActivateResponseToClient = function () {
+                    if (user.type == "patient") {
+                        user.token = req.headers['x-access-token'];
+                        userDetailsRepository.findOneByEmail(user.email, function (err, userDetails) {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    error: err
+                                });
+                            }
+                            else {
+                                res.json({
+                                    success: true,
+                                    data: _.extend(user, userDetails),
+                                    token: user.token
+                                });
+                            }
+                        });
+                    } else {
+                        user.token = req.headers['x-access-token'];
+                        providersRepository.getOne(user.email, function (err, providerDetails) {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    error: err
+                                });
+                            }
+                            else {
+                                res.json({
+                                    success: true,
+                                    data: _.extend(user, providerDetails),
+                                    token: user.token
+                                });
+                            }
+                        });
+                    }
+                };
                 if (err) {
                     res.json({
                         success: false,
                         message: err
                     });
                 } else {
-                       if(user.isActive){
-                        res.json({
-                            success: false,
-                            message:"User is active, please login",
-                            email:req.body.email
+                    if (user.isActive) {
+                        SendActivateResponseToClient();
+                    } else {
+                        usersRepository.updateActiveStatus(req.decoded.email, true, function (err) {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                SendActivateResponseToClient();
+                            }
                         });
-                       } else {
-                           sendConfirmLink(req.body.email, function () {
-                               res.json({
-                                   success: true,
-                                   message: "Message was sent successful, please verify emailbox",
-                               });
-                               console.log('send email1 ' + user.email);
-                           });
-                       }
-
-
+                    }
                 }
             });
-        });
-        app.get('/confirm',function(req,res){
-            var token=req.query.token;
-            if (token){
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.status(403).json({
-                            success: false,
-                            message: 'not found',
-                            error: err
-                        });
-                    } else {
-                        console.log(decoded);
-                    }
-                    });
-            }
-
         });
     }
 })();
