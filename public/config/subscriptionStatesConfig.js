@@ -17,6 +17,14 @@
                 },
                 controller: 'loginCtrl'
             })
+            .state('error', {
+                url: "/error",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "error.html"}
+                },
+                controller: 'loginCtrl'
+            })
             .state('reset', {
                 url: "/reset",
                 views: {
@@ -25,13 +33,29 @@
                 },
                 controller: 'resetCtrl'
             })
-            .state('resetPassword', {
-                url: "/resetPassword?token",
+            .state('reset-password', {
+                url: "/reset-password",
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
-                    "mainView": {templateUrl: "resetPassword.html"}
+                    "mainView": {
+                        templateUrl: "resetPassword.html",
+                        controller: 'resetPasswordCtrl'
+                    }
                 },
-                controller: 'resetPasswordCtrl'
+                resolve: {
+                    serverAnswer: function ($http, $state, $localStorage, $location, $rootScope, appSettings) {
+                        var params = $location.search();
+                        if (params.token) {
+                            var link = "/resetPassword?token=" + params.token;
+                            return $http.get(link)
+                                .then(function (response) {
+                                    return response.data;
+                                }, function () {
+                                    return {success: false};
+                                });
+                        }
+                    }
+                }
             })
             .state('confirmSubmit', {
                 url: "/confirmSubmit",

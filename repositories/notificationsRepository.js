@@ -155,6 +155,64 @@
             });
         },
 
+        getPagedList : function(userId, category, startTime, endTime, pageSize, pageNumber, callback){
+
+            var filterExpression='';
+            var params;
+            if(category!='All') {
+                filterExpression = '#category=:category';
+
+                params = {
+                    KeyConditionExpression: 'userId=:userId',
+
+                    ExpressionAttributeNames: {
+                        "#category": "category"
+                    },
+
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId},
+                        ":category": {"S": category}
+                    },
+                    ScanIndexForward:false,
+
+                    FilterExpression: filterExpression,
+                    TableName: TABLE_NAME,
+                    Limit: pageSize
+                };
+            }else{
+                params = {
+                    KeyConditionExpression: 'userId=:userId',
+
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId}
+                    },
+                    ScanIndexForward:false,
+                    TableName: TABLE_NAME,
+                    Limit: pageSize
+                };
+            }
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The notifications has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var notification = notificationDbMapper.mapNotificationFromDbEntity(item);
+                        results.push(notification);
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
+
         save : function(notification, callback) {
 
             var dynamodb = getDb();

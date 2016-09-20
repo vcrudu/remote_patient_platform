@@ -132,7 +132,7 @@
 
                     <fieldset class=" margin-top-100 ">
                         <div class="row">
-                            <section class="col col-4">
+                            <section class="col col-6">
                                 <label class="select"
                                        ng-class="{'state-error': rc.sampleWizard.submitted()  && step2Form.providerType.$invalid }">
                                     <select name="providerType" ng-model="vm.newProvider.providerType"
@@ -143,9 +143,7 @@
                                 <em ng-show="rc.sampleWizard.submitted()  && step2Form.providerType.$invalid"
                                     class="invalid">Health Professional Type is required.</em>
                             </section>
-                        </div>
-                        <div class="row">
-                            <section class="col col-4">
+                            <section class="col col-6">
                                 <label class="input"
                                        ng-class="{'state-error': (step2Form.mobile.$dirty || rc.sampleWizard.submitted()) && step2Form.mobile.$invalid}">
                                     <i class="icon-prepend fa fa-phone"></i>
@@ -153,7 +151,10 @@
                                            ng-required="!vm.mobile">
                                 </label>
                                 <em class="invalid">
-                                    <span ng-show="(step2Form.mobile.$dirty && step2Form.mobile.$error.isPhone)">Mobile number format is invalid.</span>
+                                    <span ng-show="(rc.sampleWizard.submitted() && step2Form.mobile.$error.required)">Mobile number is required.</span>
+                                </em>
+                                <em class="invalid">
+                                    <span ng-show="(rc.sampleWizard.submitted() && step2Form.mobile.$error.isPhone)">Mobile number format is invalid.</span>
                                 </em>
                             </section>
                         </div>

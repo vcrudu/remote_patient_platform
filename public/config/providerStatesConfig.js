@@ -40,9 +40,20 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.alarm_builder/:alarmName",
         templateUrl: "provider/alarms/provider.alarm.builder.html",
         controller: "providerAlarmBuilderCtrl"
-    }).state("provider.home", {
-        url: "/provider.home",
+    }).state("provider.call", {
+        url: "/provider.call",
         templateUrl: "provider/appointments/provider.call.html",
         controller: 'providerCallCtrl as vm'
+    }).state("provider.home", {
+        url: "/provider.home",
+        templateUrl: "provider/home/provider.home.html"
+    }).state("provider.home.inbox", {
+        url: "/provider.home.inbox",
+        templateUrl: "provider/home/provider.home.inbox.html",
+        controller: 'providerHomeInboxCtrl as vm'
+    }).state("provider.home.message", {
+        url: "/provider.home.message",
+        templateUrl: "provider/home/provider.home.message.html",
+        controller: 'providerHomeMessageCtrl as vm'
     });
 }]);

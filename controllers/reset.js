@@ -21,9 +21,7 @@
                     });
                 } else {
                     if (user) {
-                        //Todo-here: De implimentat trimiterea emailului
-
-                        sendResetLink(user.email,function(){
+                        sendResetLink(user,function(){
                             console.log('send email1 '+user.email);
                         });
 

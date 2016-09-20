@@ -19,15 +19,11 @@ angular.module('app').controller('needActivateCtrl',['$scope', '$state', '$state
                             toastr.info(res.data.message, 'Info', {timeOut: 10000});
                             $state.go('check-email-box');
                         } else {
-                            toastr.info(res.data.message, 'Info', {timeOut: 10000});
-                            $state.go('check-email-box')
+                            $state.go('error');
                         }
-
-
                     }, function (error) {
-
+                        $state.go('error');
                         toastr.error(error, 'Error');
-
                     }
                 );
             }
