@@ -63,6 +63,10 @@ h6.mdl-card__title-text {
     background: #ff5252;
 }
 
+.notification-icon .selected {
+    background: #2196F3;
+}
+
 .notification-title-summary {
 }
 
@@ -80,4 +84,14 @@ h6.mdl-card__title-text {
 
 .push-right {
     float: right;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
 }

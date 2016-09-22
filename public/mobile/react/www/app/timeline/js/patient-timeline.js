@@ -6,6 +6,8 @@
 
     "use strict";
 
+    $.event.special.tap.emitTapOnTaphold = false;
+
     var Layout = ReactMDL.Layout;
     var Header = ReactMDL.Header;
     var HeaderRow = ReactMDL.HeaderRow;
@@ -55,58 +57,90 @@
 
             var cardSummary = this.refs.cardSummary;
             $(cardSummary).dotdotdot({});
+
+            var component = this;
+            var infoCard = this.refs.infoCard;
+            $(infoCard).on("tap", function () {
+                if ($(infoCard).find(".material-icons").hasClass("selected")) {
+                    $(infoCard).find(".material-icons").text("alarm");
+                    $(infoCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    component.handleView();
+                }
+            });
+
+            $(infoCard).on("taphold", function (event) {
+                event.preventDefault();
+                if ($(infoCard).find(".material-icons").hasClass("selected")) {
+                    $(infoCard).find(".material-icons").text("alarm");
+                    $(infoCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    $(infoCard).find(".material-icons").text("done");
+                    $(infoCard).find(".material-icons").addClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
+                }
+            });
         },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
-                Card,
-                { className: "message-card-wide mdl-shadow--2dp" },
+                "div",
+                { ref: "infoCard" },
                 React.createElement(
-                    CardText,
-                    { onClick: this.handleView },
+                    Card,
+                    { className: "message-card-wide mdl-shadow--2dp noselect" },
                     React.createElement(
-                        "div",
-                        { className: "notification-title-wrapper" },
+                        CardText,
+                        null,
                         React.createElement(
                             "div",
-                            { className: "notification-icon" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons mdl-list__item-avatar info-amber" },
-                                "alarm"
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "notification-title-summary" },
+                            { className: "notification-title-wrapper" },
                             React.createElement(
                                 "div",
-                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                                this.props.title
+                                { className: "notification-icon" },
+                                React.createElement(
+                                    "i",
+                                    { className: "material-icons mdl-list__item-avatar info-amber" },
+                                    "alarm"
+                                )
                             ),
                             React.createElement(
                                 "div",
-                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
-                                this.props.summary
+                                { className: "notification-title-summary" },
+                                React.createElement(
+                                    "div",
+                                    { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                    this.props.title
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                    this.props.summary
+                                )
                             )
+                        ),
+                        React.createElement("div", { className: "clear" }),
+                        React.createElement(
+                            "div",
+                            { ref: "cardMessage", className: "notification-message" },
+                            this.props.message
                         )
                     ),
-                    React.createElement("div", { className: "clear" }),
                     React.createElement(
-                        "div",
-                        { ref: "cardMessage", className: "notification-message" },
-                        this.props.message
-                    )
-                ),
-                React.createElement(
-                    CardMenu,
-                    null,
-                    React.createElement(
-                        "div",
-                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                        this.props.time
+                        CardMenu,
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                            this.props.time
+                        )
                     )
                 )
             );
@@ -123,58 +157,90 @@
 
             var cardSummary = this.refs.cardSummary;
             $(cardSummary).dotdotdot({});
+
+            var component = this;
+            var alarmCard = this.refs.alarmCard;
+            $(alarmCard).on("tap", function () {
+                if ($(alarmCard).find(".material-icons").hasClass("selected")) {
+                    $(alarmCard).find(".material-icons").text("av_timer");
+                    $(alarmCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    component.handleView();
+                }
+            });
+
+            $(alarmCard).on("taphold", function (event) {
+                event.preventDefault();
+                if ($(alarmCard).find(".material-icons").hasClass("selected")) {
+                    $(alarmCard).find(".material-icons").text("av_timer");
+                    $(alarmCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    $(alarmCard).find(".material-icons").text("done");
+                    $(alarmCard).find(".material-icons").addClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
+                }
+            });
         },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
-                Card,
-                { className: "message-card-wide mdl-shadow--2dp" },
+                "div",
+                { ref: "alarmCard" },
                 React.createElement(
-                    CardText,
-                    { onClick: this.handleView },
+                    Card,
+                    { className: "message-card-wide mdl-shadow--2dp noselect" },
                     React.createElement(
-                        "div",
-                        { className: "notification-title-wrapper" },
+                        CardText,
+                        null,
                         React.createElement(
                             "div",
-                            { className: "notification-icon" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons mdl-list__item-avatar alarm" },
-                                "av_timer"
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "notification-title-summary" },
+                            { className: "notification-title-wrapper" },
                             React.createElement(
                                 "div",
-                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                                this.props.title
+                                { className: "notification-icon" },
+                                React.createElement(
+                                    "i",
+                                    { className: "material-icons mdl-list__item-avatar alarm" },
+                                    "av_timer"
+                                )
                             ),
                             React.createElement(
                                 "div",
-                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
-                                this.props.summary
+                                { className: "notification-title-summary" },
+                                React.createElement(
+                                    "div",
+                                    { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                    this.props.title
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                    this.props.summary
+                                )
                             )
+                        ),
+                        React.createElement("div", { className: "clear" }),
+                        React.createElement(
+                            "div",
+                            { ref: "cardMessage", className: "notification-message" },
+                            this.props.message
                         )
                     ),
-                    React.createElement("div", { className: "clear" }),
                     React.createElement(
-                        "div",
-                        { ref: "cardMessage", className: "notification-message" },
-                        this.props.message
-                    )
-                ),
-                React.createElement(
-                    CardMenu,
-                    null,
-                    React.createElement(
-                        "div",
-                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                        this.props.time
+                        CardMenu,
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                            this.props.time
+                        )
                     )
                 )
             );
@@ -191,58 +257,90 @@
 
             var cardSummary = this.refs.cardSummary;
             $(cardSummary).dotdotdot({});
+
+            var component = this;
+            var readingCard = this.refs.readingCard;
+            $(readingCard).on("tap", function () {
+                if ($(readingCard).find(".material-icons").hasClass("selected")) {
+                    $(readingCard).find(".material-icons").text("done");
+                    $(readingCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    component.handleView();
+                }
+            });
+
+            $(readingCard).on("taphold", function (event) {
+                event.preventDefault();
+                if ($(readingCard).find(".material-icons").hasClass("selected")) {
+                    $(readingCard).find(".material-icons").text("done");
+                    $(readingCard).find(".material-icons").removeClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, false, function (result) {});
+                } else {
+                    $(readingCard).find(".material-icons").text("done");
+                    $(readingCard).find(".material-icons").addClass("selected");
+
+                    Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
+                }
+            });
         },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
-                Card,
-                { className: "message-card-wide mdl-shadow--2dp" },
+                "div",
+                { ref: "readingCard" },
                 React.createElement(
-                    CardText,
-                    { onClick: this.handleView },
+                    Card,
+                    { className: "message-card-wide mdl-shadow--2dp noselect" },
                     React.createElement(
-                        "div",
-                        { className: "notification-title-wrapper" },
+                        CardText,
+                        null,
                         React.createElement(
                             "div",
-                            { className: "notification-icon" },
-                            React.createElement(
-                                "i",
-                                { className: "material-icons mdl-list__item-avatar reading" },
-                                "done"
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "notification-title-summary" },
+                            { className: "notification-title-wrapper" },
                             React.createElement(
                                 "div",
-                                { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                                this.props.title
+                                { className: "notification-icon" },
+                                React.createElement(
+                                    "i",
+                                    { className: "material-icons mdl-list__item-avatar reading" },
+                                    "done"
+                                )
                             ),
                             React.createElement(
                                 "div",
-                                { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
-                                this.props.summary
+                                { className: "notification-title-summary" },
+                                React.createElement(
+                                    "div",
+                                    { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                                    this.props.title
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { ref: "cardSummary", className: this.props.isNew ? "notification-summary unread" : "notification-summary read" },
+                                    this.props.summary
+                                )
                             )
+                        ),
+                        React.createElement("div", { className: "clear" }),
+                        React.createElement(
+                            "div",
+                            { ref: "cardMessage", className: "notification-message" },
+                            this.props.message
                         )
                     ),
-                    React.createElement("div", { className: "clear" }),
                     React.createElement(
-                        "div",
-                        { ref: "cardMessage", className: "notification-message" },
-                        this.props.message
-                    )
-                ),
-                React.createElement(
-                    CardMenu,
-                    null,
-                    React.createElement(
-                        "div",
-                        { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
-                        this.props.time
+                        CardMenu,
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: this.props.isNew ? "notification-title unread" : "notification-title read" },
+                            this.props.time
+                        )
                     )
                 )
             );
@@ -338,40 +436,44 @@
         },
         componentDidMount: function () {
             var component = this;
+
             Bridge.notificationCallback = this.notificationCallback;
 
-            Bridge.Timeline.getNotifications(function (result) {
-                var allCards = _.sortBy(result.data, "dateTime").reverse();
-                var groupedAllCards = [];
-                component.groupCards(groupedAllCards, allCards);
+            Bridge.Timeline.clearSelectedCards(function (clearResult) {
+                Bridge.Timeline.getNotifications(function (result) {
+                    var allCards = _.sortBy(result.data, "dateTime").reverse();
+                    var groupedAllCards = [];
+                    component.groupCards(groupedAllCards, allCards);
 
-                var infoCards = _.filter(allCards, function (card) {
-                    return card.category == "info";
+                    var infoCards = _.filter(allCards, function (card) {
+                        return card.category == "info";
+                    });
+                    var groupedInfoCards = [];
+                    component.groupCards(groupedInfoCards, infoCards);
+
+                    var alarmCards = _.filter(allCards, function (card) {
+                        return card.category == "alarm";
+                    });
+                    var groupedAlarmCards = [];
+                    component.groupCards(groupedAlarmCards, alarmCards);
+
+                    var readingsCards = _.filter(allCards, function (card) {
+                        return card.category == "reading";
+                    });
+                    var groupedReadingsCards = [];
+                    component.groupCards(groupedReadingsCards, readingsCards);
+
+                    component.setState({
+                        cards: groupedAllCards,
+                        allCards: groupedAllCards,
+                        infoCards: groupedInfoCards,
+                        alarmCards: groupedAlarmCards,
+                        readingsCards: groupedReadingsCards,
+                        selectedCards: []
+                    });
+
+                    $(".mdl-progress").css('visibility', 'hidden');
                 });
-                var groupedInfoCards = [];
-                component.groupCards(groupedInfoCards, infoCards);
-
-                var alarmCards = _.filter(allCards, function (card) {
-                    return card.category == "alarm";
-                });
-                var groupedAlarmCards = [];
-                component.groupCards(groupedAlarmCards, alarmCards);
-
-                var readingsCards = _.filter(allCards, function (card) {
-                    return card.category == "reading";
-                });
-                var groupedReadingsCards = [];
-                component.groupCards(groupedReadingsCards, readingsCards);
-
-                component.setState({
-                    cards: groupedAllCards,
-                    allCards: groupedAllCards,
-                    infoCards: groupedInfoCards,
-                    alarmCards: groupedAlarmCards,
-                    readingsCards: groupedReadingsCards
-                });
-
-                $(".mdl-progress").css('visibility', 'hidden');
             });
         },
         componentWillUnmount: function () {
