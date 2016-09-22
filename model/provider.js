@@ -14,12 +14,7 @@ var Payment = require("./payment");
         assert.ok(args.title, "Title is required!");
         assert.ok(args.name,"First name is required!");
         assert.ok(args.surname,"Surname name is required!");
-        assert.ok(args.practiceName,"Practice Name is required!");
-        assert.ok(args.practiceIdentifier,"Practice Identifier is required!");
         assert.ok(args.providerType, "Health Professional Type is required!");
-        assert.ok(args.availabilityType, "Please provide availability type!");
-        assert.ok(args.availabilityType==="regular" || args.availabilityType==="byDate",
-            "Availability type can be either regular or byDate!");
 
         var providerTypes = ["caregiver",
             "nurse",
@@ -30,7 +25,8 @@ var Payment = require("./payment");
             "paediatrics",
             "pathology",
             "psychiatry",
-            "surgery"];
+            "surgery",
+            "locum"];
 
         if(providerTypes.indexOf(args.providerType.toLowerCase())==-1) throw new Error("Invalid Health Professional Type!");
 
@@ -52,9 +48,8 @@ var Payment = require("./payment");
         hp.providerType = args.providerType;
         if(args.address){
             hp.address = args.address;
-        }else{
-            hp.address = entitiesFactory.createAddress(args);
         }
+
         var contactDetails = [];
 
         var availabilities = [];

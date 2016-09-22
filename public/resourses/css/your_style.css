@@ -160,24 +160,52 @@ background-color: #f4f411;
     margin-top:20px!important;
 }
 
-@media only screen and (max-width: 769px) and (min-width: 320px) {
-    .btn-header.transparent a {
-        margin-top: 16px !important;
-        color: #8bc34a;
-    }
 
-    .navbar-brand>img {
-        margin-top: 0px;
-    }
 
-    .navbar-toggle {
-        margin-right: 0px !important;
-        display: block !important;
-    }
+.inbox-data-date {
+    width: 100px;
 }
 
-@media only screen and (max-width: 479px) and (min-width: 320px) {
-    .navbar-brand>img {
-        margin-top: 10px;
-    }
+
+.notification-summary {
+    height: 20px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 4px;
+}
+
+.notification-message {
+    height: 40px;
+    padding-left: 56px;
+}
+
+.notification-title {
+    font-size: 16px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 8px;
+}
+
+.unread
+{
+    font-family: Roboto-Bold;
+}
+
+.notification-icon {
+    float: left;
+    margin-right: 16px;
+}
+
+.notification-icon .info {
+    background: #ffbc00;
+}
+
+.notification-icon .info-amber {
+    background: #ffc107;
+}
+
+.notification-icon .reading {
+    background: #8bc34a;
+}
+
+.notification-icon .alarm {
+    background: #ff5252;
 }

@@ -171,16 +171,8 @@ angular.module('app')
 
         self.getProviderTypes = function () {
             return [
-                "Caregiver",
                 "Nurse",
-                "Medicine",
-                "General practice",
-                "Anaesthetics",
-                "Ophthalmology",
-                "Paediatrics",
-                "Pathology",
-                "Psychiatry",
-                "Surgery"
+                "Locum"
             ];
         };
 

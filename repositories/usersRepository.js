@@ -129,6 +129,30 @@
             });
         },
 
+        updateActiveStatus : function(userId, isActive, callback) {
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { email: { S: userId }},
+                TableName:TABLE_NAME,
+                ExpressionAttributeValues: {
+                    ":isActive": {"BOOL":isActive  }
+                },
+                ReturnConsumedCapacity: 'TOTAL',
+                UpdateExpression: 'SET isActive=:isActive'
+            };
+
+            dynamodb.updateItem(params, function (err, data) {
+                if (err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("Active status updated successfully.");
+                callback(null, data);
+            });
+        },
+
         save : function(user, callback) {
 
             var dynamodb = getDb();

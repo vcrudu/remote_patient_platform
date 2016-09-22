@@ -24,26 +24,15 @@
             {
                 level: 'trace',
                 stream: streamCW            // log INFO and above to stdout
-            },
+            }
+            /*,
             {
             level: 'trace',
             type: 'rotating-file',
             path: './log/hcm.log',
             period: '1d',   // daily rotation
             count: 3        // keep 3 back copies
-        }]
-    });
-
-    var localLogger = bunyan.createLogger({
-        name: 'hcm.registration.local',
-        streams: [
-            {
-                level: 'trace',
-                type: 'rotating-file',
-                path: './log/hcm.log',
-                period: '1d',   // daily rotation
-                count: 3        // keep 3 back copies
-            }]
+        }*/]
     });
 
     function getIncidentTicketNumber(componentCode) {
@@ -61,10 +50,6 @@
     }
 
 
-    function getLocalLogger() {
-        return localLogger;
-    }
-
     function processUnhandledError(req, error, callback) {
         var incidentTicket = logging.getIncidentTicketNumber("or");
         getLogger().error({
@@ -81,7 +66,6 @@
         getIncidentTicketNumber: getIncidentTicketNumber,
         getUserErrorMessage: getUserErrorMessage,
         getLogger: getLogger,
-        getLocalLogger: getLocalLogger,
         processUnhandledError: processUnhandledError
     };
 })();

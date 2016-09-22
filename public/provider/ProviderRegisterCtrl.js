@@ -45,18 +45,8 @@ angular.module('app')
 
             var toSaveObject = angular.copy(vm.newProvider);
 
-            if (vm.phone) {
-                toSaveObject.contactDetails.push({
-                    "contactType": "Phone",
-                    "contact": vm.phone
-                })
-            }
-
             if (vm.mobile) {
-                toSaveObject.contactDetails.push({
-                    "contactType": "Mobile",
-                    "contact": vm.mobile
-                })
+                toSaveObject.phone = vm.mobile;
             }
 
             angular.forEach(vm.daysSchedule, function (d) {
@@ -82,10 +72,10 @@ angular.module('app')
             ProviderService.save(toSaveObject)
                 .then(function (result) {
                 vm.saving = false;
-                Messaging.success('sm', 'Success', 'Provider was successfully saved');
+                Messaging.success('sm', 'Success', 'Your details have been submitted successfully!');
                 $timeout(function() {
-                  $state.go('login');
-                }, 3000);
+                  $state.go('need-activate');
+                }, 1000);
 
             }, function (e) {
                 vm.saving = false;

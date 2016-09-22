@@ -196,7 +196,7 @@
 
                 },
                 resources: [
-                    { id: 'a', title: 'Health care providers' }
+                    { id: 'a', title: 'Appointments' }
                 ]
             });
 
@@ -334,7 +334,7 @@
                     },
                     //events: vm.events,
                     resources: [
-                        { id: 'a', title: 'Health care providers' }
+                        { id: 'a', title: 'Appointments' }
                     ],
                     eventResizeStop: function (calEvent, jsEvent, view) {
                         // saveEvent(calEvent, false);
