@@ -44,18 +44,18 @@
                       rc-step novalidate>
                     <br>
                     <fieldset>
-
                         <section>
                             <label class="input"
                                    ng-class="{'state-error': (firstForm.email.$dirty || rc.sampleWizard.submitted())  && firstForm.email.$invalid }">
                                 <i class="icon-append fa fa-envelope-o"></i>
-                                <input type="email" name="email" placeholder="Email address" required
+                                <input type="email" name="email" placeholder="Email address" required check-exists-user
                                        ng-model="vm.newProvider.email">
                                 <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
                             </label>
                             <em class="invalid">
                                 <span ng-show=" rc.sampleWizard.submitted() && firstForm.email.$error.required">Email is required</span>
                                 <span ng-show=" firstForm.email.$dirty && firstForm.email.$error.email">Invalid email</span>
+                                <em ng-show="firstForm.email.$dirty && firstForm.email.$error.checkExistsUser" class="invalid">User already exists!</em>
                             </em>
                         </section>
 
@@ -182,26 +182,21 @@
             <div class="form-actions">
                 <div class="row pager">
                     <div class="col-sm-12">
-                        <div class="pull-left btn btn-default" ng-click="vm.goBack()" ng-disabled="vm.saving">
-                            Cancel
-                        </div>
-
-                        <div class="pull-right">
-                            <a class="btn btn-default" ng-click="rc.sampleWizard.backward()"
+                        <div>
+                            <div class="pull-left btn btn-our" ng-click="rc.sampleWizard.backward()"
                                ng-disabled="vm.saving"
-                               ng-show="rc.sampleWizard.currentIndex > rc.sampleWizard.firstIndex">Back</a>
-                            <a class="btn btn-primary" data-loading-text="Please Wait..."
-                               ng-click="rc.sampleWizard.forward()"
+                               ng-show="rc.sampleWizard.currentIndex > rc.sampleWizard.firstIndex">Back</div>
+                            <div class="pull-right btn btn-our" data-loading-text="Please Wait..."
+                               ng-click="vm.goForward()"
                                ng-show="rc.sampleWizard.currentIndex < rc.sampleWizard.navigationLength"
-                                    >Next</a>
+                                    >Next</div>
 
-
-                            <a class="btn btn-primary " ng-disabled="vm.saving"
+                            <div class="pull-right btn btn-our " ng-disabled="vm.saving"
                                ng-click="rc.sampleWizard.forward()"
                                ng-show="rc.sampleWizard.currentIndex == rc.sampleWizard.navigationLength "
                                     >Submit
                                 <!--<span class="ladda-label" localize="Complete"></span>-->
-                            </a>
+                            </div>
                         </div>
 
                     </div>
