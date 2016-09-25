@@ -341,7 +341,7 @@ var _ = require('underscore');
         router.delete('/notifications/:date_time', function(req, res){
             logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.date_time + " notification requested to be deleted.");
 
-            notificationsRepository.delete(req.params.date_time,function(err,data){
+            notificationsRepository.delete(req.decoded.email, req.params.date_time,function(err,data){
                 if(err){
                     res.status(500).json({
                         success:false,
