@@ -11,18 +11,25 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.isProviderMenuItemActive = false;
         $scope.isPatientMenuItemActive = true;
 
-        $scope.forward= function(){
-            if ($state.$current.data.order==4){
+        $scope.$on('onPendingCheckUserExists', function(name, pendingState){
+            $scope.pendingState = pendingState;
+
+        });
+
+        $scope.forward= function() {
+            if ($state.$current.data.order == 4) {
                 return "Submit";
             } else {
                 return "Next";
             }
         };
         $scope.moveNext = function(){
-            if($state.$current.data.nextState){
-                $state.go($state.$current.data.nextState);
-            }else{
-                authService.signup($scope.newUser, successSignIn, errorSignIn);
+            if(!$scope.pendingState) {
+                if ($state.$current.data.nextState) {
+                    $state.go($state.$current.data.nextState);
+                } else {
+                    authService.signup($scope.newUser, successSignIn, errorSignIn);
+                }
             }
         };
 
@@ -30,8 +37,8 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
             $state.go($state.$current.data.previousState);
         };
 
-        $scope.previousButtonClass = function(){
-            return $state.$current.data.previousState?"previous":"previous disabled";
+        $scope.previousDisabled = function(){
+            return !$state.$current.data.previousState;
         };
 
         $scope.nextButtonClass = function(){

@@ -3,7 +3,7 @@
  */
 
 angular.module('app').controller('registerBasicCtrl',['$scope','$log','$state', function($scope, $log, $state){
-    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         $scope.formBasic.email.$setDirty();
         $scope.formBasic.password.$setDirty();
         $scope.formBasic.passwordConfirm.$setDirty();
@@ -13,9 +13,18 @@ angular.module('app').controller('registerBasicCtrl',['$scope','$log','$state', 
         $scope.formBasic.dateOfBirth.$setDirty();
         $scope.formBasic.password.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
         $scope.formBasic.passwordConfirm.$setValidity("matchPassword", $scope.newUser.password == $scope.newUser.passwordConfirm);
-        if(toState&&fromState&&toState.data&&fromState.data&&fromState.data.order&&fromState.data.order<toState.data.order && $scope.formBasic.$invalid){
-           event.preventDefault();
+
+        if (toState && fromState &&
+            toState.data && fromState.data &&
+            fromState.data.order &&
+            fromState.data.order < toState.data.order &&
+            $scope.formBasic.$invalid) {
+            event.preventDefault();
         }
+    });
+
+    $scope.$watch("formBasic.email.$pending", function() {
+        $scope.$emit('onPendingCheckUserExists',$scope.formBasic.email.$pending);
     });
 
     $scope.$watch("newUser.password", function() {

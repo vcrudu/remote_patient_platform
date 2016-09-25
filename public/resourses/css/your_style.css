@@ -209,3 +209,21 @@ background-color: #f4f411;
 .notification-icon .alarm {
     background: #ff5252;
 }
+
+.btn-our {
+    background:#8bc34a;
+    color: #ffffff;
+    min-width: 104px;
+}
+
+.inbox-info-bar {
+    border-bottom: none;
+}
+
+.email-open-header {
+    border-top: none;
+}
+
+.inbox-message {
+    border-bottom: none;
+}

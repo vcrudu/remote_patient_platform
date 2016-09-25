@@ -13,8 +13,15 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         controller: 'patientVitalSignsCtrl'
     }).state("patient.home", {
         url: "/patient.home",
-        templateUrl: "patient/home/patient.home.html",
-        controller: 'patientHomeCtrl'
+        templateUrl: "patient/home/patient.home.html"
+    }).state("patient.home.inbox", {
+        url: "/patient.home.inbox",
+        templateUrl: "patient/home/patient.home.inbox.html",
+        controller: 'patientHomeInboxCtrl as vm'
+    }).state("patient.home.message", {
+        url: "/patient.home.message",
+        templateUrl: "patient/home/patient.home.message.html",
+        controller: 'patientHomeMessageCtrl as vm'
     }).state("patient.vitalsigns", {
         url: "/patient.vitalsigns?token",
         templateUrl: "patient/vitalSigns/patient.vitalsigns.html",
