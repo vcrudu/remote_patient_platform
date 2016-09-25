@@ -322,19 +322,17 @@ var _ = require('underscore');
                 return;
             }
 
-            _.forEach(devicesList, function(device, index) {
-                notificationsRepository.delete(req.decoded.email, device.dateTime.toString(), function (err, data) {
-                    if (err) {
-                        res.status(500).json({
-                            success: false,
-                            error: err
-                        });
-                    } else {
-                        res.status(200).json({
-                            success: true
-                        });
-                    }
-                });
+            notificationsRepository.deleteAll(req.decoded.email, devicesList, function (err, data) {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        error: err
+                    });
+                } else {
+                    res.status(200).json({
+                        success: true
+                    });
+                }
             });
         });
 

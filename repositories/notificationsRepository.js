@@ -253,7 +253,37 @@
                     return;
                 }
 
-                loggerProvider.getLogger().debug("The user has been deleted successfully!");
+                loggerProvider.getLogger().debug("Notifications was deleted successfully!");
+                callback(null, data);
+            });
+        },
+
+        deleteAll : function(userId, listToDelete, callback) {
+            var dynamodb = getDb();
+
+            var deleteRequests = [];
+            for (var i=0; i < listToDelete.length; i++) {
+
+                deleteRequests.push({DeleteRequest : {
+                    Key: { userId: { S: userId }, dateTime:{ N:listToDelete[i].dateTime.toString() }},
+                }})
+
+            }
+
+            var params = {
+                RequestItems : {
+                    'Notification' : deleteRequests
+                }
+            };
+
+            dynamodb.batchWriteItem(params, function(err, data) {
+                if (err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                loggerProvider.getLogger().debug("Notifications were deleted successfully!");
                 callback(null, data);
             });
         },
