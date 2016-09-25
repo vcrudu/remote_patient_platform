@@ -67,6 +67,27 @@ h6.mdl-card__title-text {
     background: #2196F3;
 }
 
+.readingCard {
+    background: #8bc34a;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.infoCard {
+    background: #ffc107;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.alarmCard {
+    background: #ff5252;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
 .notification-title-summary {
 }
 

@@ -86,10 +86,11 @@
             });
         },
         handleView: function() {
+
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <div ref="infoCard">
+            return <div ref="infoCard" className="infoCard">
                 <Card className="message-card-wide mdl-shadow--2dp noselect">
                     <CardText>
                         <div className="notification-title-wrapper">
@@ -168,7 +169,7 @@
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <div ref="alarmCard">
+            return <div ref="alarmCard" className="alarmCard">
                 <Card className="message-card-wide mdl-shadow--2dp noselect">
                     <CardText>
                         <div className="notification-title-wrapper">
@@ -241,12 +242,18 @@
                     });
                 }
             });
+
+            $(readingCard).height($(readingCard).height());
         },
         handleView: function() {
-            Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
+            var readingCard = this.refs.readingCard;
+            $(readingCard).find("div").first().animate({left: '1000px'}, 300, function(){
+                $(readingCard).fadeOut("fast");
+            });
+            //Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function() {
-            return <div ref="readingCard">
+            return <div ref="readingCard" className="readingCard">
                 <Card className="message-card-wide mdl-shadow--2dp noselect">
                     <CardText>
                         <div className="notification-title-wrapper">

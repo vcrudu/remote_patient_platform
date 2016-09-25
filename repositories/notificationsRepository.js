@@ -235,6 +235,27 @@
                 loggerProvider.getLogger().debug("The notification has been inserted successfully.");
                 callback(null, data);
             });
-        }
+        },
+
+        delete : function(userId, dateTime, callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                TableName: TABLE_NAME
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                loggerProvider.getLogger().debug("The user has been deleted successfully!");
+                callback(null, data);
+            });
+        },
     };
 })();

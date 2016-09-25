@@ -87,12 +87,13 @@
             });
         },
         handleView: function () {
+
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "infoCard" },
+                { ref: "infoCard", className: "infoCard" },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },
@@ -192,7 +193,7 @@
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "alarmCard" },
+                { ref: "alarmCard", className: "alarmCard" },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },
@@ -285,14 +286,20 @@
                     Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
                 }
             });
+
+            $(readingCard).height($(readingCard).height());
         },
         handleView: function () {
-            Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
+            var readingCard = this.refs.readingCard;
+            $(readingCard).find("div").first().animate({ left: '1000px' }, 300, function () {
+                $(readingCard).fadeOut("fast");
+            });
+            //Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "readingCard" },
+                { ref: "readingCard", className: "readingCard" },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },

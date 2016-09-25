@@ -309,6 +309,35 @@ var _ = require('underscore');
             });
         });
 
+        router.delete('/notifications', function(req, res){
+            logging.getLogger().trace({url:req.url,userId:req.decoded.email}, " notifications requested to be deleted.");
+
+            var devicesList = req.body;
+
+            if(devicesList.constructor!==Array) {
+                res.status(400).json({
+                    success: false,
+                    error: "The body should be array of notifications. Please provide entity id as parameter."
+                });
+                return;
+            }
+
+            _.forEach(devicesList, function(device, index) {
+                notificationsRepository.delete(req.decoded.email, device.dateTime.toString(), function (err, data) {
+                    if (err) {
+                        res.status(500).json({
+                            success: false,
+                            error: err
+                        });
+                    } else {
+                        res.status(200).json({
+                            success: true
+                        });
+                    }
+                });
+            });
+        });
+
         router.delete('/notifications/:date_time', function(req, res){
             logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.date_time + " notification requested to be deleted.");
 
