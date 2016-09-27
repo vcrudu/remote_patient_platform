@@ -93,7 +93,7 @@
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "infoCard", className: "infoCard" },
+                { ref: "infoCard", className: "infoCard", id: this.props.serverId },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },
@@ -193,7 +193,7 @@
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "alarmCard", className: "alarmCard" },
+                { ref: "alarmCard", className: "alarmCard", id: this.props.serverId },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },
@@ -291,15 +291,19 @@
         },
         handleView: function () {
             var readingCard = this.refs.readingCard;
-            $(readingCard).find("div").first().animate({ left: '1000px' }, 300, function () {
-                $(readingCard).fadeOut("fast");
-            });
-            //Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
+
+            /*Bridge.Timeline.deleteNotificationCards(function(deletionResult) {
+                $(readingCard).find("div").first().animate({left: '1000px'}, 300, function(){
+                    $(readingCard).fadeOut("fast");
+                });
+            });*/
+
+            Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
         render: function () {
             return React.createElement(
                 "div",
-                { ref: "readingCard", className: "readingCard" },
+                { ref: "readingCard", className: "readingCard", id: this.props.serverId },
                 React.createElement(
                     Card,
                     { className: "message-card-wide mdl-shadow--2dp noselect" },
@@ -441,10 +445,17 @@
                 return previousState;
             });
         },
+        deleteNotificationsCallback: function (notifications) {
+            var component = this;
+            var notifications = notifications;
+
+            alert("delete notifications callback raised");
+        },
         componentDidMount: function () {
             var component = this;
 
             Bridge.notificationCallback = this.notificationCallback;
+            Bridge.deleteNotificationsCallback = this.deleteNotificationsCallback;
 
             Bridge.Timeline.clearSelectedCards(function (clearResult) {
                 Bridge.Timeline.getNotifications(function (result) {
@@ -485,6 +496,7 @@
         },
         componentWillUnmount: function () {
             Bridge.notificationCallback = undefined;
+            Bridge.deleteNotificationsCallback = undefined;
         },
         onChange: function (tabId) {
             if (tabId == 0) {

@@ -315,11 +315,16 @@ var _ = require('underscore');
             var devicesList = req.body;
 
             if(devicesList.constructor!==Array) {
-                res.status(400).json({
-                    success: false,
-                    error: "The body should be array of notifications. Please provide entity id as parameter."
-                });
-                return;
+                if (devicesList.notifications && devicesList.notifications.constructor === Array) {
+                    devicesList = devicesList.notifications;
+                }
+                else {
+                    res.status(400).json({
+                        success: false,
+                        error: "The body should be array of notifications. Please provide entity id as parameter."
+                    });
+                    return;
+                }
             }
 
             notificationsRepository.deleteAll(req.decoded.email, devicesList, function (err, data) {
