@@ -266,7 +266,7 @@
 
                 deleteRequests.push({DeleteRequest : {
                     Key: { userId: { S: userId }, dateTime:{ N:listToDelete[i].dateTime.toString() }},
-                }})
+                }});
 
             }
 
