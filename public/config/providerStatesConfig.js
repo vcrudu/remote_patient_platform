@@ -23,7 +23,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
     }).state("provider.patient", {
         url: "/patient/:userName",
         templateUrl: "provider/appointments/provider.appointments.patient.html",
-        controller: 'providerAppointmentsPatientViewCtrl',
+        controller: 'providerAppointmentsPatientViewCtrl'
     }).state("provider.settings", {
         url: "/provider.settings",
         templateUrl: "provider/settings/provider.settings.html",
@@ -36,6 +36,10 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.alarm_builder",
         templateUrl: "provider/alarms/provider.alarm.builder.html",
         controller: "providerAlarmBuilderCtrl"
+    }).state("provider.group_alarm_builder", {
+        url: "/provider.group_alarm_builder",
+        templateUrl: "provider/alarms/provider.group.alarm.builder.html",
+        controller: "providerGroupAlarmBuilderCtrl"
     }).state("provider.alarm_builder_edit", {
         url: "/provider.alarm_builder/:alarmName",
         templateUrl: "provider/alarms/provider.alarm.builder.html",
@@ -50,7 +54,24 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         controller: 'providerPatientsGroupsCtrl'
     }).state("provider.patients_group_members", {
         url: "/provider.patients_group_members/:groupName",
+        templateUrl: "provider/patients_groups/provider.patients_group_members_and_alarm_rules.html",
+        controller: 'providerPatientsGroupMembersCtrl'
+    }).state("provider.patients_group_members.members", {
+        url: "/provider.patients_group_members/:groupName",
         templateUrl: "provider/patients_groups/provider.patients_group_members.html",
         controller: 'providerPatientsGroupMembersCtrl'
+    }).state("provider.patients_group_members.groupalarmrules", {
+        url: "/provider.group_alarm_list/:groupName",
+        templateUrl: "provider/alarms/provider.group.alarm.list.html",
+        controller: "providerGroupAlarmList"
+    }).state("provider.patients_group_members.alarmbuilder", {
+        url: "/provider.group_alarm_builder/:groupName",
+        templateUrl: "provider/alarms/provider.group.alarm.builder.html",
+        controller: "providerGroupAlarmBuilderCtrl"
+    }).state("provider.group_alarm_builder_edit", {
+        url: "/provider.group_alarm_builder/:alarmName/:groupName",
+        templateUrl: "provider/alarms/provider.group.alarm.builder.html",
+        controller: "providerGroupAlarmBuilderCtrl"
+    
     });
 }]);

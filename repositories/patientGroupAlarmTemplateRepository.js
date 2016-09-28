@@ -8,7 +8,7 @@
     var alarmTemplateDbMapper             = require('./alarmTemplateDbMapper');
     var connectionOptions = require('./awsOptions');
     var _ = require('underscore');
-    var TABLE_NAME = 'GlobalAlarmTemplate';
+    var TABLE_NAME = 'PatientGroupAlarmTemplate';
 
     var getDb = function(){
 
@@ -19,15 +19,28 @@
     };
 
     module.exports = {
-        getAll: function(callback) {
-            var scanParams = {
-                TableName: TABLE_NAME
+        getAll: function(byGroupId, callback) {
+
+
+
+            var queryParams = {
+                TableName: TABLE_NAME,
+                KeyConditionExpression: 'groupId=:groupId',
+
+                ExpressionAttributeValues: {
+                    ":groupId": {S: byGroupId.groupId}
+                }
             };
 
             var dynamodb = getDb();
 
-            dynamodb.scan(scanParams, function(err, data){
+            dynamodb.query(queryParams, function(err, data){
+
+             
+
                 if(err) {
+
+
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
@@ -35,20 +48,29 @@
                 loggerProvider.getLogger().debug("The global alarms has been retrieved successfully.");
                 var globalAlarms=[];
                 if(data.Items) {
+
                     _.forEach(data.Items, function(item){
-                        var globalAlarm = alarmTemplateDbMapper.mapGlobalAlarmFromDbEntity(item);
+                        var globalAlarm = alarmTemplateDbMapper.mapGroupAlarmFromDbEntity(item);
                         globalAlarms.push(globalAlarm);
                     });
-                    callback(null, globalAlarms);
+
+   
+                    callback(globalAlarms, null);
                 }else{
                     callback(null, null);
                 }
             });
         },
-        
-        get: function(alarmName, callback){
+
+        get: function(byGroupId, alarmName, callback){
+
+
+          
+
             var params = {
-                Key: { alarmName: { S: alarmName } },
+                Key: {
+                    groupId : { S: byGroupId},
+                    alarmName: { S: alarmName } },
                 TableName:TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL'
             };
@@ -63,28 +85,28 @@
                 }
                 loggerProvider.getLogger().debug("The alarm has been found successfully.");
                 if(data.Item) {
-                    var globalAlarmTemplate = alarmTemplateDbMapper.mapGlobalAlarmFromDbEntity(data.Item);
+                    var globalAlarmTemplate = alarmTemplateDbMapper.mapGroupAlarmFromDbEntity(data.Item);
                     callback(null, globalAlarmTemplate);
                 }else{
                     callback(null, null);
                 }
             });
         },
+        
+       
 
-      
-
-        new : function(globalAlarm, callback) {
+        new : function(byGroupId, groupAlarm, callback) {
 
             var dynamodb = getDb();
-          
+
             var params = {
-                Item: alarmTemplateDbMapper.mapGlobalAlarmToDbEntity(globalAlarm),
+                Item: alarmTemplateDbMapper.mapGroupAlarmToDbEntity(byGroupId, groupAlarm),
                 TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL',
                 ReturnItemCollectionMetrics: 'SIZE',
                 ReturnValues: 'ALL_OLD'
             };
-         
+
             dynamodb.putItem(params, function(err, data) {
                 if(err){
                     loggerProvider.getLogger().error(err);
@@ -97,14 +119,20 @@
             });
         },
 
-        update : function(globalAlarm, callback) {
+        update : function(byGroupId, groupAlarm, callback) {
+
+
+       //    console.log("SUNTEM IN INTERIORUL UPDATE!!!!!!!!");
+      //      console.log("GROUP ID IS === "+byGroupId);
+       //     console.log("ALARM NAME IS === "+groupAlarm.alarmName);
 
             var dynamodb = getDb();
 
-            var dbEntity = alarmTemplateDbMapper.mapGlobalAlarmToDbEntity(globalAlarm);
+            var dbEntity = alarmTemplateDbMapper.mapGroupAlarmToDbEntity(byGroupId, groupAlarm);
 
+       //     console.log("DBENTITY CU SUCCESSS!!!!!!!!!!!!!!!!!");
             var params = {
-                Key: { alarmName: { S: globalAlarm.alarmName }},
+                Key: { groupId : { S: byGroupId}, alarmName: { S: groupAlarm.alarmName }},
                 TableName:TABLE_NAME,
                 ExpressionAttributeNames: {"#rules": "rules"},
                 ExpressionAttributeValues: {
@@ -123,16 +151,17 @@
                     return;
                 }
 
-                callback(null, globalAlarm);
+                callback(null, groupAlarm);
             });
         },
 
-        delete : function(alarmName, callback){
+        delete : function(byGroupId, alarmName, callback){
             var dynamodb = getDb();
 
             var params = {
                 Key: {
-                    alarmName: { S: alarmName}
+            groupId : { S: byGroupId},
+            alarmName: { S: alarmName}
                 },
                 TableName: TABLE_NAME
             };
@@ -149,5 +178,5 @@
             });
         }
     };
-    
+
 })();

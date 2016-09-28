@@ -1,0 +1,46 @@
+<div id="ribbon">
+	<!--			<span class="ribbon-button-alignment">
+					<span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true" data-reset-msg="Would you like to RESET all your saved widgets and clear LocalStorage?"><i class="fa fa-refresh"></i></span>
+				</span>  -->
+
+    <!-- breadcrumb -->
+    <ol class="breadcrumb"><li>Patients Groups</li><li>{{currentGroupName}}</li></ol>
+    <!-- end breadcrumb -->
+
+</div>
+
+
+
+
+
+
+
+
+<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false"
+     ng-controller="patientDevicesCtrl">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-stethoscope"></i> </span>
+
+     <!--   <h2>{{currentGroupName}} group members and Alarm rules</h2>  -->
+
+
+        <ul class="nav nav-tabs pull-right in">
+            <li ui-sref-active="active">
+                <a ui-sref="provider.patients_group_members.members">  <span
+                        class="hidden-mobile hidden-tablet">Patients group members</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="provider.patients_group_members.groupalarmrules">  <span
+                        class="hidden-mobile hidden-tablet">Alarm rules</span> </a>
+            </li>
+
+        </ul>
+
+
+    </header>
+    <div>
+        <div class="widget-body">
+            <ui-view></ui-view>
+        </div>
+    </div>
+</div>

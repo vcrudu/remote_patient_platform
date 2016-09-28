@@ -1,32 +1,40 @@
 /**
+ * Created by developer1 on 9/21/2016.
+ */
+/**
  * Created by Victor on 5/26/2016.
  */
 
 (function() {
-    angular.module('app').controller('providerAlarmListCtrl', ["$scope", "$http", "_", "appSettings", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
-        function ($scope, $http, _, appSettings, $localStorage, $state, alarmBuilderFactoryService, toastr) {
-          
-        
-          
+    angular.module('app').controller("providerGroupAlarmList", ["$scope", "$http", "_", "appSettings", "$stateParams", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
+        function ($scope, $http, _, appSettings, $stateParams, $localStorage, $state, alarmBuilderFactoryService, toastr) {
+
+
+
             $scope.alarmTemplates = [];
             $scope.availableTemplates = [];
 
             $scope.handleAlarmTemplateSelected = function(template) {
-                $state.go("provider.alarm_builder_edit", {alarmName: template.alarmName});
+
+
+                $state.go("provider.group_alarm_builder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
             };
 
             $scope.deleteAlarmTemplate = function(template) {
+
+
                 var req = {
                     method: 'DELETE',
-                    url: appSettings.getServerUrl() + '/v1/api//globalalarm/' + template.alarmName,
+                    url: appSettings.getServerUrl() + '/v1/api//groupalarm?alarmName=' + template.alarmName+"&groupname="+$stateParams.groupName,
                     headers: {
                         'x-access-token': $localStorage.user.token
                     }
+
                 };
 
                 $http(req).success(function (res) {
                     if (res.success) {
-                        toastr.success('Alarm Template deleted!','Success');
+                        toastr.success('Group Alarm Template deleted!','Success');
 
                         var index = -1;
                         for(var i=0; i<$scope.alarmTemplates.length;i++) {
@@ -37,7 +45,7 @@
                         }
 
                         if (index > -1) {
-                            alert(index);
+                         //   alert(index);
                             $scope.alarmTemplates.splice(index, 1);
                         }
                     } else {
@@ -52,9 +60,11 @@
                 $http.get("/provider/alarms/availableTemplates.json").success(function(data) {
                     $scope.availableTemplates = data;
 
+                 
+
                     var req = {
                         method: 'GET',
-                        url: appSettings.getServerUrl() + '/v1/api/globalalarms',
+                        url: appSettings.getServerUrl() + '/v1/api/groupalarms/' + $stateParams.groupName,
                         headers: {
                             'x-access-token': $localStorage.user.token
                         }
@@ -66,6 +76,8 @@
                                 $scope.alarmTemplates.push(item);
                             });
 
+
+
                             _.each($scope.alarmTemplates, function(alarmTemplate) {
                                 alarmTemplate.rulesText = [];
                                 if (alarmTemplate.rules) {
@@ -74,7 +86,7 @@
 
                                         if (template != null) {
                                             var text = "<b><u>" + (rule.prefix ? "where" : "where not") + "</u></b> " + template.phrase;
-                                            
+
                                             var args = rule.arguments;
 
                                             switch (template.name) {
@@ -108,7 +120,7 @@
                                                     text = text.replace("<u><b>value</b></u>", "<u><b>"+ textValue +"</b></u>");
                                                     break;
                                             }
-                                            
+
                                             alarmTemplate.rulesText.push(text);
                                         }
                                     });
@@ -116,8 +128,11 @@
                             });
 
                         } else {
+
+                          
                         }
                     }).error(function (err) {
+                       // console.log("EROARE !!!  ");
 
                     });
                 });

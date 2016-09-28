@@ -50,10 +50,11 @@ var util = require('util');
             });
         });
 
-        router.post('/patientsgroup', function (req, res) {
+        router.post('/add-patients-group', function (req, res) {
 
+           
 
-            var savedItem = {};
+             var savedItem = {};
             savedItem.providerId = req.decoded.email;
             savedItem.groupName = req.body.groupName;
 
@@ -61,14 +62,14 @@ var util = require('util');
             patientsGroupRepository.save(savedItem, function (err, data) {
                 if (err) {
                     res.status(500).json({
-                        success: false,
+                        success: false
 
                     });
                 } else {
 
                     res.json({
-                        success: true,
-                        description: "The PatientsGroup Item was saved!!!"
+                        success: true
+
                     });
 
                 }

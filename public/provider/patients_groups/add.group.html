@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
+        Input New group name </h4>
+</div>
+<div class="modal-body hidden-overflow ">
+
+    <form name="groupNameForm" novalidate class="smart-form" id="scheduleForm">
+
+        <section>
+            <label class="text">
+                <input type="text"  name="groupName" id="groupName" required  check-exists-group-name placeholder="New Group name" ng-model="groupName"
+                       autofocus >
+            </label>
+            <em ng-show="groupNameForm.groupName.$dirty && groupNameForm.groupName.$error.required" class="invalid">Group Name is required.</em>
+            <em ng-show="groupNameForm.groupName.$dirty && groupNameForm.groupName.$error.checkExistsGroupName" class="invalid">Group Name already exists!</em>
+
+
+        </section>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="apply()" ng-disabled="groupNameForm.$invalid" >Apply</button>
+</div>

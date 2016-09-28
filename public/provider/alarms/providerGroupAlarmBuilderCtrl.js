@@ -2,8 +2,17 @@
  * Created by Victor on 5/6/2016.
  */
 (function() {
-    angular.module('app').controller('providerAlarmBuilderCtrl', ["$scope", "$http", "$modal", "alarmBuilderFactoryService", "appSettings", "$localStorage", "$state", "_", "toastr",
-        function ($scope, $http, $modal, alarmBuilderFactoryService, appSettings, $localStorage, $state, _, toastr) {
+    angular.module('app').controller('providerGroupAlarmBuilderCtrl', ["$scope", "$http", "$modal", "$stateParams","alarmBuilderFactoryService", "appSettings", "$localStorage", "$state", "_", "toastr",
+        function ($scope, $http, $modal, $stateParams, alarmBuilderFactoryService, appSettings, $localStorage, $state, _, toastr) {
+
+        $scope.groupName = $stateParams.groupName;
+
+         var   byGroupName = $stateParams.groupName;
+        //   alert("GROUP NAME IS ====    "+$state.params.groupName);
+
+       //     alert("ALARM NAME IS=====    "+$state.params.alarmName);
+
+
             $scope.alarmTemplateModel = {
                 alarmName: "",
                 alarmDescription: "",
@@ -46,21 +55,22 @@
 
                 var req = {
                     method: 'POST',
-                    url: appSettings.getServerUrl() + '/v1/api/globalalarm',
+                    url: appSettings.getServerUrl() + '/v1/api/groupalarm',
                     headers: {
                         'x-access-token': $localStorage.user.token
                     },
-                    data: {alarmTemplate: alarmTemplateToPost}
+                    data: {alarmTemplate: alarmTemplateToPost,
+                           groupname: $stateParams.groupName}
                 };
 
                 $http(req).success(function (res) {
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
-                        toastr.success('Alarm Template saved!','Success');
+                        toastr.success('Group Alarm Template saved!','Success');
                     } else {
                     }
                 }).error(function (err) {
-                    
+
                 });
             }
 
@@ -111,10 +121,10 @@
                     element.parent().remove();
 
                     for (var i =0; i < $scope.conditions.length; i++)
-                    if ($scope.conditions[i].id === conditionObj.id) {
-                        $scope.conditions.splice(i,1);
-                        break;
-                    }
+                        if ($scope.conditions[i].id === conditionObj.id) {
+                            $scope.conditions.splice(i,1);
+                            break;
+                        }
                 }
             }
 
@@ -204,23 +214,32 @@
                 $http.get("/provider/alarms/availableTemplates.json").success(function(data) {
                     $scope.availableTemplates = data;
 
+
+        //            alert("$state.params   == "+$state.params);
+          //          alert("$state.params.alarmName   == "+$state.params.alarmName);
+
                     if ($state && $state.params && $state.params.alarmName)
+                    
+             //           alert("AM AJUNS LA PARAMETRUL ALARMNAME SI GROUPNAME!!!!!!")
+          //          alert("ALARM NAME DIN  ESTE ===== "+$state.params.alarmName);
+          //          alert("GROUP NAME ESTE    == "+$stateParams.groupName);
                     {
                         var req = {
                             method: 'GET',
-                            url: appSettings.getServerUrl() + '/v1/api/globalalarms',
+                            url: appSettings.getServerUrl() + '/v1/api/groupalarms/' + $stateParams.groupName,
                             headers: {
                                 'x-access-token': $localStorage.user.token
                             }
                         };
-
+                        
                         $http(req).success(function (res) {
                             if (res.success) {
-                                var foundAlarm = _.find(res.items, function (globalAlarm) {
-                                    console.log("GLOBALALRM IS !!!!!!!!!!!!!!!!     "+globalAlarm.alarmName);
-                                    console.log("GLOBAL ALARM DESCRIPTIONO !!!!!!!!    "+globalAlarm.alarmDescription);
+                               
 
-                                    return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
+                                var foundAlarm = _.find(res.items, function (globalAlarm) { return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
+
+                               console.log("FOUNDALARM == "+foundAlarm.alarmName);
+                               console.log("ALARMDESCRIPTION ===  "+ foundAlarm.alarmDescription);
 
                                 if (foundAlarm) {
                                     $scope.alarmTemplateModel.alarmName = foundAlarm.alarmName;
@@ -253,8 +272,10 @@
                                                     condition.operator = operator;
                                                     condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
 
-                                                    var value = condition.value1.replace("'", "");
-                                                    value = value.replace("'", "");
+                                                  //  var value = condition.value1.replace("'", "");
+                                                    //    value = value.replace("'", "");
+
+                                                        var value = condition.value1;
 
                                                     condition.value2 = undefined;
                                                     parsedCondition = parsedCondition.replace("$Operator$", "<span data-param=\"" + operator.value + "\" class=\"Operator\" ng-click=\"setOperator(this)\">" + operator.value + "</span>");
@@ -271,8 +292,7 @@
                             }
                         }).error(function (err) {
 
-                        });
-                    }
+                        });                    }
                 });
             };
 

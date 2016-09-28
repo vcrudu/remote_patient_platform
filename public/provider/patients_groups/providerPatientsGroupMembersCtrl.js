@@ -4,7 +4,10 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
     'toastr', 'authService', '$localStorage', 'patientsGroupMembersService', '$modal','$rootScope','$stateParams', 'appSettings',
     function ($scope, $log, $http, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams, appSettings) {
 
-        
+
+
+         $scope.currentGroupName = $stateParams.groupName;
+
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
 
@@ -20,7 +23,7 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
         $scope.addPatient = function () {
 
             var modal = $modal.open({
-                templateUrl: 'provider/patients_groups/nhs.dialog.html',
+                templateUrl: 'provider/patients_groups/add.nhs.html',
                 controller: function ($scope, $modalInstance) {
 
 
@@ -33,39 +36,30 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
 
                     $scope.apply = function () {
 
-                       
-                      var post_data = {
-                            'patientId': $localStorage.patientId,
-                            'groupName': $stateParams.groupName,
-                            'providerId': $localStorage.user.email
+                     
+                        var post_data = {
+                            "patientId": $localStorage.patientId,
+                            "groupName": $stateParams.groupName,
+                            "providerId": $localStorage.user.email
                         };
 
+                        var config = {
 
-
-
-
-
-
-                        var reqOptions = {
-                            path: "/v1/api/patient-member-group-invitation",
-                            method: "POST",
-                            body: post_data,
                             headers: {
                                 'Accept':'application/json',
                                 'Content-Type': 'application/json',
                                 'x-access-token': $localStorage.user.token
                             }
                         };
+                     
 
-                        $http(reqOptions).then(function () {
+                        $http.post("/v1/api/patient-member-group-invitation",post_data, config).then(function () {
+                            $modalInstance.dismiss();
                             toastr.success('Invitation was sent successfully !');
                         }, function () {
                             toastr.error('Invitation was not sent !');
                         });
-
-
-
-                       };
+                      };
                 },
                 resolve: {
                     event: function () {

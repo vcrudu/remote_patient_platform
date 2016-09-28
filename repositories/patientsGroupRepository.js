@@ -68,7 +68,7 @@
                 Key: {
                     "providerId": {S: patientsGroup.providerId},
                     "groupName": {S: patientsGroup.groupName}
-                },
+                }
             };
 
             this.dynamoDb.getItem(params, function (err, data) {
@@ -79,13 +79,13 @@
                     return;
                 }
 
-                if (data.Item) {
+                if (data.Item!==undefined) {
                     var mappedPatientsGroupObject = mapPatientsGroupFromDbEntity(data.Item);
 
                     callback(null, mappedPatientsGroupObject);
 
                 } else {
-                    callback(null, null);
+                    callback(true, null);
                 }
             });
         },
