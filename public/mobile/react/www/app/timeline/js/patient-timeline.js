@@ -85,6 +85,14 @@
                     Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
                 }
             });
+
+            if (component.props.isSelected) {
+                $(infoCard).find(".material-icons").text("done");
+                $(infoCard).find(".material-icons").addClass("selected");
+            } else if ($(infoCard).find(".material-icons").hasClass("selected")) {
+                $(infoCard).find(".material-icons").text("alarm");
+                $(infoCard).find(".material-icons").removeClass("selected");
+            }
         },
         handleView: function () {
 
@@ -186,6 +194,14 @@
                     Bridge.Timeline.changeSelectedCard(component.props.serverId, true, function (result) {});
                 }
             });
+
+            if (component.props.isSelected) {
+                $(alarmCard).find(".material-icons").text("done");
+                $(alarmCard).find(".material-icons").addClass("selected");
+            } else if ($(alarmCard).find(".material-icons").hasClass("selected")) {
+                $(alarmCard).find(".material-icons").text("av_timer");
+                $(alarmCard).find(".material-icons").removeClass("selected");
+            }
         },
         handleView: function () {
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
@@ -287,16 +303,18 @@
                 }
             });
 
+            if (component.props.isSelected) {
+                $(readingCard).find(".material-icons").text("done");
+                $(readingCard).find(".material-icons").addClass("selected");
+            } else if ($(readingCard).find(".material-icons").hasClass("selected")) {
+                $(readingCard).find(".material-icons").text("done");
+                $(readingCard).find(".material-icons").removeClass("selected");
+            }
+
             $(readingCard).height($(readingCard).height());
         },
         handleView: function () {
             var readingCard = this.refs.readingCard;
-
-            /*Bridge.Timeline.deleteNotificationCards(function(deletionResult) {
-                $(readingCard).find("div").first().animate({left: '1000px'}, 300, function(){
-                    $(readingCard).fadeOut("fast");
-                });
-            });*/
 
             Bridge.Redirect.redirectToWithLevelsUp("timeline/timeline-message.html?messageId=" + this.props.serverId, 2);
         },
@@ -446,10 +464,12 @@
             });
         },
         deleteNotificationsCallback: function (notifications) {
-            var component = this;
-            var notifications = notifications;
-
-            alert("delete notifications callback raised");
+            for (var i = 0; i < notifications.length; i++) {
+                var notificationCard = $("#" + notifications[i].dateTime);
+                notificationCard.find("div").first().animate({ left: '1000px' }, 300, function () {
+                    $(this).parent().fadeOut("fast");
+                });
+            }
         },
         componentDidMount: function () {
             var component = this;
@@ -499,15 +519,65 @@
             Bridge.deleteNotificationsCallback = undefined;
         },
         onChange: function (tabId) {
-            if (tabId == 0) {
-                this.setState({ activeTab: tabId, cards: this.state.allCards });
-            } else if (tabId == 1) {
-                this.setState({ activeTab: tabId, cards: this.state.infoCards });
-            } else if (tabId == 2) {
-                this.setState({ activeTab: tabId, cards: this.state.alarmCards });
-            } else if (tabId == 3) {
-                this.setState({ activeTab: tabId, cards: this.state.readingsCards });
-            }
+            var component = this;
+            Bridge.Timeline.getSelectedCards(function (selectedCards) {
+                if (selectedCards.success) {
+                    var sCards = selectedCards.data;
+                    var allCardsArray = component.state.allCards;
+                    for (var i = 0; i < allCardsArray.length; i++) {
+                        allCardsArray[i].isSelected = false;
+                        for (var j = 0; j < sCards.length; j++) {
+                            if (sCards[j].dateTime === allCardsArray[i].dateTime) {
+                                allCardsArray[i].isSelected = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    var infoCardsArray = component.state.infoCards;
+                    for (var i = 0; i < infoCardsArray.length; i++) {
+                        infoCardsArray[i].isSelected = false;
+                        for (var j = 0; j < sCards.length; j++) {
+                            if (sCards[j].dateTime === infoCardsArray[i].dateTime) {
+                                infoCardsArray[i].isSelected = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    var alarmCardsArray = component.state.alarmCards;
+                    for (var i = 0; i < alarmCardsArray.length; i++) {
+                        alarmCardsArray[i].isSelected = false;
+                        for (var j = 0; j < sCards.length; j++) {
+                            if (sCards[j].dateTime === alarmCardsArray[i].dateTime) {
+                                alarmCardsArray[i].isSelected = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    var readingsCardsArray = component.state.readingsCards;
+                    for (var i = 0; i < readingsCardsArray.length; i++) {
+                        readingsCardsArray[i].isSelected = false;
+                        for (var j = 0; j < sCards.length; j++) {
+                            if (sCards[j].dateTime === readingsCardsArray[i].dateTime) {
+                                readingsCardsArray[i].isSelected = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (tabId == 0) {
+                        component.setState({ activeTab: tabId, cards: allCardsArray });
+                    } else if (tabId == 1) {
+                        component.setState({ activeTab: tabId, cards: infoCardsArray });
+                    } else if (tabId == 2) {
+                        component.setState({ activeTab: tabId, cards: alarmCardsArray });
+                    } else if (tabId == 3) {
+                        component.setState({ activeTab: tabId, cards: readingsCardsArray });
+                    }
+                }
+            });
         },
         render: function () {
             var component = this;
@@ -560,11 +630,11 @@
                                         case "date":
                                             return React.createElement(DateCard, { key: card.id + "_date", title: card.title, cardId: card.id + "_date" });
                                         case "info":
-                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                            return React.createElement(InfoCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read, isSelected: card.isSelected });
                                         case "alarm":
-                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                            return React.createElement(AlarmCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read, isSelected: card.isSelected });
                                         case "reading":
-                                            return React.createElement(ReadingCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read });
+                                            return React.createElement(ReadingCard, { key: card.dateTime + "_all", serverId: card.dateTime, time: card.timeString, title: card.title, message: card.content, summary: card.summary, cardId: card.dateTime + "_all", isNew: !card.read, isSelected: card.isSelected });
                                     }
                                 })
                             )
