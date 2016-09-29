@@ -5,9 +5,8 @@
 (function(){
 
     var usersRepository = require('../repositories').Users;
-    var sendConfirmLink =require ('../services/emailService').sendSubscriptionConfirmation;
+    var emailService =require ('../services/emailService');
     var jwt = require('jsonwebtoken');
-    var secret = 'shhhhh';//to-do insert in config secret
 
     module.exports.init = function(app) {
         app.post('/confirm', function (req, res) {
@@ -18,23 +17,24 @@
                         message: err
                     });
                 } else {
-                       if(user.isActive){
-                        res.json({
-                            success: false,
-                            message:"User is active, please login",
-                            email:req.body.email
-                        });
-                       } else {
-                           sendConfirmLink(req.body.email, function () {
+                       if(user.type=='patient'){
+                           emailService.sendPatientSubscriptionConfirmation(user.email, function () {
                                res.json({
                                    success: true,
-                                   message: "Message was sent successful, please verify emailbox",
+                                   message:"Email has been sent successfully.",
+                                   email:req.body.email
                                });
-                               console.log('send email1 ' + user.email);
+                           });
+
+                       } else {
+                           emailService.sendProviderSubscriptionConfirmation(user.email, function () {
+                               res.json({
+                                   success: true,
+                                   message:"Email has been sent successfully.",
+                                   email:req.body.email
+                               });
                            });
                        }
-
-
                 }
             });
         });

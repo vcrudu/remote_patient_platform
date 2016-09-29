@@ -25,7 +25,7 @@
 }
 
 .progress-bar-result {
-    height: 8px;
+    height: 16px;
     margin-top: 4px;
 }
 
@@ -41,4 +41,54 @@
     position: fixed;
     right: 32px;
     top: 10px;
+}
+
+.explain-hide {
+    display: none;
+}
+
+.explain {
+    color: rgba(0, 0, 0, 0.87) !important;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.bullet {
+    font-weight: 800;
+}
+
+.group_single ul {
+    display: block;
+    padding: 8px 0;
+    list-style: none;
+}
+
+.group_single ul > li {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    line-height: 1;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    padding: 16px;
+    cursor: default;
+    color: rgba(0,0,0,.87);
+    overflow: hidden;
+}
+
+.group_single ul > li > label {
+    position: relative;
+    z-index: 1;
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    padding: 0;
 }

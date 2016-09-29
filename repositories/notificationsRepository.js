@@ -155,6 +155,64 @@
             });
         },
 
+        getPagedList : function(userId, category, startTime, endTime, pageSize, pageNumber, callback){
+
+            var filterExpression='';
+            var params;
+            if(category!='All') {
+                filterExpression = '#category=:category';
+
+                params = {
+                    KeyConditionExpression: 'userId=:userId',
+
+                    ExpressionAttributeNames: {
+                        "#category": "category"
+                    },
+
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId},
+                        ":category": {"S": category}
+                    },
+                    ScanIndexForward:false,
+
+                    FilterExpression: filterExpression,
+                    TableName: TABLE_NAME,
+                    Limit: pageSize
+                };
+            }else{
+                params = {
+                    KeyConditionExpression: 'userId=:userId',
+
+                    ExpressionAttributeValues: {
+                        ":userId": {"S": userId}
+                    },
+                    ScanIndexForward:false,
+                    TableName: TABLE_NAME,
+                    Limit: pageSize
+                };
+            }
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                loggerProvider.getLogger().debug("The notifications has been retrieved successfully.");
+                var results=[];
+                if(data.Items) {
+                    _.forEach(data.Items, function(item){
+                        var notification = notificationDbMapper.mapNotificationFromDbEntity(item);
+                        results.push(notification);
+                    });
+                    callback(null, results);
+                }else{
+                    callback(null, null);
+                }
+            });
+        },
+
         save : function(notification, callback) {
 
             var dynamodb = getDb();
@@ -177,6 +235,57 @@
                 loggerProvider.getLogger().debug("The notification has been inserted successfully.");
                 callback(null, data);
             });
-        }
+        },
+
+        delete : function(userId, dateTime, callback) {
+
+            var dynamodb = getDb();
+
+            var params = {
+                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                TableName: TABLE_NAME
+            };
+
+            dynamodb.deleteItem(params, function(err, data) {
+                if(err){
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                loggerProvider.getLogger().debug("Notifications was deleted successfully!");
+                callback(null, data);
+            });
+        },
+
+        deleteAll : function(userId, listToDelete, callback) {
+            var dynamodb = getDb();
+
+            var deleteRequests = [];
+            for (var i=0; i < listToDelete.length; i++) {
+
+                deleteRequests.push({DeleteRequest : {
+                    Key: { userId: { S: userId }, dateTime:{ N:listToDelete[i].dateTime.toString() }},
+                }});
+
+            }
+
+            var params = {
+                RequestItems : {
+                    'Notification' : deleteRequests
+                }
+            };
+
+            dynamodb.batchWriteItem(params, function(err, data) {
+                if (err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+
+                loggerProvider.getLogger().debug("Notifications were deleted successfully!");
+                callback(null, data);
+            });
+        },
     };
 })();

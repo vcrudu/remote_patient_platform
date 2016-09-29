@@ -266,8 +266,10 @@
         },
         render: function () {
             var component = this;
-            if (!component.devices) {
-                component.devices = [];
+            var devices = [];
+
+            if (component.props.devices) {
+                devices = component.props.devices;
             }
             return React.createElement(
                 "div",
@@ -276,7 +278,7 @@
                 React.createElement(
                     "div",
                     { className: "list-group", ref: "addDeviceOverlayList" },
-                    component.props.devices.map(function (device) {
+                    devices.map(function (device) {
                         return React.createElement(Device, { key: "available-" + device.model, imageUrl: device.imagesUrls[0], model: device.model, description: device.description, modelType: device.deviceModelType });
                     })
                 )

@@ -1,0 +1,26 @@
+
+        <div class="table-wrap custom-scroll animated fast fadeInRight" style="opacity: 1;">
+            <div class="inbox-info-bar">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h2 class="email-open-header">
+                        <span style="background: none;" class="notification-icon">
+                        <i ng-show="vm.message.category=='info'" class="material-icons ng-hide">mail_outline</i>
+                        <i ng-show="vm.message.category=='reading'" class="material-icons ng-hide">done</i>
+                        <i ng-show="vm.message.category=='alarm'" class="material-icons">warning</i>
+                    </span>{{vm.message.title}}
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="inbox-message">
+                {{vm.message.greetings}}<br>
+                    {{vm.message.content}}
+            </div>
+            <br>Thanks,<br>
+            <strong>Trichrome Healthcare</strong>
+            <br>
+
+        </div>

@@ -132,7 +132,7 @@
                 givenNameIsValid: this.state.givenName.isValid,
                 phoneNumberIsValid: this.state.phoneNumber.isValid
             };
-            this.setState({email: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({email: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         passwordOnBlur: function(component, isValid) {
             var validFields = {
@@ -143,7 +143,7 @@
                 givenNameIsValid: this.state.givenName.isValid,
                 phoneNumberIsValid: this.state.phoneNumber.isValid
             };
-            this.setState({password: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({password: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         confirmPasswordOnBlur: function(component, isValid) {
             var validFields = {
@@ -154,7 +154,7 @@
                 givenNameIsValid: this.state.givenName.isValid,
                 phoneNumberIsValid: this.state.phoneNumber.isValid
             };
-            this.setState({confirmPassword: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({confirmPassword: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         surnameOnBlur: function(component, isValid) {
             var validFields = {
@@ -165,7 +165,7 @@
                 givenNameIsValid: this.state.givenName.isValid,
                 phoneNumberIsValid: this.state.phoneNumber.isValid
             };
-            this.setState({surname: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({surname: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         givenNameOnBlur: function(component, isValid) {
             var validFields = {
@@ -176,7 +176,7 @@
                 givenNameIsValid: isValid,
                 phoneNumberIsValid: this.state.phoneNumber.isValid
             };
-            this.setState({givenName: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({givenName: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         phoneNumberOnBlur: function(component, isValid) {
             var validFields = {
@@ -187,7 +187,7 @@
                 givenNameIsValid: this.state.givenName.isValid,
                 phoneNumberIsValid: isValid
             };
-            this.setState({phoneNumber: {value: component.target.value, isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
+            this.setState({phoneNumber: {value: component.target.value, isValid: isValid}, canSubmitForm: this.changeCanSubmit(validFields)});
         },
         getInitialState: function() {
             return {

@@ -159,3 +159,71 @@ background-color: #f4f411;
 .down a{
     margin-top:20px!important;
 }
+
+
+
+.inbox-data-date {
+    width: 100px;
+}
+
+
+.notification-summary {
+    height: 20px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 4px;
+}
+
+.notification-message {
+    height: 40px;
+    padding-left: 56px;
+}
+
+.notification-title {
+    font-size: 16px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 8px;
+}
+
+.unread
+{
+    font-family: Roboto-Bold;
+}
+
+.notification-icon {
+    float: left;
+    margin-right: 16px;
+}
+
+.notification-icon .info {
+    background: #ffbc00;
+}
+
+.notification-icon .info-amber {
+    background: #ffc107;
+}
+
+.notification-icon .reading {
+    background: #8bc34a;
+}
+
+.notification-icon .alarm {
+    background: #ff5252;
+}
+
+.btn-our {
+    background:#8bc34a;
+    color: #ffffff;
+    min-width: 104px;
+}
+
+.inbox-info-bar {
+    border-bottom: none;
+}
+
+.email-open-header {
+    border-top: none;
+}
+
+.inbox-message {
+    border-bottom: none;
+}

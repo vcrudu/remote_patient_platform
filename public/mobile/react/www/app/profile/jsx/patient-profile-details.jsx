@@ -23,6 +23,179 @@
         }
     });
 
+    var Question = React.createClass({
+        componentDidMount: function() {
+        },
+        render: function() {
+            return <li className="question-answer">
+                <div className="question">{this.props.question}</div>
+                <div className="answers">
+                    {
+                        this.props.answers.map(function (answer) {
+                            return <div key={answer.id} className="answer">{answer.name +" - "+ answer.choice_id}</div>
+                        })
+                    }
+                </div>
+            </li>
+        }
+    });
+
+    var ConditionResult = React.createClass({
+        getInitialState: function() {
+            return {
+                explanation: {
+                    supporting_evidence: [],
+                    conflicting_evidence: []
+                }
+            }
+        },
+        handleConditionClick: function() {
+            var explainContainer = this.refs.explainContainer;
+            if (!this.state.explanation.supporting_evidence || this.state.explanation.supporting_evidence.length === 0) {
+                var component = this;
+                Bridge.Symptomate.getExplainPortObjectEvidence(this.props.diagnosticResult, this.props.targetId, function(result) {
+                    indeterminateProgress.start();
+                    if (result.success) {
+                        Bridge.Symptomate.explainDiagnosis(result.data, function(explanationResult) {
+                            if (explanationResult.success) {
+                                component.setState({explanation: explanationResult.data});
+                                $(explainContainer).slideToggle();
+                            }
+                            else {
+                                debugger;
+                            }
+
+                            indeterminateProgress.end();
+                        })
+                    }
+                });
+            }
+            else {
+                $(explainContainer).slideToggle();
+            }
+        },
+        componentDidMount: function() {
+            var probability = (this.props.probability * 100);
+            var conditionId = "#progressBar_" + this.props.conditionId.toString().replace(".", "");
+            document.querySelector(conditionId).MaterialProgress.setProgress(probability);
+
+            componentHandler.upgradeDom();
+            var explainMenuItem = this.refs.explainMenuItem;
+            explainMenuItem.addEventListener("click", this.handleConditionClick);
+        },
+        render: function() {
+            var progressBarId = this.props.conditionId.toString().replace(".", "");
+            var component = this;
+            var supportingEvidenceClass = "visible";
+            var conflictingEvidenceClass = "visible";
+
+            if (!component.state.explanation.supporting_evidence || component.state.explanation.supporting_evidence == 0) {
+                supportingEvidenceClass = "hide";
+            }
+            else {
+                supportingEvidenceClass = "visible";
+            }
+
+            if (!component.state.explanation.conflicting_evidence || component.state.explanation.conflicting_evidence == 0) {
+                conflictingEvidenceClass = "hide";
+            }
+            else {
+                conflictingEvidenceClass = "visible";
+            }
+
+            return <div className="conditionCard">
+                <div className="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div className="mdl-card__title">
+                        <h2 className="mdl-card__title-text">{this.props.label}</h2>
+                    </div>
+                    <div className="mdl-card__supporting-text">
+                        {(this.props.probability * 100).toFixed(2)} %
+                        <div ref="progressBar" id={"progressBar_" + progressBarId} className="mdl-progress mdl-js-progress"></div>
+                        <div ref="explainContainer" className="explain-hide">
+                            <h2 className="mdl-card__title-text explain">Explain</h2>
+                            <p className={supportingEvidenceClass}>I suggested this condition on the basis of the following symptoms:</p>
+                            <ul className={supportingEvidenceClass}>
+                                {
+                                    component.state.explanation.supporting_evidence.map(function(sEvidence) {
+                                        var random = Math.random();
+                                        return <li key={random} className="bullet">{sEvidence.name}</li>
+                                    })
+                                }
+                            </ul>
+                            <p className={conflictingEvidenceClass}>I have not found the presence of the following symptoms that could increase probability of this condition:</p>
+                            <ul className={conflictingEvidenceClass}>
+                                {
+                                    component.state.explanation.conflicting_evidence.map(function(cEvidence) {
+                                        var random = Math.random();
+                                        return <li key={random} className="bullet">{cEvidence.name}</li>;
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="mdl-card__menu">
+                        <button id={"card_menu_" + component.props.conditionId + "_" + component.props.slotId} className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i className="material-icons">more_vert</i>
+                        </button>
+                        <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor={"card_menu_" + component.props.conditionId + "_" + component.props.slotId}>
+                            <li className="mdl-menu__item"  onClick={this.handleConditionClick} ref="explainMenuItem">Explain</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    });
+
+    var Symptoms = React.createClass({
+        render: function() {
+            var diagnosticResult = this.props.symptomResult;
+
+            var coditions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.conditions) {
+                var sortedConditions = _.sortBy(diagnosticResult.conditions, function(condition){
+                    return condition.probability * -1;
+                }).slice(0, 5);
+
+                coditions = sortedConditions.map(function (condition) {
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} conditionId={(condition.probability * 100000)} slotId={diagnosticResult.slotId} targetId={condition.id} diagnosticResult={diagnosticResult}></ConditionResult>
+                });
+            }
+
+            var questions = [].map(function(item) {
+                return <div></div>;
+            });
+
+            if (diagnosticResult && diagnosticResult.evidence) {
+                var groupedQuestions = _.groupBy(diagnosticResult.evidence, function(value){
+                    return value.type + '#' + value.text;
+                });
+
+                questions = _.map(groupedQuestions, function(group){
+                    var model = {
+                        question: group[0].text,
+                        id:group[0].text.replace(/\s/g, ''),
+                        answers: _.map(group, function(q, key){ return {name: q.name, choice_id: q.choice_id, id: q.id} })
+                    };
+
+                    return <Question key={model.id} question={model.question} answers={model.answers}></Question>
+                });
+
+            }
+
+            return <div>
+                <div className="condition-cards">
+                    <ul className="questions-list">
+                        {questions}
+                    </ul>
+                    {coditions}
+                </div>
+            </div>
+        }
+    });
+
     var PatientMedicalInfo = React.createClass({
         getInitialState: function() {
             return {
@@ -847,7 +1020,8 @@
         getInitialState: function() {
             return {
                 userName: "",
-                userDetails: undefined
+                userDetails: undefined,
+                symptomResult: undefined
             };
         },
         socketCallback: function(message) {
@@ -945,6 +1119,12 @@
                         weight: result.data.weight ? result.data.weight : "",
                         diseases: healthProblemsText,
                         diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
+                    });
+
+                    Bridge.Symptomate.getLastEvidence(function (result) {
+                        if (result.success) {
+                            component.setState({symptomResult: result.data});
+                        }
                     });
                 }
             });
@@ -1071,9 +1251,10 @@
                 <div className="userName"><h4>{this.state.userName}</h4></div>
                 <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                     <div className="mdl-tabs__tab-bar">
-                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab">Basic Info</a>
-                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress">Address</a>
-                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical">Medical</a>
+                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab"><i className="material-icons tab-icon show-mobile">face</i><span className="hide-mobile">Basic Info</span></a>
+                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress"><i className="material-icons tab-icon show-mobile">home</i><span className="hide-mobile">Address</span></a>
+                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">gesture</i><span className="hide-mobile">Medical</span></a>
+                        <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">favorite</i><span className="hide-mobile">Symptoms</span></a>
                     </div>
                     <main>
                         <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
@@ -1084,6 +1265,9 @@
                         </div>
                         <div className="mdl-tabs__panel" id="medical" ref="basicMedicalContent">
                             <PatientMedicalInfo ref="patientMedicalInfo"/>
+                        </div>
+                        <div className="mdl-tabs__panel" id="symptoms" ref="symptoms">
+                            <Symptoms ref="symtoms" symptomResult={this.state.symptomResult}/>
                         </div>
                     </main>
                 </div>

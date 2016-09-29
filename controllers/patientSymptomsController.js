@@ -49,5 +49,23 @@
                 }
             });
         });
+
+        router.get('/symptoms/:patientId/:slotId', function (req, res) {
+            patientSymptomsService.getEvidenceBySlotId(req.params.patientId, req.params.slotId, function (err, data) {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        error: err,
+                        data: undefined
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        data: data,
+                        error: undefined
+                    });
+                }
+            });
+        });
     };
 })();

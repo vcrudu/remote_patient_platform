@@ -27,6 +27,7 @@ var checkExistsGroupNameController=require('./checkExistsGroupNameController');
 
 var orderStatusController = require('./orderStatusController');
 var patientSymptomsController = require('./patientSymptomsController');
+var activateSubscription = require('./activateSubscription');
 
 
 var logging     = require('../logging');
@@ -87,6 +88,7 @@ var logging     = require('../logging');
         orderStatusController.init(apiRoutes);
         patientSymptomsController.init(apiRoutes);
 
+        activateSubscription.init(apiRoutes);
         app.use('/v1/api', apiRoutes);
 
     };

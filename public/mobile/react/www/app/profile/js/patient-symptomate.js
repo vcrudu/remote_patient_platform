@@ -15,9 +15,13 @@
     var Card = ReactMDL.Card;
     var CardTitle = ReactMDL.CardTitle;
     var CardText = ReactMDL.CardText;
+    var CardMenu = ReactMDL.CardMenu;
     var ProgressBar = ReactMDL.ProgressBar;
     var List = ReactMDL.List;
     var ListItem = ReactMDL.ListItem;
+    var IconButton = ReactMDL.IconButton;
+    var Menu = ReactMDL.Menu;
+    var MenuItem = ReactMDL.MenuItem;
 
     var ChoiceButton = React.createClass({
         displayName: "ChoiceButton",
@@ -39,7 +43,57 @@
     var ConditionResult = React.createClass({
         displayName: "ConditionResult",
 
+        getInitialState: function () {
+            return {
+                explanation: {
+                    supporting_evidence: [],
+                    conflicting_evidence: []
+                }
+            };
+        },
+        handleConditionClick: function () {
+            var explainContainer = this.refs.explainContainer;
+            if (!this.state.explanation.supporting_evidence || this.state.explanation.supporting_evidence.length === 0) {
+                var component = this;
+
+                var evidenceArray = [];
+                _.map(component.props.diagnosticPost.evidence, function (evidence) {
+                    evidenceArray.push({ id: evidence.id, choice_id: evidence.choice_id });
+                });
+
+                var obj = {
+                    target: component.props.targetId,
+                    evidence: evidenceArray,
+                    sex: component.props.diagnosticPost.sex,
+                    age: component.props.diagnosticPost.age
+                };
+
+                Bridge.Symptomate.explainDiagnosis(obj, function (explanationResult) {
+                    if (explanationResult.success) {
+                        component.setState({ explanation: explanationResult.data });
+                        $(explainContainer).slideToggle();
+                    }
+                });
+            } else {
+                $(explainContainer).slideToggle();
+            }
+        },
         render: function () {
+            var component = this;
+            var supportingEvidenceClass = "visible";
+            var conflictingEvidenceClass = "visible";
+
+            if (!component.state.explanation.supporting_evidence || component.state.explanation.supporting_evidence == 0) {
+                supportingEvidenceClass = "hide";
+            } else {
+                supportingEvidenceClass = "visible";
+            }
+
+            if (!component.state.explanation.conflicting_evidence || component.state.explanation.conflicting_evidence == 0) {
+                conflictingEvidenceClass = "hide";
+            } else {
+                conflictingEvidenceClass = "visible";
+            }
             return React.createElement(
                 "div",
                 { className: "conditionCard" },
@@ -56,7 +110,64 @@
                         null,
                         (this.props.probability * 100).toFixed(2),
                         " %",
-                        React.createElement(ProgressBar, { progress: this.props.probability * 100, className: "progress-bar-result" })
+                        React.createElement(ProgressBar, { progress: this.props.probability * 100, className: "progress-bar-result" }),
+                        React.createElement(
+                            "div",
+                            { ref: "explainContainer", className: "explain-hide" },
+                            React.createElement(
+                                "h2",
+                                { className: "mdl-card__title-text explain" },
+                                "Explain"
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: supportingEvidenceClass },
+                                "I suggested this condition on the basis of the following symptoms:"
+                            ),
+                            React.createElement(
+                                "ul",
+                                { className: supportingEvidenceClass },
+                                component.state.explanation.supporting_evidence.map(function (sEvidence) {
+                                    var random = Math.random();
+                                    return React.createElement(
+                                        "li",
+                                        { key: random, className: "bullet" },
+                                        sEvidence.name
+                                    );
+                                })
+                            ),
+                            React.createElement(
+                                "p",
+                                { className: conflictingEvidenceClass },
+                                "I have not found the presence of the following symptoms that could increase probability of this condition:"
+                            ),
+                            React.createElement(
+                                "ul",
+                                { className: conflictingEvidenceClass },
+                                component.state.explanation.conflicting_evidence.map(function (cEvidence) {
+                                    var random = Math.random();
+                                    return React.createElement(
+                                        "li",
+                                        { key: random, className: "bullet" },
+                                        cEvidence.name
+                                    );
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        CardMenu,
+                        null,
+                        React.createElement(IconButton, { name: "more_vert", id: "card_menu_" + component.props.targetId })
+                    ),
+                    React.createElement(
+                        Menu,
+                        { target: "card_menu_" + component.props.targetId, align: "right" },
+                        React.createElement(
+                            MenuItem,
+                            { onClick: this.handleConditionClick },
+                            "Explain"
+                        )
                     )
                 )
             );
@@ -132,6 +243,12 @@
             var answerId = $(event.target).attr("value");
             var isChecked = $(event.target).is(":checked");
 
+            // workaround for mobile
+            var ulParent = $(event.target).parent().parent().parent();
+            ulParent.find(".mdl-radio").removeClass("is-checked");
+
+            $(event.target).parent().addClass("is-checked");
+
             var answer = _.find(this.state.question.items, function (answer) {
                 return answer.id === answerId;
             });
@@ -185,13 +302,9 @@
             if (this.props.question && this.props.question.items && this.props.question.items.length > 0) {
                 questions = this.props.question.items.map(function (answer) {
                     return React.createElement(
-                        ListItem,
-                        { key: answer.id + "_check" },
-                        React.createElement(
-                            Radio,
-                            { key: answer.id, value: answer.id, ripple: true },
-                            answer.name
-                        )
+                        Radio,
+                        { key: answer.id, value: answer.id, ripple: true },
+                        answer.name
                     );
                 });
             }
@@ -206,12 +319,8 @@
                 ),
                 React.createElement(
                     RadioGroup,
-                    { name: "groupSingleQuestion", onChange: component.onChange },
-                    React.createElement(
-                        List,
-                        null,
-                        questions
-                    )
+                    { container: "ul", childContainer: "li", name: "groupSingleQuestion", onChange: component.onChange },
+                    questions
                 ),
                 React.createElement(
                     Button,
@@ -450,6 +559,7 @@
             Bridge.Redirect.redirectToWithLevelsUp("appointments/patient-appointments.html?slotId=" + this.props.slotId, 2);
         },
         render: function () {
+            var component = this;
             var diagnosticResult = this.props.diagnosticResult;
 
             var coditions = [].map(function (item) {
@@ -462,7 +572,7 @@
                 }).slice(0, 5);
 
                 coditions = sortedConditions.map(function (condition) {
-                    return React.createElement(ConditionResult, { key: condition.name, label: condition.name, probability: condition.probability });
+                    return React.createElement(ConditionResult, { key: condition.name, label: condition.name, probability: condition.probability, diagnosticPost: component.props.diagnosticPost, slotId: component.props.slotId, targetId: condition.id });
                 });
             }
 
@@ -622,9 +732,22 @@
 
                 if (step == 0) {
                     this.setState(this.getInitialState);
+                    this.setState({ showCommonSymptoms: true });
+
+                    //this.componentDidMount();
                     $(".mdl-progress-top").css('visibility', 'hidden');
                 } else {
-                    Bridge.Symptomate.sendDiagnosis(component.state.evidences[component.state.evidences.length - 1], function (diagnosisResult) {
+                    var prevEvidence = component.state.evidences[component.state.evidences.length - 1];
+
+                    var tempArray = [];
+
+                    _.map(prevEvidence.evidence, function (ev) {
+                        tempArray.push({ id: ev.id, choice_id: ev.choice_id });
+                    });
+
+                    prevEvidence.evidence = tempArray;
+
+                    Bridge.Symptomate.sendDiagnosis(prevEvidence, function (diagnosisResult) {
                         if (diagnosisResult.success) {
                             component.setState({ selectionStep: step, diagnostic: component.state.evidences[component.state.evidences.length - 1], diagnosticResponse: diagnosisResult.data });
 
@@ -653,7 +776,7 @@
                         { className: "page-content" },
                         React.createElement(CommonSymptoms, { show: this.state.showCommonSymptoms, ref: "commonSymptoms", handleNext: this.handleNext, handlePrev: this.handlePrev }),
                         React.createElement(SymptomQuestions, { show: this.state.showQuestion, question: this.state.diagnosticResponse.question, ref: "symptomQuestions", handleNext: this.handleNext, handlePrev: this.handlePrev }),
-                        React.createElement(PatientSymptomateResult, { show: this.state.showResult, diagnosticResult: this.state.diagnosticResponse, slotId: this.state.slotId })
+                        React.createElement(PatientSymptomateResult, { show: this.state.showResult, diagnosticResult: this.state.diagnosticResponse, diagnosticPost: this.state.diagnostic, slotId: this.state.slotId })
                     )
                 )
             );

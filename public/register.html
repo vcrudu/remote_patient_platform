@@ -2,7 +2,7 @@
     <!-- row -->
     <div class="row">
         <!-- NEW WIDGET START -->
-        <article class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+        <article class="col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
@@ -19,7 +19,7 @@
                 data-widget-sortable="false"
 
                 -->
-                <header>
+                <header class="registration-wizard">
                     <span class="widget-icon"> <i class="fa fa-check"></i> </span>
                     <h2>Registration Wizard </h2>
 
@@ -62,20 +62,20 @@
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <ul class="pager wizard no-margin">
+                                                    <div>
                                                         <!--<li class="previous first disabled">
                                                         <a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
                                                         </li>-->
-                                                        <li ng-class="previousButtonClass()">
-                                                            <a ng-click="moveBack()" class="btn btn-lg btn-default"> Previous </a>
-                                                        </li>
+                                                        <div class="pull-left btn btn-lg btn-our" ng-hide="previousDisabled()" ng-class="previousButtonClass()" ng-click="moveBack()">
+                                                             Previous
+                                                        </div>
                                                         <!--<li class="next last">
                                                         <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
                                                         </li>-->
-                                                        <li ng-class="nextButtonClass()">
-                                                            <a ng-click="moveNext()" class="btn btn-lg txt-color-darken">{{forward()}} </a>
-                                                        </li>
-                                                    </ul>
+                                                        <div class="pull-right btn btn-lg btn-our" ng-class="nextButtonClass()" ng-click="moveNext()" ng-disabled="pendingState">
+                                                            {{forward()}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -21,9 +21,9 @@ angular.module('app').directive('checkExistsUser',function($q,$http){
                 $http(req).
                     success(function(data, status, headers, config) {
                        if(data.success){
-                           def.reject();
+                           def.reject('exists');
                        }else{
-                           def.resolve();
+                           def.resolve(true);
                        }
                     });
 

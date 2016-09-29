@@ -15,9 +15,13 @@
     var Card  = ReactMDL.Card;
     var CardTitle  = ReactMDL.CardTitle;
     var CardText  = ReactMDL.CardText;
+    var CardMenu  = ReactMDL.CardMenu;
     var ProgressBar  = ReactMDL.ProgressBar;
     var List  = ReactMDL.List;
     var ListItem  = ReactMDL.ListItem;
+    var IconButton  = ReactMDL.IconButton;
+    var Menu  = ReactMDL.Menu;
+    var MenuItem  = ReactMDL.MenuItem;
 
     var ChoiceButton = React.createClass({
         handleClick: function() {
@@ -31,14 +35,94 @@
     var numberOfPosts = 10;
 
     var ConditionResult = React.createClass({
+        getInitialState: function() {
+            return {
+                explanation: {
+                    supporting_evidence: [],
+                    conflicting_evidence: []
+                }
+            }
+        },
+        handleConditionClick: function() {
+            var explainContainer = this.refs.explainContainer;
+            if (!this.state.explanation.supporting_evidence || this.state.explanation.supporting_evidence.length === 0) {
+                var component = this;
+
+                var evidenceArray = [];
+                _.map(component.props.diagnosticPost.evidence, function (evidence) {
+                    evidenceArray.push({id: evidence.id, choice_id: evidence.choice_id});
+                });
+
+                var obj = {
+                    target: component.props.targetId,
+                    evidence: evidenceArray,
+                    sex: component.props.diagnosticPost.sex,
+                    age: component.props.diagnosticPost.age
+                };
+
+                Bridge.Symptomate.explainDiagnosis(obj, function(explanationResult) {
+                    if (explanationResult.success) {
+                        component.setState({explanation: explanationResult.data});
+                        $(explainContainer).slideToggle();
+                    }
+                });
+            }
+            else {
+                $(explainContainer).slideToggle();
+            }
+        },
         render: function() {
+            var component = this;
+            var supportingEvidenceClass = "visible";
+            var conflictingEvidenceClass = "visible";
+
+            if (!component.state.explanation.supporting_evidence || component.state.explanation.supporting_evidence == 0) {
+                supportingEvidenceClass = "hide";
+            }
+            else {
+                supportingEvidenceClass = "visible";
+            }
+
+            if (!component.state.explanation.conflicting_evidence || component.state.explanation.conflicting_evidence == 0) {
+                conflictingEvidenceClass = "hide";
+            }
+            else {
+                conflictingEvidenceClass = "visible";
+            }
             return <div className="conditionCard">
                 <Card shadow={0}>
                     <CardTitle>{this.props.label}</CardTitle>
                     <CardText>
                         {(this.props.probability * 100).toFixed(2)} %
                         <ProgressBar progress={(this.props.probability * 100)} className="progress-bar-result"/>
+                        <div ref="explainContainer" className="explain-hide">
+                            <h2 className="mdl-card__title-text explain">Explain</h2>
+                            <p className={supportingEvidenceClass}>I suggested this condition on the basis of the following symptoms:</p>
+                            <ul className={supportingEvidenceClass}>
+                                {
+                                    component.state.explanation.supporting_evidence.map(function(sEvidence) {
+                                        var random = Math.random();
+                                        return <li key={random} className="bullet">{sEvidence.name}</li>
+                                    })
+                                }
+                            </ul>
+                            <p className={conflictingEvidenceClass}>I have not found the presence of the following symptoms that could increase probability of this condition:</p>
+                            <ul className={conflictingEvidenceClass}>
+                                {
+                                    component.state.explanation.conflicting_evidence.map(function(cEvidence) {
+                                        var random = Math.random();
+                                        return <li key={random} className="bullet">{cEvidence.name}</li>;
+                                    })
+                                }
+                            </ul>
+                        </div>
                     </CardText>
+                    <CardMenu>
+                        <IconButton name="more_vert" id={"card_menu_" + component.props.targetId}/>
+                    </CardMenu>
+                    <Menu target={"card_menu_" + component.props.targetId} align="right">
+                        <MenuItem onClick={this.handleConditionClick}>Explain</MenuItem>
+                    </Menu>
                 </Card>
             </div>
         }
@@ -98,6 +182,12 @@
             var answerId = $(event.target).attr("value");
             var isChecked = $(event.target).is(":checked");
 
+            // workaround for mobile
+            var ulParent = $(event.target).parent().parent().parent();
+            ulParent.find(".mdl-radio").removeClass("is-checked");
+
+            $(event.target).parent().addClass("is-checked");
+
             var answer = _.find(this.state.question.items, function(answer) {
                 return answer.id === answerId;
             });
@@ -150,17 +240,15 @@
 
             if (this.props.question && this.props.question.items && this.props.question.items.length > 0) {
                 questions = this.props.question.items.map(function (answer) {
-                    return <ListItem key={answer.id + "_check"}><Radio key={answer.id} value={answer.id} ripple>{answer.name}</Radio></ListItem>
+                    return <Radio key={answer.id} value={answer.id} ripple>{answer.name}</Radio>;
                 });
             }
 
             return <div className="group_single">
                 <div className="question">{this.props.question.text}</div>
 
-                <RadioGroup name="groupSingleQuestion" onChange={component.onChange}>
-                    <List>
+                <RadioGroup container="ul" childContainer="li" name="groupSingleQuestion" onChange={component.onChange}>
                         {questions}
-                    </List>
                 </RadioGroup>
 
 
@@ -341,6 +429,7 @@
             Bridge.Redirect.redirectToWithLevelsUp("appointments/patient-appointments.html?slotId=" + this.props.slotId, 2);
         },
         render: function() {
+            var component = this;
             var diagnosticResult = this.props.diagnosticResult;
 
             var coditions = [].map(function(item) {
@@ -353,7 +442,7 @@
                 }).slice(0, 5);
 
                 coditions = sortedConditions.map(function (condition) {
-                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability}></ConditionResult>
+                    return <ConditionResult key={condition.name} label={condition.name} probability={condition.probability} diagnosticPost={component.props.diagnosticPost} slotId={component.props.slotId} targetId={condition.id}></ConditionResult>
                 });
             }
 
@@ -502,10 +591,23 @@
 
                 if (step == 0) {
                     this.setState(this.getInitialState);
+                    this.setState({showCommonSymptoms:true});
+
+                    //this.componentDidMount();
                     $(".mdl-progress-top").css('visibility', 'hidden');
                 }
                 else {
-                    Bridge.Symptomate.sendDiagnosis(component.state.evidences[component.state.evidences.length-1], function(diagnosisResult) {
+                    var prevEvidence = component.state.evidences[component.state.evidences.length-1];
+
+                    var tempArray = [];
+
+                    _.map(prevEvidence.evidence, function(ev) {
+                        tempArray.push({id: ev.id, choice_id: ev.choice_id});
+                    });
+
+                    prevEvidence.evidence = tempArray;
+
+                    Bridge.Symptomate.sendDiagnosis(prevEvidence, function(diagnosisResult) {
                         if (diagnosisResult.success) {
                             component.setState({selectionStep: step, diagnostic: component.state.evidences[component.state.evidences.length-1], diagnosticResponse: diagnosisResult.data});
 
@@ -528,7 +630,7 @@
                     <div className="page-content">
                         <CommonSymptoms show={this.state.showCommonSymptoms} ref="commonSymptoms" handleNext={this.handleNext} handlePrev={this.handlePrev}/>
                         <SymptomQuestions show={this.state.showQuestion} question={this.state.diagnosticResponse.question} ref="symptomQuestions" handleNext={this.handleNext} handlePrev={this.handlePrev}/>
-                        <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} slotId={this.state.slotId}/>
+                        <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} diagnosticPost={this.state.diagnostic} slotId={this.state.slotId}/>
                     </div>
                 </Content>
             </Layout>

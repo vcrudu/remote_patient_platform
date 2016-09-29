@@ -231,7 +231,7 @@
             };
         },
         onReasonChange: function () {},
-        handleTimeoutSnackbar() {
+        handleTimeoutSnackbar: function () {
             this.setState({ isSnackbarActive: false });
         },
         render: function () {

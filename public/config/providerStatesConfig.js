@@ -72,6 +72,16 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.group_alarm_builder/:alarmName/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
-    
+    }).state("provider.home", {
+        url: "/provider.home",
+        templateUrl: "provider/home/provider.home.html"
+    }).state("provider.home.inbox", {
+        url: "/provider.home.inbox",
+        templateUrl: "provider/home/provider.home.inbox.html",
+        controller: 'providerHomeInboxCtrl as vm'
+    }).state("provider.home.message", {
+        url: "/provider.home.message",
+        templateUrl: "provider/home/provider.home.message.html",
+        controller: 'providerHomeMessageCtrl as vm'
     });
 }]);

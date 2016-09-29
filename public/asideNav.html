@@ -17,7 +17,7 @@
 <nav>
     <ul ng-show="isPatient">
         <li ui-sref-active="active">
-            <a ui-sref="patient.home"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
+            <a ui-sref="patient.home.inbox"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
         </li>
         <li ui-sref-active="active">
             <a ui-sref="patient.vitalsigns"><i class="fa fa-lg fa-fw fa-heart-o"></i> <span class="menu-item-parent">Vital Signs</span></a>
@@ -43,16 +43,12 @@
             <a ui-sref="patient.appointments"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
         </li>
 
-        <li ui-sref-active="active">
-            <a ui-sref="patient.messages"><i class="fa fa-lg fa-fw fa-envelope-o"></i> <span class="menu-item-parent">Messages</span></a>
-        </li>
-
-        <li ui-sref-active="active">
-            <a ui-sref="patient.settings"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Settings</span></a>
-        </li>
     </ul>
 
     <ul ng-show="isProvider">
+        <li ui-sref-active="active">
+            <a ui-sref="provider.home.inbox"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Inbox</span></a>
+        </li>
         <li ui-sref-active="active">
             <a ui-sref="provider.call"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Call</span></a>
         </li>
@@ -71,7 +67,6 @@
         <li ui-sref-active="active">
             <a ui-sref="provider.settings"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Settings</span></a>
         </li>
-
 
     </ul>
 </nav>

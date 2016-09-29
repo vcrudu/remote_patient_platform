@@ -51,32 +51,58 @@ var _ = require('underscore');
                 userName = req.decoded.email;
             }
 
-            console.log(userName);
+            if(!pageSize) {
+                notificationsRepository.getList(userName, notificationType, startTime, endTime, function(err, notifications){
+                    if(err)
+                    {
+                        var incidentTicket = logging.getIncidentTicketNumber("nt");
+                        logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
+                        res.status(500).json({
+                            success:false,
+                            error:logging.getUserErrorMessage(incidentTicket)
+                        });
+                    } else {
 
-            notificationsRepository.getList(userName, notificationType, startTime, endTime, function(err, notifications){
-                if(err)
-                {
-                    var incidentTicket = logging.getIncidentTicketNumber("nt");
-                    logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
-                    res.status(500).json({
-                        success:false,
-                        error:logging.getUserErrorMessage(incidentTicket)
-                    });
-                } else {
+                        var result = [];
+                        _.forEach(notifications, function(notification){
+                            result.push(notification);
+                        });
+                        res.json({
+                            count: result.length,
+                            success: true,
+                            items: result,
+                            description: "The result contains the list of notifications."
+                        });
+                        logging.getLogger().trace({url:req.url,userId:req.decoded.email}, notifications.length + " notifications provided.");
+                    }
+                });
+            } else {
+                notificationsRepository.getPagedList(userName, notificationType, startTime, endTime, pageSize, pageNumber, function(err, notifications){
+                    if(err)
+                    {
+                        var incidentTicket = logging.getIncidentTicketNumber("nt");
+                        logging.getLogger().error({incident:incidentTicket, url:req.url,userId:req.decoded.email},err);
+                        res.status(500).json({
+                            success:false,
+                            error:logging.getUserErrorMessage(incidentTicket)
+                        });
+                    } else {
 
-                    var result = [];
-                    _.forEach(notifications, function(notification){
-                        result.push(notification);
-                    });
-                    res.json({
-                        count: result.length,
-                        success: true,
-                        items: result,
-                        description: "The result contains the list of notifications."
-                    });
-                    logging.getLogger().trace({url:req.url,userId:req.decoded.email}, notifications.length + " notifications provided.");
-                }
-            });
+                        var result = [];
+                        _.forEach(notifications, function(notification){
+                            result.push(notification);
+                        });
+                        res.json({
+                            count: result.length,
+                            success: true,
+                            items: result,
+                            description: "The result contains the list of notifications."
+                        });
+                        logging.getLogger().trace({url:req.url,userId:req.decoded.email}, notifications.length + " notifications provided.");
+                    }
+                });
+            }
+
         });
 
         router.get('/notification', function(req, res){
@@ -283,10 +309,42 @@ var _ = require('underscore');
             });
         });
 
+        router.delete('/notifications', function(req, res){
+            logging.getLogger().trace({url:req.url,userId:req.decoded.email}, " notifications requested to be deleted.");
+
+            var devicesList = req.body;
+
+            if(devicesList.constructor!==Array) {
+                if (devicesList.notifications && devicesList.notifications.constructor === Array) {
+                    devicesList = devicesList.notifications;
+                }
+                else {
+                    res.status(400).json({
+                        success: false,
+                        error: "The body should be array of notifications. Please provide entity id as parameter."
+                    });
+                    return;
+                }
+            }
+
+            notificationsRepository.deleteAll(req.decoded.email, devicesList, function (err, data) {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        error: err
+                    });
+                } else {
+                    res.status(200).json({
+                        success: true
+                    });
+                }
+            });
+        });
+
         router.delete('/notifications/:date_time', function(req, res){
             logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.date_time + " notification requested to be deleted.");
 
-            notificationsRepository.delete(req.params.date_time,function(err,data){
+            notificationsRepository.delete(req.decoded.email, req.params.date_time,function(err,data){
                 if(err){
                     res.status(500).json({
                         success:false,

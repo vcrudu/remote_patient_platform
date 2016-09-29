@@ -70,7 +70,7 @@
             TopicArn: 'arn:aws:sns:eu-west-1:160466482332:hcm-registration'
         };
         snsClient.publish(params, function (err, data) {
-            if(err){
+            if (err) {
                 logging.getLogger().error(err);
             }
             if (callback)

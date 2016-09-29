@@ -84,7 +84,7 @@
     module.exports  = {
 
         mapToDbEntity : function(item){
-            if (item.agent!=='mobile') {
+            if (item.agent!=='mobile' && item.agent!=='browser') {
                 var fullAddress = mapAddressToDbEntity(item.address);
                 var allContactDetails = buildArray(item.getContactDetails(), mapContactDetailsToDbEntity);
                 var allAvailabilities = buildArray(item.getAvailabilities(), mapAvailabilitiesToDbEntity);
@@ -111,6 +111,7 @@
                     title: {S: 'Mr.'},
                     name: {S: item.name},
                     surname: {S: item.surname},
+                    providerType: {S: item.providerType || "Nurse"},
                     availabilityType: {S: 'regular'},
                     contactDetails: {L: [{"M": {"contactType": {"S": "Phone"}, "contact": {"S": item.phone}}}]},
                     availabilities: {L: []}
@@ -119,7 +120,8 @@
         },
 
         mapFromDbEntity : function(dbEntity){
-            var fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
+            var fullAddress;
+            if(dbEntity.address) fullAddress = mapAddressFromDbEntity(dbEntity.address.M);
             var allContactDetails = buildArray(dbEntity.contactDetails.L, mapContactDetailsFromDbEntity);
             var allAvailabilities = buildArray(dbEntity.availabilities.L, mapAvailabilitiesFromDbEntity);
 
@@ -129,14 +131,10 @@
                 title: dbEntity.title.S,
                 name: dbEntity.name.S,
                 surname: dbEntity.surname.S,
-                practiceName: dbEntity.practiceName.S,
-                practiceIdentifier: dbEntity.practiceIdentifier.S,
                 providerType: dbEntity.providerType.S,
                 address: fullAddress,
                 contactDetails: allContactDetails,
-                availabilityType: dbEntity.availabilityType.S,
                 availabilities: allAvailabilities
-
             });
 
             provider.contactDetails = provider.getContactDetails();

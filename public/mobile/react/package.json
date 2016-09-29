@@ -6,6 +6,7 @@
     "browser-sync": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^3.0.1",
     "gulp-watch": "^4.3.5"
   },
   "dependencies": {

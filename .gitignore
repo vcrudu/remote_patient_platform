@@ -1,3 +1,4 @@
+ebextensions
 node_modules/*
 public/lib/*
 .idea/*

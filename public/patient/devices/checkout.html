@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-xs-2 ">
                             <div class="pull-right text-danger font-md">
-                                <b>{{item.Price | number :2}}&pound</b>
+                                <b>&pound{{item.Price | number :2}}</b>
                             </div>
                         </div>
                         <div class="col-xs-2 ">
@@ -57,7 +57,7 @@
         <div class="col-md-4 col-sm-6 ">
 
             <div class="well text-center">
-                <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s) : <span class="text-danger">{{vm.basket.getAmount() | number :2}}&pound</span></b></span>
+                <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s) : <span class="text-danger">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
                 <br>
 
                 <div class="padding-top-10">

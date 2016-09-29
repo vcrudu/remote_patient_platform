@@ -17,6 +17,14 @@
                 },
                 controller: 'loginCtrl'
             })
+            .state('error', {
+                url: "/error",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "error.html"}
+                },
+                controller: 'loginCtrl'
+            })
             .state('reset', {
                 url: "/reset",
                 views: {
@@ -25,13 +33,29 @@
                 },
                 controller: 'resetCtrl'
             })
-            .state('resetPassword', {
-                url: "/resetPassword?token",
+            .state('reset-password', {
+                url: "/reset-password",
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
-                    "mainView": {templateUrl: "resetPassword.html"}
+                    "mainView": {
+                        templateUrl: "resetPassword.html",
+                        controller: 'resetPasswordCtrl'
+                    }
                 },
-                controller: 'resetPasswordCtrl'
+                resolve: {
+                    serverAnswer: function ($http, $state, $localStorage, $location, $rootScope, appSettings) {
+                        var params = $location.search();
+                        if (params.token) {
+                            var link = "/resetPassword?token=" + params.token;
+                            return $http.get(link)
+                                .then(function (response) {
+                                    return response.data;
+                                }, function () {
+                                    return {success: false};
+                                });
+                        }
+                    }
+                }
             })
             .state('confirmSubmit', {
                 url: "/confirmSubmit",
@@ -40,14 +64,78 @@
                     "mainView": {templateUrl: "confirmSubmit.html"}
                 }
             })
-            .state('confirm', {
-                url: "/confirm",
+            .state('activate', {
+                url: "/activate",
+                views: {
+                    "headerView": {
+                        templateUrl: "activateHeader.html"
+                    },
+                    "mainView": {
+                        templateUrl: "activate.html",
+                        controller:'activateCtrl as ctrl'
+                    }
+                },
+                resolve: {
+                    activateState: function ($http, $state, $localStorage, $location, $rootScope, appSettings) {
+                        var params = $location.search();
+                        if (params.token) {
+                            var req = {
+                                method: 'POST',
+                                url: appSettings.getServerUrl() + '/v1/api/activate',
+                                headers: {
+                                    'x-access-token': params.token
+                                }
+                            };
+                            return $http(req).then(function (res) {
+                                if (!res.data.error) {
+                                    $localStorage.user = res.data.data;
+                                    if (window.socket) {
+                                        window.socket.connect();
+                                    } else {
+                                        window.socket = window.io.connect(appSettings.getServerUrl());
+                                        window.socket.on('connect', function () {
+                                            window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                            $rootScope.$broadcast('socket.connect', 'connected');
+                                        });
+
+                                        window.socket.on('disconnect', function () {
+                                            $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                        });
+                                    }
+                                } else{
+                                    return {isActive:false};
+                                }
+                            });
+                        } else {
+                            return {isActive:false};
+                        }
+                    }
+                }
+            })
+            .state('need-activate', {
+                url: "/need-activate",
                 views: {
                     "headerView": {templateUrl: "loggedOutHeader.html"},
-                    "mainView": {templateUrl: "confirm.html"}
+                    "mainView": {
+                        templateUrl: "needActivate.html",
+                        controller:"needActivateCtrl"
+                    }
                 },
-                params:{userName:null},
-                controller: 'confirmCtrl'
+                controller: 'needActivateCtrl'
+            })
+            .state('check-email-box', {
+                url: "/check-email-box",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "checkEmailBox.html"}
+                }
+            })
+            .state('provider-join', {
+                url: "/provider-join",
+                views: {
+                    "headerView": {templateUrl: "loggedOutHeader.html"},
+                    "mainView": {templateUrl: "providerJoin.html"}
+                }
             })
             .state('notfound', {
                 url: "/notfound",
@@ -113,7 +201,9 @@
             .state('provider-register', {
                 url: "/provider-register",
                 views: {
-                    "headerView": {templateUrl: "registerHeader.html"},
+                    "headerView": {
+                        templateUrl: "providerRegisterHeader.html",
+                    },
                     "mainView": {
                         templateUrl: "provider/register.html",
                         controller: 'ProviderRegisterCtrl as vm'

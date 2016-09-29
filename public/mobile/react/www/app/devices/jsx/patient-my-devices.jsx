@@ -203,13 +203,15 @@
         },
         render: function() {
             var component = this;
-            if (!component.devices) {
-                component.devices = [];
+            var devices = [];
+            
+            if (component.props.devices) {
+                devices = component.props.devices;
             }
             return <div ref="addDeviceOverlay" className="addDeviceOverlay gray_200" onClick={this.hideAddDeviceOverlay}>
                 <div className="space_24"></div>
                 <div className="list-group" ref="addDeviceOverlayList">
-                    {component.props.devices.map(function(device) {
+                    {devices.map(function(device) {
                         return <Device key={"available-" + device.model} imageUrl={device.imagesUrls[0]} model={device.model} description={device.description} modelType={device.deviceModelType}/>;
                     })}
                 </div>

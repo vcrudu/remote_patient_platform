@@ -68,3 +68,8 @@ i.accent {
 .space_24 {
     height: 24px;
 }
+
+.col-sm-12 {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+}

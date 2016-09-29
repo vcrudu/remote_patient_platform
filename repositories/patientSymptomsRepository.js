@@ -65,6 +65,33 @@
                     callback(null, null);
                 }
             });
+        },
+        getEvidenceBySlotId: function(patientId, slotId, callback) {
+            var params = {
+                TableName: TABLE_NAME, /* required */
+                ExpressionAttributeValues: {
+                    ":patientId":{"S":patientId},
+                    ":slotId":{"N":slotId}
+                },
+                ReturnConsumedCapacity: 'INDEXES',
+                KeyConditionExpression: 'patientId = :patientId',
+                FilterExpression: 'slotId = :slotId',
+            };
+
+            var dynamodb = getDb();
+
+            dynamodb.query(params, function(err, data){
+                if(err) {
+                    loggerProvider.getLogger().error(err);
+                    callback(err, null);
+                    return;
+                }
+                if(data.Items.length>0) {
+                    callback(null, patientSymptomsDbMapper.mapFromDbEntity(data.Items[0]));
+                }else{
+                    callback(null, null);
+                }
+            });
         }
     };
 })();

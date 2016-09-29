@@ -16,7 +16,7 @@
 
             var token = req.query.token;
             if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
+                jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
                     if (err) {
                         res.status(403).json({
                             success: false,
@@ -48,7 +48,7 @@
         app.post('/resetPassword',function (req, res) {
             var token=req.body.new.token;
             if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
+                jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
                     if (err) {
                         res.status(403).json({
                             success: false,
