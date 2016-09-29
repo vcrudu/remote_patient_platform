@@ -30,14 +30,14 @@
 
                         var index = -1;
                         for(var i=0; i<$scope.alarmTemplates.length;i++) {
-                            if (template.alarmName == $scope.alarmTemplates[0].alarmName) {
+                            if (template.alarmName == $scope.alarmTemplates[i].alarmName) { // update by Lipcan 29.09.2016 was $scope.alarmTemplates[0].alarmName 
                                 index = i;
                                 break;
                             }
                         }
 
                         if (index > -1) {
-                            alert(index);
+                           // alert(index);
                             $scope.alarmTemplates.splice(index, 1);
                         }
                     } else {

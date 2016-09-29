@@ -57,7 +57,7 @@
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
                         toastr.success('Alarm Template saved!','Success');
-                       
+                        $state.go("provider.alarm_list");
                     } else {
                     }
                 }).error(function (err) {
@@ -254,9 +254,11 @@
                                                     condition.operator = operator;
                                                     condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
 
-                                                    var value = condition.value1.replace("'", "");
-                                                    value = value.replace("'", "");
-
+                                                 
+                                                 // commented by Lipcan 29.09.2016
+                                                  //  var value = condition.value1.replace("'", "");
+                                                 //   value = value.replace("'", "");
+                                                    var value = condition.value1; // added by Lipcan 29.09.2016
                                                     condition.value2 = undefined;
                                                     parsedCondition = parsedCondition.replace("$Operator$", "<span data-param=\"" + operator.value + "\" class=\"Operator\" ng-click=\"setOperator(this)\">" + operator.value + "</span>");
                                                     parsedCondition = parsedCondition.replace("$Value$", "<span data-param=\"" + rule.arguments[2].textValue + "\" class=\"Value\" ng-click=\"setValue(this, true, 'Value', 'Value')\">" + value + "</span>");
