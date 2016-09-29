@@ -68,7 +68,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.group_alarm_builder/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
-    }).state("provider.group_alarm_builder_edit", {
+    }).state("provider.patients_group_members.alarmbuilder_edit", {    // state("provider.group_alarm_builder_edit", {
         url: "/provider.group_alarm_builder/:alarmName/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"

@@ -67,6 +67,7 @@
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
                         toastr.success('Group Alarm Template saved!','Success');
+                        $state.go("provider.patients_group_members.groupalarmrules");
                     } else {
                     }
                 }).error(function (err) {
@@ -238,8 +239,8 @@
 
                                 var foundAlarm = _.find(res.items, function (globalAlarm) { return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
 
-                               console.log("FOUNDALARM == "+foundAlarm.alarmName);
-                               console.log("ALARMDESCRIPTION ===  "+ foundAlarm.alarmDescription);
+                          //     console.log("FOUNDALARM == "+foundAlarm.alarmName);
+                         //      console.log("ALARMDESCRIPTION ===  "+ foundAlarm.alarmDescription);
 
                                 if (foundAlarm) {
                                     $scope.alarmTemplateModel.alarmName = foundAlarm.alarmName;

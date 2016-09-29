@@ -17,7 +17,7 @@
             $scope.handleAlarmTemplateSelected = function(template) {
 
 
-                $state.go("provider.group_alarm_builder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
+                $state.go("provider.patients_group_members.alarmbuilder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
             };
 
             $scope.deleteAlarmTemplate = function(template) {
@@ -38,7 +38,7 @@
 
                         var index = -1;
                         for(var i=0; i<$scope.alarmTemplates.length;i++) {
-                            if (template.alarmName == $scope.alarmTemplates[0].alarmName) {
+                            if (template.alarmName == $scope.alarmTemplates[i].alarmName) {
                                 index = i;
                                 break;
                             }

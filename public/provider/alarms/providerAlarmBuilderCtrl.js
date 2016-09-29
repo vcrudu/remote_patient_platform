@@ -57,6 +57,7 @@
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
                         toastr.success('Alarm Template saved!','Success');
+                       
                     } else {
                     }
                 }).error(function (err) {
@@ -217,8 +218,8 @@
                         $http(req).success(function (res) {
                             if (res.success) {
                                 var foundAlarm = _.find(res.items, function (globalAlarm) {
-                                    console.log("GLOBALALRM IS !!!!!!!!!!!!!!!!     "+globalAlarm.alarmName);
-                                    console.log("GLOBAL ALARM DESCRIPTIONO !!!!!!!!    "+globalAlarm.alarmDescription);
+                                //    console.log("GLOBALALRM IS !!!!!!!!!!!!!!!!     "+globalAlarm.alarmName);
+                                 //   console.log("GLOBAL ALARM DESCRIPTIONO !!!!!!!!    "+globalAlarm.alarmDescription);
 
                                     return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
 
