@@ -9,6 +9,8 @@
                         if (err) {
                                 callback(err);
                         } else {
+                                var userDetails = context;
+
                                 //globalMeasurementScheduleData
                         }
                 });

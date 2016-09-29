@@ -23,7 +23,6 @@
                                 });
                             }
                             else {
-                                if(userDetails.)
                                 res.json({
                                     success: true,
                                     data: _.extend(user, userDetails),
