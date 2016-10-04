@@ -731,6 +731,22 @@
             });
 
             $(document).ready(function() {
+
+                var tabsBar = $(".mdl-tabs__tab-bar");
+                var tabBarTop = tabsBar.offset().top;
+
+                var layout = $(".mdl-layout");
+                var st = 0;
+                $(layout).scroll(function() {
+                    st = $(layout).scrollTop();
+
+                    if (st >= tabBarTop) {
+                        tabsBar.css({"position": "fixed", "background-color": "#EEEEEE", "width": "100%", "top": 0, "z-index": 10000});
+                    } else {
+                        tabsBar.css({"position": "", "background-color": "", "width": "", "top": "", "z-index": ""});
+                    }
+                });
+
                 $('#patient-details-collapse')
                     .on('show.bs.collapse', function(a) {
                         $(a.target).prev('.panel-heading').addClass('active');
@@ -785,7 +801,7 @@
             symptomsLink.addEventListener('click', this.handleSymptomsClick);
         },
         render: function() {
-            return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            return <div className="mdl-layout mdl-js-layout">
                 <header className="mdl-layout__header">
                     <USER_PROFILE_PROGRESS />
                     <div className="primary-bg profile-image-container">
