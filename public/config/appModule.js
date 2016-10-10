@@ -3,7 +3,7 @@
  */
 (function(){
      angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage',
-    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm', 'ui.calendar']);
+    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm', 'ui.calendar', 'ngAria', 'ngMaterial', 'ngMessages']);
 
     angular.module('app').factory('authorisationInterceptor',['$localStorage','$location',function($localStorage, $location){
         return{
@@ -25,18 +25,22 @@
     angular.module('app').factory('spinnerInterceptor', ['usSpinnerService',function(usSpinnerService){
         return {
             request:function(config){
+                $("#circularProgress").show();
                 usSpinnerService.spin('spinner-main');
                 return config;
             },
             response:function(config){
+                $("#circularProgress").hide();
                 usSpinnerService.stop('spinner-main');
                 return config;
             },
             requestError:function(config){
+                $("#circularProgress").hide();
                 usSpinnerService.stop('spinner-main');
                 return config;
             },
             responseError:function(config){
+                $("#circularProgress").hide();
                 usSpinnerService.stop('spinner-main');
                 return config;
             }

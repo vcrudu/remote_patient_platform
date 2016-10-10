@@ -3,7 +3,10 @@
  */
 angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'authService',
     function($scope, $state, toastr, authService){
-      $scope.userCredentials = {};
+      $scope.userCredentials = {
+          email: "",
+          password: ""
+      };
 
       if ($state && $state.params && $state.params.userName)
       {

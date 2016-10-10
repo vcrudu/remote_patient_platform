@@ -20,13 +20,12 @@
 
                 -->
                 <header class="registration-wizard">
-                    <span class="widget-icon"> <i class="fa fa-check"></i> </span>
-                    <h2>Registration Wizard </h2>
-
+                    <h2><md-icon md-svg-src="resourses/img/material-icons/ic_person_outline_black_36px.svg" class="name"></md-icon>&nbsp;&nbsp;Registration</h2>
+                    <div style="clear: both"></div>
                 </header>
 
                 <!-- widget div-->
-                <div>
+                <div id="bootstrap-wizard-2" class="registration-wizard-content">
 
                     <!-- widget edit box -->
                     <div class="jarviswidget-editbox">
@@ -72,9 +71,11 @@
                                                         <!--<li class="next last">
                                                         <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
                                                         </li>-->
-                                                        <div class="pull-right btn btn-lg btn-our" ng-class="nextButtonClass()" ng-click="moveNext()" ng-disabled="pendingState">
+                                                        <!--<div class="pull-right btn btn-lg btn-our" ng-class="nextButtonClass()" ng-click="moveNext()" ng-disabled="pendingState">
                                                             {{forward()}}
-                                                        </div>
+                                                        </div>-->
+
+                                                        <md-button data-loading-text="Please Wait..." class="md-raised md-primary pull-right" ng-class="nextButtonClass()" ng-click="moveNext()" ng-disabled="pendingState">{{forward()}}</md-button>
                                                     </div>
                                                 </div>
                                             </div>
