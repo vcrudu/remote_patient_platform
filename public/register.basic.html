@@ -28,7 +28,7 @@
 
                         <section>
                             <md-input-container class="md-block" flex-gt-sm
-                                                md-is-error="formBasic.password.$dirty && (formBasic.password.$error.required || formBasic.password.$error.differFromEmail || formBasic.email.$invalid)">
+                                                md-is-error="formBasic.password.$dirty && (formBasic.password.$error.required || formBasic.password.$error.pattern || formBasic.password.$error.differFromEmail || formBasic.email.$invalid)">
                                 <label>Password</label>
                                 <md-icon md-svg-src="resourses/img/material-icons/ic_lock_black_24px.svg" class="name"></md-icon>
                                 <input type="password" name="password" ng-model="newUser.password" required differ-from-email ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/">
@@ -59,13 +59,6 @@
                                     </div>
                                 </div>
                             </md-input-container>
-
-                            <!--<label class="input" ng-class="formBasic.passwordConfirm.$dirty && (formBasic.passwordConfirm.$error.required||formBasic.passwordConfirm.$error.matchPassword)?'state-error':''">
-                                <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="passwordConfirm" placeholder="Confirm password" required ng-model="newUser.passwordConfirm" ng-model-options="{ updateOn: 'default blur' }" >
-                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
-                            <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.required" class="invalid">Password is required.</em>
-                            <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.matchPassword" class="invalid">Password does not match.</em>-->
                         </section>
                     </fieldset>
 
@@ -85,15 +78,6 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-
-                                <!--<label class="select" ng-class="formBasic.title.$dirty && formBasic.title.$error.required?'state-error':''">
-                                    <select name="title" ng-model="newUser.title">
-                                        <option value="" selected="" disabled="">Title</option>
-                                        <option value="Mr.">Mr.</option>
-                                        <option value="Mrs.">Mrs.</option>
-                                        <option value="Ms.">Ms.</option>
-                                    </select> <i></i> </label>
-                                <em ng-show="formBasic.title.$dirty && formBasic.title.$error.required" class="invalid">Gender is required.</em>-->
                             </section>
                         </div>
                         <div class="row">
@@ -108,11 +92,6 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-
-                                <!--<label class="input" ng-class="formBasic.firstname.$dirty && formBasic.firstname.$error.required?'state-error':''">
-                                    <input type="text" name="name" required ng-model="newUser.name" placeholder="First name">
-                                </label>
-                                <em ng-show="formBasic.name.$dirty && formBasic.name.$error.required" class="invalid">First name is required.</em>-->
                             </section>
                             <section class="col col-6">
                                 <md-input-container class="md-block" flex-gt-sm md-is-error="formBasic.surname.$dirty && formBasic.surname.$error.required">
@@ -125,10 +104,6 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-                                <!--<label class="input" ng-class="formBasic.surname.$dirty && formBasic.surname.$error.required?'state-error':''">
-                                    <input type="text" name="surname" required ng-model="newUser.surname" placeholder="Surname">
-                                </label>
-                                <em ng-show="formBasic.surname.$dirty && formBasic.surname.$error.required" class="invalid">Last name is required.</em>-->
                             </section>
                         </div>
                         <div class="row">
@@ -146,17 +121,9 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-                                <!--<label class="select" ng-class="formBasic.gender.$dirty && formBasic.gender.$error.required?'state-error':''">
-                                    <select name="gender" required ng-model="newUser.gender">
-                                        <option value="" selected="" disabled="">Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="NoAnswer">Prefer not to answer</option>
-                                    </select> <i></i> </label>
-                                <em ng-show="formBasic.gender.$dirty && formBasic.gender.$error.required" class="invalid">Gender is required.</em>-->
                             </section>
                             <section class="col col-6">
-
+                                <!--<md-datepicker ng-model="newUser.dateOfBirth" md-placeholder="Enter date"></md-datepicker>-->
                                 <label class="input"
                                        ng-class="{'state-error': formBasic.dateOfBirth.$dirty && formBasic.dateOfBirth.$error.required }">
 

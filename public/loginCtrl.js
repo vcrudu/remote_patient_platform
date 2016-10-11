@@ -7,12 +7,14 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'aut
           email: "",
           password: ""
       };
+        $scope.submitted = false;
 
       if ($state && $state.params && $state.params.userName)
       {
         $scope.userCredentials.email = $state.params.userName;
       }
       $scope.signIn = function(){
+          $scope.submitted = true;
           if($scope.loginForm.$valid){
               authService.signin($scope.userCredentials,
                   function(success){

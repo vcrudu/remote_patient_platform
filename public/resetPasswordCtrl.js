@@ -7,7 +7,9 @@ angular.module('app').controller('resetPasswordCtrl',['$scope', '$stateParams','
 
         $scope.serverAnswer = serverAnswer;
         $scope.newUser = {};
+        $scope.submitted = false;
         $scope.submitResetPassword = function(){
+            $scope.submitted = true;
             if($scope.resetPasswordForm.$valid){
                 var dataReset={
                 token:$scope.serverAnswer.token,

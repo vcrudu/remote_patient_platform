@@ -14,6 +14,9 @@
         if (hash != "" &&
             hash.indexOf("login") == -1 &&
             hash.indexOf("register") == -1 &&
+            hash.indexOf("confirmSubmit") == -1 &&
+            hash.indexOf("reset") == -1 &&
+            hash.indexOf("need-activate") == -1 &&
             hash.indexOf("activate") == -1) {
             setLayout();
             $scope.userName = authService.getUserName();

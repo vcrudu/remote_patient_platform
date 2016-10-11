@@ -1,6 +1,6 @@
 <br><br><br>
 <div class="row">
-    <div ng-show="showSendAgain" class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
+    <!--<div ng-show="showSendAgain" class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
         <div class="well no-padding">
             <form name="confirmForm" novalidate id="confirm-form" class="smart-form client-form">
                 <header>
@@ -8,7 +8,6 @@
                 </header>
 
                 <fieldset>
-
                     <section>
                         <p>Provide please you email address in order to resent the activation email again and press Send button.</p>
                     </section>
@@ -31,5 +30,60 @@
         You account is not active yet.<br>
         Please activate it by confirming you subscription from the email message we have sent to you.<br>
         If you need to resend the email message again, <a href="#" ng-click="setShowForm()">click here.</a>
+    </div>-->
+
+    <div ng-show="showSendAgain" class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+        <div>
+            <form name="confirmForm" novalidate id="confirm-form">
+                <header>
+                    <h2 style="border-bottom: 1px solid rgba(0,0,0,.1);">Dear Friend</h2>
+                </header>
+
+                <fieldset>
+                    <section>
+                        <br />
+                        <p style="padding-bottom: 24px">Provide please you email address in order to resent the activation email again and press Send button.</p>
+                    </section>
+                    <section>
+                        <md-input-container class="md-block" flex-gt-sm md-is-error="submitted && (confirmForm.email.$error.required || confirmForm.email.$error.email || confirmForm.email.$invalid)">
+                            <label>Email address</label>
+                            <md-icon md-svg-src="resourses/img/material-icons/ic_email_black_24px.svg" class="name"></md-icon>
+                            <input type="email" name="email" ng-model="email" required ng-pattern="/^.+@.+\..+$/">
+                            <div ng-messages="confirmForm.email.$error">
+                                <div ng-message="required">
+                                    Email is required!
+                                </div>
+                                <div ng-message="pattern">
+                                    Email is invalid!
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </section>
+                    <section>
+                        <div style="width: 88px; margin: 0 auto">
+                            <md-button class="md-raised md-primary" ng-click="submitSendConfirm()">Send</md-button>
+                        </div>
+                    </section>
+                </fieldset>
+            </form>
+        </div>
     </div>
+
+    <md-card class="_md md-default-theme" ng-hide="showSendAgain">
+        <md-card-title>
+            <md-card-title-media>
+                <div class="md-media-sm card-media" layout>
+                    <md-icon md-svg-src="resourses/img/material-icons/ic_check_circle_black_48px.svg" class="register-done"></md-icon>
+                </div>
+            </md-card-title-media>
+            <md-card-title-text>
+                <div class="md-headline"><b>Dear Friend,</b></div>
+                <div ng-hide="showSendAgain" class="md-subhead description">
+                    You account is not active yet.<br>
+                    Please activate it by confirming you subscription from the email message we have sent to you.<br>
+                    If you need to resend the email message again, <a href="javascript:void(0);" ng-click="setShowForm()">click here.</a>
+                </div>
+            </md-card-title-text>
+        </md-card-title>
+    </md-card>
 </div>

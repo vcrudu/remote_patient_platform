@@ -11,7 +11,41 @@
                     <fieldset>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="select"
+                                <md-input-container  class="md-block" flex-gt-sm md-is-error="formAddress.country.$dirty && formAddress.country.$error.required">
+                                    <label>Country</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_language_black_24px.svg" class="name"></md-icon>
+                                    <md-select name="country" ng-model="newUser.country" required>
+                                        <md-option value="Austria">Austria</md-option>
+                                        <md-option value="Belgium">Belgium</md-option>
+                                        <md-option value="British Indian Ocean Territory">British Indian Ocean Territory
+                                        </md-option>
+                                        <md-option value="Canada">Canada</md-option>
+                                        <md-option value="Finland">Finland</md-option>
+                                        <md-option value="Germany">Germany</md-option>
+                                        <md-option value="Greece">Greece</md-option>
+                                        <md-option value="Italy">Italy</md-option>
+                                        <md-option value="Luxembourg">Luxembourg</md-option>
+                                        <md-option value="Moldova, Republic of">Moldova, Republic of</md-option>
+                                        <md-option value="New Zealand">New Zealand</md-option>
+                                        <md-option value="Norway">Norway</md-option>
+                                        <md-option value="Portugal">Portugal</md-option>
+                                        <md-option value="Romania">Romania</md-option>
+                                        <md-option value="Spain">Spain</md-option>
+                                        <md-option value="Sweden">Sweden</md-option>
+                                        <md-option value="Switzerland">Switzerland</md-option>
+                                        <md-option value="United Arab Emirates">United Arab Emirates</md-option>
+                                        <md-option value="United Kingdom">United Kingdom</md-option>
+                                        <md-option value="United States">United States</md-option>
+                                        <md-option value="Virgin Islands (British)">Virgin Islands (British)</md-option>
+                                        <md-option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</md-option>
+                                    </md-select>
+                                    <div ng-messages="formAddress.country.$error">
+                                        <div ng-message="required">
+                                            Country is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <!--<label class="select"
                                        ng-class="formAddress.country.$dirty && formAddress.country.$error.required?'state-error':''">
                                     <select name="country" required ng-model="newUser.country">
                                         <option value="" selected="" disabled="">Country</option>
@@ -40,76 +74,142 @@
                                         <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
                                     </select> <i></i> </label>
                                 <em ng-show="formAddress.country.$dirty && formAddress.country.$error.required"
-                                    class="invalid">Country is required.</em>
+                                    class="invalid">Country is required.</em>-->
                             </section>
 
                             <section class="col col-6">
-                                <label class="input"
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.county.$dirty && formAddress.county.$error.required">
+                                    <label>County</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_location_city_black_24px.svg" class="name"></md-icon>
+                                    <input type="text" name="county" ng-model="newUser.county" required>
+                                    <div ng-messages="formAddress.county.$error">
+                                        <div ng-message="required">
+                                            County is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <!--<label class="input"
                                        ng-class="formAddress.county.$dirty && formAddress.county.$error.required?'state-error':''">
                                     <input type="text" name="county" required ng-model="newUser.county"
                                            placeholder="County">
                                 </label>
                                 <em ng-show="formAddress.county.$dirty && formAddress.county.$error.required"
-                                    class="invalid">County is required.</em>
+                                    class="invalid">County is required.</em>-->
                             </section>
                         </div>
 
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input"
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.town.$dirty && formAddress.town.$error.required">
+                                    <label>Town</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_domain_black_24px.svg" class="name"></md-icon>
+                                    <input type="text" name="town" ng-model="newUser.town" required>
+                                    <div ng-messages="formAddress.town.$error">
+                                        <div ng-message="required">
+                                            Town is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <!--<label class="input"
                                        ng-class="formAddress.town.$dirty && formAddress.town.$error.required?'state-error':''">
                                     <input type="text" name="town" required ng-model="newUser.town" placeholder="Town">
                                 </label>
                                 <em ng-show="formAddress.town.$dirty && formAddress.town.$error.required"
-                                    class="invalid">Town is required.</em>
+                                    class="invalid">Town is required.</em>-->
                             </section>
 
                             <section class="col col-6">
-                                <label class="input"
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.postCode.$dirty && formAddress.postCode.$error.required">
+                                    <label>Post Code</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_local_post_office_black_24px.svg" class="name"></md-icon>
+                                    <input type="text" name="postCode" ng-model="newUser.postCode" required>
+                                    <div ng-messages="formAddress.postCode.$error">
+                                        <div ng-message="required">
+                                            Post Code is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <!--<label class="input"
                                        ng-class="formAddress.postCode.$dirty && formAddress.postCode.$error.required?'state-error':''">
                                     <input type="text" name="postCode" required ng-model="newUser.postCode"
                                            placeholder="Post code">
                                 </label>
                                 <em ng-show="formAddress.postCode.$dirty && formAddress.postCode.$error.required"
-                                    class="invalid">Post code is required.</em>
+                                    class="invalid">Post code is required.</em>-->
                             </section>
                         </div>
 
                         <section>
-                            <label for="addressLine1" class="input"
+                            <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.addressLine1.$dirty && formAddress.addressLine1.$error.required">
+                                <label>Address Line 1</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_place_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="addressLine1" ng-model="newUser.addressLine1" required>
+                                <div ng-messages="formAddress.addressLine1.$error">
+                                    <div ng-message="required">
+                                        Address line 1 is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label for="addressLine1" class="input"
                                    ng-class="formAddress.addressLine1.$dirty && formAddress.addressLine1.$error.required?'state-error':''">
                                 <input type="text" name="addressLine1" id="addressLine1" required
                                        ng-model="newUser.addressLine1" placeholder="Address Line 1">
                             </label>
                             <em ng-show="formAddress.addressLine1.$dirty && formAddress.addressLine1.$error.required"
-                                class="invalid">Address line 1 is required.</em>
+                                class="invalid">Address line 1 is required.</em>-->
                         </section>
 
                         <section>
-                            <label for="addressLine2" class="input">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Address Line2</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_place_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="addressLine2" ng-model="newUser.addressLine2">
+                            </md-input-container>
+                            <!--<label for="addressLine2" class="input">
                                 <input type="text" name="addressLine2" id="addressLine2" ng-model="newUser.addressLine2"
                                        placeholder="Address Line 2">
-                            </label>
+                            </label>-->
                         </section>
 
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.phone.$dirty && (formAddress.phone.$error.phoneMobileRequired || formAddress.phone.$error.isPhone)">
+                                    <label>Phone</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_local_phone_black_24px.svg" class="name"></md-icon>
+                                    <input type="tel" name="phone" ng-model="newUser.phone" phone-mobile-required is-phone>
+                                    <div ng-messages="formAddress.phone.$error">
+                                        <div ng-message="phoneMobileRequired"
+                                            class="invalid">Phone or Mobile is required!</div>
+                                        <div ng-message="isPhone"
+                                            class="invalid">Phone number format is invalid!</div>
+                                    </div>
+                                </md-input-container>
+
+                                <!--<label class="input"> <i class="icon-prepend fa fa-phone"></i>
                                     <input type="tel" name="phone" ng-model="newUser.phone" phone-mobile-required
                                            is-phone placeholder="Phone">
                                 </label>
                                 <em ng-show="(formAddress.phone.$dirty && formAddress.phone.$error.phoneMobileRequired)"
                                     class="invalid">Phone or Mobile is required!</em>
                                 <em ng-show="(formAddress.phone.$dirty && formAddress.phone.$error.isPhone)"
-                                    class="invalid">Phone number format is invalid!</em>
+                                    class="invalid">Phone number format is invalid!</em>-->
                             </section>
                             <section class="col col-6">
-                                <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formAddress.phone.$dirty && formAddress.mobile.$error.isPhone">
+                                    <label>Mobile</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_phone_android_black_24px.svg" class="name"></md-icon>
+                                    <input type="tel" name="mobile" ng-model="newUser.mobile" is-phone>
+                                    <div ng-messages="formAddress.mobile.$error">
+                                        <div ng-message="isPhone">Mobile number format is invalid!</div>
+                                    </div>
+                                </md-input-container>
+
+                                <!--<label class="input"> <i class="icon-prepend fa fa-phone"></i>
                                     <input type="tel" name="mobile" ng-model="newUser.mobile" is-phone
                                            placeholder="Mobile">
                                 </label>
                                 <em ng-show="(formAddress.mobile.$dirty && formAddress.mobile.$error.isPhone)"
-                                    class="invalid">Mobile number format is invalid!</em>
+                                    class="invalid">Mobile number format is invalid!</em>-->
                             </section>
                         </div>
                     </fieldset>

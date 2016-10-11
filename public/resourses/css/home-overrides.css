@@ -5,6 +5,7 @@ body {
   font-weight: 300;
   color: #000;
   font-size: 16px;
+  height: initial;
 }
 .green {
   background: #8bc34a;
@@ -23,6 +24,13 @@ body {
 }
 .md-input-invalid svg {
   fill: #dd2c00;
+}
+.register-done {
+  width: 48px;
+  height: 48px;
+}
+.register-done svg {
+  fill: #8bc34a;
 }
 .thawteseal-container {
   float: right;
