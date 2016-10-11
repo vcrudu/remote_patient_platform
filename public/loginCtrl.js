@@ -3,13 +3,18 @@
  */
 angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'authService',
     function($scope, $state, toastr, authService){
-      $scope.userCredentials = {};
+      $scope.userCredentials = {
+          email: "",
+          password: ""
+      };
+        $scope.submitted = false;
 
       if ($state && $state.params && $state.params.userName)
       {
         $scope.userCredentials.email = $state.params.userName;
       }
       $scope.signIn = function(){
+          $scope.submitted = true;
           if($scope.loginForm.$valid){
               authService.signin($scope.userCredentials,
                   function(success){

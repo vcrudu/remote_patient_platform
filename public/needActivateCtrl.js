@@ -4,6 +4,7 @@
 angular.module('app').controller('needActivateCtrl',['$scope', '$state', '$stateParams','authService','toastr',
     function($scope, $state, $stateParams, authService, toastr) {
         $scope.email = "";
+        $scope.submitted = false;
 
         $scope.showSendAgain = false;
         $scope.setShowForm = function () {
@@ -11,7 +12,7 @@ angular.module('app').controller('needActivateCtrl',['$scope', '$state', '$state
         };
 
         $scope.submitSendConfirm = function () {
-
+            $scope.submitted = true;
             if ($scope.confirmForm.$valid) {
                 authService.submitConfirm($scope.email,
                     function (res) {

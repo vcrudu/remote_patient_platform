@@ -9,78 +9,121 @@
                  <fieldset>
 
                         <section>
-                            <label class="input" ng-class="formBasic.email.$dirty && (formBasic.email.$error.required ||
-                            formBasic.email.$error.email || formBasic.email.$invalid)?'state-error':''"> <i class="icon-append fa fa-envelope-o"></i>
-                                <input type="email" name="email" placeholder="Email address"  { updateOn: 'default blur', debounce: { default: 500, blur: 0 }   required check-exists-user ng-model="newUser.email">
-                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
-                            </label>
-                                <em ng-show="formBasic.email.$dirty && formBasic.email.$error.required" class="invalid">Email is required.</em>
-                            <em ng-show="formBasic.email.$dirty && formBasic.email.$error.email" class="invalid">Email is invalid</em>
-                            <em ng-show="formBasic.email.$dirty && formBasic.email.$error.checkExistsUser" class="invalid">User already exists!</em>
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="formBasic.email.$dirty && (formBasic.email.$error.required || formBasic.email.$error.email || formBasic.email.$invalid)">
+                                <label>Email address</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_email_black_24px.svg" class="name"></md-icon>
+                                <input type="email" name="email" ng-model="newUser.email" required check-exists-user ng-pattern="/^.+@.+\..+$/">
+                                <div ng-messages="formBasic.email.$error">
+                                    <div ng-message="required">
+                                        Email is required!
+                                    </div>
+                                    <div ng-message="pattern">
+                                        Email is invalid!
+                                    </div>
+                                    <div ng-show="formBasic.email.$error.checkExistsUser" class="md-input-message-animation">User already exists!</div>
+                                </div>
+                            </md-input-container>
                         </section>
 
                         <section>
-                            <label class="input" ng-class="formBasic.password.$dirty && (formBasic.password.$error.required||formBasic.password.$error.matchPassword)?'state-error':''">
-                                <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="password" placeholder="Password" id="password" required
-                                       password-format differ-from-email ng-model="newUser.password" >
-                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
-                            <em ng-show="formBasic.password.$dirty && formBasic.password.$error.required" class="invalid">Password is required.</em>
-                            <em ng-show="formBasic.password.$dirty && formBasic.password.$error.matchPassword" class="invalid">Password does not match.</em>
-                            <em ng-show="formBasic.password.$dirty && formBasic.password.$error.passwordFormat" class="invalid">Password must contain at least six characters, at least one number (0-9), one lowercase letter (a-z), one uppercase letter (A-Z)!</em>
-                            <em ng-show="formBasic.password.$dirty && formBasic.password.$error.differFromEmail" class="invalid">Password must be different from E-mail.</em>
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="formBasic.password.$dirty && (formBasic.password.$error.required || formBasic.password.$error.pattern || formBasic.password.$error.differFromEmail || formBasic.email.$invalid)">
+                                <label>Password</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_lock_black_24px.svg" class="name"></md-icon>
+                                <input type="password" name="password" ng-model="newUser.password" required differ-from-email ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/">
+                                <div ng-messages="formBasic.password.$error">
+                                    <div ng-message="required">
+                                        Password is required!
+                                    </div>
+                                    <div ng-message="pattern">
+                                        Password must contain at least six characters, at least one number (0-9), one lowercase letter (a-z), one uppercase letter (A-Z)!
+                                    </div>
+                                    <div ng-show="formBasic.password.$dirty && formBasic.password.$error.differFromEmail" class="invalid">Password must be different from E-mail.</div>
+                                </div>
+                            </md-input-container>
                         </section>
 
                         <section>
-                            <label class="input" ng-class="formBasic.passwordConfirm.$dirty && (formBasic.passwordConfirm.$error.required||formBasic.passwordConfirm.$error.matchPassword)?'state-error':''">
-                                <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="passwordConfirm" placeholder="Confirm password" required ng-model="newUser.passwordConfirm" ng-model-options="{ updateOn: 'default blur' }" >
-                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
-                            <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.required" class="invalid">Password is required.</em>
-                            <em ng-show="formBasic.passwordConfirm.$dirty && formBasic.passwordConfirm.$error.matchPassword" class="invalid">Password does not match.</em>
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="formBasic.passwordConfirm.$dirty && (formBasic.passwordConfirm.$error.required||formBasic.passwordConfirm.$error.matchPassword)">
+                                <label>Confirm password</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_lock_black_24px.svg" class="name"></md-icon>
+                                <input type="password" name="passwordConfirm" ng-model="newUser.passwordConfirm" ng-pattern="{{newUser.password}}" required>
+                                <div ng-messages="formBasic.passwordConfirm.$error">
+                                    <div ng-message="required">
+                                        Password confirmation is required.
+                                    </div>
+                                    <div ng-message="pattern">
+                                        Password does not match.
+                                    </div>
+                                </div>
+                            </md-input-container>
                         </section>
                     </fieldset>
 
                  <fieldset>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="select" ng-class="formBasic.title.$dirty && formBasic.title.$error.required?'state-error':''">
-                                    <select name="title" ng-model="newUser.title">
-                                        <option value="" selected="" disabled="">Title</option>
-                                        <option value="Mr.">Mr.</option>
-                                        <option value="Mrs.">Mrs.</option>
-                                        <option value="Ms.">Ms.</option>
-                                    </select> <i></i> </label>
-                                <em ng-show="formBasic.title.$dirty && formBasic.title.$error.required" class="invalid">Gender is required.</em>
+                                <md-input-container  class="md-block" flex-gt-sm md-is-error="formBasic.title.$dirty && formBasic.title.$error.required">
+                                    <label>Title</label>
+                                    <md-select name="title" ng-model="newUser.title" required>
+                                        <md-option value="Mr.">Mr.</md-option>
+                                        <md-option value="Mrs.">Mrs.</md-option>
+                                        <md-option value="Ms.">Ms.</md-option>
+                                    </md-select>
+                                    <div ng-messages="formBasic.title.$error">
+                                        <div ng-message="required">
+                                            Title is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
                             </section>
                         </div>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="input" ng-class="formBasic.firstname.$dirty && formBasic.firstname.$error.required?'state-error':''">
-                                    <input type="text" name="name" required ng-model="newUser.name" placeholder="First name">
-                                </label>
-                                <em ng-show="formBasic.name.$dirty && formBasic.name.$error.required" class="invalid">First name is required.</em>
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formBasic.name.$dirty && formBasic.name.$error.required">
+                                    <label>First name</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_person_black_24px.svg" class="name"></md-icon>
+                                    <input type="text" name="name" ng-model="newUser.name" required>
+                                    <div ng-messages="formBasic.name.$error">
+                                        <div ng-message="required">
+                                            First name is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
                             </section>
                             <section class="col col-6">
-                                <label class="input" ng-class="formBasic.surname.$dirty && formBasic.surname.$error.required?'state-error':''">
-                                    <input type="text" name="surname" required ng-model="newUser.surname" placeholder="Surname">
-                                </label>
-                                <em ng-show="formBasic.surname.$dirty && formBasic.surname.$error.required" class="invalid">Last name is required.</em>
+                                <md-input-container class="md-block" flex-gt-sm md-is-error="formBasic.surname.$dirty && formBasic.surname.$error.required">
+                                    <label>Surname</label>
+                                    <md-icon md-svg-src="resourses/img/material-icons/ic_person_black_24px.svg" class="name"></md-icon>
+                                    <input type="text" name="surname" ng-model="newUser.surname" required>
+                                    <div ng-messages="formBasic.surname.$error">
+                                        <div ng-message="required">
+                                            Surname is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
                             </section>
                         </div>
                         <div class="row">
                             <section class="col col-6">
-                                <label class="select" ng-class="formBasic.gender.$dirty && formBasic.gender.$error.required?'state-error':''">
-                                    <select name="gender" required ng-model="newUser.gender">
-                                        <option value="" selected="" disabled="">Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="NoAnswer">Prefer not to answer</option>
-                                    </select> <i></i> </label>
-                                <em ng-show="formBasic.gender.$dirty && formBasic.gender.$error.required" class="invalid">Gender is required.</em>
+                                <md-input-container  class="md-block" flex-gt-sm md-is-error="formBasic.gender.$dirty && formBasic.gender.$error.required">
+                                    <label>Gender</label>
+                                    <md-select name="gender" ng-model="newUser.gender" required>
+                                        <md-option value="Male">Male</md-option>
+                                        <md-option value="Female">Female</md-option>
+                                        <md-option value="NoAnswer">Prefer not to answer</md-option>
+                                    </md-select>
+                                    <div ng-messages="formBasic.title.$error">
+                                        <div ng-message="required">
+                                            Gender is required!
+                                        </div>
+                                    </div>
+                                </md-input-container>
                             </section>
                             <section class="col col-6">
-
+                                <!--<md-datepicker ng-model="newUser.dateOfBirth" md-placeholder="Enter date"></md-datepicker>-->
                                 <label class="input"
                                        ng-class="{'state-error': formBasic.dateOfBirth.$dirty && formBasic.dateOfBirth.$error.required }">
 
