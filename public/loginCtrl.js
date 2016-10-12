@@ -21,7 +21,7 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'aut
                     switch (success.type){
                       case "patient":
                       {
-                        $state.go('patient.home');
+                        $state.go('patient.home.inbox');
                         $scope.$emit('signin');
                         break;
                       }
