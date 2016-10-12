@@ -3,15 +3,56 @@
 @green:                  #8bc34a;
 @green-hover-state:      #7daf43;
 @gray:                   #E5E5E4;
+@gray-100:               #F5F5F5;
+@gray-600:               #757575;
+@gray-50:                #FAFAFA;
 @gray-strip:             #F8F8F9;
 @brand-red:              #ff5252;
 @brand-gold:             #ffbc00;
+@purple-500:             #673AB7;
+@text-color-black:       rgb(33, 33, 33);
 
 
 @nav-height:             92px;
 @footer-height:          92px;
 @strip-content-padding:  52px;
 
+html {
+  background: none;
+  background-color: @gray-50;
+}
+
+body {
+  font-family: 'Fira Sans';
+  background-color: #F5F5F5;
+  font-style: normal;
+  font-weight: 300;
+  color: #000;
+  font-size: 16px;
+  height: initial;
+  background: none !important;
+  height: auto !important;
+}
+
+.alarm {
+  color: @brand-red;
+  background: none !important;
+}
+
+.info {
+  color: @brand-gold;
+  background: none !important;
+}
+
+.reading {
+  color: @green;
+  background: none !important;
+}
+
+md-toolbar {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
+}
 
 #header {
   height:93px;
@@ -54,6 +95,74 @@
 
 #left-panel {
   padding-top: 93px;
+  background-color: @gray-100 !important;
+  background: inherit;
+  border-right: 1px solid rgba(0, 0, 0, 0.137255);
+
+  nav {
+    ul {
+      margin-top: 16px;
+      li {
+        a {
+          color: rgb(33, 33, 33);
+          font-weight: 700;
+          margin-top: 0px;
+          border-left: 2px solid transparent;
+        }
+
+        &.active {
+          a {
+            color: @purple-500 !important;
+          }
+          a:before {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+
+  .login-info {
+    border: none;
+    box-shadow: none;
+    height: auto;
+
+    .user-avatar-mask {
+      background-image: url("https://ssl.gstatic.com/accounts/ui/avatar_2x.png");
+      background-repeat: no-repeat;
+      background-size: 96px auto;
+      border-radius: 50%;
+      display: block;
+      height: 96px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: hidden;
+      transition: opacity 0.075s ease 0s;
+      width: 96px;
+      z-index: 100;
+
+      &.online {
+        border: 2px solid @green;
+      }
+
+      &.offline {
+        border: 2px solid @brand-red;
+      }
+    }
+
+    .user-name {
+      display: table;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      color: @text-color-black;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
+    }
+  }
 }
 
 @media (max-width: 480px) {

@@ -1,17 +1,22 @@
 <aside  id="left-panel" ng-controller="asideNavCtrl as main">
 
-<div class="login-info" style="margin-top: 20px">
-<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
+<div class="login-info">
+    <!--<span> &lt;!&ndash; User image size is adjusted inside CSS, it should stay as it &ndash;&gt;
 
-					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                        <img src="resourses/img/avatars/male.png" alt="me" ng-class="statusClass" />
-						<span>
-							{{userName}}
-						</span>
-                        <i class="fa fa-angle-down"></i>
-                    </a>
+    <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+        <img src="resourses/img/avatars/male.png" alt="me" ng-class="statusClass" />
+        <span>
+            {{userName}}
+        </span>
+        <i class="fa fa-angle-down"></i>
+    </a>
 
-				</span>
+</span>-->
+
+    <div class="user-avatar-mask" ng-class="statusClass"></div>
+    <div class="user-name">
+        {{userName}}
+    </div>
 </div>
 
 <nav>
