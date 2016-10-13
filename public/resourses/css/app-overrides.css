@@ -114,6 +114,20 @@ md-toolbar {
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
 }
+/* tabs */
+md-tabs md-card {
+  min-height: 360px;
+}
+md-tabs md-ink-bar {
+  color: #673AB7;
+  background: #673AB7;
+}
+md-tabs .md-tab.md-active {
+  color: #673AB7;
+}
+md-tabs .md-tab.md-active md-icon svg {
+  fill: #673AB7;
+}
 @media (max-width: 480px) {
   #header {
     height: 93px !important;

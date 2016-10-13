@@ -1,62 +1,61 @@
-<div class="tab-pane fade padding-10 no-padding-bottom active in">
-    <h1 class="page-title txt-color-blueLight">Shopping basket</h1>
+<md-content class="" layout="row" ng-if="vm.basket.Items.length">
+    <md-card style="width: 100%; min-height: inherit">
+        <md-card-content>
+            <div class=" col-md-8 col-sm-6">
 
-    <div class="row" ng-if="vm.basket.Items.length">
-        <div class=" col-md-8 col-sm-6">
-
-            <div class="row">
-                <div class="col-xs-8 ">
-                    <b>Product</b>
-                </div>
-                <div class="col-xs-2 ">
-                    <div class="pull-right ">
-                        <b>Price</b>
+                <div class="row">
+                    <div class="col-xs-8 ">
+                        <b>Product</b>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <div class="pull-right ">
+                            <b>Price</b>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="pull-right ">
+                            <b>Quantity</b>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-2">
-                    <div class="pull-right ">
-                        <b>Quantity</b>
-                    </div>
-                </div>
-            </div>
-            <div class="padding-top-10">
-                <div ng-repeat="item in vm.basket.Items" class="padding-top-10">
-                    <div class="row">
-                        <div class="col-xs-2 ">
-                            <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img">
-                        </div>
-                        <div class="col-xs-6">
-                            <h3>{{item.Device.model}}
-                                <small><p>({{item.Device.deviceModelType}})</p></small>
-                            </h3>
-                            <p class="note ">
-                                {{item.Device.description}}
-                            </p>
-                        </div>
-                        <div class="col-xs-2 ">
-                            <div class="pull-right text-danger font-md">
-                                <b>&pound{{item.Price | number :2}}</b>
+                <div class="padding-top-10">
+                    <div ng-repeat="item in vm.basket.Items" class="padding-top-10">
+                        <div class="row">
+                            <div class="col-xs-2 ">
+                                <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img">
                             </div>
-                        </div>
-                        <div class="col-xs-2 ">
-                            <div class="pull-right text-center">
-                                <div class=" text-primary font-md">
-                                    <div class="form-group ">
-                                        <input type="number" min="0" class="form-control text-right" ng-model="item.Quantity" >
-                                    </div>
+                            <div class="col-xs-6">
+                                <h3>{{item.Device.model}}
+                                    <small><p>({{item.Device.deviceModelType}})</p></small>
+                                </h3>
+                                <p class="note ">
+                                    {{item.Device.description}}
+                                </p>
+                            </div>
+                            <div class="col-xs-2 ">
+                                <div class="pull-right text-danger font-md">
+                                    <b>&pound{{item.Price | number :2}}</b>
                                 </div>
-                                <a href="" class="text-danger " ng-click="vm.removeItem(item)">
-                                    Remove
-                                </a>
+                            </div>
+                            <div class="col-xs-2 ">
+                                <div class="pull-right text-center">
+                                    <div class=" text-primary font-md">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" class="form-control text-right" ng-model="item.Quantity" >
+                                        </div>
+                                    </div>
+                                    <a href="" class="text-danger " ng-click="vm.removeItem(item)">
+                                        Remove
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 col-sm-6 ">
+            <div class="col-md-4 col-sm-6 ">
 
-            <div class="well text-center">
+            <div class="text-center">
                 <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s) : <span class="text-danger">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
                 <br>
 
@@ -70,8 +69,6 @@
             </div>
 
         </div>
-
-    </div>
-
-
-</div>
+        </md-card-content>
+    </md-card>
+</md-content>

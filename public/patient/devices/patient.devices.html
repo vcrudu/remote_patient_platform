@@ -1,28 +1,14 @@
-<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false"
-     ng-controller="patientDevicesCtrl">
-    <header>
-        <span class="widget-icon"> <i class="fa fa-stethoscope"></i> </span>
-
-        <h2>Devices</h2>
-
-
-        <ul class="nav nav-tabs pull-right in">
-            <li ui-sref-active="active">
-                <a ui-sref="patient.devices.buy"> <i class="fa fa-tablet"></i> <span
-                        class="hidden-mobile hidden-tablet">Devices</span></a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="patient.devices.checkout"> <i class="fa fa-shopping-cart"></i> <span
-                        class="hidden-mobile hidden-tablet">Basket</span> <basket-amount></basket-amount></a>
-            </li>
-
-        </ul>
-        <!--<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>-->
-
-    </header>
-    <div>
-        <div class="widget-body">
-            <ui-view></ui-view>
-        </div>
-    </div>
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab ui-sref="patient.devices.buy">
+                <md-tab-label><md-icon md-svg-src="resourses/img/material-icons/ic_devices_other_black_48px.svg" class="tab-icon"></md-icon>&nbsp;&nbsp;Devices</md-tab-label>
+                <md-tab-body><ui-view></ui-view></md-tab-body>
+            </md-tab>
+            <md-tab ui-sref="patient.devices.checkout">
+                <md-tab-label><md-icon md-svg-src="resourses/img/material-icons/ic_add_shopping_cart_black_48px.svg" class="tab-icon"></md-icon>&nbsp;&nbsp;Cart</md-tab-label>
+                <md-tab-body><ui-view></ui-view></md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>

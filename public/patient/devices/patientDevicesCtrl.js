@@ -4,6 +4,6 @@
 
 angular.module('app').controller('patientDevicesCtrl',['$scope','$log','$state','toastr','authService',
         function($scope, $log, $state, toastr, authService){
-
+                $state.go('patient.devices.buy');
         }
 ]);

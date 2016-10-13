@@ -1,33 +1,22 @@
-<div class="tab-pane fade padding-10 no-padding-bottom active in">
-
-    <div class="row">
-        <div ng-repeat="device in vm.devices" class="col-sm-6 col-md-4 col-lg-3 padding-5 "
-             ng-click="vm.showDetails(device)">
-            <div class="well well-light " style="height: 300px;overflow: hidden">
-                <div ng-if="device.imagesUrls && device.imagesUrls.length" style="height: 150px;">
-                    <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive "
+<div class="tab-pane fade no-padding-bottom active in">
+    <md-content layout-xs="column" layout="row">
+        <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="device in vm.devices" ng-click="vm.showDetails(device)">
+            <md-card>
+                <div ng-if="device.imagesUrls && device.imagesUrls.length" style="height: 150px;margin-top: 20px">
+                    <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive"
                          style="margin-left: auto;margin-right: auto;max-height: 150px;">
                 </div>
-                <div class="row">
-                    <div class="col-xs-8 ">
-                        <h3>{{device.model}}
+                <md-card-title>
+                    <md-card-title-text>
+                        <h3>{{device.model}}<span class="pull-right txt-color-red">&pound{{device.price | number : 2}}</span>
                             <small><p>({{device.deviceModelType}})</p></small>
                         </h3>
-                    </div>
-                    <div class="col-xs-4">
-                        <h2 class="pull-right txt-color-red">
-                            &pound{{device.price | number : 2}}
-                        </h2>
-                    </div>
-                </div>
-
-                <p class="note">
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
                     {{device.description}}
-                </p>
-
-            </div>
+                </md-card-content>
+            </md-card>
         </div>
-    </div>
-
-
+    </md-content>
 </div>

@@ -165,6 +165,28 @@ md-toolbar {
   }
 }
 
+/* tabs */
+md-tabs {
+  md-card {
+    min-height: 360px;
+  }
+  md-ink-bar {
+    color: @purple-500;
+    background: @purple-500;
+  }
+  .md-tab {
+    &.md-active {
+      color: @purple-500;
+
+      md-icon {
+        svg {
+          fill: @purple-500;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 480px) {
   #header {
     height:93px !important;
