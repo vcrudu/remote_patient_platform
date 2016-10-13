@@ -49,6 +49,15 @@ body {
   background: none !important;
 }
 
+.text-primary {
+  color: @purple-500;
+}
+
+.font-md {
+  font-size: 19px;
+  font-weight: normal;
+}
+
 md-toolbar {
   background: transparent !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
@@ -161,6 +170,28 @@ md-toolbar {
       color: @text-color-black;
       padding-bottom: 16px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
+    }
+  }
+}
+
+/* tabs */
+md-tabs {
+  md-card {
+    min-height: 360px;
+  }
+  md-ink-bar {
+    color: @purple-500;
+    background: @purple-500;
+  }
+  .md-tab {
+    &.md-active {
+      color: @purple-500;
+
+      md-icon {
+        svg {
+          fill: @purple-500;
+        }
+      }
     }
   }
 }
