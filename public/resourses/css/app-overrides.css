@@ -25,6 +25,13 @@ body {
   color: #8bc34a;
   background: none !important;
 }
+.text-primary {
+  color: #673AB7;
+}
+.font-md {
+  font-size: 19px;
+  font-weight: normal;
+}
 md-toolbar {
   background: transparent !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);

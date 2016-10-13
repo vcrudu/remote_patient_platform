@@ -7,7 +7,7 @@
                         <small><p>({{vm.device.deviceModelType}})</p></small>
                     </h3>
                     <p>{{vm.device.description}}</p>
-                    <h2 class="txt-color-red" style="margin: 0; font-weight: 500">
+                    <h2 class="text-primary" style="margin: 0; font-weight: 500">
                         &pound{{vm.device.price | number : 2}}
                     </h2>
                 </md-card-title-text>
@@ -18,7 +18,7 @@
             <md-card-content>
                 <div>
                     <p class="pull-left">
-                        <a class="txt-color-blue cursor-pointer" href="{{vm.device.manufacturerUrl}}"
+                        <a class="text-primary cursor-pointer" href="{{vm.device.manufacturerUrl}}"
                            target="_blank" ng-if="vm.device.manufacturerUrl">
                             Manufacturer
                         </a>
