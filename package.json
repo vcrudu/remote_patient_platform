@@ -4,7 +4,8 @@
   "private": true,
   "description": "Package for users signup.",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "dependencies": {
     "@vcrudu/hcm.domainmodel": "^1.0.17",

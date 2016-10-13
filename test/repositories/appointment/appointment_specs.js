@@ -11,7 +11,7 @@ var uuid = require('node-uuid');
 var should = require('should');
 var utils = require('../../../utils');
 
-describe('slots', function() {
+describe.skip('slots', function() {
     this.timeout(20000);
 
     describe('availabilityService', function () {
