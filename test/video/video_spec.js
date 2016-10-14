@@ -5,7 +5,7 @@
 var videoService = require('../../services/videoService');
 var should = require('should');
 
-describe('Video',function(){
+describe.skip('Video',function(){
 
     describe('Manage users',function(){
 

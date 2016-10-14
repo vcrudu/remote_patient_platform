@@ -9,7 +9,7 @@ var entitiesFactory = require("@vcrudu/hcm.domainmodel");
 var _ = require('underscore');
 var Order = require('../model').Order;
 
-describe("Test Device Repository from Db", function() {
+describe.skip("Test Device Repository from Db", function() {
 
     var order = {};
     var address = {};

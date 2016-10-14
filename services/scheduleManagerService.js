@@ -6,6 +6,19 @@
     var logging = require('../logging');
     var SchedulePlan = require('../model/schedulePlan');
 
+    var globalMeasurementScheduleRepository = require('../repositories/globalMeasurementScheduleRepository');
+    var schedulePlan = function (scheduleType, context, callback) {
+        globalMeasurementScheduleRepository.getOne(scheduleType, function (err, globalMeasurementScheduleData) {
+            if (err) {
+                callback(err);
+            } else {
+                var userDetails = context;
+
+                //globalMeasurementScheduleData
+            }
+        });
+    };
+
     var scheduleRecurentJob = function (userId, eventToTrigger,
                                         timeString,
                                         scheduleType, offsetInMinutes,

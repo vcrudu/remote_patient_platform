@@ -8,8 +8,8 @@
 
     var userId='vladcod@yahoo.com';
 
-    describe('Usage SES service', function() {
-        it.only("Send Subscription Confirmation email\n", function (done) {
+    describe.skip('Usage SES service', function() {
+        it("Send Subscription Confirmation email\n", function (done) {
 
             emailService.sendPatientSubscriptionConfirmation(userId, function (err) {
                 should.not.exist(err);
