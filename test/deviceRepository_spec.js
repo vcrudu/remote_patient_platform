@@ -11,7 +11,7 @@ var _ = require('underscore');
 
 
 
-describe("Test Device Repository from Db", function() {
+describe.skip("Test Device Repository from Db", function() {
 
     var deviceModelsResult;
     var deviceModel;
@@ -39,30 +39,6 @@ describe("Test Device Repository from Db", function() {
             done();
         });
     });
-
-    it("Should save device Model ", function (done) {
-       /* devicesRepository.save(deviceModel, function (err, data) {
-            assert.equal(err, null, "Device Model save  method is not succesfull!");
-            count = count + 1;
-            done();
-        });*/
-    });
-
-    it("Should delete device Model ", function (done) {
-        /*devicesRepository.delete(deviceModel, function (err, data) {
-            assert.equal(err, null, "Device Model has been delete succesfull!");
-            countDel = count-1;
-
-            devicesRepository.getAll(function (err, deviceModels) {
-                deviceModelResult = deviceModels;
-                assert.notEqual(countDel, count, "Result should be array with length > 0");
-
-
-                done();
-            });
-        });*/
-    });
-
 });
 
 

@@ -3,7 +3,6 @@
  */
 
 var availabilityService = require('../../services').AvailabilityService;
-var slotsRepository = require('../../repositories').Slots;
 var should = require('should');
 
 describe('availabilityService', function() {
