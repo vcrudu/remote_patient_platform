@@ -21,6 +21,7 @@
                 -->
                 <header class="registration-wizard">
                     <h2><md-icon md-svg-src="resourses/img/material-icons/ic_person_outline_black_36px.svg" class="name"></md-icon>&nbsp;&nbsp;Registration</h2>
+                    <h3 class="pull-right"><span style="font-weight: 500">{{stepCountLabel}}</span> - {{stepLabel}}</h3>
                     <div style="clear: both"></div>
                 </header>
 
@@ -35,11 +36,11 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
+                    <!--<div class="widget-body">
 
-                        <div class="row">
-                                <div id="bootstrap-wizard-1" class="col-sm-12">
-                                    <div class="form-bootstrapWizard">
+                        <div class="row">-->
+                                <div id="bootstrap-wizard-1" class="registration-wizard-content">
+                                    <div class="form-bootstrapWizard" style="display: none;">
                                         <ul class="bootstrapWizard form-wizard">
                                             <li ui-sref-active="active">
                                                 <a ui-sref="register.basic" data-toggle="tab"> <span class="step">1</span> <span class="title">User</span> </a>
@@ -84,9 +85,9 @@
 
                                     </div>
                                 </div>
-                        </div>
+                        <!--</div>
 
-                    </div>
+                    </div>-->
                     <!-- end widget content -->
 
                 </div>

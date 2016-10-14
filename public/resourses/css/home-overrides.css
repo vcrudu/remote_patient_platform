@@ -60,8 +60,11 @@
 #extr-page {
   height: 100%;
 }
+#extr-page #main {
+  padding-bottom: 0;
+}
 #extr-page #content {
-  padding-top: 40px;
+  padding-top: 0;
 }
 #extr-page .form-actions {
   margin-bottom: 0 !important;
@@ -195,9 +198,22 @@
   font-size: 22px;
   margin: 20px 0;
   line-height: normal;
-  font-weight: 300;
+  font-weight: 400;
+  width: auto;
 }
 #extr-page .registration-wizard h2 md-icon {
+  margin-top: -4px;
+}
+#extr-page h3 {
+  color: #232323;
+  letter-spacing: -1px;
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: normal;
+  font-weight: 300;
+  width: auto;
+}
+#extr-page h3 md-icon {
   margin-top: -4px;
 }
 #extr-page .registration-wizard-content {
@@ -275,36 +291,36 @@
   }
 }
 @media (max-width: 768px) {
-  #extr-page #header {
+  #extr-page body #header {
     overflow: inherit;
   }
-  #extr-page #header .navbar .navbar-container {
+  #extr-page body #header .navbar .navbar-container {
     width: 100% !important;
   }
-  #extr-page #header .navbar .navbar-header {
+  #extr-page body #header .navbar .navbar-header {
     width: 100% !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle {
     border-color: transparent !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:hover {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:hover {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:active {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:active {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:focus {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:focus {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:visited {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:visited {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-brand {
+  #extr-page body #header .navbar .navbar-header .navbar-brand {
     padding-left: 30px !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-collapse {
+  #extr-page body #header .navbar .navbar-header .navbar-collapse {
     position: absolute;
     width: 100%;
     margin-top: 93px;
@@ -312,21 +328,27 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-  #extr-page #header .navbar .navbar-nav {
+  #extr-page body #header .navbar .navbar-nav {
     width: 100%;
     height: auto !important;
     margin: 0 !important;
   }
-  #extr-page #header .navbar .navbar-nav li.nav {
+  #extr-page body #header .navbar .navbar-nav li.nav {
     height: 80px;
   }
-  #extr-page #header .navbar .navbar-nav li.nav a {
-    border-top: 0px!important;
+  #extr-page body #header .navbar .navbar-nav li.nav a {
+    border-top: 0px !important;
     border-bottom: 1px solid #8bc34a !important;
     height: inherit !important;
     display: inherit !important;
     vertical-align: inherit !important;
     padding-top: 30px !important;
+  }
+  #extr-page body #header .navbar .navbar-nav li.nav.active {
+    background-color: #8bc34a !important;
+  }
+  #extr-page body #header .navbar .navbar-nav li.nav.active a {
+    color: white !important;
   }
 }
 @media (max-width: 356px) {

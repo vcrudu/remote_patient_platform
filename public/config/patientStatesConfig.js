@@ -19,7 +19,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "patient/home/patient.home.inbox.html",
         controller: 'patientHomeInboxCtrl as vm'
     }).state("patient.home.message", {
-        url: "/patient.home.message",
+        url: "/message",
         templateUrl: "patient/home/patient.home.message.html",
         controller: 'patientHomeMessageCtrl as vm'
     }).state("patient.vitalsigns", {

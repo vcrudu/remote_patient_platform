@@ -4,6 +4,10 @@ angular.module('app')
 
             var vm = this;
 
+            vm.currentStep = 0;
+            vm.stepCountLabel = "Step 1";
+            vm.stepLabel = "Basic Information";
+
             vm.isProviderMenuItemActive = true;
             vm.isPatientMenuItemActive = false;
 
@@ -11,9 +15,18 @@ angular.module('app')
                 $state.go('login');
             };
 
+            vm.goBackward = function () {
+                $scope.rc.sampleWizard.backward();
+                vm.currentStep = $scope.rc.sampleWizard.currentIndex;
+                vm.fillStepInfo();
+            };
+
             vm.goForward = function () {
                 if(!$scope.firstForm.email.$pending){
                     $scope.rc.sampleWizard.forward();
+
+                    vm.currentStep = $scope.rc.sampleWizard.currentIndex;
+                    vm.fillStepInfo();
                 }
             };
 
@@ -46,6 +59,29 @@ angular.module('app')
                 }
                 return false;
             };
+
+            vm.fillStepInfo = function() {
+                switch (vm.currentStep) {
+                    case 0:
+                        vm.stepCountLabel = "Step 1";
+                        vm.stepLabel = "Basic Information";
+                        break;
+                    case 1:
+                        vm.stepCountLabel = "Step 2";
+                        vm.stepLabel = "Contact Information";
+                        break;
+                    case 2:
+                        vm.stepCountLabel = "Step 3";
+                        vm.stepLabel = "Finish";
+                        break;
+                }
+            };
+
+            vm.init = function() {
+                vm.fillStepInfo();
+            };
+
+            vm.init();
 
             vm.save = function () {
 

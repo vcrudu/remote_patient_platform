@@ -1,6 +1,6 @@
 <div class="tab-pane fade no-padding-bottom active in">
-    <md-content layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="device in vm.devices" ng-click="vm.showDetails(device)">
+    <md-content class="row" style="margin-right: 0px; margin-left: 0px;">
+        <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="device in vm.devices" ng-click="vm.showDetails(device)" style="padding-right: 0px; padding-left: 0px;">
             <md-card>
                 <div ng-if="device.imagesUrls && device.imagesUrls.length" style="height: 150px;margin-top: 20px">
                     <img ng-src="{{device.imagesUrls[0]}}" class="img-rounded img-responsive"

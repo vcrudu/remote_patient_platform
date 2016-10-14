@@ -11,6 +11,9 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.isProviderMenuItemActive = false;
         $scope.isPatientMenuItemActive = true;
 
+        $scope.stepCountLabel = "Step 1";
+        $scope.stepLabel = "Basic Information";
+
         $scope.$on('onPendingCheckUserExists', function(name, pendingState){
             $scope.pendingState = pendingState;
 
@@ -26,7 +29,9 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         $scope.moveNext = function(){
             if(!$scope.pendingState) {
                 if ($state.$current.data.nextState) {
-                    $state.go($state.$current.data.nextState);
+                    $state.go($state.$current.data.nextState).then(function() {
+                        $scope.fillStepInfo($state.current.name);
+                    });
                 } else {
                     authService.signup($scope.newUser, successSignIn, errorSignIn);
                 }
@@ -34,7 +39,10 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         };
 
         $scope.moveBack = function(){
-            $state.go($state.$current.data.previousState);
+            $state.go($state.$current.data.previousState).then(function() {
+                $scope.fillStepInfo($state.current.name);
+            });
+            $scope.fillStepInfo($state.current.name);
         };
 
         $scope.previousDisabled = function(){
@@ -65,4 +73,36 @@ angular.module('app').controller('registerCtrl',['$scope','$log','$state','toast
         var errorSignIn = function(err){
             toastr.error(err,'Error');
         };
+
+        $scope.fillStepInfo = function(state) {
+            switch (state) {
+                case "register.basic":
+                    $scope.stepCountLabel = "Step 1";
+                    $scope.stepLabel = "Basic Information";
+                    break;
+                case "register.address":
+                    $scope.stepCountLabel = "Step 2";
+                    $scope.stepLabel = "Address and Contact Information";
+                    break;
+                case "register.medical":
+                    $scope.stepCountLabel = "Step 3";
+                    $scope.stepLabel = "Medical Information";
+                    break;
+                case "register.save":
+                    $scope.stepCountLabel = "Step 4";
+                    $scope.stepLabel = "Finish";
+                    break;
+                default:
+                    $scope.stepCountLabel = "Step 1";
+                    $scope.stepLabel = "Finish Information";
+                    break;
+
+            }
+        };
+
+        $scope.init = function() {
+            $scope.fillStepInfo("register.basic");
+        };
+
+        $scope.init();
 }]);

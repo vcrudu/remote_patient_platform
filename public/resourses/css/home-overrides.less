@@ -93,10 +93,15 @@
 }
 
 #extr-page{
+
+  #main {
+    padding-bottom: 0;
+  }
+
   height:100%;
 
   #content {
-    padding-top: 40px;
+    padding-top: 0;
   }
 
   .form-actions {
@@ -262,11 +267,26 @@
       font-size: 22px;
       margin: 20px 0;
       line-height: normal;
-      font-weight: 300;
+      font-weight: 400;
+      width: auto;
 
       md-icon {
         margin-top: -4px;
       }
+    }
+  }
+
+  h3 {
+    color: rgb(35, 35, 35);
+    letter-spacing: -1px;
+    font-size: 18px;
+    margin: 20px 0;
+    line-height: normal;
+    font-weight: 300;
+    width: auto;
+
+    md-icon {
+      margin-top: -4px;
     }
   }
 
@@ -380,71 +400,80 @@
 }
 
 @media (max-width: 768px) {
+
   #extr-page {
-    #header {
-      overflow: inherit;
-      .navbar {
-        .navbar-container {
-          width: 100% !important;
-        }
-        .navbar-header {
-          width: 100% !important;
-          padding-left: 0px !important;
-          padding-right: 0px !important;
+    body {
+      #header {
+        overflow: inherit;
+        .navbar {
+          .navbar-container {
+            width: 100% !important;
+          }
+          .navbar-header {
+            width: 100% !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
 
-          .navbar-toggle {
-            border-color: transparent !important;
+            .navbar-toggle {
+              border-color: transparent !important;
+            }
+
+            .navbar-toggle:hover {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:active {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:focus {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:visited {
+              background-color: transparent;
+            }
+
+            .navbar-brand {
+              padding-left: 30px !important;
+            }
+
+            .navbar-collapse {
+              position: absolute;
+              width: 100%;
+              margin-top: 93px;
+              border: 0 transparent;
+              padding-left: 0px;
+              padding-right: 0px;
+            }
           }
 
-          .navbar-toggle:hover {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:active {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:focus {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:visited {
-            background-color: transparent;
-          }
-
-          .navbar-brand {
-            padding-left: 30px !important;
-          }
-
-          .navbar-collapse {
-            position: absolute;
+          .navbar-nav {
             width: 100%;
-            margin-top: 93px;
-            border: 0 transparent;
-            padding-left: 0px;
-            padding-right: 0px;
-          }
-        }
+            height: auto !important;
+            margin: 0 !important;
+            li.nav {
+              height: 80px;
+              a {
+                border-top: 0px !important;
+                border-bottom: 1px solid @green !important;
+                height: inherit !important;
+                display: inherit !important;
+                vertical-align: inherit !important;
+                padding-top: 30px !important;
+              }
+            }
 
-        .navbar-nav {
-          width: 100%;
-          height: auto !important;
-          margin: 0 !important;
-          li.nav {
-            height: 80px;
-            a {
-              border-top: 0px!important;
-              border-bottom: 1px solid @green !important;
-              height: inherit !important;
-              display: inherit !important;
-              vertical-align: inherit !important;
-              padding-top: 30px !important;
+            li.nav.active {
+              background-color: @green !important;
+              a {
+                color: white !important;
+              }
             }
           }
         }
       }
     }
-
   }
 }
 
