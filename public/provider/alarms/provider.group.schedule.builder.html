@@ -1,0 +1,196 @@
+
+
+<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+    <style>
+        .has-errors {
+            border: 1px solid #A90329;
+        }
+
+        .has-error-message {
+            display: block;
+            margin-top: 6px;
+            padding: 0 1px;
+            font-style: normal;
+            font-size: 11px;
+            line-height: 15px;
+            color: #D56161;
+        }
+    </style>
+    <header>
+        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
+        <h2>New Schedule Plan</h2>
+    </header>
+    <div>
+        <div class="widget-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form name="scheduleBuilderForm" novalidate ng-submit="submitForm(scheduleBuilderForm.$valid)">
+                        <fieldset>
+                            <div class="smart-form">
+                                <section>
+                                    <label class="label">Schedule Name</label>
+                                    <label class="col-md-2 control-label" for="select-1">Select</label>
+                                    <select class="form-control" id="scheduleList" name="scheduleList" ng-model="data.scheduleList" required>
+                                        <option value="Hypertension">Hypertension</option>
+                                        <option value="Diabetes">Diabetes</option>
+                                        <option value="Fever">Fever</option>
+                                        <option value="INR">INR</option>
+                                    </select>
+
+                                    </label>
+                                    <em ng-show="scheduleBuilderForm.scheduleList.$invalid && formWasSubmitted" class="invalid">Schedule Name is required!</em>
+                                </section>
+                                <div class="widget-body">
+                                <section>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Schedule time</th>
+                                            <th>Reminders</th>
+                                            <th></th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="dtp in dayTimePoints">
+                                            <td>{{dtp.time}}</td>
+                                            <td>{{dtp.reminders}}</td>
+                                            <td style="vertical-align:middle;"><div style="text-align:center;"><button type="button" class="btn btn-warning" ng-click="deleteScheduleTime(dtp)">Delete</button></div></td>
+                                            <!--        <td>
+                                                          <ul>
+                                                              <li ng-repeat="ruleText in alarmTemplate.rulesText">
+                                                                  <div ng-bind-html="ruleText | rawHtml"></div>
+                                                              </li>
+                                                          </ul>
+                                                      </td> -->
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </section>
+                             </div>
+                                <section>
+                                    <div>
+                                        <input ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo" placeholder="Please Select..." />
+
+                                        <button ng-click="demo.clear()">Clear</button>
+                                        <button ng-click="demo.show()">Show</button>
+
+                                        <select ng-model="myselect" mobiscroll-select="remSettings" mobiscroll-instance="demo1" multiple>
+                                            <option value="12.00">12.00</option>
+                                            <option value="12.30">12.30</option>
+                                            <option value="13.00">13.00</option>
+                                            <option value="13.30">13.30</option>
+                                            <option value="14.00">14.00</option>
+                                            <option value="14.30">14.30</option>
+                                            <option value="15.00">15.00</option>
+                                            <option value="15.30">15.30</option>
+                                            <option value="16.00">16.00</option>
+                                            <option value="16.30">16.30</option>
+                                            <option value="17.00">17.00</option>
+                                            <option value="17.30">17.30</option>
+                                            <option value="18.00">18.00</option>
+                                            <option value="18.30">18.30</option>
+                                            <option value="19.00">19.00</option>
+                                            <option value="19.30">19.30</option>
+                                            <option value="20.00">20.00</option>
+                                        </select>
+
+                                        <button ng-click="demo1.clear()">Clear</button>
+                                        <button ng-click="demo1.show()">Show</button>
+
+
+                                   <button  type="button" class="btn btn-primary push-right" style="float: left" ng-click="addTime()">Add new time</button>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <section>
+                            <!--    <header>
+                                    <h2>Reminders</h2>
+                                </header>
+
+                              <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="panel panel-primary" style="">
+                                            <div class="panel-heading">Reminders list</div>
+                                            <div class="panel-body">
+                                                <ul>
+                                                    <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                     <!-- by Lipcan               <div class="col-xs-6">
+                                        <div class="panel panel-success" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-errors': ''">
+                                            <div class="panel-heading">Reminders list</div>
+                                            <div class="panel-body">
+                                                <ul class="selected-conditions">
+                                                    <li ng-repeat="condition in conditions"><div id="{{condition.id}}" bind-html-compile="condition.parsedCondition"></div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <em ng-show="alarmTemplateModel.conditionsInvalid" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-error-message': ''">Conditions are invalid!</em>
+                                    </div>
+
+                                <div class="col-xs-6">
+                                    <div class="panel panel-primary" style="">
+                                        <div class="panel-heading">Reminders list</div>
+                                        <div class="panel-body">
+                                            <ul>
+                                                <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> by Lipcan -->
+                            <!--    </div>  -->
+                            </section>
+
+                            <section>
+                                <button type="submit" class="btn btn-primary push-right" style="float: right">Save schedule</button>
+                            </section>
+
+                        </fieldset>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="valueModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Set a value</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="value">{{label}}</label>
+                    <input type="text" ng-class="cssClass" id="value" ng-model="model.value">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="operatorModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Set an operator</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline" style="width: 158px; margin: 0 auto">
+                <div class="form-group">
+                    <select id="selectedOperator" ng-model="selectedOperator" ng-options="t.value for t in operators">
+                        <!--<option ng-repeat="operator in operators" value="{{operator.id}}">{{operator.value}}</option>-->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>

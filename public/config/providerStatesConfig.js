@@ -64,14 +64,26 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.group_alarm_list/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.list.html",
         controller: "providerGroupAlarmList"
+    }).state("provider.patients_group_members.schedules", {
+        url: "/provider.group_schedule_list/:groupName",
+        templateUrl: "provider/alarms/provider.group.schedule.list.html",
+        controller: "providerGroupScheduleList"
     }).state("provider.patients_group_members.alarmbuilder", {
         url: "/provider.group_alarm_builder/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
+    }).state("provider.patients_group_members.schedulebuilder", {
+        url: "/provider.group_schedule_builder/:groupName",
+        templateUrl: "provider/alarms/provider.group.schedule.builder.html",
+        controller: "providerGroupScheduleBuilderCtrl"
     }).state("provider.patients_group_members.alarmbuilder_edit", {    // state("provider.group_alarm_builder_edit", {
         url: "/provider.group_alarm_builder/:alarmName/:groupName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
+    }).state("provider.patients_group_members.schedulebuilder_edit", {
+        url: "/provider.group_schedule_builder/:scheduleName/:groupName",
+        templateUrl: "provider/alarms/provider.group.schedule.builder.html",
+        controller: "providerGroupScheduleBuilderCtrl"
     }).state("provider.home", {
         url: "/provider.home",
         templateUrl: "provider/home/provider.home.html"

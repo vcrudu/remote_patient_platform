@@ -3,7 +3,7 @@
  */
 (function(){
      angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage',
-    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm', 'ui.calendar']);
+    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm', 'ui.calendar','mobiscroll-select','mobiscroll-datetime']);
 
     angular.module('app').factory('authorisationInterceptor',['$localStorage','$location',function($localStorage, $location){
         return{
