@@ -135,6 +135,15 @@ md-tabs .md-tab.md-active {
 md-tabs .md-tab.md-active md-icon svg {
   fill: #673AB7;
 }
+/* switch */
+md-switch.md-default-theme.md-checked .md-thumb,
+md-switch.md-checked .md-thumb {
+  background: #673AB7;
+}
+md-switch.md-default-theme.md-checked .md-bar,
+md-switch.md-checked .md-bar {
+  background: rgba(103, 58, 183, 0.5);
+}
 @media (max-width: 480px) {
   #header {
     height: 93px !important;

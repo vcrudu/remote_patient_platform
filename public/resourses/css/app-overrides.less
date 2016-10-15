@@ -10,6 +10,7 @@
 @brand-red:              #ff5252;
 @brand-gold:             #ffbc00;
 @purple-500:             #673AB7;
+@purple-500_0_5:         rgba(103,58,183,0.5);
 @text-color-black:       rgb(33, 33, 33);
 
 
@@ -194,6 +195,15 @@ md-tabs {
       }
     }
   }
+}
+
+/* switch */
+md-switch.md-default-theme.md-checked .md-thumb, md-switch.md-checked .md-thumb {
+  background: @purple-500;
+}
+
+md-switch.md-default-theme.md-checked .md-bar, md-switch.md-checked .md-bar {
+  background: @purple-500_0_5;
 }
 
 @media (max-width: 480px) {

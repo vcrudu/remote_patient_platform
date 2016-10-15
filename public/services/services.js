@@ -160,6 +160,20 @@ angular.module('app')
                 {id: 12, name: "December"}];
         };
 
+        self.getNext15Years = function () {
+            var tempYears = [];
+            var today = new Date();
+            var year = today.getFullYear();
+
+            tempYears.push({id: year, name: (year).toString()});
+
+            for(var i = 1; i < 16; i++) {
+                tempYears.push({id: year + i, name: (year + i).toString()});
+            }
+
+            return tempYears;
+        };
+
         self.getPersonTitles = function () {
             return [
                 "Mr.",
