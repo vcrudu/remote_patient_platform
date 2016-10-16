@@ -7,9 +7,9 @@
             <br>
             <form name="bookingForm" novalidate class="smart-form" id="bookingForm">
                 <section>
-                    <md-input-container class="md-block" md-is-error="submitted && bookingForm.reasonText.$error">
+                    <md-input-container class="md-block" md-is-error="submitted && bookingForm.reasonText.$error.required">
                         <label>Describe the reason</label>
-                        <textarea name="reasonText" id="reasonText" ng-model="reasonText" md-maxlength="150" rows="4" md-select-on-focus required></textarea>
+                        <textarea name="reasonText" id="reasonText" ng-model="reasonText" md-maxlength="150" rows="4" required></textarea>
                         <div ng-messages="bookingForm.reasonText.$error">
                             <div ng-message="required">
                                 Reason is required!

@@ -2,6 +2,14 @@ html {
   background: none;
   background-color: #FAFAFA;
 }
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
 body {
   font-family: 'Fira Sans';
   background-color: #F5F5F5;
@@ -38,6 +46,28 @@ md-toolbar {
 }
 #circularProgress {
   z-index: 10000;
+}
+.user-avatar-mask {
+  background-image: url("https://ssl.gstatic.com/accounts/ui/avatar_2x.png");
+  background-repeat: no-repeat;
+  background-size: 96px auto;
+  border-radius: 50%;
+  display: block;
+  height: 96px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  transition: opacity 0.075s ease 0s;
+  width: 96px;
+  z-index: 100;
+}
+.user-avatar-mask.online {
+  border: 2px solid #8bc34a;
+}
+.user-avatar-mask.offline {
+  border: 2px solid #ff5252;
 }
 #header {
   height: 93px;
@@ -150,7 +180,7 @@ md-toolbar {
 }
 /* tabs */
 md-tabs md-card {
-  min-height: 358px;
+  min-height: 380px;
 }
 md-tabs md-ink-bar {
   color: #673AB7;
