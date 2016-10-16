@@ -1,4 +1,4 @@
-<section id="widget-grid" widget-grid>
+<!--<section id="widget-grid" widget-grid>
 
     <div jarvis-widget data-widget-color="darken"
          data-widget-custombutton="false"
@@ -15,18 +15,32 @@
         <div>
 
 
-            <!-- widget content -->
+            &lt;!&ndash; widget content &ndash;&gt;
             <div class="widget-body">
 
                 <div class="padding-top-10">
                     <div id="calendarBook" class="fc fc-ltr fc-unthemed" ></div>
-                    <!--ng-model="vm.eventSources"  config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"-->
+                    &lt;!&ndash;ng-model="vm.eventSources"  config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"&ndash;&gt;
                 </div>
             </div>
-            <!-- end widget content -->
+            &lt;!&ndash; end widget content &ndash;&gt;
 
         </div>
     </div>
 
 
-</section>
+</section>-->
+
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><md-icon md-svg-src="resourses/img/material-icons/ic_insert_invitation_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Book an appointment</h2>
+    </div>
+</md-toolbar>
+
+<md-content>
+    <md-card>
+        <md-card-content style="padding-left: 0; padding-right: 0">
+            <div id="calendarBook" class="fc fc-ltr fc-unthemed" ></div>
+        </md-card-content>
+    </md-card>
+</md-content>

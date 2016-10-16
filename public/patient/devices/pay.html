@@ -1,275 +1,283 @@
-<form name="checkoutform" class="smart-form" novalidate ng-submit="vm.submitForm(checkoutform)">
+<md-content layout="row">
+    <md-card style="width: 100%; min-height: inherit">
+        <md-card-content>
+            <form name="checkoutform" class="smart-form" novalidate ng-submit="vm.submitForm(checkoutform)">
 
-    <legend>Checkout</legend>
+                <!--<legend>Checkout</legend>-->
 
-    <fieldset>
-        <div class="row">
-            <section class="col col-6">
-                <md-switch ng-model="isAddressNeeded" aria-label="SetShippingAddress">
-                    Set shipping address different from billing address?
-                </md-switch>
-            </section>
-        </div>
-
-       <!-- <div class="row" ng-if="true" >
-            <section class="col col-6">
-                <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                    <input type="email" name="email" placeholder="E-mail">
-                </label>
-            </section>
-            <section class="col col-6">
-                <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                    <input type="tel" name="phone" placeholder="Phone" is-phone>
-                </label>
-            </section>
-        </div>-->
-    </fieldset>
-
-
-    <fieldset ng-if="isAddressNeeded">
-        <div class="row">
-            <section class="col col-4">
-                <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.country.$invalid">
-                    <label>Country</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_language_black_24px.svg" class="name"></md-icon>
-                    <md-select name="country" ng-model="vm.shippingAddress.country" required>
-                        <md-option ng-repeat="country in vm.countries" value="{{country.code}}">{{country.name}}</md-option>
-                    </md-select>
-                    <div ng-messages="checkoutform.country.$error">
-                        <div ng-message="required">
-                            Country is required!
-                        </div>
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-6">
+                            <md-switch ng-model="isAddressNeeded" aria-label="SetShippingAddress">
+                                Set shipping address different from billing address?
+                            </md-switch>
+                        </section>
                     </div>
-                </md-input-container>
 
-                <!--<label class="select"
-                       ng-class="{'state-error': vm.submitted && checkoutform.country.$invalid}">
-                    <select name="country" ng-model="vm.shippingAddress.country"
-                            ng-options="country.code as country.name for country in vm.countries" required>
-                        <option style="display:none" value="">Country</option>
-                    </select> <i></i> </label>
-                <em ng-show=" vm.submitted && checkoutform.country.$invalid"
-                    class="invalid">Please select country</em>-->
-            </section>
-            <section class="col col-3">
-                <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.county.$invalid">
-                    <label>County</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_location_city_black_24px.svg" class="name"></md-icon>
-                    <input type="text" name="county" ng-model="vm.shippingAddress.county" required>
-                    <div ng-messages="checkoutform.county.$error">
-                        <div ng-message="required">
-                            County is required!
-                        </div>
+                    <!-- <div class="row" ng-if="true" >
+                         <section class="col col-6">
+                             <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+                                 <input type="email" name="email" placeholder="E-mail">
+                             </label>
+                         </section>
+                         <section class="col col-6">
+                             <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                 <input type="tel" name="phone" placeholder="Phone" is-phone>
+                             </label>
+                         </section>
+                     </div>-->
+                </fieldset>
+
+
+                <fieldset ng-if="isAddressNeeded">
+                    <div class="row">
+                        <section class="col-sm-6 col-md-4">
+                            <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.country.$invalid">
+                                <label>Country</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_language_black_24px.svg" class="name"></md-icon>
+                                <md-select name="country" ng-model="vm.shippingAddress.country" required>
+                                    <md-option ng-repeat="country in vm.countries" value="{{country.name}}">{{country.name}}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutform.country.$error">
+                                    <div ng-message="required">
+                                        Country is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <!--<label class="select"
+                                   ng-class="{'state-error': vm.submitted && checkoutform.country.$invalid}">
+                                <select name="country" ng-model="vm.shippingAddress.country"
+                                        ng-options="country.code as country.name for country in vm.countries" required>
+                                    <option style="display:none" value="">Country</option>
+                                </select> <i></i> </label>
+                            <em ng-show=" vm.submitted && checkoutform.country.$invalid"
+                                class="invalid">Please select country</em>-->
+                        </section>
+                        <section class="col-sm-6 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.county.$invalid">
+                                <label>County</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_location_city_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="county" ng-model="vm.shippingAddress.county" required>
+                                <div ng-messages="checkoutform.county.$error">
+                                    <div ng-message="required">
+                                        County is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.county.$invalid}">
+                                <input type="text" name="county" placeholder="County" ng-model="vm.shippingAddress.county" required>
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.county.$invalid"
+                                class="invalid">County is required</em>-->
+                        </section>
+                        <section class="col-sm-6 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.town.$invalid">
+                                <label>Town</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_domain_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="town" ng-model="vm.shippingAddress.town" required>
+                                <div ng-messages="checkoutform.town.$error">
+                                    <div ng-message="required">
+                                        Town is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.town.$invalid}">
+                                <input type="text" name="town" placeholder="Town" ng-model="vm.shippingAddress.town" required>
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.town.$invalid"
+                                class="invalid">Town is required</em>-->
+                        </section>
+
+                        <section class="col-sm-6 col-md-2">
+                            <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.code.$invalid">
+                                <label>Post Code</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_local_post_office_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="code" ng-model="vm.shippingAddress.postCode" required>
+                                <div ng-messages="checkoutform.code.$error">
+                                    <div ng-message="required">
+                                        Post Code is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.code.$invalid}">
+                                <input type="text" name="code" placeholder="Post code" ng-model="vm.shippingAddress.postCode"
+                                       required>
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.code.$invalid"
+                                class="invalid">Post code is required</em>-->
+                        </section>
                     </div>
-                </md-input-container>
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.county.$invalid}">
-                    <input type="text" name="county" placeholder="County" ng-model="vm.shippingAddress.county" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.county.$invalid"
-                    class="invalid">County is required</em>-->
-            </section>
-            <section class="col col-3">
-                <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.town.$invalid">
-                    <label>Town</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_domain_black_24px.svg" class="name"></md-icon>
-                    <input type="text" name="town" ng-model="vm.shippingAddress.town" required>
-                    <div ng-messages="checkoutform.town.$error">
-                        <div ng-message="required">
-                            Town is required!
-                        </div>
+
+                    <div class="row">
+                        <section class="col-md-12">
+                            <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.address.$invalid">
+                                <label>Address</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_place_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="address" ng-model="vm.shippingAddress.addressLine1" required>
+                                <div ng-messages="checkoutform.address.$error">
+                                    <div ng-message="required">
+                                        Address is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.address.$invalid}">
+                                <input type="text" name="address" placeholder="Address" ng-model="vm.shippingAddress.addressLine1"
+                                       required>
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.address.$invalid"
+                                class="invalid">Address is required</em>-->
+                        </section>
                     </div>
-                </md-input-container>
-
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.town.$invalid}">
-                    <input type="text" name="town" placeholder="Town" ng-model="vm.shippingAddress.town" required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.town.$invalid"
-                    class="invalid">Town is required</em>-->
-            </section>
-
-            <section class="col col-2">
-                <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.code.$invalid">
-                    <label>Post Code</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_local_post_office_black_24px.svg" class="name"></md-icon>
-                    <input type="text" name="code" ng-model="vm.shippingAddress.postCode" required>
-                    <div ng-messages="checkoutform.code.$error">
-                        <div ng-message="required">
-                            Post Code is required!
-                        </div>
+                    <div class="row">
+                        <section class="col-md-12">
+                            <md-input-container class="md-block">
+                                <label>Additional Info</label>
+                                <textarea ng-model="vm.shippingAddress.addressLine2" rows="5" md-select-on-focus></textarea>
+                            </md-input-container>
+                        </section>
                     </div>
-                </md-input-container>
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.code.$invalid}">
-                    <input type="text" name="code" placeholder="Post code" ng-model="vm.shippingAddress.postCode"
-                           required>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.code.$invalid"
-                    class="invalid">Post code is required</em>-->
-            </section>
-        </div>
+                </fieldset>
 
-        <section>
-            <md-input-container class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.address.$invalid">
-                <label>Address</label>
-                <md-icon md-svg-src="resourses/img/material-icons/ic_place_black_24px.svg" class="name"></md-icon>
-                <input type="text" name="address" ng-model="vm.shippingAddress.addressLine1" required>
-                <div ng-messages="checkoutform.address.$error">
-                    <div ng-message="required">
-                        Address is required!
+                <fieldset>
+                    <!--<section>-->
+                    <!--<div class="inline-group">-->
+                    <!--<label class="radio">-->
+                    <!--<input type="radio" name="radio-inline" checked="">-->
+                    <!--<i></i>Visa</label>-->
+                    <!--<label class="radio">-->
+                    <!--<input type="radio" name="radio-inline">-->
+                    <!--<i></i>MasterCard</label>-->
+                    <!--<label class="radio">-->
+                    <!--<input type="radio" name="radio-inline">-->
+                    <!--<i></i>American Express</label>-->
+                    <!--</div>-->
+                    <!--</section>-->
+
+                    <div class="row">
+                        <section class="col-sm-12 col-md-5">
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="vm.submitted && checkoutform.cardholdername.$invalid">
+                                <label>Name on card</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_person_black_24px.svg" class="name"></md-icon>
+                                <input type="text" name="cardholdername" ng-model="vm.payment.nameOnCard" required>
+                                <div ng-messages="checkoutform.cardholdername.$error">
+                                    <div ng-message="required">
+                                        Name on card is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardholdername.$invalid}">
+                                <input type="text" name="cardholdername" placeholder="Name on card" required
+                                       ng-model="vm.payment.nameOnCard">
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.cardholdername.$invalid"
+                                class="invalid">Name on card is required</em>-->
+                        </section>
+                        <section class="col-sm-9 col-md-5">
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="vm.submitted && checkoutform.cardNumber.$invalid">
+                                <label>Card number</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_credit_card_black_48px.svg" class="name"></md-icon>
+                                <input type="number" name="cardNumber" ng-model="vm.payment.cardNumber" required
+                                       ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35d{3})d{11})$/">
+                                <div ng-messages="checkoutform.cardNumber.$error">
+                                    <div ng-message="required">
+                                        Password is required!
+                                    </div>
+                                    <div ng-message="pattern">
+                                        Card number is not valid!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardNumber.$invalid}">
+                                <input type="text" name="cardNumber" placeholder="Card number"
+                                       data-smart-masked-input="9999 9999 9999 9999" required ng-model="vm.payment.cardNumber">
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.cardNumber.$invalid"
+                                class="invalid">Card number is required</em>-->
+                        </section>
+                        <section class="col-sm-3 col-md-2">
+                            <md-input-container class="md-block" flex-gt-sm
+                                                md-is-error="vm.submitted && checkoutform.cvv.$invalid">
+                                <label>CVV</label>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_fingerprint_black_48px.svg" class="name"></md-icon>
+                                <input type="number" name="cvv" ng-model="vm.payment.cardSecurityNumber" required
+                                       ng-pattern="/^[0-9]{3,4}$/">
+
+                                <div ng-messages="checkoutform.cvv.$error">
+                                    <div ng-message="required">
+                                        CVV is required!
+                                    </div>
+                                    <div ng-message="pattern">
+                                        CVV is not valid!
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!-- <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cvv.$invalid}">
+                                 <input type="text" name="cvv" placeholder="CVV2" data-smart-masked-input="999" required
+                                        ng-model="vm.payment.cardSecurityNumber">
+                             </label>
+                             <em ng-show=" vm.submitted && checkoutform.cvv.$invalid"
+                                 class="invalid">CVV is required</em>-->
+                        </section>
                     </div>
-                </div>
-            </md-input-container>
-            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.address.$invalid}">
-                <input type="text" name="address" placeholder="Address" ng-model="vm.shippingAddress.addressLine1"
-                       required>
-            </label>
-            <em ng-show=" vm.submitted && checkoutform.address.$invalid"
-                class="invalid">Address is required</em>-->
-        </section>
 
-        <section>
-            <md-input-container class="md-block">
-                <label>Additional Info</label>
-                <textarea ng-model="vm.shippingAddress.addressLine2" rows="5" md-select-on-focus></textarea>
-            </md-input-container>
-        </section>
-    </fieldset>
+                    <div class="row">
+                        <section class="col-sm-4 col-md-3 padding-10">
+                            <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.month.$invalid">
+                                <label>Expiration Month</label>
+                                <md-select name="month" ng-model="vm.payment.expireMonth" required>
+                                    <md-option ng-repeat="month in vm.months" value="{{month.id}}">{{month.name}}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutform.month.$error">
+                                    <div ng-message="required">
+                                        Expiration Month is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
 
-    <fieldset>
-        <!--<section>-->
-        <!--<div class="inline-group">-->
-        <!--<label class="radio">-->
-        <!--<input type="radio" name="radio-inline" checked="">-->
-        <!--<i></i>Visa</label>-->
-        <!--<label class="radio">-->
-        <!--<input type="radio" name="radio-inline">-->
-        <!--<i></i>MasterCard</label>-->
-        <!--<label class="radio">-->
-        <!--<input type="radio" name="radio-inline">-->
-        <!--<i></i>American Express</label>-->
-        <!--</div>-->
-        <!--</section>-->
+                            <!--<label class="select" ng-class="{'state-error': vm.submitted && checkoutform.month.$invalid}">
+                                <select name="month" ng-model="vm.payment.expireMonth"
+                                        ng-options="month.id as month.name for month in vm.months" required>
+                                    <option style="display:none" value="">Month</option>
+                                </select> <i></i>
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.month.$invalid"
+                                class="invalid">Month is required</em>-->
+                        </section>
+                        <section class="col-sm-4 col-md-3 padding-10">
+                            <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.year.$invalid">
+                                <label>Expiration Year</label>
+                                <md-select name="year" ng-model="vm.payment.expireYear" required>
+                                    <md-option ng-repeat="year in vm.years" value="{{year.id}}">{{year.name}}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutform.year.$error">
+                                    <div ng-message="required">
+                                        Expiration Year is required!
+                                    </div>
+                                </div>
+                            </md-input-container>
 
-        <div class="row">
-            <section class="col-md-5">
-                <md-input-container class="md-block" flex-gt-sm
-                                    md-is-error="vm.submitted && checkoutform.cardholdername.$invalid">
-                    <label>Name on card</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_person_black_24px.svg" class="name"></md-icon>
-                    <input type="text" name="cardholdername" ng-model="vm.payment.nameOnCard" required>
-                    <div ng-messages="checkoutform.cardholdername.$error">
-                        <div ng-message="required">
-                            Name on card is required!
-                        </div>
+                            <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.year.$invalid}">
+                                <input type="text" name="year" placeholder="Year" data-smart-masked-input="2099" required
+                                       ng-model="vm.payment.expireYear">
+                            </label>
+                            <em ng-show=" vm.submitted && checkoutform.year.$invalid"
+                                class="invalid">Year is required</em>-->
+                        </section>
                     </div>
-                </md-input-container>
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardholdername.$invalid}">
-                    <input type="text" name="cardholdername" placeholder="Name on card" required
-                           ng-model="vm.payment.nameOnCard">
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.cardholdername.$invalid"
-                    class="invalid">Name on card is required</em>-->
-            </section>
-            <section class="col col-5">
-                <md-input-container class="md-block" flex-gt-sm
-                                    md-is-error="vm.submitted && checkoutform.cardNumber.$invalid">
-                    <label>Card number</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_credit_card_black_48px.svg" class="name"></md-icon>
-                    <input type="number" name="cardNumber" ng-model="vm.payment.cardNumber" required
-                           ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35d{3})d{11})$/">
-                    <div ng-messages="checkoutform.cardNumber.$error">
-                        <div ng-message="required">
-                            Password is required!
-                        </div>
-                        <div ng-message="pattern">
-                            Card number is not valid!
-                        </div>
-                    </div>
-                </md-input-container>
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cardNumber.$invalid}">
-                    <input type="text" name="cardNumber" placeholder="Card number"
-                           data-smart-masked-input="9999 9999 9999 9999" required ng-model="vm.payment.cardNumber">
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.cardNumber.$invalid"
-                    class="invalid">Card number is required</em>-->
-            </section>
-            <section class="col col-2">
-                <md-input-container class="md-block" flex-gt-sm
-                                    md-is-error="vm.submitted && checkoutform.cvv.$invalid">
-                    <label>CVV</label>
-                    <md-icon md-svg-src="resourses/img/material-icons/ic_fingerprint_black_48px.svg" class="name"></md-icon>
-                    <input type="number" name="cvv" ng-model="vm.payment.cardSecurityNumber" required
-                           ng-pattern="/^[0-9]{3,4}$/">
-
-                    <div ng-messages="checkoutform.cvv.$error">
-                        <div ng-message="required">
-                            CVV is required!
-                        </div>
-                        <div ng-message="pattern">
-                            CVV is not valid!
-                        </div>
-                    </div>
-                </md-input-container>
-                <!-- <label class="input" ng-class="{'state-error': vm.submitted && checkoutform.cvv.$invalid}">
-                     <input type="text" name="cvv" placeholder="CVV2" data-smart-masked-input="999" required
-                            ng-model="vm.payment.cardSecurityNumber">
-                 </label>
-                 <em ng-show=" vm.submitted && checkoutform.cvv.$invalid"
-                     class="invalid">CVV is required</em>-->
-            </section>
-        </div>
-
-        <div class="row">
-            <label class="label col col-8"></label>
-            <section class="col col-2">
-                <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.month.$invalid">
-                    <label>Expiration Month</label>
-                    <md-select name="month" ng-model="vm.payment.expireMonth" required>
-                        <md-option ng-repeat="month in vm.months" value="{{month.id}}">{{month.name}}</md-option>
-                    </md-select>
-                    <div ng-messages="checkoutform.month.$error">
-                        <div ng-message="required">
-                            Expiration Month is required!
-                        </div>
-                    </div>
-                </md-input-container>
-
-                <!--<label class="select" ng-class="{'state-error': vm.submitted && checkoutform.month.$invalid}">
-                    <select name="month" ng-model="vm.payment.expireMonth"
-                            ng-options="month.id as month.name for month in vm.months" required>
-                        <option style="display:none" value="">Month</option>
-                    </select> <i></i>
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.month.$invalid"
-                    class="invalid">Month is required</em>-->
-            </section>
-            <section class="col col-2">
-                <md-input-container  class="md-block" flex-gt-sm md-is-error="vm.submitted && checkoutform.year.$invalid">
-                    <label>Expiration Year</label>
-                    <md-select name="year" ng-model="vm.payment.expireYear" required>
-                        <md-option ng-repeat="year in vm.years" value="{{year.id}}">{{year.name}}</md-option>
-                    </md-select>
-                    <div ng-messages="checkoutform.year.$error">
-                        <div ng-message="required">
-                            Expiration Year is required!
-                        </div>
-                    </div>
-                </md-input-container>
-
-                <!--<label class="input" ng-class="{'state-error': vm.submitted && checkoutform.year.$invalid}">
-                    <input type="text" name="year" placeholder="Year" data-smart-masked-input="2099" required
-                           ng-model="vm.payment.expireYear">
-                </label>
-                <em ng-show=" vm.submitted && checkoutform.year.$invalid"
-                    class="invalid">Year is required</em>-->
-            </section>
-        </div>
-    </fieldset>
+                </fieldset>
 
 
 
-    <footer>
-        <button type="submit" class="btn btn-primary">
-            Pay
-        </button>
-    </footer>
-</form>
+                <footer>
+                    <md-button class="md-raised md-primary pull-right padding-left-right-16" type="submit">Pay</md-button>
+                </footer>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

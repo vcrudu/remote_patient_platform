@@ -1,100 +1,90 @@
-<h3 class=" txt-color-blueLight">Order confirmation</h3>
+<md-content layout="row">
+    <md-card style="width: 100%; min-height: inherit">
+        <md-card-content>
 
-<form class="smart-form">
-    <fieldset>
-        <b><label class="label txt-color-blue">Products</label></b>
+            <md-toolbar layout="row" class="md-hue-3">
+                <div class="md-toolbar-tools">
+                    <h2>Products</h2>
+                </div>
+            </md-toolbar>
 
-    </fieldset>
-    <fieldset>
-
-        <div class="col col-xs-12 padding-top-10">
-            <div ng-repeat="item in vm.basket.Items">
-                <div class="row">
-                    <div class="col-xs-2 text-center">
-                        <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img" style="max-width: 100px">
-                    </div>
-                    <div class="col-xs-4">
-                        <h3>{{item.Device.model}}
+            <md-list-item class="md-3-line md-long-text" ng-repeat="item in vm.basket.Items track by $index">
+                <div class="product-thumb">
+                    <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img" style="max-height: 150px;max-width: 150px;">
+                </div>
+                <div class="md-list-item-text">
+                    <div class="col-md-12">
+                        <h3 class="md-headline">{{item.Device.model}}
                             <small><p>({{item.Device.deviceModelType}})</p></small>
                         </h3>
-                        <p class="note ">
+                        <p>
                             {{item.Device.description}}
                         </p>
                     </div>
-                    <div class="col-xs-2 ">
-                        <div class="pull-right text-center">
-                            <div class=" text-primary ">
-                                {{item.Quantity | number :0}}
-                            </div>
-                        </div>
+
+                </div>
+                <div class="md-secondary-container">
+                    <div class="col-md-6 quantity-price">
+                        {{item.Quantity | number :0}}
                     </div>
-                    <div class="col-xs-2 ">
-                        <div class="pull-right  ">
-                            {{item.Price | number :2}}&pound
-                        </div>
-                    </div>
-                    <div class="col-xs-2 ">
-                        <div class="pull-right text-center">
-                            <b>{{item.Quantity * item.Price | number :2}}&pound</b>
-                        </div>
+                    <div class="col-md-6 quantity-price">
+                        &pound{{item.Quantity * item.Price | number :2}}
                     </div>
                 </div>
-            </div>
+                <md-divider></md-divider>
+            </md-list-item>
 
-        </div>
-        <div class="col col-xs-12">
-            <div class="row">
-                <div class="pull-right">
-                    <b>Total:{{vm.basket.getAmount() | number :2}}&pound</b>
-                </div>
-            </div>
-        </div>
-    </fieldset>
+            <form class="smart-form">
+                <fieldset>
+                    <div class="col col-xs-12 no-padding-right">
+                        <div class="pull-right sub-totals">
+                            Total: &pound{{vm.basket.getAmount() | number :2}}
+                        </div>
+                        <br>
+                        <br>
+                    </div>
 
-    <fieldset>
-        <div class="col col-6">
-            <b><label class="label txt-color-blue">Shipment info</label></b>
+                </fieldset>
+                <fieldset>
+                    <div class="col col-md-6 no-padding-left">
+                        <label class="quantity-price">Shipment info</label>
+                        <br>
+                        <br>
+                        <section>
+                            <p>
+                                {{vm.basket.shippingAddress.country}}<span ng-if="vm.basket.shippingAddress.county">, {{vm.basket.shippingAddress.county}}</span><span ng-if="vm.basket.shippingAddress.town">, {{vm.basket.shippingAddress.town}}</span>
+                            </p>
+                            <p>
+                                {{vm.basket.shippingAddress.postCode}}, {{vm.basket.shippingAddress.addressLine1}}
+                                <br>
+                                <span ng-if="vm.basket.shippingAddress.addressLine2">
+                                    {{vm.basket.shippingAddress.addressLine2}}
+                                </span>
+                            </p>
+                        </section>
+                    </div>
+                    <div class="col col-md-6 text-right no-padding-right">
+                        <label class="quantity-price">Payment info</label>
+                        <br>
+                        <br>
+                        <section>
+                            <p>
+                                {{vm.basket.payment.nameOnCard}}
+                            </p>
 
-            <section>
-                <p class="note">
-                    <b>{{vm.basket.shippingAddress.country}}</b><i ng-if="vm.basket.shippingAddress.county">
-                    ({{vm.basket.shippingAddress.county}})</i>
-                    <span ng-if="vm.basket.shippingAddress.town">,{{vm.basket.shippingAddress.town}}</span>
-                </p>
+                            <p>
+                                {{vm.basket.payment.cardNumber}}
+                            </p>
 
-                <p class="note">
-                    {{vm.basket.shippingAddress.addressLine1}}
-                    <br>
-                        <span ng-if="vm.basket.shippingAddress.addressLine2">
-                            {{vm.basket.shippingAddress.addressLine2}}
-                        </span>
-                </p>
-            </section>
-        </div>
-        <div class="col col-6 text-right">
-            <b><label class="label text-right txt-color-blue">Payment info</label></b>
-
-            <section>
-                <p class="note">
-                    {{vm.basket.payment.nameOnCard}}
-                </p>
-
-                <p class="note">
-                    {{vm.basket.payment.cardNumber}}
-                </p>
-
-            </section>
-        </div>
-    </fieldset>
-    <footer>
-        <div class="btn btn-primary" ng-click="vm.confirmOrder()" ng-disabled="vm.loading">
-            <div ng-show="vm.loading">
-                <i class="fa fa-refresh fa-spin margin-right-5" ></i>
-                Processing...
-            </div>
-            Confirm order
-        </div>
-    </footer>
-</form>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <md-button class="md-raised md-primary pull-right padding-left-right-16" ng-click="vm.confirmOrder()" ng-disabled="vm.loading">Confirm order</md-button>
+                </footer>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
 
 

@@ -12,7 +12,7 @@
                     var event = getSchedulerEvent(slot.slotDateTime);
                     if (event.length > 0 && !event[0].isBooked) {
                         event[0].slot.countOfProviders++;
-                        event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                        event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? '#8bc34a' : '#ff5252';
                         //event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                         event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                         $('#calendarBook').fullCalendar('updateEvent', event[0]);
@@ -23,7 +23,7 @@
                     if (event.length > 0) {
                         if (event[0].slot.countOfProviders > 0 && !event[0].isBooked) {
                             event[0].slot.countOfProviders--;
-                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? '#ffbc00' : '#ff5252';
                             // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                             event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                             $('#calendarBook').fullCalendar('updateEvent', event[0]);
@@ -33,7 +33,7 @@
                 window.socket.on('slotBookedSuccessfully', function (slot) {
                     var event = getSchedulerEvent(slot.slotDateTime);
                     if (event.length > 0) {
-                        event[0].backgroundColor = 'rgb(191,88,179)';
+                        event[0].backgroundColor = '#ffbc00';
                         event[0].isBooked = true;
                         // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                         event[0].title = "You have booked the appointment at this time.";
@@ -45,7 +45,7 @@
                     if (event.length > 0) {
                         if (event[0].slot.countOfProviders > 0) {
                             event[0].slot.countOfProviders--;
-                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : 'red';
+                            event[0].backgroundColor = event[0].slot.countOfProviders > 0 ? 'rgb(153,217,234)' : '#ff5252';
                             // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                             event[0].title = event[0].slot.countOfProviders + event[0].titleText;
                             $('#calendarBook').fullCalendar('updateEvent', event[0]);
@@ -150,6 +150,7 @@
 
                 },
                 events: function (start, end, timezone, callback) {
+                    $("circularProgress").show();
                     var events = [];
                     slotsService.getSlots(new Date(), function (data) {
                         slotsService.getPacientAppointment(new Date(), function (patientData) {
@@ -160,6 +161,7 @@
                                 }
                             }
                             callback(events);
+                            $("circularProgress").hide();
                         }, function (error) {
 
                         });
