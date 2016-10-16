@@ -4,15 +4,19 @@
             Book appointment</h4>
     </div>
     <div class="modal-body hidden-overflow ">
-
+            <br>
             <form name="bookingForm" novalidate class="smart-form" id="bookingForm">
                 <section>
-                    <label class="textarea" ng-class="{stateError: bookingForm.reasonText.$dirty && bookingForm.reasonText.$invalid}">
-                        <textarea  rows="4" name="reasonText" id="reasonText" required placeholder="Describe the reason" ng-model="reasonText"
-                                autofocus required></textarea>
-                    </label>
-                    <em ng-show="serverError" class="invalid">Server error has occurred. Try again later.</em>
-                    <span class="note">Describe please the reason of the appointment.</span>
+                    <md-input-container class="md-block" md-is-error="submitted && bookingForm.reasonText.$error.required">
+                        <label>Describe the reason</label>
+                        <textarea name="reasonText" id="reasonText" ng-model="reasonText" md-maxlength="150" rows="4" required></textarea>
+                        <div ng-messages="bookingForm.reasonText.$error">
+                            <div ng-message="required">
+                                Reason is required!
+                            </div>
+                        </div>
+                        <div class="hint" style="font-size: 13px">Describe please the reason of the appointment</div>
+                    </md-input-container>
                 </section>
             </form>
     </div>
@@ -21,8 +25,8 @@
             <button class="btn btn-danger" ng-click="delete()" ng-if="session.Id">Delete</button>
 
         </div>
-            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-            <button class="btn btn-primary" ng-click="apply()" ng-disabled="bookingForm.$invalid">Book</button>
+
+        <md-button class="md-raised" ng-click="cancel()">Cancel</md-button><md-button class="md-raised md-primary" ng-click="apply()">Book</md-button>
     </div>
 
 

@@ -19,6 +19,8 @@
                     </div>
 
                 </div>
+                <br/>
+                <md-divider></md-divider>
                 <div class="padding-top-10">
                     <div ng-repeat="item in vm.basket.Items" class="padding-top-10">
                         <div class="row">
@@ -51,17 +53,18 @@
                                 </div>
                             </div>
                         </div>
+                        <md-divider></md-divider>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12" style="margin-right: 0px;">
-
+            <div class="col-md-12 col-sm-12" style="margin-right: 0px;padding-right:1px">
+                <br>
                 <div class="pull-right">
                     <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s):&nbsp; <span class="text-primary font-md">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
                     <br>
 
                     <div class="padding-top-10">
-                        <md-button class="md-raised md-primary pull-right" ui-sref="patient.devices.checkout-pay"><i class="fa fa-shopping-cart"></i>
+                        <md-button class="md-raised md-primary pull-right padding-left-right-16" ui-sref="patient.devices.checkout-pay"><i class="fa fa-shopping-cart"></i>
                             &nbsp;Proceed to checkout</md-button>
                     </div>
                 </div>

@@ -1,32 +1,25 @@
 
-        <div class="inbox-body ">
-            <table id="inbox-table" class="table table-striped table-hover">
-                <tbody>
-                    <tr ng-repeat="notification in vm.notifications track by $index" ng-click="vm.openMessage(notification)">
-                        <td class="inbox-table-icon">
-                            <div class="notification-icon">
-                                <i ng-show="notification.category=='info'" class="material-icons">mail_outline</i>
-                                <i ng-show="notification.category=='reading'" class="material-icons">done</i>
-                                <i ng-show="notification.category=='alarm'" class="material-icons">warning</i>
-                            </div>
-                        </td>
-
-                        <td class="inbox-data-message">
-                            <div>
-                                <span>{{notification.title}}</span> {{notification.summary}}
-                            </div>
-                        </td>
-                        <td class="inbox-data-attachment hidden-xs">
-                            <div>
-
-                            </div>
-                        </td>
-                        <td class="inbox-data-date hidden-xs">
-                            <div>
-                                {{vm.getTimeString(notification.dateTime)}}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="inbox-body">
+    <md-toolbar layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <h2><md-icon md-svg-src="resourses/img/material-icons/ic_email_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Inbox</h2>
         </div>
+    </md-toolbar>
+
+    <md-list-item class="md-3-line md-long-text" ng-repeat="notification in vm.notifications track by $index" ng-click="vm.openMessage(notification)">
+        <div class="notification-icon">
+            <i ng-show="notification.category=='info'" class="material-icons info">mail_outline</i>
+            <i ng-show="notification.category=='reading'" class="material-icons reading">done</i>
+            <i ng-show="notification.category=='alarm'" class="material-icons alarm">warning</i>
+        </div>
+        <div class="md-list-item-text">
+            <h3>{{notification.title}}</h3>
+            <p>
+                {{notification.summary}}
+            </p>
+        </div>
+        <div class="md-secondary-container">{{vm.getTimeString(notification.dateTime)}}</div>
+        <md-divider></md-divider>
+    </md-list-item>
+    <div style="clear: both"></div>
+</div>

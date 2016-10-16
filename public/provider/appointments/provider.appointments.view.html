@@ -1,32 +1,13 @@
-<section id="widget-grid" widget-grid>
-
-    <div jarvis-widget data-widget-color="darken"
-         data-widget-custombutton="false"
-         data-widget-colorbutton="false"
-         data-widget-editbutton="false"
-         data-widget-togglebutton="false"
-         data-widget-deletebutton="false"
-            >
-        <header>
-            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-            <h2>My appointments</h2>
-
-        </header>
-        <div>
-
-
-            <!-- widget content -->
-            <div class="widget-body">
-
-                <div class="padding-top-10">
-                    <div id="calendarBook" class="fc fc-ltr fc-unthemed" ></div>
-                    <!--ng-model="vm.eventSources"  config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"-->
-                </div>
-            </div>
-            <!-- end widget content -->
-
-        </div>
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><md-icon md-svg-src="resourses/img/material-icons/ic_insert_invitation_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;My appointments</h2>
     </div>
+</md-toolbar>
 
-
-</section>
+<md-content>
+    <md-card>
+        <md-card-content style="padding-left: 0; padding-right: 0">
+            <div id="calendarBook" class="fc fc-ltr fc-unthemed" ></div>
+        </md-card-content>
+    </md-card>
+</md-content>
