@@ -106,6 +106,8 @@
                     var modal = $modal.open({
                         templateUrl: 'patient/appointments/book.dialog.html',
                         controller: function ($scope, $modalInstance, event) {
+                            $scope.submitted = false;
+
                             $scope.cancel = function () {
                                 $modalInstance.dismiss();
                             };
@@ -114,24 +116,27 @@
                             };
 
                             $scope.apply = function () {
-                                var now = new Date();
-                                if (calEvent.slot.slotDateTime <= now.getTime()) {
-                                    toastr.error("It is too late to book for that time!", 'Error');
-                                    $modalInstance.dismiss();
-                                    return;
-                                }
-                                slotsService.bookAppointment({
-                                        slotDateTime: calEvent.slot.slotDateTime,
-                                        appointmentReason: $scope.reasonText
-                                    },
-                                    function (success) {
-                                        $('#calendarBook').fullCalendar('refetchEvents');
-                                        $modalInstance.close($scope.reasonText);
-                                    }, function (error) {
-                                        $modalInstance.close($scope.reasonText);
-                                        toastr.error(error, 'Error');
+                                $scope.submitted = true;
+                                if($scope.bookingForm.$valid){
+                                    var now = new Date();
+                                    if (calEvent.slot.slotDateTime <= now.getTime()) {
+                                        toastr.error("It is too late to book for that time!", 'Error');
+                                        $modalInstance.dismiss();
+                                        return;
                                     }
-                                );
+                                    slotsService.bookAppointment({
+                                            slotDateTime: calEvent.slot.slotDateTime,
+                                            appointmentReason: $scope.reasonText
+                                        },
+                                        function (success) {
+                                            $('#calendarBook').fullCalendar('refetchEvents');
+                                            $modalInstance.close($scope.reasonText);
+                                        }, function (error) {
+                                            $modalInstance.close($scope.reasonText);
+                                            toastr.error(error, 'Error');
+                                        }
+                                    );
+                                }
                             };
                         },
                         resolve: {
