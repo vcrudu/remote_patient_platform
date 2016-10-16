@@ -126,7 +126,11 @@
         },
 
         createUserDetailsFromBody : function(requestBody){
-            return domainModel.createPatient(requestBody);
+            var patient = domainModel.createPatient(requestBody);
+            requestBody.healthProblems.forEach(function (healthProblem) {
+                patient.addHealthProblem(healthProblem, new Date(), healthProblem);
+            });
+            return patient;
         },
         createDbEntityFromUser : function(user) {
             var createdDateTime = new Date();

@@ -5,19 +5,8 @@
 (function() {
     var logging = require('../logging');
     var SchedulePlan = require('../model/schedulePlan');
-
+    var loggerProvider = require('../logging');
     var globalMeasurementScheduleRepository = require('../repositories/globalMeasurementScheduleRepository');
-    var schedulePlan = function (scheduleType, context, callback) {
-        globalMeasurementScheduleRepository.getOne(scheduleType, function (err, globalMeasurementScheduleData) {
-            if (err) {
-                callback(err);
-            } else {
-                var userDetails = context;
-
-                //globalMeasurementScheduleData
-            }
-        });
-    };
 
     var scheduleRecurentJob = function (userId, eventToTrigger,
                                         timeString,
@@ -44,7 +33,8 @@
                 scheduleType: scheduleType,
                 offsetInMinutes: offsetInMinutes,
                 timezone: timezone,
-                userId: userId
+                userId: userId,
+                payload: {userId: userId, eventName: "OnMeasurementExpected", scheduleType: "bloodPressure"}
             });
 
         logging.getLogger().debug(post_data);
@@ -74,22 +64,42 @@
         req.end();
     };
 
-    var setupSchedulePlan = function (userId, eventToTrigger, timeZone, schedulePlan, callback) {
-        var schedulePlanObj = new SchedulePlan(schedulePlan);
+    var setupSchedulePlan = function (userDetails, callback) {
+        var userId, eventToTrigger, timeZone, schedulePlan;
+        userId = userDetails.email;
+        eventToTrigger = 'OnMeasurementExpected';
+        timeZone = 'Europe/London';
+        var healthProblems = userDetails.getHealthProblems();
+        if (healthProblems.find(function (healthProblem) {
+                return healthProblem.problemType.toLowerCase().indexOf("hypertension") != -1;
+            })) {
 
-        var source = Rx.Observable.from(schedulePlanObj.dayTimePoints).flatMap(function (dayTimePoint) {
-                return Rx.Observable.from(dayTimePoint.reminders).concat(Rx.Observable.just(0)).distinct();
-            },
-            function (dayTimePoint, reminder) {
-                scheduleRecurentJob(userId, eventToTrigger, dayTimePoint.time, schedulePlan.scheduleType, reminder, timeZone, function (err) {
-                    return err;
-                });
-            }
-        );
+            globalMeasurementScheduleRepository.getOne('bloodPressure', function (err, globalMeasurementScheduleData) {
+                if (err) {
+                    callback(err);
+                } else {
 
-        source.subscribe(null, null, function () {
-            callback();
-        });
+                    schedulePlan = globalMeasurementScheduleData;
+
+                    var schedulePlanObj = new SchedulePlan(schedulePlan);
+
+                    var source = Rx.Observable.from(schedulePlanObj.dayTimePoints).flatMap(function (dayTimePoint) {
+                            return Rx.Observable.from(dayTimePoint.reminders).concat(Rx.Observable.just(0)).distinct();
+                        },
+                        function (dayTimePoint, reminder) {
+                            scheduleRecurentJob(userId, eventToTrigger, dayTimePoint.time, schedulePlan.scheduleType, reminder, timeZone, function (err) {
+                                return err;
+                            });
+                        }
+                    );
+
+                    source.subscribe(null, null, function () {
+                        loggerProvider.getLogger().info("Schedule plan hypertension for the user " + userId);
+                        callback();
+                    });
+                }
+            });
+        }
     };
 
     module.exports = {
