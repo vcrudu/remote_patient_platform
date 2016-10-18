@@ -58,6 +58,12 @@
         };
     }]);
 
+    angular.module('app').filter('toFormatedDate', ['$sce', function($sce){
+        return function(val) {
+            return moment(val).format('MMMM Do YYYY, h:mm:ss a');
+        };
+    }]);
+
     angular.module('app').directive('bindHtmlCompile', ['$compile', function ($compile) {
         return {
             restrict: 'A',

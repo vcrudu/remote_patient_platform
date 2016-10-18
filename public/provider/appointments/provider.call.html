@@ -9,7 +9,7 @@
         <md-list-item class="md-3-line" ng-repeat="p in vm.providers" ng-click="null">
             <img ng-src="{{p.avatar}}" class="md-avatar" ng-class="{'online':p.onlineStatus=='online', 'offline': p.onlineStatus!='online'}">
             <div class="md-list-item-text" layout="column">
-                <h3>{{p.name}} - {{p.slotDateTimeString}}</h3>
+                <h3>{{p.name}} - {{p.slotDateTimeString|toFormatedDate}}</h3>
             </div>
             <md-button class="md-fab md-mini md-primary" ng-disabled="p.onlineStatus !='online'" ng-click="vm.call(p, true)">
                 <md-icon class="call-patient-icon" md-svg-src="resourses/img/material-icons/ic_local_phone_black_24px.svg"></md-icon>
