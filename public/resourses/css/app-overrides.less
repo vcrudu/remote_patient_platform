@@ -68,6 +68,11 @@ md-toolbar {
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
 }
 
+.modal-title {
+  font-weight: 400;
+  margin-top: 8px;
+}
+
 #circularProgress {
   z-index: 10000;
 }
@@ -94,6 +99,24 @@ md-toolbar {
 
   &.offline {
     border: 2px solid @brand-red;
+  }
+}
+
+.call-patient-icon {
+  svg {
+    fill: white;
+  }
+}
+
+.md-avatar {
+  &.offline {
+    border-left: 0px solid @brand-red !important;
+    /*border: 1px solid @brand-red !important;*/
+  }
+  border: 0;
+  &.online {
+    border-left: 2px solid @green !important;
+    border: 2px solid @green !important;
   }
 }
 
@@ -284,6 +307,87 @@ md-switch.md-default-theme.md-checked .md-bar, md-switch.md-checked .md-bar {
 
 /* full calendar */
 
+.fc-toolbar h2 {
+  font-weight: 400;
+}
+
+.fc-today-button {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 88px;
+  line-height: 36px;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  padding: 0 6px;
+  margin: 6px 8px;
+  background: transparent;
+  color: currentColor;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
+  transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
+}
+
+.fc-prev-button {
+  color: rgba(255,255,255,0.87) !important;
+  background-color: rgb(63,81,181) !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+
+  .fc-today-button
+}
+
+.fc-next-button {
+  color: rgba(255,255,255,0.87) !important;
+  background-color: rgb(63,81,181) !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+
+  .fc-today-button
+}
+
+.fc-today {
+  background-color: #EDE7F6 !important;
+}
+
+.fc-future {
+  &.fc-other-month {
+    .fc-today;
+  }
+}
+
+.fc-past {
+  background-color: #FAFAFA;
+}
+
+.bg-color-greenLight {
+  background-color: @green !important;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  border: 0 !important;
+}
+
 md-card-content {
   .fc-unthemed .fc-divider,
   .fc-unthemed .fc-popover,
@@ -380,61 +484,6 @@ md-card-content {
 
   .fc-view-container {
     border-top: 1px solid rgba(0, 0, 0, 0.137255);;
-  }
-
-  .fc-today-button {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    min-height: 36px;
-    min-width: 88px;
-    line-height: 36px;
-    vertical-align: middle;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-grid-row-align: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 3px;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 0;
-    padding: 0 6px;
-    margin: 6px 8px;
-    background: transparent;
-    color: currentColor;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    font-style: inherit;
-    font-variant: inherit;
-    font-family: inherit;
-    text-decoration: none;
-    overflow: hidden;
-    -webkit-transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
-    transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
-  }
-
-  .fc-prev-button {
-    color: rgba(255,255,255,0.87) !important;
-    background-color: rgb(63,81,181) !important;
-    margin-left: 4px !important;
-    margin-right: 4px !important;
-
-    .fc-today-button
-  }
-
-  .fc-next-button {
-    color: rgba(255,255,255,0.87) !important;
-    background-color: rgb(63,81,181) !important;
-    margin-left: 4px !important;
-    margin-right: 4px !important;
-
-    .fc-today-button
   }
 }
 

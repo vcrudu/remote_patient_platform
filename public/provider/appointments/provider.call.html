@@ -1,29 +1,46 @@
-<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
-    <header>
-        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
-        <h2>Patients with appointments</h2>
-    </header>
-    <div>
-        <div class="widget-body row">
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><i class="fa fa-lg fa-fw fa-phone" style="font-size: 1em;vertical-align:0"></i>&nbsp;&nbsp;Call</h2>
+    </div>
+</md-toolbar>
 
-            <div class=" col-md-3" ng-repeat="p in vm.providers">
-                <div class="well well-light provider">
-                    <img ng-src="{{p.avatar}}" class="img-responsive " ng-class="{'online':p.onlineStatus=='online'}">
-                    <h4 class="text-center">
-                        {{p.name}} - {{p.slotDateTimeString}}
-                    </h4>
+<md-content>
+    <md-list flex>
+        <md-list-item class="md-3-line" ng-repeat="p in vm.providers" ng-click="null">
+            <img ng-src="{{p.avatar}}" class="md-avatar" ng-class="{'online':p.onlineStatus=='online', 'offline': p.onlineStatus!='online'}">
+            <div class="md-list-item-text" layout="column">
+                <h3>{{p.name}} - {{p.slotDateTimeString}}</h3>
+            </div>
+            <md-button class="md-fab md-mini md-primary" ng-disabled="p.onlineStatus !='online'" ng-click="vm.call(p, true)">
+                <md-icon class="call-patient-icon" md-svg-src="resourses/img/material-icons/ic_local_phone_black_24px.svg"></md-icon>
+                <!--<i class="fa fa-lg fa-fw fa-phone" style="font-size: 1em;vertical-align:0"></i>-->
+            </md-button>
+        </md-list-item>
+        <md-divider ></md-divider>
+    </md-list>
 
-                    <br>
+    <!--<md-card>
+        <md-card-content>
 
-                    <div class="text-center">
-                        <button class="btn btn-labeled btn-success" ng-disabled="p.onlineStatus !='online'"
-                                ng-click="vm.call(p, true)">
+        </md-card-content>
+    </md-card>-->
+    <!--<div class=" col-md-3" ng-repeat="p in vm.providers">
+        <div class="well well-light provider">
+
+            <h4 class="text-center">
+                {{p.name}} - {{p.slotDateTimeString}}
+            </h4>
+
+            <br>
+
+            <div class="text-center">
+                <button class="btn btn-labeled btn-success" ng-disabled="p.onlineStatus !='online'"
+                        ng-click="vm.call(p, true)">
                             <span class="btn-label">
                             <i class="fa fa-phone"></i></span>Make a call
-                        </button>
-                    </div>
-                </div>
+                </button>
             </div>
         </div>
-    </div>
-</div>
+    </div>-->
+</md-content>
+

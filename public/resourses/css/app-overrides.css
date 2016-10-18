@@ -44,6 +44,10 @@ md-toolbar {
   background: transparent !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
 }
+.modal-title {
+  font-weight: 400;
+  margin-top: 8px;
+}
 #circularProgress {
   z-index: 10000;
 }
@@ -68,6 +72,20 @@ md-toolbar {
 }
 .user-avatar-mask.offline {
   border: 2px solid #ff5252;
+}
+.call-patient-icon svg {
+  fill: white;
+}
+.md-avatar {
+  border: 0;
+}
+.md-avatar.offline {
+  border-left: 0px solid #ff5252 !important;
+  /*border: 1px solid @brand-red !important;*/
+}
+.md-avatar.online {
+  border-left: 2px solid #8bc34a !important;
+  border: 2px solid #8bc34a !important;
 }
 #header {
   height: 93px;
@@ -211,6 +229,141 @@ md-switch.md-checked .md-bar {
   padding: 0;
 }
 /* full calendar */
+.fc-toolbar h2 {
+  font-weight: 400;
+}
+.fc-today-button {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 88px;
+  line-height: 36px;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  padding: 0 6px;
+  margin: 6px 8px;
+  background: transparent;
+  color: currentColor;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.fc-prev-button {
+  color: rgba(255, 255, 255, 0.87) !important;
+  background-color: #3f51b5 !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 88px;
+  line-height: 36px;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  padding: 0 6px;
+  margin: 6px 8px;
+  background: transparent;
+  color: currentColor;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.fc-next-button {
+  color: rgba(255, 255, 255, 0.87) !important;
+  background-color: #3f51b5 !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 88px;
+  line-height: 36px;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  padding: 0 6px;
+  margin: 6px 8px;
+  background: transparent;
+  color: currentColor;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.fc-today {
+  background-color: #EDE7F6 !important;
+}
+.fc-future.fc-other-month {
+  background-color: #EDE7F6 !important;
+}
+.fc-past {
+  background-color: #FAFAFA;
+}
+.bg-color-greenLight {
+  background-color: #8bc34a !important;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  border: 0 !important;
+}
 md-card-content .fc-unthemed .fc-divider,
 md-card-content .fc-unthemed .fc-popover,
 md-card-content .fc-unthemed .fc-row,
@@ -298,122 +451,6 @@ md-card-content .fc-unthemed thead {
 }
 md-card-content .fc-view-container {
   border-top: 1px solid rgba(0, 0, 0, 0.137255);
-}
-md-card-content .fc-today-button {
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  min-height: 36px;
-  min-width: 88px;
-  line-height: 36px;
-  vertical-align: middle;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-grid-row-align: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 3px;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  padding: 0 6px;
-  margin: 6px 8px;
-  background: transparent;
-  color: currentColor;
-  white-space: nowrap;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 14px;
-  font-style: inherit;
-  font-variant: inherit;
-  font-family: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-md-card-content .fc-prev-button {
-  color: rgba(255, 255, 255, 0.87) !important;
-  background-color: #3f51b5 !important;
-  margin-left: 4px !important;
-  margin-right: 4px !important;
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  min-height: 36px;
-  min-width: 88px;
-  line-height: 36px;
-  vertical-align: middle;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-grid-row-align: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 3px;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  padding: 0 6px;
-  margin: 6px 8px;
-  background: transparent;
-  color: currentColor;
-  white-space: nowrap;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 14px;
-  font-style: inherit;
-  font-variant: inherit;
-  font-family: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-md-card-content .fc-next-button {
-  color: rgba(255, 255, 255, 0.87) !important;
-  background-color: #3f51b5 !important;
-  margin-left: 4px !important;
-  margin-right: 4px !important;
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  min-height: 36px;
-  min-width: 88px;
-  line-height: 36px;
-  vertical-align: middle;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-grid-row-align: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 3px;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  padding: 0 6px;
-  margin: 6px 8px;
-  background: transparent;
-  color: currentColor;
-  white-space: nowrap;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 14px;
-  font-style: inherit;
-  font-variant: inherit;
-  font-family: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 @media (max-width: 480px) {
   #header {

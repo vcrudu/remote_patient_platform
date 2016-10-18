@@ -1,31 +1,14 @@
-<section id="widget-grid" widget-grid>
-
-    <div jarvis-widget data-widget-color="darken"
-         data-widget-custombutton="false"
-         data-widget-colorbutton="false"
-         data-widget-editbutton="false"
-         data-widget-togglebutton="false"
-         data-widget-deletebutton="false"
-         >
-        <header>
-            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-            <h2>Availability</h2>
-
-        </header>
-        <div>
-
-
-            <!-- widget content -->
-            <div class="widget-body">
-
-                <div class="padding-top-10">
-                    <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
-                </div>
-            </div>
-            <!-- end widget content -->
-
-        </div>
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><i class="fa fa-lg fa-fw fa-calendar-o" style="font-size: 1em;vertical-align:0"></i>&nbsp;&nbsp;Inbox</h2>
     </div>
+</md-toolbar>
 
+<md-content>
+    <md-card>
+        <md-card-title>
+            <div id="calendar" class="calendar" ng-model="vm.eventSources" config="vm.uiConfig.calendar" ui-calendar="vm.uiConfig.calendar"></div>
+        </md-card-title>
+    </md-card>
 
-</section>
+</md-content>
