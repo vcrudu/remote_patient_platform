@@ -33,6 +33,18 @@ body {
   color: #8bc34a;
   background: none !important;
 }
+.green {
+  background-color: #8bc34a !important;
+}
+.green svg {
+  fill: white  !important;
+}
+.red {
+  background-color: #ff5252 !important;
+}
+.red svg {
+  fill: white  !important;
+}
 .text-primary {
   color: #673AB7;
 }
@@ -72,6 +84,9 @@ md-toolbar {
 }
 .user-avatar-mask.offline {
   border: 2px solid #ff5252;
+}
+.user-avatar-mask.provider-avatar {
+  background-image: url("/resourses/img/avatars/8-512.png");
 }
 .call-patient-icon svg {
   fill: white;

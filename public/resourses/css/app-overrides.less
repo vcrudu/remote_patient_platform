@@ -54,6 +54,22 @@ body {
   background: none !important;
 }
 
+.green {
+  background-color: @green !important;
+
+  svg {
+    fill: white  !important;
+  }
+}
+
+.red {
+  background-color: @brand-red !important;
+
+  svg {
+    fill: white  !important;
+  }
+}
+
 .text-primary {
   color: @purple-500;
 }
@@ -99,6 +115,10 @@ md-toolbar {
 
   &.offline {
     border: 2px solid @brand-red;
+  }
+
+  &.provider-avatar {
+    background-image: url("/resourses/img/avatars/8-512.png");
   }
 }
 

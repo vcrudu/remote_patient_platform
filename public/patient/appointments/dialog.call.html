@@ -3,24 +3,22 @@
         Call</h4>
 </div>
 <div class="modal-body hidden-overflow ">
-    <div class="well well-light provider">
-        <img ng-src="{{provider.avatar}}" class="img-responsive " ng-class="{'online':provider.onlineStatus=='online'}">
-        <h4 class="text-center">
-            {{provider.name}} {{provider.surname}}
-        </h4>
-    </div>
-</div>
-<div class="modal-footer">
+    <div class="user-avatar-mask online" ng-class="{'provider-avatar': !isCalling}"></div>
+    <h4 class="text-center">
+        {{provider.name}} {{provider.surname}}
+    </h4>
+
+    <br>
+
     <div class="text-center">
-        <button ng-show="!isCalling" class="btn btn-labeled btn-danger" ng-click="answer()">
-                            <span class="btn-label">
-                            <i class="fa fa-phone fa-rotate-90"></i></span>Answer
-        </button>
-
-        <button class="btn btn-labeled btn-danger" ng-click="cancel()">
-                            <span class="btn-label">
-                            <img style="width: 20px;height: 20px" src="resourses/img/cancel_phone.ico"></i></span>Cancel
-        </button>
+        <md-button class="md-fab red" ng-click="cancel()">
+            <md-icon md-svg-src="resourses/img/material-icons/ic_call_end_black_48px.svg"></md-icon>
+        </md-button>
+        <md-button ng-show="!isCalling" class="md-fab green" ng-click="answer()">
+            <md-icon md-svg-src="resourses/img/material-icons/ic_local_phone_black_24px.svg"></md-icon>
+        </md-button>
     </div>
 
+    <br>
 </div>
+
