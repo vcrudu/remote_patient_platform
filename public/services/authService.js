@@ -81,6 +81,7 @@ angular.module('app')
                                     callService.getContact(data.caller, function (contact) {
                                         $localStorage.recipientModal = $modal.open({
                                             templateUrl: 'patient/appointments/dialog.call.html',
+                                            backdrop: 'static',
                                             controller: function ($scope, $modalInstance, provider, isCalling) {
 
                                                 StartCallSound();
