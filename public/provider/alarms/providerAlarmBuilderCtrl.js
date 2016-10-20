@@ -249,7 +249,7 @@
                                                     condition.operator = operator;
                                                     condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
 
-                                                    var value = condition.value1.replace("'", "");
+                                                    var value = condition.value1.toString().replace("'", "");
                                                     value = value.replace("'", "");
 
                                                     condition.value2 = undefined;

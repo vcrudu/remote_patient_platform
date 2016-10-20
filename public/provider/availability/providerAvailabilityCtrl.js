@@ -118,6 +118,7 @@
                     var modal = $modal.open({
                         templateUrl: 'provider/availability/schedule.dialog.html',
                         controller: function ($scope, $modalInstance, event) {
+                            $scope.submitted = false;
                             $scope.modification = "Add";
 
                             var todayAvailability = GetTodayAvailability(event);
@@ -152,45 +153,48 @@
                             };
 
                             $scope.apply = function () {
+                                $scope.submitted = true;
+                                if ($scope.scheduleForm.$valid) {
+                                    var dateString = getDotDateString(event.date);
+                                    var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
 
-                                var dateString = getDotDateString(event.date);
-                                var re = /((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g;
+                                    var match = re.exec($scope.scheduleValue);
+                                    var availabilityString = '';
+                                    while(match){
+                                        availabilityString+=match[0]+',';
+                                        match = re.exec($scope.scheduleValue);
+                                    }
 
-                                var match = re.exec($scope.scheduleValue);
-                                var availabilityString = '';
-                                while(match){
-                                    availabilityString+=match[0]+',';
-                                    match = re.exec($scope.scheduleValue);
+                                    availabilityString = availabilityString.substring(0,availabilityString.length-1);
+
+                                    if ($scope.modification == "Add") {
+                                        availabilityService.addAvailability({
+                                                availabilityString: availabilityString,
+                                                dateString: dateString
+                                            },
+
+                                            function (success) {
+                                                $modalInstance.close(availabilityString);
+                                            }, function (error) {
+                                                $scope.serverError = true;
+                                            }
+                                        );
+                                    } else {
+                                        availabilityService.editAvailability({
+                                                availabilityString: availabilityString,
+                                                dateString: dateString,
+                                                oldAvailabilityString: $scope.oldAvailability
+                                            },
+
+                                            function (success) {
+                                                $modalInstance.close(availabilityString);
+                                            }, function (error) {
+                                                $scope.serverError = true;
+                                            }
+                                        );
+                                    }
                                 }
 
-                                availabilityString = availabilityString.substring(0,availabilityString.length-1);
-
-                                if ($scope.modification == "Add") {
-                                    availabilityService.addAvailability({
-                                            availabilityString: availabilityString,
-                                            dateString: dateString
-                                        },
-
-                                        function (success) {
-                                            $modalInstance.close(availabilityString);
-                                        }, function (error) {
-                                            $scope.serverError = true;
-                                        }
-                                    );
-                                } else {
-                                    availabilityService.editAvailability({
-                                            availabilityString: availabilityString,
-                                            dateString: dateString,
-                                            oldAvailabilityString: $scope.oldAvailability
-                                        },
-
-                                        function (success) {
-                                            $modalInstance.close(availabilityString);
-                                        }, function (error) {
-                                            $scope.serverError = true;
-                                        }
-                                    );
-                                }
                             };
                         },
                         resolve: {
