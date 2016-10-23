@@ -27,23 +27,23 @@
     var dynamodb = new AWS.DynamoDB(connectionOptions);
         return dynamodb;
     };
-    var tablesSuffix = uuid.v4();
+    var tablesPrefix = uuid.v4();
 
     after(function(done){
 
-       awsSchemaUtils.deleteTable(tablesSuffix+"_Alarm", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_DeviceModel", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_AppointmentFeedback", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_Event", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_Order", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_PatientAppointment", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_Provider", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_Slot", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_UserDetails", function (err, data) {});
-        awsSchemaUtils.deleteTable(tablesSuffix+"_VitalSign", function (err, data) {
+       awsSchemaUtils.deleteTable(tablesPrefix+"_Alarm", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_DeviceModel", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_AppointmentFeedback", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_Event", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_Order", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_PatientAppointment", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_Provider", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_Slot", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_UserDetails", function (err, data) {});
+        awsSchemaUtils.deleteTable(tablesPrefix+"_VitalSign", function (err, data) {
             console.log(err);
         });
-        awsSchemaUtils.deleteTable(tablesSuffix+"_User", function (err, data) {
+        awsSchemaUtils.deleteTable(tablesPrefix+"_User", function (err, data) {
             console.log(err); //eroare
             done();
         });
@@ -56,7 +56,7 @@
 
     it("Creez tabela Alarme\n", function (done){
 
-        awsSchemaUtils.createAlarmTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createAlarmTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -66,7 +66,7 @@
 
     it("Creez tabela DeviceModel\n", function (done){
 
-        awsSchemaUtils.createDeviceModelTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createDeviceModelTable(tablesPrefix, function (err, result) {
             console.log(result);
             should.not.exist(err);
             done();
@@ -76,7 +76,7 @@
 
     it("Creez tabela AppointmentFeedbackTable\n", function (done){
 
-        awsSchemaUtils.createAppointmentFeedbackTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createAppointmentFeedbackTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -86,7 +86,7 @@
 
     it("Creez tabela EventTable\n", function (done){
 
-        awsSchemaUtils.createEventTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createEventTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -96,7 +96,7 @@
 
     it("Creez tabela OrderTable\n", function (done){
 
-        awsSchemaUtils.createOrderTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createOrderTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -106,7 +106,7 @@
 
     it("Creez tabela PatientAppointmentTable\n", function (done){
 
-        awsSchemaUtils.createPatientAppointmentTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createPatientAppointmentTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -116,7 +116,7 @@
 
     it("Creez tabela ProviderTable\n", function (done){
 
-        awsSchemaUtils.createProviderTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createProviderTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -126,7 +126,7 @@
 
     it("Creez tabela SlotTable\n", function (done){
 
-        awsSchemaUtils.createSlotTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createSlotTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -136,7 +136,7 @@
 
     it("Creez tabela UserTable\n", function (done){
 
-        awsSchemaUtils.createUserTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createUserTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -146,7 +146,7 @@
 
     it("Creez tabela UserDetailsTable\n", function (done){
 
-        awsSchemaUtils.createUserDetailsTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createUserDetailsTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();
@@ -156,7 +156,7 @@
 
     it("Creez tabela VitalSignTable\n", function (done){
 
-        awsSchemaUtils.createVitalSignTable(tablesSuffix, function (err, result) {
+        awsSchemaUtils.createVitalSignTable(tablesPrefix, function (err, result) {
             //console.log(result);
             should.not.exist(err);
             done();

@@ -1046,6 +1046,22 @@
 
             var component = this;
             $(document).ready(function () {
+
+                var tabsBar = $(".mdl-tabs__tab-bar");
+                var tabBarTop = tabsBar.offset().top;
+
+                var layout = $(".mdl-layout");
+                var st = 0;
+                $(layout).scroll(function() {
+                    st = $(layout).scrollTop();
+
+                    if (st >= tabBarTop) {
+                        tabsBar.css({"position": "fixed", "background-color": "#EEEEEE", "width": "100%", "top": 0, "z-index": 10000});
+                    } else {
+                        tabsBar.css({"position": "", "background-color": "", "width": "", "top": "", "z-index": ""});
+                    }
+                });
+
                 $('#patient-details-collapse')
                     .on('show.bs.collapse', function (a) {
                         $(a.target).prev('.panel-heading').addClass('active');
@@ -1238,39 +1254,39 @@
         },
         render: function() {
             return <div className="mdl-layout mdl-js-layout mdl-layout--header primary-bg">
-                <button ref="doneButton" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect done-button">
-                    <i className="material-icons">done</i>
+                    <button ref="doneButton" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect done-button">
+                        <i className="material-icons">done</i>
                         <span className="mdl-button__ripple-container">
                             <span className="mdl-ripple is-animating"></span>
                         </span>
-                </button>
-                <USER_PROFILE_PROGRESS />
-                <div className="profile-image-container">
-                    <img src="images/user.png" width="120" height="20" className="img-responsive center-block profile-user-photo" />
-                </div>
-                <div className="userName"><h4>{this.state.userName}</h4></div>
-                <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                    <div className="mdl-tabs__tab-bar">
-                        <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab"><i className="material-icons tab-icon show-mobile">face</i><span className="hide-mobile">Basic Info</span></a>
-                        <a href="#address" className="mdl-tabs__tab" ref="basicAddress"><i className="material-icons tab-icon show-mobile">home</i><span className="hide-mobile">Address</span></a>
-                        <a href="#medical" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">gesture</i><span className="hide-mobile">Medical</span></a>
-                        <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">favorite</i><span className="hide-mobile">Symptoms</span></a>
+                    </button>
+                    <USER_PROFILE_PROGRESS />
+                    <div className="profile-image-container">
+                        <img src="images/user.png" width="120" height="20" className="img-responsive center-block profile-user-photo" />
                     </div>
-                    <main>
-                        <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
-                            <PatientBasicInfo ref="patientInfoComponent"/>
+                    <div className="userName"><h4>{this.state.userName}</h4></div>
+                    <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                        <div className="mdl-tabs__tab-bar">
+                            <a href="#basic-info" className="mdl-tabs__tab is-active" ref="basicInfoTab"><i className="material-icons tab-icon show-mobile">face</i><span className="hide-mobile">Basic Info</span></a>
+                            <a href="#address" className="mdl-tabs__tab" ref="basicAddress"><i className="material-icons tab-icon show-mobile">home</i><span className="hide-mobile">Address</span></a>
+                            <a href="#medical" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">gesture</i><span className="hide-mobile">Medical</span></a>
+                            <a href="#symptoms" className="mdl-tabs__tab" ref="basicMedical"><i className="material-icons tab-icon show-mobile">favorite</i><span className="hide-mobile">Symptoms</span></a>
                         </div>
-                        <div className="mdl-tabs__panel" id="address" ref="basicAddressContent">
-                            <PatientAddress ref="patientAddress"/>
-                        </div>
-                        <div className="mdl-tabs__panel" id="medical" ref="basicMedicalContent">
-                            <PatientMedicalInfo ref="patientMedicalInfo"/>
-                        </div>
-                        <div className="mdl-tabs__panel" id="symptoms" ref="symptoms">
-                            <Symptoms ref="symtoms" symptomResult={this.state.symptomResult}/>
-                        </div>
-                    </main>
-                </div>
+                        <main>
+                            <div className="mdl-tabs__panel is-active" id="basic-info" ref="basicInfoTabContent">
+                                <PatientBasicInfo ref="patientInfoComponent"/>
+                            </div>
+                            <div className="mdl-tabs__panel" id="address" ref="basicAddressContent">
+                                <PatientAddress ref="patientAddress"/>
+                            </div>
+                            <div className="mdl-tabs__panel" id="medical" ref="basicMedicalContent">
+                                <PatientMedicalInfo ref="patientMedicalInfo"/>
+                            </div>
+                            <div className="mdl-tabs__panel" id="symptoms" ref="symptoms">
+                                <Symptoms ref="symtoms" symptomResult={this.state.symptomResult}/>
+                            </div>
+                        </main>
+                    </div>
             </div>
         }
     });

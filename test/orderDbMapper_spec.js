@@ -7,7 +7,7 @@ var OrderDbMapper = require("../repositories/orderDbMapper");
 var entitiesFactory = require("@vcrudu/hcm.domainmodel");
 var Order = require('../model').Order;
 
-describe("Test mapping from Order entity to Db", function () {
+describe.skip("Test mapping from Order entity to Db", function () {
     var order = {};
     var address = {};
 

@@ -1,27 +1,42 @@
 <div class="modal-header">
-    <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
+    <h4 class="modal-title" style=""><i class="fa fa-lg fa-fw fa-calendar-o"></i>
         {{modification}} schedule for {{today | date:'dd/MM/yyyy'}}</h4>
 </div>
 <div class="modal-body hidden-overflow ">
 
         <form name="scheduleForm" novalidate class="smart-form" id="scheduleForm">
-            <header ng-show="currentSchedule">Current schedule: <span>{{currentSchedule}}</span></header>
+            <header ng-show="currentSchedule" style="margin-top: 0;margin-left: 0; font-weight: 400; border: 0 !important;">Current schedule: <span>{{currentSchedule}}</span></header>
             <section>
-                <label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
+                <br>
+                <md-input-container class="md-block" md-is-error="submitted && scheduleForm.schedule.$invalid">
+                    <label>Describe the reason</label>
+                    <textarea name="schedule" id="schedule" ng-model="scheduleValue" rows="4" required ng-pattern="/((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g"></textarea>
+                    <div ng-messages="scheduleForm.schedule.$error">
+                        <div ng-message="required">
+                            Schedule is required!
+                        </div>
+                        <div ng-message="pattern">
+                            Invalid schedule data!
+                        </div>
+                        <div ng-show="serverError" class="md-input-message-animation">Server error has occurred. Try again later.</div>
+                    </div>
+                    <div class="hint" style="font-size: 13px">Example: 08:00 - 12:00, 13:00-17:00</div>
+                </md-input-container>
+
+                <!--<label class="textarea" ng-class="{stateError: scheduleForm.schedule.$dirty && scheduleForm.schedule.$invalid}">
                     <textarea  rows="4" name="schedule" id="schedule" schedule-time ime placeholder="Schedule" ng-model="scheduleValue"
                             autofocus required></textarea>
                 </label>
                 <em ng-show="scheduleForm.schedule.$dirty && scheduleForm.schedule.$error.scheduleTime" class="invalid">Invalid schedule data</em>
                 <em ng-show="serverError" class="invalid">Server error has occurred. Try again later.</em>
-                <span class="note">Example: 08:00 - 12:00, 13:00-17:00 </span>
+                <span class="note">Example: 08:00 - 12:00, 13:00-17:00 </span>-->
             </section>
         </form>
 </div>
 <div class="modal-footer">
     <div class="pull-left">
         <button class="btn btn-danger" ng-click="delete()" ng-if="session.Id">Delete</button>
-
     </div>
-        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-        <button class="btn btn-primary" ng-click="apply()" ng-disabled="scheduleForm.$invalid">Apply</button>
+
+    <md-button class="md-raised" ng-click="cancel()">Cancel</md-button><md-button class="md-raised md-primary" ng-click="apply()">Apply</md-button>
 </div>

@@ -1,29 +1,34 @@
 <aside  id="left-panel" ng-controller="asideNavCtrl as main">
 
-<div class="login-info" style="margin-top: 20px">
-<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
+<div class="login-info">
+    <!--<span> &lt;!&ndash; User image size is adjusted inside CSS, it should stay as it &ndash;&gt;
 
-					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                        <img src="resourses/img/avatars/male.png" alt="me" ng-class="statusClass" />
-						<span>
-							{{userName}}
-						</span>
-                        <i class="fa fa-angle-down"></i>
-                    </a>
+    <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+        <img src="resourses/img/avatars/male.png" alt="me" ng-class="statusClass" />
+        <span>
+            {{userName}}
+        </span>
+        <i class="fa fa-angle-down"></i>
+    </a>
 
-				</span>
+</span>-->
+
+    <div class="user-avatar-mask" ng-class="statusClass"></div>
+    <div class="user-name">
+        {{userName}}
+    </div>
 </div>
 
 <nav>
     <ul ng-show="isPatient">
         <li ui-sref-active="active">
-            <a ui-sref="patient.home.inbox"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
+            <a ui-sref="patient.home.inbox"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Inbox</span></a>
         </li>
         <li ui-sref-active="active">
             <a ui-sref="patient.vitalsigns"><i class="fa fa-lg fa-fw fa-heart-o"></i> <span class="menu-item-parent">Vital Signs</span></a>
             </li>
         <li ui-sref-active="active">
-            <a ui-sref="patient.devices.buy"><i class="fa fa-lg fa-fw fa-stethoscope"></i> <span class="menu-item-parent">Devices</span></a>
+            <a ui-sref="patient.devices"><i class="fa fa-lg fa-fw fa-stethoscope"></i> <span class="menu-item-parent">Devices</span></a>
         </li>
 
         <!--<li>

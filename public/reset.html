@@ -1,30 +1,37 @@
 <div ng-controller="resetCtrl" class="row">
-    <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
-        <div class="well no-padding">
-            <form name="resetForm" novalidate id="reset-form" class="smart-form client-form">
-                <header>
-                    <b>Reset Your Trichrome Password</b>
+    <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+        <div class="">
+            <form name="resetForm" novalidate id="reset-form">
+                <header style="border-bottom: 1px solid rgba(0,0,0,.1);">
+                    <h2>Dear Friend</h2>
                 </header>
 
                 <fieldset>
-
                     <section>
-                        <label class="label">Submit your e-mail address and we'll send you a link to reset your password.</label>
-                        <label class="label">E-mail</label>
-                        <label class="input"> <i class="icon-append fa fa-user"></i>
-                            <input type="email" name="email" ng-model="userCredentials.email" required>
-                            <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
-                        <em ng-show="resetForm.email.$error.$dirty && resetForm.email.$error.required" class="invalid">The username is required!</em>
+                        <br />
+                        <p style="padding-bottom: 24px">Submit your e-mail address and we'll send you a link to reset your password.</p>
+                    </section>
+                    <section>
+                        <md-input-container class="md-block" flex-gt-sm md-is-error="submitted && (resetForm.email.$error.required || resetForm.email.$error.pattern)">
+                            <label>Email address</label>
+                            <md-icon md-svg-src="resourses/img/material-icons/ic_email_black_24px.svg" class="name"></md-icon>
+                            <input type="email" name="email" ng-model="userCredentials.email" required ng-pattern="/^.+@.+\..+$/">
+                            <div ng-messages="resetForm.email.$error">
+                                <div ng-message="required">
+                                    Email is required!
+                                </div>
+                                <div ng-message="pattern">
+                                    Email is invalid!
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </section>
+                    <section>
+                        <div style="width: 88px; margin: 0 auto">
+                            <md-button class="md-raised md-primary" ng-click="submitReset()">Send</md-button>
+                        </div>
                     </section>
                 </fieldset>
-                <footer>
-                    <span></span>
-                    <a ui-sref="confirmSubmit">
-                    <button ng-click="submitReset()" class="btn btn-primary">
-                        Submit
-                    </button>
-                     </a>
-                </footer>
             </form>
 
         </div>

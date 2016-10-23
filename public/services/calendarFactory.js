@@ -42,17 +42,17 @@
                     };
                     switch(eventType){
                         case 'noProvider':
-                            event.backgroundColor = 'red';
+                            event.backgroundColor = '#ff5252';
                             event.textColor = 'rgb(255,255,255)';
                             return event;
                             break;
                         case 'available':
-                            event.backgroundColor = 'rgb(153,217,234)';
-                            event.textColor = 'rgb(0,0,0)';
+                            event.backgroundColor = '#8bc34a';
+                            event.textColor = 'rgb(255,255,255)';
                             return event;
                             break;
                         case 'appointment':
-                            event.backgroundColor = 'rgb(255,255,193)';
+                            event.backgroundColor = '#ffbc00';
                             event.textColor = 'rgb(0,0,0)';
                             event.title = "You have booked the appointment at this time. " + matchedSlot.providerName + " will be with you. Please be online!";
                             return event;

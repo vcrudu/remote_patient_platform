@@ -128,4 +128,4 @@ var GlobalMeasurementScheduleRepository = function () {
     return GlobalMeasurementScheduleRepository;
 }();
 
-exports.default = GlobalMeasurementScheduleRepository;
+module.exports = GlobalMeasurementScheduleRepository;

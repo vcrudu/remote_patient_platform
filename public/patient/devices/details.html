@@ -1,56 +1,40 @@
-<div class="well well-light ">
-    <div ng-if="vm.device.imagesUrls && vm.device.imagesUrls.length" style="height: 150px;">
-        <img ng-src="{{vm.device.imagesUrls[0]}}" class="img-rounded img-responsive "
-             style="margin-left: auto;margin-right: auto;max-height: 150px;">
+<md-content layout="row">
+    <div layout="column" style="width: 100%">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <h3 class="md-headline">{{vm.device.model}}
+                        <small><p>({{vm.device.deviceModelType}})</p></small>
+                    </h3>
+                    <p>{{vm.device.description}}</p>
+                    <h2 class="text-primary" style="margin: 0; font-weight: 500">
+                        &pound{{vm.device.price | number : 2}}
+                    </h2>
+                    <div>
+                        <br/>
+                        <p class="pull-left">
+                            <a class="text-primary cursor-pointer" href="{{vm.device.manufacturerUrl}}"
+                               target="_blank" ng-if="vm.device.manufacturerUrl">
+                                Manufacturer
+                            </a>
+                        </p>
+                    </div>
+                    <div style="clear: both"></div>
+                    <h3>Features:</h3>
+                    <ul>
+                        <li ng-repeat="spec in vm.device.specifications">{{spec}}</li>
+                    </ul>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img ng-src="{{vm.device.imagesUrls[0]}}" class="img-rounded img-responsive" style="margin: 20px;">
+                </md-card-title-media>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center" class="padding-10">
+                <md-button class="md-raised padding-left-right-16" ng-click="vm.addToBasket(false)"><i class="fa fa-shopping-cart"></i>
+                    &nbsp;Add to basket</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised padding-left-right-16" ng-click="vm.addToBasket(true)"><i class="fa fa-money"></i>
+                    &nbsp;Add to basket and Proceed checkout</md-button>
+            </md-card-actions>
+        </md-card>
     </div>
-    <div class="row">
-        <div class="col-xs-8 ">
-            <h3>{{vm.device.model}}
-                <small><p>({{vm.device.deviceModelType}})</p></small>
-            </h3>
-        </div>
-        <div class="col-xs-4">
-            <h2 class="pull-right txt-color-red">
-                {{vm.device.price | number : 2}}&pound
-            </h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-md-8">
-            <p class="note font-md">
-                {{vm.device.description}}
-            </p>
-
-            <p>
-                <a class="txt-color-blue cursor-pointer" href="{{vm.device.manufacturerUrl}}"
-                   target="_blank" ng-if="vm.device.manufacturerUrl">
-                    Manufacturer
-                </a>
-            </p>
-
-            <div ng-if="vm.device.specifications ">
-                <ul>
-                    <li ng-repeat="spec in vm.device.specifications">{{spec}}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="row padding-5">
-                <div class="btn  btn-primary pull-right" ng-click="vm.addToBasket(false)">
-                    <i class="fa fa-shopping-cart"></i>
-                    Add to basket
-                </div>
-
-            </div>
-            <div class="row padding-5">
-                <div class="btn btn-success pull-right " ng-click="vm.addToBasket(true)">
-                    <i class="fa fa-money"></i>
-                    Add to basket and Proceed checkout
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-</div>
+</md-content>

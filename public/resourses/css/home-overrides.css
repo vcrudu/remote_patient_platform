@@ -7,14 +7,73 @@
 .gold {
   background: #ffbc00;
 }
+.btn:hover {
+  color: white !important;
+}
+.btn:focus {
+  color: white !important;
+}
+.md-input-invalid svg {
+  fill: #dd2c00;
+}
+.register-done {
+  width: 48px;
+  height: 48px;
+}
+.register-done svg {
+  fill: #8bc34a;
+}
+.thawteseal-container {
+  float: right;
+  position: relative;
+}
+.thawteseal-container a img {
+  width: 47px;
+  margin-top: -72px;
+  margin-right: -7px;
+}
+.well {
+  background-color: transparent;
+  border: 1px solid transparent !important;
+  border-radius: 0px;
+}
+.sing-in {
+  background-color: #8bc34a !important;
+}
+#circularProgress {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+}
+#login-form header {
+  background: transparent;
+}
+#login-form footer {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.md-input-message-animation {
+  font-size: 13px !important;
+}
 #extr-page {
   height: 100%;
+}
+#extr-page #main {
+  padding-bottom: 0;
+}
+#extr-page #content {
+  padding-top: 0;
 }
 #extr-page .form-actions {
   margin-bottom: 0 !important;
 }
 #extr-page .jarviswidget .widget-body {
   padding-bottom: 0px;
+}
+#extr-page .jarviswidget div {
+  font-size: 16px;
 }
 #extr-page .pager {
   margin: 0 !important;
@@ -26,7 +85,7 @@
 }
 #extr-page body #header {
   margin: 0 auto !important;
-  height: 92px;
+  height: 93px;
   background: none !important;
   background-color: #E5E5E4 !important;
   border-bottom: none !important;
@@ -64,6 +123,7 @@
   padding-top: 25px;
   font-size: 17px;
   font-weight: 400;
+  color: black;
 }
 #extr-page body #header .navbar .navbar-nav li.nav a:hover {
   border-top: 4px solid #8bc34a;
@@ -127,13 +187,69 @@
   height: 60px;
 }
 #extr-page .registration-wizard {
-  background-color: #ff5252;
+  background-color: transparent;
+  border: 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  height: auto;
 }
-#extr-page .bootstrapWizard li.active .step {
+#extr-page .registration-wizard h2 {
+  color: #232323;
+  letter-spacing: -1px;
+  font-size: 22px;
+  margin: 20px 0;
+  line-height: normal;
+  font-weight: 400;
+  width: auto;
+}
+#extr-page .registration-wizard h2 md-icon {
+  margin-top: -4px;
+}
+#extr-page h3 {
+  color: #232323;
+  letter-spacing: -1px;
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: normal;
+  font-weight: 300;
+  width: auto;
+}
+#extr-page h3 md-icon {
+  margin-top: -4px;
+}
+#extr-page .registration-wizard-content {
+  border: 0px;
+}
+#extr-page .registration-wizard-content .bootstrapWizard li:before {
+  border-top: 2px solid grey;
+}
+#extr-page .registration-wizard-content .bootstrapWizard li.active .step {
+  background: #3f51b5 !important;
+  border: 0;
+}
+#extr-page .registration-wizard-content .bootstrapWizard li .step {
+  background: grey !important;
+  border: 0;
+}
+#extr-page .registration-wizard-content .bootstrapWizard li.complete .step {
+  padding: 7px 13px;
   background: #8bc34a !important;
 }
-#extr-page .bootstrapWizard li .step {
-  background: #ffbc00 !important;
+#extr-page .registration-wizard-content .form-actions {
+  background-color: transparent;
+  border: 0;
+  margin-top: 0;
+}
+#extr-page .registration-wizard-content .form-bootstrapWizard {
+  margin-bottom: 24px;
+}
+#extr-page .thawteseal-container {
+  float: right;
+  position: relative;
+}
+#extr-page .thawteseal-container a img {
+  width: 47px;
+  margin-top: -74px;
+  margin-right: -7px;
 }
 @media (min-width: 768px) {
   #extr-page .navbar-nav {
@@ -175,36 +291,36 @@
   }
 }
 @media (max-width: 768px) {
-  #extr-page #header {
+  #extr-page body #header {
     overflow: inherit;
   }
-  #extr-page #header .navbar .navbar-container {
+  #extr-page body #header .navbar .navbar-container {
     width: 100% !important;
   }
-  #extr-page #header .navbar .navbar-header {
+  #extr-page body #header .navbar .navbar-header {
     width: 100% !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle {
     border-color: transparent !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:hover {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:hover {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:active {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:active {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:focus {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:focus {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-toggle:visited {
+  #extr-page body #header .navbar .navbar-header .navbar-toggle:visited {
     background-color: transparent;
   }
-  #extr-page #header .navbar .navbar-header .navbar-brand {
+  #extr-page body #header .navbar .navbar-header .navbar-brand {
     padding-left: 30px !important;
   }
-  #extr-page #header .navbar .navbar-header .navbar-collapse {
+  #extr-page body #header .navbar .navbar-header .navbar-collapse {
     position: absolute;
     width: 100%;
     margin-top: 93px;
@@ -212,21 +328,27 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-  #extr-page #header .navbar .navbar-nav {
+  #extr-page body #header .navbar .navbar-nav {
     width: 100%;
     height: auto !important;
     margin: 0 !important;
   }
-  #extr-page #header .navbar .navbar-nav li.nav {
+  #extr-page body #header .navbar .navbar-nav li.nav {
     height: 80px;
   }
-  #extr-page #header .navbar .navbar-nav li.nav a {
-    border-top: 0px!important;
+  #extr-page body #header .navbar .navbar-nav li.nav a {
+    border-top: 0px !important;
     border-bottom: 1px solid #8bc34a !important;
     height: inherit !important;
     display: inherit !important;
     vertical-align: inherit !important;
     padding-top: 30px !important;
+  }
+  #extr-page body #header .navbar .navbar-nav li.nav.active {
+    background-color: #8bc34a !important;
+  }
+  #extr-page body #header .navbar .navbar-nav li.nav.active a {
+    color: white !important;
   }
 }
 @media (max-width: 356px) {

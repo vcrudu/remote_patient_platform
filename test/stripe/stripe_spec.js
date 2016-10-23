@@ -9,7 +9,7 @@ var stripe = require("stripe")(
     "sk_test_5E9TfNGdHcjff6iioxBDuOed"
 );
 
-describe('Stripe',function(){
+describe.skip('Stripe',function(){
 
     describe('Manage customers',function(){
             it("Get customers list", function(done){

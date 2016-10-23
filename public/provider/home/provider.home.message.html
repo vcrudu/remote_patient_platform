@@ -1,26 +1,28 @@
-
-        <div class="table-wrap custom-scroll animated fast fadeInRight" style="opacity: 1;">
-            <div class="inbox-info-bar">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h2 class="email-open-header">
-                        <span style="background: none;" class="notification-icon">
-                        <i ng-show="vm.message.category=='info'" class="material-icons ng-hide">mail_outline</i>
-                        <i ng-show="vm.message.category=='reading'" class="material-icons ng-hide">done</i>
-                        <i ng-show="vm.message.category=='alarm'" class="material-icons">warning</i>
+<div layout="column">
+    <div class="inbox-info-bar">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="email-open-header" style="font-weight: 500;">
+                    <span style="background: none;margin-right:8px;" class="notification-icon">
+                        <i ng-show="vm.message.category=='info'" class="material-icons info">mail_outline</i>
+                        <i ng-show="vm.message.category=='reading'" class="material-icons reading">done</i>
+                        <i ng-show="vm.message.category=='alarm'" class="material-icons alarm">warning</i>
                     </span>{{vm.message.title}}
-                        </h2>
-                    </div>
-
-                </div>
+                </h2>
             </div>
-
-            <div class="inbox-message">
-                {{vm.message.greetings}}<br>
-                    {{vm.message.content}}
-            </div>
-            <br>Thanks,<br>
-            <strong>Trichrome Healthcare</strong>
-            <br>
-
         </div>
+    </div>
+
+    <md-content flex>
+        <br>
+        <p style="text-transform: capitalize;font-weight: 400;">
+            {{vm.message.greetings}}
+        </p>
+        <br>
+        <p style="text-transform: capitalize; margin-right: 8px;margin-left: 8px">
+            {{vm.message.content}}
+        </p>
+        <br><span style="font-weight: 400">Thanks,</span><br>
+        <span style="font-weight: 500">Trichrome Healthcare</span>
+    </md-content>
+</div>

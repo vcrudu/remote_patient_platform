@@ -3,7 +3,9 @@
  */
 angular.module('app').controller('resetCtrl',['$scope', '$state', 'authService',
     function($scope, $state, authService) {
+        $scope.submitted = false;
         $scope.submitReset = function () {
+            $scope.submitted = true;
             if ($scope.resetForm.$valid) {
                 authService.submitReset($scope.userCredentials.email,
                     function (success) {

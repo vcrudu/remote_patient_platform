@@ -6,12 +6,12 @@
 @gray-strip:             #F8F8F9;
 @brand-red:              #ff5252;
 @brand-gold:             #ffbc00;
+@purple:                 rgb(63,81,181);
 
 
 @nav-height:             92px;
 @footer-height:          92px;
 @strip-content-padding:  52px;
-
 
 .green {
   background: @green;
@@ -25,8 +25,84 @@
   background: @brand-gold;
 }
 
+.btn:hover {
+  color: white !important;
+}
+
+.btn:focus {
+  color: white !important;
+}
+
+.md-input-invalid {
+  svg {
+    fill: rgb(221, 44, 0)
+  }
+}
+
+.register-done {
+  width: 48px;
+  height: 48px;
+  svg {
+    fill: @green;
+  }
+}
+
+.thawteseal-container {
+  float: right;
+  position: relative;
+
+  a {
+    img {
+      width: 47px;
+      margin-top: -72px;
+      margin-right: -7px;
+    }
+  }
+}
+
+.well {
+  background-color: transparent;
+  border: 1px solid transparent !important;
+  border-radius: 0px;
+}
+
+.sing-in {
+  background-color: @green !important;
+}
+
+#circularProgress {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+}
+
+#login-form {
+  header {
+    background: transparent;
+  }
+  footer {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+}
+
+.md-input-message-animation {
+  font-size: 13px !important;
+}
+
 #extr-page{
+
+  #main {
+    padding-bottom: 0;
+  }
+
   height:100%;
+
+  #content {
+    padding-top: 0;
+  }
 
   .form-actions {
     margin-bottom: 0 !important;
@@ -36,6 +112,10 @@
   {
     .widget-body {
       padding-bottom: 0px;
+    }
+
+    div {
+      font-size: 16px;
     }
   }
 
@@ -51,7 +131,7 @@
 
     #header {
       margin: 0 auto !important;
-      height: 92px;
+      height: 93px;
       background: none !important;
       background-color: @gray !important;
       border-bottom: none !important;
@@ -91,6 +171,7 @@
               padding-top: 25px;
               font-size: 17px;
               font-weight: 400;
+              color: black;
             }
 
             a:hover {
@@ -175,19 +256,89 @@
   }
 
   .registration-wizard {
-    background-color: @brand-red;
+    background-color:transparent;
+    border: 0px;
+    border-bottom: 1px solid rgba(0,0,0,.1) !important;
+    height: auto;
+
+    h2 {
+      color: rgb(35, 35, 35);
+      letter-spacing: -1px;
+      font-size: 22px;
+      margin: 20px 0;
+      line-height: normal;
+      font-weight: 400;
+      width: auto;
+
+      md-icon {
+        margin-top: -4px;
+      }
+    }
   }
 
-  .bootstrapWizard {
-    li.active {
-      .step {
-        background: @green !important;
+  h3 {
+    color: rgb(35, 35, 35);
+    letter-spacing: -1px;
+    font-size: 18px;
+    margin: 20px 0;
+    line-height: normal;
+    font-weight: 300;
+    width: auto;
+
+    md-icon {
+      margin-top: -4px;
+    }
+  }
+
+  .registration-wizard-content {
+    border: 0px;
+    .bootstrapWizard {
+      li:before {
+        border-top: 2px solid grey;
+      }
+
+      li.active {
+        .step {
+          background: @purple !important;
+          border: 0;
+        }
+      }
+
+      li {
+        .step {
+          background: grey !important;
+          border: 0;
+        }
+      }
+
+      li.complete {
+        .step {
+          padding: 7px 13px;
+          background: @green !important;
+        }
       }
     }
 
-    li {
-      .step {
-        background: @brand-gold !important;
+    .form-actions {
+      background-color: transparent;
+      border: 0;
+      margin-top: 0;
+    }
+
+    .form-bootstrapWizard {
+      margin-bottom: 24px;
+    }
+  }
+
+  .thawteseal-container {
+    float: right;
+    position: relative;
+
+    a {
+      img {
+        width: 47px;
+        margin-top: -74px;
+        margin-right: -7px;
       }
     }
   }
@@ -249,71 +400,80 @@
 }
 
 @media (max-width: 768px) {
+
   #extr-page {
-    #header {
-      overflow: inherit;
-      .navbar {
-        .navbar-container {
-          width: 100% !important;
-        }
-        .navbar-header {
-          width: 100% !important;
-          padding-left: 0px !important;
-          padding-right: 0px !important;
+    body {
+      #header {
+        overflow: inherit;
+        .navbar {
+          .navbar-container {
+            width: 100% !important;
+          }
+          .navbar-header {
+            width: 100% !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
 
-          .navbar-toggle {
-            border-color: transparent !important;
+            .navbar-toggle {
+              border-color: transparent !important;
+            }
+
+            .navbar-toggle:hover {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:active {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:focus {
+              background-color: transparent;
+            }
+
+            .navbar-toggle:visited {
+              background-color: transparent;
+            }
+
+            .navbar-brand {
+              padding-left: 30px !important;
+            }
+
+            .navbar-collapse {
+              position: absolute;
+              width: 100%;
+              margin-top: 93px;
+              border: 0 transparent;
+              padding-left: 0px;
+              padding-right: 0px;
+            }
           }
 
-          .navbar-toggle:hover {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:active {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:focus {
-            background-color: transparent;
-          }
-
-          .navbar-toggle:visited {
-            background-color: transparent;
-          }
-
-          .navbar-brand {
-            padding-left: 30px !important;
-          }
-
-          .navbar-collapse {
-            position: absolute;
+          .navbar-nav {
             width: 100%;
-            margin-top: 93px;
-            border: 0 transparent;
-            padding-left: 0px;
-            padding-right: 0px;
-          }
-        }
+            height: auto !important;
+            margin: 0 !important;
+            li.nav {
+              height: 80px;
+              a {
+                border-top: 0px !important;
+                border-bottom: 1px solid @green !important;
+                height: inherit !important;
+                display: inherit !important;
+                vertical-align: inherit !important;
+                padding-top: 30px !important;
+              }
+            }
 
-        .navbar-nav {
-          width: 100%;
-          height: auto !important;
-          margin: 0 !important;
-          li.nav {
-            height: 80px;
-            a {
-              border-top: 0px!important;
-              border-bottom: 1px solid @green !important;
-              height: inherit !important;
-              display: inherit !important;
-              vertical-align: inherit !important;
-              padding-top: 30px !important;
+            li.nav.active {
+              background-color: @green !important;
+              a {
+                color: white !important;
+              }
             }
           }
         }
       }
     }
-
   }
 }
 

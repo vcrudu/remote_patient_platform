@@ -15,7 +15,7 @@ angular.module('app').controller('patientHomeInboxCtrl', ['$scope', '$log', '$st
 
         vm.openMessage = function (notification) {
             $rootScope.message = notification;
-            $state.go('provider.home.message');
+            $state.go('patient.home.message');
         };
 
         notificationsService.getNotifications(function (result) {

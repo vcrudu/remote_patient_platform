@@ -253,14 +253,7 @@
             }
 
             if (patient.healthProblems) {
-                var _ = require('underscore');
-                var healthProblems = [];
-                var dateTime = new Date();
-                _.forEach(patient.healthProblems, function (healthProblem) {
-                    healthProblems.push({problemType: healthProblem.trim(), date: dateTime});
-                });
-
-                var allHealthProblems = buildArray(healthProblems, mapHealthProblemsToDbEntity);
+                var allHealthProblems = buildArray(patient.healthProblems, mapHealthProblemsToDbEntity);
                 patientDbEntity.healthProblems = {L: allHealthProblems};
             }
 

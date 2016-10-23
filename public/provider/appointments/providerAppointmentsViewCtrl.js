@@ -22,7 +22,7 @@
                     var event = getSchedulerEvent(slotWithPatient.slotDateTime);
                     if(event.length>0) {
                         event[0].slot.countOfProviders--;
-                        event[0].backgroundColor = 'yellow';
+                        event[0].backgroundColor = '#8bc34a';
                         // event[0].eventTextColor = event[0].slot.countOfProviders>0? 'rgb(255,255,255)':'rgb(0,0,0)';
                         event[0].title = "Slot booked by: "+slotWithPatient.name;
                         $('#calendarBook').fullCalendar('updateEvent', event[0]);
@@ -73,8 +73,8 @@
                     } else {
                         var data = response.data.result;
                         for (var i = 0; i < data.length; i++) {
-                            var backgroundColor = 'yellow';
-                            var eventTextColor = 'rgb(0,0,0)';  //rgb(255,255,255)
+                            var backgroundColor = '#8bc34a';
+                            var eventTextColor = 'rgba(255,255,255. 0.85)';  //rgb(255,255,255)
                             var slotDateTime = new Date();
                             slotDateTime.setTime(data[i].slotDateTime);
 
@@ -166,8 +166,8 @@
                             } else {
                                 var data = response.data.result;
                                 for (var i = 0; i < data.length; i++) {
-                                    var backgroundColor = 'yellow';
-                                    var eventTextColor = 'rgb(0,0,0)';  //rgb(255,255,255)
+                                    var backgroundColor = '#8bc34a';
+                                    var eventTextColor = 'rgba(255,255,255. 0.85)';  //rgb(255,255,255)
                                     var slotDateTime = new Date();
                                     slotDateTime.setTime(data[i].slotDateTime);
 

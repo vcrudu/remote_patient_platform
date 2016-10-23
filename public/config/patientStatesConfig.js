@@ -15,11 +15,11 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/patient.home",
         templateUrl: "patient/home/patient.home.html"
     }).state("patient.home.inbox", {
-        url: "/patient.home.inbox",
+        url: "/inbox",
         templateUrl: "patient/home/patient.home.inbox.html",
         controller: 'patientHomeInboxCtrl as vm'
     }).state("patient.home.message", {
-        url: "/patient.home.message",
+        url: "/message",
         templateUrl: "patient/home/patient.home.message.html",
         controller: 'patientHomeMessageCtrl as vm'
     }).state("patient.vitalsigns", {

@@ -19,65 +19,123 @@
 
     };
 
+    function getList (userId, category, startTime, endTime, callback) {
+
+        var filterExpression = '';
+        var params;
+        if (category != 'All') {
+            filterExpression = '#category=:category';
+
+            params = {
+                KeyConditionExpression: 'userId=:userId',
+
+                ExpressionAttributeNames: {
+                    "#category": "category"
+                },
+
+                ExpressionAttributeValues: {
+                    ":userId": {"S": userId},
+                    ":category": {"S": category}
+                },
+                ScanIndexForward: false,
+
+                FilterExpression: filterExpression,
+                TableName: TABLE_NAME,
+                Limit: 30
+            };
+        } else {
+            params = {
+                KeyConditionExpression: 'userId=:userId',
+
+                ExpressionAttributeValues: {
+                    ":userId": {"S": userId}
+                },
+                ScanIndexForward: false,
+                TableName: TABLE_NAME,
+                Limit: 30
+            };
+        }
+        var dynamodb = getDb();
+
+        dynamodb.query(params, function (err, data) {
+            if (err) {
+                loggerProvider.getLogger().error(err);
+                callback(err, null);
+                return;
+            }
+            loggerProvider.getLogger().debug("The notifications has been retrieved successfully.");
+            var results = [];
+            if (data.Items) {
+                _.forEach(data.Items, function (item) {
+                    var notification = notificationDbMapper.mapNotificationFromDbEntity(item);
+                    results.push(notification);
+                });
+                callback(null, results);
+            } else {
+                callback(null, null);
+            }
+        });
+    }
+
     module.exports = {
 
-        getOne:function(userId, type, notificationDateTime, callback){
+        getOne: function (userId, type, notificationDateTime, callback) {
             var params = {
-                Key: { userId: { S: userId },dateTime:{N:notificationDateTime.getTime().toString()}},
-                TableName:TABLE_NAME,
+                Key: {userId: {S: userId}, dateTime: {N: notificationDateTime.getTime().toString()}},
+                TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL'
             };
 
             var dynamodb = getDb();
 
-            dynamodb.getItem(params, function(err, data){
-                if(err) {
+            dynamodb.getItem(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
                 loggerProvider.getLogger().debug("The notification has been found successfully.");
-                if(data.Item) {
+                if (data.Item) {
                     var event = notificationDbMapper.mapNotificationFromDbEntity(data.Item);
                     callback(null, event);
-                }else{
+                } else {
                     callback(null, null);
                 }
             });
         },
 
-        getByUserIdAndDateTime:function(userId, dateTime, callback){
+        getByUserIdAndDateTime: function (userId, dateTime, callback) {
             var params = {
-                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
-                TableName:TABLE_NAME,
+                Key: {userId: {S: userId}, dateTime: {N: dateTime}},
+                TableName: TABLE_NAME,
                 ReturnConsumedCapacity: 'TOTAL'
             };
 
             var dynamodb = getDb();
 
-            dynamodb.getItem(params, function(err, data){
-                if(err) {
+            dynamodb.getItem(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
                 loggerProvider.getLogger().debug("The notification has been found successfully.");
-                if(data.Item) {
+                if (data.Item) {
                     var notification = notificationDbMapper.mapNotificationFromDbEntity(data.Item);
                     callback(null, notification);
-                }else{
+                } else {
                     callback(null, null);
                 }
             });
         },
 
-        notificationRead : function(userId, dateTime, read, callback){
+        notificationRead: function (userId, dateTime, read, callback) {
             var params = {
-                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                Key: {userId: {S: userId}, dateTime: {N: dateTime}},
                 ExpressionAttributeNames: {"#read": "read"},
-                TableName:TABLE_NAME,
+                TableName: TABLE_NAME,
                 ExpressionAttributeValues: {
-                    ":p_read": { BOOL: read }
+                    ":p_read": {BOOL: read}
                 },
                 ReturnConsumedCapacity: "TOTAL",
                 ReturnValues: "NONE",
@@ -86,8 +144,8 @@
 
             var dynamodb = getDb();
 
-            dynamodb.updateItem(params, function(err, data) {
-                if(err){
+            dynamodb.updateItem(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
@@ -97,11 +155,13 @@
             });
         },
 
-        getList : function(userId, category, startTime, endTime, callback){
+        getList: getList,
 
-            var filterExpression='';
+        getPagedList: function (userId, category, startTime, endTime, pageSize, pageNumber, callback) {
+
+            var filterExpression = '';
             var params;
-            if(category!='All') {
+            if (category != 'All') {
                 filterExpression = '#category=:category';
 
                 params = {
@@ -115,105 +175,47 @@
                         ":userId": {"S": userId},
                         ":category": {"S": category}
                     },
-                    ScanIndexForward:false,
+                    ScanIndexForward: false,
 
                     FilterExpression: filterExpression,
                     TableName: TABLE_NAME,
-                    Limit: 30
+                    Limit: pageSize
                 };
-            }else{
+            } else {
                 params = {
                     KeyConditionExpression: 'userId=:userId',
 
                     ExpressionAttributeValues: {
                         ":userId": {"S": userId}
                     },
-                    ScanIndexForward:false,
-                    TableName: TABLE_NAME,
-                    Limit: 30
-                };
-            }
-            var dynamodb = getDb();
-
-            dynamodb.query(params, function(err, data){
-                if(err) {
-                    loggerProvider.getLogger().error(err);
-                    callback(err, null);
-                    return;
-                }
-                loggerProvider.getLogger().debug("The notifications has been retrieved successfully.");
-                var results=[];
-                if(data.Items) {
-                    _.forEach(data.Items, function(item){
-                        var notification = notificationDbMapper.mapNotificationFromDbEntity(item);
-                        results.push(notification);
-                    });
-                    callback(null, results);
-                }else{
-                    callback(null, null);
-                }
-            });
-        },
-
-        getPagedList : function(userId, category, startTime, endTime, pageSize, pageNumber, callback){
-
-            var filterExpression='';
-            var params;
-            if(category!='All') {
-                filterExpression = '#category=:category';
-
-                params = {
-                    KeyConditionExpression: 'userId=:userId',
-
-                    ExpressionAttributeNames: {
-                        "#category": "category"
-                    },
-
-                    ExpressionAttributeValues: {
-                        ":userId": {"S": userId},
-                        ":category": {"S": category}
-                    },
-                    ScanIndexForward:false,
-
-                    FilterExpression: filterExpression,
-                    TableName: TABLE_NAME,
-                    Limit: pageSize
-                };
-            }else{
-                params = {
-                    KeyConditionExpression: 'userId=:userId',
-
-                    ExpressionAttributeValues: {
-                        ":userId": {"S": userId}
-                    },
-                    ScanIndexForward:false,
+                    ScanIndexForward: false,
                     TableName: TABLE_NAME,
                     Limit: pageSize
                 };
             }
             var dynamodb = getDb();
 
-            dynamodb.query(params, function(err, data){
-                if(err) {
+            dynamodb.query(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
                 }
                 loggerProvider.getLogger().debug("The notifications has been retrieved successfully.");
-                var results=[];
-                if(data.Items) {
-                    _.forEach(data.Items, function(item){
+                var results = [];
+                if (data.Items) {
+                    _.forEach(data.Items, function (item) {
                         var notification = notificationDbMapper.mapNotificationFromDbEntity(item);
                         results.push(notification);
                     });
                     callback(null, results);
-                }else{
+                } else {
                     callback(null, null);
                 }
             });
         },
 
-        save : function(notification, callback) {
+        save: function (notification, callback) {
 
             var dynamodb = getDb();
 
@@ -225,8 +227,8 @@
                 ReturnValues: 'ALL_OLD'
             };
 
-            dynamodb.putItem(params, function(err, data) {
-                if(err){
+            dynamodb.putItem(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
@@ -237,17 +239,17 @@
             });
         },
 
-        delete : function(userId, dateTime, callback) {
+        delete: function (userId, dateTime, callback) {
 
             var dynamodb = getDb();
 
             var params = {
-                Key: { userId: { S: userId }, dateTime:{ N:dateTime }},
+                Key: {userId: {S: userId}, dateTime: {N: dateTime}},
                 TableName: TABLE_NAME
             };
 
-            dynamodb.deleteItem(params, function(err, data) {
-                if(err){
+            dynamodb.deleteItem(params, function (err, data) {
+                if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
                     return;
@@ -258,25 +260,27 @@
             });
         },
 
-        deleteAll : function(userId, listToDelete, callback) {
+        deleteAll: function (userId, listToDelete, callback) {
             var dynamodb = getDb();
 
             var deleteRequests = [];
-            for (var i=0; i < listToDelete.length; i++) {
+            for (var i = 0; i < listToDelete.length; i++) {
 
-                deleteRequests.push({DeleteRequest : {
-                    Key: { userId: { S: userId }, dateTime:{ N:listToDelete[i].dateTime.toString() }},
-                }});
+                deleteRequests.push({
+                    DeleteRequest: {
+                        Key: {userId: {S: userId}, dateTime: {N: listToDelete[i].dateTime.toString()}},
+                    }
+                });
 
             }
 
             var params = {
-                RequestItems : {
-                    'Notification' : deleteRequests
+                RequestItems: {
+                    'Notification': deleteRequests
                 }
             };
 
-            dynamodb.batchWriteItem(params, function(err, data) {
+            dynamodb.batchWriteItem(params, function (err, data) {
                 if (err) {
                     loggerProvider.getLogger().error(err);
                     callback(err, null);
@@ -287,5 +291,48 @@
                 callback(null, data);
             });
         },
+
+        cleanNotifications: function (userId, callback) {
+            var startTime = new Date();
+            startTime.setDate(startTime.getDate() - 180);
+            var endTime = new Date();
+            var clean = function () {
+                getList(userId, 'All', startTime, endTime, function (err, notifications) {
+                    var dynamodb = getDb();
+
+                    var deleteRequests = [];
+                    for (var i = 0; i < notifications.length; i++) {
+                        deleteRequests.push({
+                            DeleteRequest: {
+                                Key: {userId: {S: userId}, dateTime: {N: notifications[i].dateTime.toString()}}
+                            }
+                        });
+                    }
+                    var Rx = require('rx');
+
+                    var source = Rx.Observable.from(deleteRequests).windowWithCount(25).selectMany(function (deleteRequestChunk) {
+                        return deleteRequestChunk.toArray();
+                    });
+
+                    source.subscribe(function (deleteRequestChunk) {
+                        var params = {
+                            RequestItems: {
+                                'Notification': deleteRequestChunk
+                            }
+                        };
+                        dynamodb.batchWriteItem(params, function (err, data) {
+                            if (err) {
+                                loggerProvider.getLogger().error(err);
+                                callback(err, null);
+                                return;
+                            }
+                            setTimeout(clean,5000);
+                            loggerProvider.getLogger().debug("Notifications were deleted successfully " + params.RequestItems.Notification.length + " notifications");
+                        });
+                    });
+                });
+            };
+            clean();
+        }
     };
 })();
