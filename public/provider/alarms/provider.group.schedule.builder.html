@@ -30,7 +30,7 @@
                                 <section>
                                     <label class="label">Schedule Name</label>
                                     <label class="col-md-2 control-label" for="select-1">Select</label>
-                                    <select class="form-control" id="scheduleList" name="scheduleList" ng-model="data.scheduleList" required>
+                                    <select class="form-control" id="scheduleList" name="scheduleList" ng-model="data.scheduleList" ng-click="foundScheduleName()" required>
                                         <option value="Hypertension">Hypertension</option>
                                         <option value="Diabetes">Diabetes</option>
                                         <option value="Fever">Fever</option>
@@ -71,12 +71,35 @@
                              </div>
                                 <section>
                                     <div>
-                                        <input ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo" placeholder="Please Select..." />
+                                        <input ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo2" placeholder="Please select time..." />
 
-                                        <button ng-click="demo.clear()">Clear</button>
-                                        <button ng-click="demo.show()">Show</button>
+                                        <button ng-click="demo2.clear()">Clear</button>
+                                        <button ng-click="demo2.show()">Show</button>
 
                                         <select ng-model="myselect" mobiscroll-select="remSettings" mobiscroll-instance="demo1" multiple>
+                                            <option value="0.30">0.30</option>
+                                            <option value="1.00">1.00</option>
+                                            <option value="1.30">1.30</option>
+                                            <option value="2.00">2.00</option>
+                                            <option value="2.30">2.30</option>
+                                            <option value="3.00">3.00</option>
+                                            <option value="3.30">3.30</option>
+                                            <option value="4.00">4.00</option>
+                                            <option value="4.30">4.30</option>
+                                            <option value="5.00">5.00</option>
+                                            <option value="5.30">5.30</option>
+                                            <option value="6.00">6.00</option>
+                                            <option value="6.30">6.30</option>
+                                            <option value="7.00">7.00</option>
+                                            <option value="7.30">7.30</option>
+                                            <option value="8.00">8.00</option>
+                                            <option value="8.30">8.30</option>
+                                            <option value="9.00">9.00</option>
+                                            <option value="9.30">9.30</option>
+                                            <option value="10.00">10.00</option>
+                                            <option value="10.30">10.30</option>
+                                            <option value="11.00">11.00</option>
+                                            <option value="11.30">11.30</option>
                                             <option value="12.00">12.00</option>
                                             <option value="12.30">12.30</option>
                                             <option value="13.00">13.00</option>
@@ -94,6 +117,14 @@
                                             <option value="19.00">19.00</option>
                                             <option value="19.30">19.30</option>
                                             <option value="20.00">20.00</option>
+                                            <option value="20.30">20.30</option>
+                                            <option value="21.00">21.00</option>
+                                            <option value="21.30">21.30</option>
+                                            <option value="22.00">22.00</option>
+                                            <option value="22.30">22.30</option>
+                                            <option value="23.00">23.00</option>
+                                            <option value="23.30">23.30</option>
+                                            <option value="24.00">24.00</option>
                                         </select>
 
                                         <button ng-click="demo1.clear()">Clear</button>

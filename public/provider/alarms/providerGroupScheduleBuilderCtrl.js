@@ -35,23 +35,114 @@
 
             };
 
+
+            $scope.foundScheduleName = function(){
+
+                if ($scope.data.scheduleList) {
+
+                    $scope.dayTimePoints = [];
+
+
+                        var req = {
+                            method: 'GET',
+                            url: appSettings.getServerUrl() + '/v1/api/groupschedule/' + $stateParams.groupName,
+                            headers: {
+                                'x-access-token': $localStorage.user.token
+                            }
+                        };
+
+                        $http(req).success(function (res) {
+                            if (res.success) {
+
+
+                                var foundSchedule = _.find(res.items, function (globalSchedule) { return globalSchedule.scheduleName.toLowerCase() === $scope.data.scheduleList.toLowerCase() });
+
+                                //     console.log("FOUNDALARM == "+foundAlarm.alarmName);
+                                //      console.log("ALARMDESCRIPTION ===  "+ foundAlarm.alarmDescription);
+
+                                if (foundSchedule) {
+
+
+                                    //  $scope.dayTimePoints.push({time:  $scope.timeValue, reminders:  $scope.myselect});
+
+                                   // $scope.data.scheduleList = foundSchedule.scheduleName;
+
+
+                                    _.each(foundSchedule.dayTimePoints, function(timeReminder) {
+                                        $scope.dayTimePoints.push({time:  timeReminder.time, reminders:  timeReminder.reminders});
+
+                                    });
+                                }
+                            } else {
+                            }
+                        }).error(function (err) {
+
+                        });
+                }
+                };
+
+
+
+
+
+
+
+
+
+
+
          $scope.addTime = function() {
 
-             $scope.dayTimePoints.push({time:  $scope.timeValue, reminders:  $scope.myselect});
+           if ($scope.data.scheduleList) {
+
+               if ($scope.timeValue && $scope.myselect) {
+
+                   var foundTime = false;
+                   _.each($scope.dayTimePoints, function(timeReminder) {
 
 
-            }
+                       if (timeReminder.time == $scope.timeValue) {
+
+
+                           timeReminder.reminders = $scope.myselect;
+                           foundTime = true;
+                           // $state.go("provider.patients_group_members.schedulebuilder_edit")
+                       }
+                   });
+               if (!foundTime) {
+                   $scope.dayTimePoints.push({time: $scope.timeValue, reminders: $scope.myselect});
+
+               }
+               } else {
+
+                   toastr.error('Time value or Reminders list not SET!');
+               }
+           } else {
+
+               toastr.error('Schedule Name not selected!');
+
+           }
+            };
            $scope.data = {
                scheduleList : null
            };
 
-           
+
 
                 $scope.timeSettings = {
                     theme: 'mobiscroll',
                     display: 'bottom',
                     headerText: false,
-                    onSet: function(event, demo1) { $scope.timeValue = event.valueText},
+                    onSet: function(event) { $scope.timeValue = event.valueText;
+
+                        _.each($scope.dayTimePoints, function(timeReminder) {
+                            if (timeReminder.time ==  $scope.timeValue) {
+                                $scope.myselect = timeReminder.reminders;
+                              //  $state.go("provider.patients_group_members.schedulebuilder_edit")
+                            }
+                        });
+
+                        },
                     minWidth: 200
                 };
 
@@ -78,49 +169,63 @@
             $scope.formWasSubmitted = false;
 
             $scope.submitForm = function (isValid) {
-                $scope.formWasSubmitted = true;
 
-             
+                if ($scope.data.scheduleList) {
 
-             
-           //     alert("SCHEDULENAME ESTE    "+$scope.data.scheduleList);
+                    if ($scope.dayTimePoints.length>0) {
 
-                if (!isValid) {
-                    return;
-                }
+                        $scope.formWasSubmitted = true;
 
-                var scheduleToPost = {
-                    scheduleName: $scope.data.scheduleList,
-                    scheduleTime: $scope.dayTimePoints
 
-                };
+                        //     alert("SCHEDULENAME ESTE    "+$scope.data.scheduleList);
 
-             
-                var req = {
-                    method: 'POST',
-                    url: appSettings.getServerUrl() + '/v1/api/groupschedule',
-                    headers: {
-                        'x-access-token': $localStorage.user.token
-                    },
-                    data: {
-                        scheduleData: scheduleToPost,
-                        groupname: $stateParams.groupName
-                    }
-                };
+                        if (!isValid) {
+                            return;
+                        }
 
-                $http(req).success(function (res) {
-                    if (res.success) {
-                        //   $scope.alarmTemplateModel.alarmNameDisabled = true;
-                        toastr.success('Schedule Plan saved!', 'Success');
-                        $state.go("provider.patients_group_members.schedules");
+                        var scheduleToPost = {
+                            scheduleName: $scope.data.scheduleList,
+                            scheduleTime: $scope.dayTimePoints
+
+                        };
+
+
+                        var req = {
+                            method: 'POST',
+                            url: appSettings.getServerUrl() + '/v1/api/groupschedule',
+                            headers: {
+                                'x-access-token': $localStorage.user.token
+                            },
+                            data: {
+                                scheduleData: scheduleToPost,
+                                groupname: $stateParams.groupName
+                            }
+                        };
+
+                        $http(req).success(function (res) {
+                            if (res.success) {
+                                //   $scope.alarmTemplateModel.alarmNameDisabled = true;
+                                toastr.success('Schedule Plan saved!', 'Success');
+                                $state.go("provider.patients_group_members.schedules");
+                            } else {
+
+
+                            }
+                        }).error(function (err) {
+
+                        });
                     } else {
 
-                      
+                        toastr.error('Schedule time list is Empty!');
 
                     }
-                }).error(function (err) {
 
-                });
+
+                } else {
+
+                    toastr.error('Schedule Name not selected!');
+
+                }
             };
 
 
