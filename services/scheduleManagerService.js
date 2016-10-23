@@ -6,7 +6,19 @@
     var logging = require('../logging');
     var SchedulePlan = require('../model/schedulePlan');
     var loggerProvider = require('../logging');
-    var globalMeasurementScheduleRepository = require('../repositories/globalMeasurementScheduleRepository');
+    var GlobalMeasurementScheduleRepository = require('../repositories/globalMeasurementScheduleRepository');
+    var AWS             = require('aws-sdk');
+    var connectionOptions = require('../repositories/awsOptions');
+    var Rx = require('rx');
+    var http = require('http');
+
+    var getDb = function(){
+
+        var dynamodb = new AWS.DynamoDB(connectionOptions);
+
+        return dynamodb;
+
+    };
 
     var scheduleRecurentJob = function (userId, eventToTrigger,
                                         timeString,
@@ -74,6 +86,8 @@
                 return healthProblem.problemType.toLowerCase().indexOf("hypertension") != -1;
             })) {
 
+            var globalMeasurementScheduleRepository = new GlobalMeasurementScheduleRepository(getDb());
+
             globalMeasurementScheduleRepository.getOne('bloodPressure', function (err, globalMeasurementScheduleData) {
                 if (err) {
                     callback(err);
@@ -87,13 +101,29 @@
                             return Rx.Observable.from(dayTimePoint.reminders).concat(Rx.Observable.just(0)).distinct();
                         },
                         function (dayTimePoint, reminder) {
-                            scheduleRecurentJob(userId, eventToTrigger, dayTimePoint.time, schedulePlan.scheduleType, reminder, timeZone, function (err) {
-                                return err;
-                            });
+                            return {
+                                userId: userId,
+                                eventToTrigger: eventToTrigger,
+                                timeString: dayTimePoint.time,
+                                scheduleType: schedulePlan.scheduleType,
+                                reminder: reminder, timeZone: timeZone
+                            };
                         }
                     );
 
-                    source.subscribe(null, null, function () {
+                    source.subscribe(function (schedulePlan) {
+                        scheduleRecurentJob(schedulePlan.userId,
+                            schedulePlan.eventToTrigger,
+                            schedulePlan.timeString,
+                            schedulePlan.scheduleType,
+                            schedulePlan.reminder,
+                            schedulePlan.timeZone, function (err) {
+                                return err;
+                            });
+
+                    }, function (err) {
+                        loggerProvider.getLogger().error(err);
+                    }, function () {
                         loggerProvider.getLogger().info("Schedule plan hypertension for the user " + userId);
                         callback();
                     });

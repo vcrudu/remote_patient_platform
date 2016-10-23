@@ -3,7 +3,7 @@
  */
 
 var _ = require('underscore');
-var assert = require('assert')
+var assert = require('assert');
 
 (function(){
 
