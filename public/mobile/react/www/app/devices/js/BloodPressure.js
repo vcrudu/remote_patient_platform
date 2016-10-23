@@ -10,7 +10,7 @@
     $.material.init();
 
     var intObj = {
-        template: 3,
+        template: 2,
         parent: ".progress-bar-indeterminate"
     };
     var indeterminateProgress = new Mprogress(intObj);
