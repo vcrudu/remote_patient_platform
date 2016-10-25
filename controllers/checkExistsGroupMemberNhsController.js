@@ -23,8 +23,6 @@
                     });
                 } else {
                     if (user) {
-
-
                         var byGroupIdAndPatientId = {};
 
                         byGroupIdAndPatientId.providerId = req.query.providerId;
@@ -33,34 +31,30 @@
 
 
                         patientsGroupMemberRepository.getOne(byGroupIdAndPatientId, function (err, data) {
-
-
                             if (err) {
-
-                                res.status(500).json({
+                                res.json({
                                     success: false,
                                     data: user
 
                                 });
                             } else {
-
-
                                 res.json({
                                     success: true,
                                     data: user
 
                                 });
-
                             }
 
                         });
 
                     } else {
-
+                        res.json({
+                            success: false,
+                            data: null
+                        });
                     }
                 }
             });
-
         });
     };
 })();

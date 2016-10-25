@@ -212,6 +212,16 @@ md-toolbar {
   border-bottom: 1px solid rgba(0, 0, 0, 0.137255);
 }
 /* tabs */
+md-tabs {
+  height: 100%;
+}
+md-tabs md-tab-content > div {
+  height: 100%;
+}
+md-tabs md-tab-content > div .vertical-scroll {
+  height: 100%;
+  overflow-y: auto;
+}
 md-tabs md-card {
   min-height: 380px;
 }
@@ -466,6 +476,17 @@ md-card-content .fc-unthemed thead {
 }
 md-card-content .fc-view-container {
   border-top: 1px solid rgba(0, 0, 0, 0.137255);
+}
+li.active a md-icon svg {
+  fill: #673AB7;
+}
+.fab-action-button {
+  position: fixed;
+  right: 0;
+  bottom: 60px;
+}
+.fab-action-button md-icon svg {
+  fill: white;
 }
 @media (max-width: 480px) {
   #header {

@@ -4,61 +4,50 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
     'toastr', 'authService', '$localStorage', 'patientsGroupMembersService', '$modal','$rootScope','$stateParams', 'appSettings',
     function ($scope, $log, $http, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams, appSettings) {
 
-
-
          $scope.currentGroupName = $stateParams.groupName;
 
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
-
                     $scope.patientsGroupsMembers = data.items;
-
-
                 }
-
-
             },
             function(err) {});
 
         $scope.addPatient = function () {
-
             var modal = $modal.open({
                 templateUrl: 'provider/patients_groups/add.nhs.html',
                 controller: function ($scope, $modalInstance) {
-
-
-
+                    $scope.submitted = false;
                    $scope.cancel = function () {
-                      
                        $modalInstance.dismiss();
                     };
 
-
                     $scope.apply = function () {
+                        $scope.submitted = true;
 
-                     
-                        var post_data = {
-                            "patientId": $localStorage.patientId,
-                            "groupName": $stateParams.groupName,
-                            "providerId": $localStorage.user.email
-                        };
+                        if ($scope.nhsNumberForm.$valid) {
 
-                        var config = {
+                            var post_data = {
+                                "patientId": $localStorage.patientId,
+                                "groupName": $stateParams.groupName,
+                                "providerId": $localStorage.user.email
+                            };
 
-                            headers: {
-                                'Accept':'application/json',
-                                'Content-Type': 'application/json',
-                                'x-access-token': $localStorage.user.token
-                            }
-                        };
-                     
+                            var config = {
+                                headers: {
+                                    'Accept':'application/json',
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': $localStorage.user.token
+                                }
+                            };
 
-                        $http.post("/v1/api/patient-member-group-invitation",post_data, config).then(function () {
-                            $modalInstance.dismiss();
-                            toastr.success('Invitation was sent successfully !');
-                        }, function () {
-                            toastr.error('Invitation was not sent !');
-                        });
+                            $http.post("/v1/api/patient-member-group-invitation",post_data, config).then(function () {
+                                $modalInstance.dismiss();
+                                toastr.success('Invitation was sent successfully !');
+                            }, function () {
+                                toastr.error('Invitation was not sent !');
+                            });
+                        }
                       };
                 },
                 resolve: {
@@ -67,7 +56,5 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
                     }
                 }
             });
-          
-
         };
     }]);
