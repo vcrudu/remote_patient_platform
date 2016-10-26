@@ -103,29 +103,40 @@ var util = require('util');
 
             snsClient.onPatientInvitedToGroupEvent(req.body.patientId, req.decoded.email, req.body.groupName,
                 function (err, data) {
-
                     if (err) {
-
                         res.status(500).json({
                             success: false
-
                         });
-
                     }
                     if (data) {
-
-
                         res.status(200).json({
                             success: true
-
                         });
-
                     }
-
-
                 });
+        });
 
+        router.post('/patient-member-group-invitation-approve', function (req, res) {
+            var groupMember = {
+                providerId: req.decoded.providerId,
+                groupName: req.decoded.groupName,
+                patientId: req.decoded.patientId,
+                createDateTime: (new Date()).getTime(),
+                createdBy: req.decoded.providerId
+            };
 
+            patientsGroupMemberRepository.save(groupMember, function () {
+                if (err) {
+                    res.status(500).json({
+                        success: false
+                    });
+                }
+                if (data) {
+                    res.status(200).json({
+                        success: true
+                    });
+                }
+            });
         });
 
         router.post('/patientsgroupmember', function (req, res) {
