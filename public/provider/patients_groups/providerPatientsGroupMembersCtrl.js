@@ -1,8 +1,8 @@
 
 
-angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', '$log', '$http','$state',
+angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScope', '$scope', '$log', '$http','$state',
     'toastr', 'authService', '$localStorage', 'patientsGroupMembersService', '$modal','$rootScope','$stateParams', 'appSettings',
-    function ($scope, $log, $http, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams, appSettings) {
+    function ($rootScope, $scope, $log, $http, $state, toastr, authService, $localStorage, patientsGroupMembersService, $modal, $rootScope, $stateParams, appSettings) {
 
          $scope.currentGroupName = $stateParams.groupName;
 
@@ -56,5 +56,9 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
                     }
                 }
             });
+        };
+
+        $scope.addAlarmTemplate = function() {
+            $rootScope.$broadcast("addAlarmTemplateClickEvent");
         };
     }]);
