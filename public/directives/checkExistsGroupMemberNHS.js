@@ -14,8 +14,10 @@ angular.module('app').directive('checkExistsGroupMemberNhs',function($q,$http,$l
                 var req = {
                     method: 'GET',
                     url: appSettings.getServerUrl() + '/v1/api/checkExistsGroupMemberNhs?nhsNumber=' + modelValue + '&groupName=' + $stateParams.groupName
-                    + '&providerId=' + $localStorage.user.email,
+                    + '&providerId=' + $localStorage.user.email + '&token=' + $localStorage.user.token,
                     headers: {
+                        'Accept':'application/json',
+                        'Content-Type': 'application/json',
                         'x-access-token': $localStorage.user.token
                     }
                 };
@@ -24,21 +26,15 @@ angular.module('app').directive('checkExistsGroupMemberNhs',function($q,$http,$l
 
 
                     if (data.success) {
-
-
                         $localStorage.patientId = data.data[0].email;
-
-
-                        // $localStorage.patientId = data.patientId;
-
                         def.reject();
                     } else {
-
-                       
-                        $localStorage.patientId = data.data[0].email;
-
-
-                        def.resolve();
+                        if (data.data) {
+                            $localStorage.patientId = data.data[0].email;
+                            def.resolve();
+                        } else {
+                            def.reject();
+                        }
                     }
                 });
 

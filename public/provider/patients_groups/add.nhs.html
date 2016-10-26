@@ -1,25 +1,38 @@
 <div class="modal-header">
-    <h4 class="modal-title"><i class="fa fa-calendar fa-fw "></i>
-        Input patient NHS number </h4>
+    <h4 class="modal-title"><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon>&nbsp;&nbsp;Add patient by NHS number</h4>
 </div>
 <div class="modal-body hidden-overflow ">
 
     <form name="nhsNumberForm" novalidate class="smart-form" id="scheduleForm">
-
         <section>
-            <label class="text">
+            <br />
+            <md-input-container class="md-block" flex-gt-sm md-is-error="submitted && (nhsNumberForm.nhsNumber.$error.required || nhsNumberForm.nhsNumber.$error.nhsNumberValid ||  nhsNumberForm.nhsNumber.$error.checkExistsGroupMemberNhs)">
+                <label>NHS number</label>
+                <input type="text" name="nhsNumber" id="nhsNumber" ng-model="nhsNumber" required nhs-number-valid check-exists-group-member-nhs>
+                <div ng-messages="nhsNumberForm.nhsNumber.$error">
+                    <div ng-message="required">
+                        NHS Number is required!
+                    </div>
+                    <div ng-message="nhsNumberValid">
+                        NHS Number is not valid!
+                    </div>
+                    <div ng-message="checkExistsGroupMemberNhs">
+                        NHS Number does not exists or user with that number is already member of this group!
+                    </div>
+                </div>
+            </md-input-container>
+
+            <!--<label class="text">
                     <input type="text"  name="nhsNumber" id="nhsNumber" required nhs-number-valid check-exists-group-member-nhs placeholder="NHS number" ng-model="nhsNumber"
                                autofocus >
-            </label>
-            <em ng-show="nhsNumberForm.nhsNumber.$dirty && nhsNumberForm.nhsNumber.$error.required" class="invalid">NHS Number is required.</em>
+            </label>-->
+            <!--<em ng-show="nhsNumberForm.nhsNumber.$dirty && nhsNumberForm.nhsNumber.$error.required" class="invalid">NHS Number is required.</em>
             <em ng-show="nhsNumberForm.nhsNumber.$dirty && nhsNumberForm.nhsNumber.$error.nhsNumberValid" class="invalid">NHS Number is not valid.</em>
-            <em ng-show="nhsNumberForm.nhsNumber.$dirty && nhsNumberForm.nhsNumber.$error.checkExistsGroupMemberNhs" class="invalid">NHS Number already exists!</em>
-
-
+            <em ng-show="nhsNumberForm.nhsNumber.$dirty && nhsNumberForm.nhsNumber.$error.checkExistsGroupMemberNhs" class="invalid">NHS Number already exists!</em>-->
         </section>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-primary" ng-click="apply()" ng-disabled="nhsNumberForm.$invalid" >Apply</button>
+    <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+    <md-button class="md-raised md-primary" ng-click="apply()">Apply</md-button>
 </div>

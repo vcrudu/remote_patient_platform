@@ -58,6 +58,9 @@ var util = require('util');
 
                     /* new forEach */
 
+                    if (data && data.length === 0) {
+                        sendResultToClient([]);
+                    }
 
                     _.forEach(data, function (patientsmembergroup) {
 

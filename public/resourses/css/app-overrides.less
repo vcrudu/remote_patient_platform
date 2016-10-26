@@ -283,7 +283,21 @@ md-toolbar {
 }
 
 /* tabs */
+
 md-tabs {
+  height: 100%;
+
+  md-tab-content > div
+  {
+    height: 100%;
+
+    .vertical-scroll
+    {
+      height: 100%;
+      overflow-y: auto;
+    }
+  }
+
   md-card {
     min-height: 380px;
   }
@@ -504,6 +518,30 @@ md-card-content {
 
   .fc-view-container {
     border-top: 1px solid rgba(0, 0, 0, 0.137255);;
+  }
+}
+
+li {
+  &.active {
+    a {
+      md-icon {
+        svg {
+          fill: @purple-500;
+        }
+      }
+    }
+  }
+}
+
+.fab-action-button {
+  position: fixed;
+  right: 0;
+  bottom: 60px;
+
+  md-icon {
+    svg {
+      fill: white;
+    }
   }
 }
 

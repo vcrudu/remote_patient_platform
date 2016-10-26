@@ -1,80 +1,19 @@
-<section id="widget-grid" widget-grid>
-
-    <div jarvis-widget data-widget-color="darken"
-         data-widget-custombutton="false"
-         data-widget-colorbutton="false"
-         data-widget-editbutton="false"
-         data-widget-togglebutton="false"
-         data-widget-deletebutton="false"
-    >
-        <header>
-            <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-            <h2>Patients Groups</h2>
-
-        </header>
-        <div >
-
-
-
-            <!-- widget content -->
-            <div class="widget-body">
-<!-- add by Lipkan -->
-                <div class="dt-toolbar">
-                    <div class="col-xs-10 ">
-                        <div class="dataTables_filter" id="datatable_filter">
-                       <!--     <label>
-                                                <span class="input-group-addon">
-                                                    <i class="glyphicon glyphicon-search"></i>
-                                                </span>
-                                <input class="form-control"
-                                       aria-controls="datatable"
-                                       type="search"
-                                       data-ng-model="searchKeywords">
-                            </label>  -->
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="toolbar">
-                            <div class="text-right">
-                                <button class="btn btn-primary pull-right" ng-click="addGroup()">New group</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- add by Lipkan -->
-
-                <div class="row">
-
-                    <div class="col-sm-4" ng-repeat="group in patientsGroups">
-
-                        <a ui-sref='provider.patients_group_members.members({groupName: group.groupName})'
-                           style="color: white">
-
-
-                        <div class="well well-sm bg-color-teal txt-color-white text-center">
-                           <!-- <h5><a ui-sref='provider.patients_group_members({groupName: group.groupName})'
-                                   style="color: white">{{group.groupName}}</a></h5> -->
-                            <h5>{{group.groupName}}</h5>
-                                   </div>
-
-                        </a>
-                        </div>
-
-
-                    </div>
-
-
-
-                </div>
-
-            </div>
-            <!-- end widget content -->
-
-        </div>
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon>&nbsp;&nbsp;Patients Groups</h2>
     </div>
+</md-toolbar>
 
+<md-list-item class="md-2-line" ng-repeat="group in patientsGroups" ng-click="goToGroupDetails(group);">
+    <div class="md-list-item-text">
+        <h3>{{group.groupName}}</h3>
+    </div>
+    <md-divider></md-divider>
+</md-list-item>
+<div style="clear: both"></div>
 
-</section>
-
-
+<div class="fab-action-button">
+    <md-button class="md-fab md-primary md-ink-ripple" ng-click="addGroup()">
+        <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+    </md-button>
+</div>
