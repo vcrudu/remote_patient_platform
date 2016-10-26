@@ -7,7 +7,7 @@ angular.module('app').controller('providerPatientsGroupsCtrl', ['$scope', '$log'
     function ($scope, $log, $state, toastr, authService, $localStorage, patientsGroupsService, $modal, $rootScope, $http) {
 
         $scope.goToGroupDetails = function(group) {
-            $state.go("provider.patients_groups_members.members", {groupName: group.groupName});
+            $state.go("provider.patients_group_members.members", {groupName: group.groupName});
         };
 
         $scope.addGroup = function () {
