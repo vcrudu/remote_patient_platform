@@ -13,25 +13,32 @@
 
             <div style="clear: both"></div>
 
-            <div class="smart-form">
+            <div>
 
                 <section>
-                    <label class="label">Group Alarm Name</label>
-                    <label class="input" ng-class="alarmBuilderForm.alarmName.$invalid && formWasSubmitted ? 'state-error' : ''">
-                        <i class="icon-append fa fa-bell-o" />
-                        <input type="text" name="alarmName" placeholder="Alarm Name" ng-model="alarmTemplateModel.alarmName" required ng-disabled="alarmTemplateModel.alarmNameDisabled">
-                        <b class="tooltip tooltip-top-right">Please enter an alarm name.</b>
-                    </label>
-                    <em ng-show="alarmBuilderForm.alarmName.$invalid && formWasSubmitted" class="invalid">Alarm Name is reuired!</em>
+
+                    <md-input-container class="md-block" flex-gt-sm md-is-error="formWasSubmitted && alarmBuilderForm.alarmName.$error.required">
+                        <label>Alarm Name</label>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_notifications_none_black_48px.svg" class="name"></md-icon>
+                        <input type="text" name="alarmName" ng-model="alarmTemplateModel.alarmName" required>
+                        <div ng-messages="alarmBuilderForm.alarmName.$error">
+                            <div ng-message="required">
+                                Alarm Name is reuired!
+                            </div>
+                        </div>
+                    </md-input-container>
                 </section>
                 <section>
-                    <label class="label">Group Alarm Description</label>
-                    <label class="textarea" ng-class="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted ? 'state-error' : ''">
-                        <i class="icon-append fa fa-comments-o" />
-                        <textarea rows="5" type="text" name="alarmDescription" placeholder="Alarm Description" ng-model="alarmTemplateModel.alarmDescription" required />
-                        <b class="tooltip tooltip-top-right">Please enter an alarm description.</b>
-                    </label>
-                    <em ng-show="alarmBuilderForm.alarmDescription.$invalid && formWasSubmitted" class="invalid">Alarm Description is reuired!</em>
+                    <md-input-container class="md-block" md-is-error="formWasSubmitted && alarmBuilderForm.alarmDescription.$error.required">
+                        <label>Group Alarm Description</label>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_chat_bubble_outline_black_48px.svg" class="name"></md-icon>
+                        <textarea name="alarmDescription" id="alarmDescription" ng-model="alarmTemplateModel.alarmDescription" rows="5" required></textarea>
+                        <div ng-messages="alarmBuilderForm.alarmDescription.$error">
+                            <div ng-message="required">
+                                Alarm Description is required!
+                            </div>
+                        </div>
+                    </md-input-container>
                 </section>
             </div>
 
@@ -77,16 +84,14 @@
             <h3 class="modal-title">Set a value</h3>
         </div>
         <div class="modal-body">
-            <div class="form-inline">
-                <div class="form-group">
-                    <label for="value">{{label}}</label>
-                    <input type="text" ng-class="cssClass" id="value" ng-model="model.value">
-                </div>
-            </div>
+            <md-input-container class="md-block" flex-gt-sm md-is-error="formWasSubmitted && alarmBuilderForm.alarmName.$error.required">
+                <label>{{label}}</label>
+                <input type="text" name="value" id="value" ng-model="model.value">
+            </md-input-container>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+            <md-button class="md-raised md-primary" ng-click="ok()">OK</md-button>
         </div>
     </script>
     <script type="text/ng-template" id="operatorModal.html">
@@ -94,17 +99,16 @@
             <h3 class="modal-title">Set an operator</h3>
         </div>
         <div class="modal-body">
-            <div class="form-inline" style="width: 158px; margin: 0 auto">
-                <div class="form-group">
-                    <select id="selectedOperator" ng-model="selectedOperator" ng-options="t.value for t in operators">
-                        <!--<option ng-repeat="operator in operators" value="{{operator.id}}">{{operator.value}}</option>-->
-                    </select>
-                </div>
-            </div>
+            <md-input-container  class="md-block">
+                <label>Select Operator</label>
+                <md-select name="selectedOperator" id="selectedOperator" ng-model="selectedOperator">
+                    <md-option ng-repeat="t in operators" value="{{t.id}}">{{t.value}}</md-option>
+                </md-select>
+            </md-input-container>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+            <md-button class="md-raised md-primary" ng-click="ok()">OK</md-button>
         </div>
     </script>
 </md-content>

@@ -172,14 +172,24 @@
                 });
 
                 modal.result.then(function (data) {
+                    var operators = alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
+
+                    var operator = undefined;
+                    for(var i=0;i<operators.length;i++) {
+                        if (operators[i].id === data) {
+                            operator = operators[i];
+                        }
+                    }
+
+                    debugger;
                     var element = $("#" + conditionObj.id);
                     if (element && element.length > 0) {
                         var minValueSpan = element.find(".Operator");
                         if (minValueSpan && minValueSpan.length > 0) {
-                            minValueSpan.attr("data-value", data.id)
-                            minValueSpan.text(data.value);
+                            minValueSpan.attr("data-value", operator.id)
+                            minValueSpan.text(operator.value);
 
-                            conditionObj.operator = data;
+                            conditionObj.operator = operator;
                         }
                     }
                 }, function (arg) {
@@ -326,8 +336,8 @@
         }
     ]);
 
-    angular.module('app').controller('setOperatorModalCtrl', ["$scope", "$modalInstance", "operators", "selectedOperator",
-        function ($scope, $modalInstance, operators, selectedOperator) {
+    angular.module('app').controller('setOperatorModalCtrl', ["$scope", "$modalInstance", "operators", "selectedOperator", "_",
+        function ($scope, $modalInstance, operators, selectedOperator, _) {
             $scope.operators = operators;
             $scope.selectedOperator = selectedOperator ? selectedOperator : operators[0];
 
