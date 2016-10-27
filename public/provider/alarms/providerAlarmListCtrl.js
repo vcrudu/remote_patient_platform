@@ -1,24 +1,22 @@
-/**
- * Created by Victor on 5/26/2016.
- */
-
 (function() {
-    angular.module('app').controller('providerAlarmListCtrl', ["$scope", "$http", "_", "appSettings", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
-        function ($scope, $http, _, appSettings, $localStorage, $state, alarmBuilderFactoryService, toastr) {
-          
-        
-          
+    angular.module('app').controller("providerGroupAlarmList", ["$rootScope", "$scope", "$http", "_", "appSettings", "$stateParams", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
+        function ($rootScope, $scope, $http, _, appSettings, $stateParams, $localStorage, $state, alarmBuilderFactoryService, toastr) {
+
             $scope.alarmTemplates = [];
             $scope.availableTemplates = [];
 
+            $scope.$on("addAlarmTemplateClickEvent", function() {
+                $state.go("provider.patients_groups_members.alarmbuilder");
+            });
+
             $scope.handleAlarmTemplateSelected = function(template) {
-                $state.go("provider.alarm_builder_edit", {alarmName: template.alarmName});
+                $state.go("provider.patients_groups_members.alarmbuilder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
             };
 
             $scope.deleteAlarmTemplate = function(template) {
                 var req = {
                     method: 'DELETE',
-                    url: appSettings.getServerUrl() + '/v1/api//globalalarm/' + template.alarmName,
+                    url: appSettings.getServerUrl() + '/v1/api//groupalarm?alarmName=' + template.alarmName+"&groupname="+$stateParams.groupName,
                     headers: {
                         'x-access-token': $localStorage.user.token
                     }
@@ -26,18 +24,18 @@
 
                 $http(req).success(function (res) {
                     if (res.success) {
-                        toastr.success('Alarm Template deleted!','Success');
+                        toastr.success('Group Alarm Template deleted!','Success');
 
                         var index = -1;
                         for(var i=0; i<$scope.alarmTemplates.length;i++) {
-                            if (template.alarmName == $scope.alarmTemplates[i].alarmName) { // update by Lipcan 29.09.2016 was $scope.alarmTemplates[0].alarmName 
+                            if (template.alarmName == $scope.alarmTemplates[i].alarmName) {
                                 index = i;
                                 break;
                             }
                         }
 
                         if (index > -1) {
-                           // alert(index);
+                            //   alert(index);
                             $scope.alarmTemplates.splice(index, 1);
                         }
                     } else {
@@ -54,7 +52,7 @@
 
                     var req = {
                         method: 'GET',
-                        url: appSettings.getServerUrl() + '/v1/api/globalalarms',
+                        url: appSettings.getServerUrl() + '/v1/api/groupalarms/' + $stateParams.groupName,
                         headers: {
                             'x-access-token': $localStorage.user.token
                         }
@@ -74,7 +72,7 @@
 
                                         if (template != null) {
                                             var text = "<b><u>" + (rule.prefix ? "where" : "where not") + "</u></b> " + template.phrase;
-                                            
+
                                             var args = rule.arguments;
 
                                             switch (template.name) {
@@ -108,7 +106,7 @@
                                                     text = text.replace("<u><b>value</b></u>", "<u><b>"+ textValue +"</b></u>");
                                                     break;
                                             }
-                                            
+
                                             alarmTemplate.rulesText.push(text);
                                         }
                                     });
@@ -118,6 +116,7 @@
                         } else {
                         }
                     }).error(function (err) {
+                        // console.log("EROARE !!!  ");
 
                     });
                 });

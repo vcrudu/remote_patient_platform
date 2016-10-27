@@ -7,20 +7,20 @@ angular.module('app').controller('providerPatientsGroupsCtrl', ['$scope', '$log'
     function ($scope, $log, $state, toastr, authService, $localStorage, patientsGroupsService, $modal, $rootScope, $http) {
 
         $scope.goToGroupDetails = function(group) {
-            $state.go("provider.patients_group_members.members", {groupName: group.groupName});
+            $state.go("provider.patients_groups_members.members", {groupName: group.groupName});
         };
 
         $scope.addGroup = function () {
-    
+
             var modal = $modal.open({
                 templateUrl: 'provider/patients_groups/add.group.html',
                 controller: function ($scope, $modalInstance) {
                     $scope.submitted = false;
                     $scope.cancel = function () {
-    
+
                         $modalInstance.dismiss();
                     };
-    
+
                     $scope.apply = function () {
                         $scope.submitted = true;
 
@@ -59,11 +59,11 @@ angular.module('app').controller('providerPatientsGroupsCtrl', ['$scope', '$log'
                 }
             });
         };
-    
+
         patientsGroupsService.getPatientsGroups(function(data) {
-            if (data) {
-                $scope.patientsGroups = data.items;
-            }
-        },
-        function(err) {});
-}]);
+                if (data) {
+                    $scope.patientsGroups = data.items;
+                }
+            },
+            function(err) {});
+    }]);
