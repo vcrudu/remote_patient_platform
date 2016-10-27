@@ -6,11 +6,11 @@
             $scope.availableTemplates = [];
 
             $scope.$on("addAlarmTemplateClickEvent", function() {
-                $state.go("provider.patients_group_members.alarmbuilder");
+                $state.go("provider.patients_groups_members.alarmbuilder");
             })
 
             $scope.handleAlarmTemplateSelected = function(template) {
-                $state.go("provider.patients_group_members.alarmbuilder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
+                $state.go("provider.patients_groups_members.alarmbuilder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
             };
 
             $scope.deleteAlarmTemplate = function(template) {
