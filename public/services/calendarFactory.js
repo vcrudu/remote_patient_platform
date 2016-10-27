@@ -33,8 +33,9 @@
                     dateTime.setTime(slotData.slotDateTime);
                     var event = {
                         id: slotData.slotDateTime,
-                        title: slotData.countOfProviders + " nurses are available.",
-                        titleText: " nurses are available.",
+                        title: slotData.countOfProviders>0?(slotData.countOfProviders + (slotData.countOfProviders>1?" doctors are":" doctor is")+" available."):
+                        "Doctors not available for this slot.",
+                        titleText: " doctors are available.",
                         slot: slotData,
                         start: getCurrentTimeString(dateTime),
                         icon: 'fa fa-calendar',
