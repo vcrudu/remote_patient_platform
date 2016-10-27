@@ -166,7 +166,7 @@
                             return alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
                         },
                         selectedOperator: function () {
-                            return conditionObj.operator;
+                            return conditionObj.operator.id;
                         }
                     }
                 });
@@ -181,7 +181,6 @@
                         }
                     }
 
-                    debugger;
                     var element = $("#" + conditionObj.id);
                     if (element && element.length > 0) {
                         var minValueSpan = element.find(".Operator");
