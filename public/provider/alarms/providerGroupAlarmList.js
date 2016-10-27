@@ -7,7 +7,7 @@
 
             $scope.$on("addAlarmTemplateClickEvent", function() {
                 $state.go("provider.patients_groups_members.alarmbuilder");
-            })
+            });
 
             $scope.handleAlarmTemplateSelected = function(template) {
                 $state.go("provider.patients_groups_members.alarmbuilder_edit", {alarmName: template.alarmName, groupName: $stateParams.groupName });
@@ -35,7 +35,7 @@
                         }
 
                         if (index > -1) {
-                         //   alert(index);
+                            //   alert(index);
                             $scope.alarmTemplates.splice(index, 1);
                         }
                     } else {
@@ -116,7 +116,7 @@
                         } else {
                         }
                     }).error(function (err) {
-                       // console.log("EROARE !!!  ");
+                        // console.log("EROARE !!!  ");
 
                     });
                 });
