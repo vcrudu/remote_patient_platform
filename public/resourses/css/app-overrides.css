@@ -491,6 +491,9 @@ li.active a md-icon svg {
 .fab-action-button md-icon svg {
   fill: white;
 }
+md-input-container .mbsc-control {
+  display: none !important;
+}
 @media (max-width: 480px) {
   #header {
     height: 93px !important;

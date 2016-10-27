@@ -169,12 +169,15 @@
             $scope.formWasSubmitted = false;
 
             $scope.submitForm = function (isValid) {
+                $scope.formWasSubmitted = true;
+
+                if (!isValid) {return;}
 
                 if ($scope.data.scheduleList) {
 
                     if ($scope.dayTimePoints.length>0) {
 
-                        $scope.formWasSubmitted = true;
+
 
 
                         //     alert("SCHEDULENAME ESTE    "+$scope.data.scheduleList);
@@ -206,7 +209,7 @@
                             if (res.success) {
                                 //   $scope.alarmTemplateModel.alarmNameDisabled = true;
                                 toastr.success('Schedule Plan saved!', 'Success');
-                                $state.go("provider.patients_group_members.schedules");
+                                $state.go("provider.patients_groups_members.schedules");
                             } else {
 
 

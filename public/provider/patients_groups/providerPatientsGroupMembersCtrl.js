@@ -61,4 +61,8 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
         $scope.addAlarmTemplate = function() {
             $rootScope.$broadcast("addAlarmTemplateClickEvent");
         };
+
+        $scope.addSchedule = function() {
+            $rootScope.$broadcast("addScheduleClickEvent");
+        };
     }]);

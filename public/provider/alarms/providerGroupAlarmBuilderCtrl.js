@@ -67,7 +67,7 @@
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
                         toastr.success('Group Alarm Template saved!','Success');
-                        $state.go("provider.patients_group_members.groupalarmrules");
+                        $state.go("provider.patients_groups_members.groupalarmrules");
                     } else {
                     }
                 }).error(function (err) {

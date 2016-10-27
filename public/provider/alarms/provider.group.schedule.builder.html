@@ -1,227 +1,174 @@
+<md-content style="margin-top: 16px;">
+    <form name="scheduleBuilderForm" novalidate ng-submit="submitForm(scheduleBuilderForm.$valid)">
+        <fieldset>
+            <section class="md-padding" >
+                <md-button type="submit" class="md-raised md-primary padding-left-right-16" style="float: right">Save Schedule</md-button>
+            </section>
+            <div style="clear: both"></div>
+            <section class="md-padding" >
+                <md-input-container  class="md-block" flex-gt-sm md-is-error="formWasSubmitted && scheduleBuilderForm.scheduleList.$error.required">
+                    <label>Schedule Name</label>
+                    <md-select id="scheduleList" name="scheduleList" ng-model="data.scheduleList" required>
+                        <md-option value="Hypertension" ng-click="foundScheduleName()">Hypertension</md-option>
+                        <md-option value="Diabetes" ng-click="foundScheduleName()">Diabetes</md-option>
+                        <md-option value="Fever" ng-click="foundScheduleName()">Fever</md-option>
+                        <md-option value="INR" ng-click="foundScheduleName()">INR</md-option>
+                    </md-select>
+                    <div ng-messages="scheduleBuilderForm.scheduleList.$error">
+                        <div ng-message="required">
+                            Schedule Name is required!
+                        </div>
+                    </div>
+                </md-input-container>
+            </section>
 
+            <section style="margin-bottom: 16px;" class="md-padding">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>Schedule time</th>
+                                <th md-column>Reminders</th>
+                                <th md-column>Actions</th>
 
-<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
-    <style>
-        .has-errors {
-            border: 1px solid #A90329;
-        }
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr md-row ng-repeat="dtp in dayTimePoints">
+                            <td md-cell><h3>{{dtp.time}}</h3></td>
+                            <td md-cell>
+                                <md-chips ng-model="dtp.reminders" readonly="true">
+                                    <md-chip-template>
+                                        <strong>{{$chip}}</strong>
+                                    </md-chip-template>
+                                </md-chips>
+                            </td>
+                            <td md-cell>
+                                <md-icon md-svg-src="resourses/img/material-icons/ic_delete_forever_black_48px.svg" class="name" ng-click="deleteScheduleTime(dtp)">
+                                    <md-tooltip md-direction="bottom">
+                                        Delete
+                                    </md-tooltip>
+                                </md-icon>
+                                <!--<div style="text-align:center;">
+                                    <button type="button" class="btn btn-warning" ng-click="deleteScheduleTime(dtp)">Delete</button>
+                                </div>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </section>
 
-        .has-error-message {
-            display: block;
-            margin-top: 6px;
-            padding: 0 1px;
-            font-style: normal;
-            font-size: 11px;
-            line-height: 15px;
-            color: #D56161;
-        }
-    </style>
-    <header>
-        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
-        <h2>New Schedule Plan</h2>
-    </header>
-    <div>
-        <div class="widget-body">
-            <div class="row">
-                <div class="col-xs-12">
-                    <form name="scheduleBuilderForm" novalidate ng-submit="submitForm(scheduleBuilderForm.$valid)">
-                        <fieldset>
-                            <div class="smart-form">
-                                <section>
-                                    <label class="label">Schedule Name</label>
-                                    <label class="col-md-2 control-label" for="select-1">Select</label>
-                                    <select class="form-control" id="scheduleList" name="scheduleList" ng-model="data.scheduleList" ng-click="foundScheduleName()" required>
-                                        <option value="Hypertension">Hypertension</option>
-                                        <option value="Diabetes">Diabetes</option>
-                                        <option value="Fever">Fever</option>
-                                        <option value="INR">INR</option>
-                                    </select>
+            <section class="md-padding">
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <h3>Set time</h3>
+                    </div>
+                </md-toolbar>
 
-                                    </label>
-                                    <em ng-show="scheduleBuilderForm.scheduleList.$invalid && formWasSubmitted" class="invalid">Schedule Name is required!</em>
-                                </section>
-                                <div class="widget-body">
-                                <section>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Schedule time</th>
-                                            <th>Reminders</th>
-                                            <th></th>
+                <br/>
+                <div>
+                    <div class="col-md-9">
+                        <md-input-container class="md-block" style="margin-bottom: 0">
+                            <label>Please select time</label>
+                            <input type="text" ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo2">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-button type="button" class="md-raised" ng-click="demo2.clear()">Clear time</md-button>
+                        <!--<input ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo2" placeholder="Please select time..." />-->
+                    </div>
+                </div>
+            </section>
 
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="dtp in dayTimePoints">
-                                            <td>{{dtp.time}}</td>
-                                            <td>{{dtp.reminders}}</td>
-                                            <td style="vertical-align:middle;"><div style="text-align:center;"><button type="button" class="btn btn-warning" ng-click="deleteScheduleTime(dtp)">Delete</button></div></td>
-                                            <!--        <td>
-                                                          <ul>
-                                                              <li ng-repeat="ruleText in alarmTemplate.rulesText">
-                                                                  <div ng-bind-html="ruleText | rawHtml"></div>
-                                                              </li>
-                                                          </ul>
-                                                      </td> -->
+            <section class="md-padding">
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <h3>Set riminders</h3>
+                    </div>
+                </md-toolbar>
 
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </section>
-                             </div>
-                                <section>
-                                    <div>
-                                        <input ng-model="mytime" mobiscroll-time="timeSettings" mobiscroll-instance="demo2" placeholder="Please select time..." />
-
-                                        <button ng-click="demo2.clear()">Clear</button>
-                                        <button ng-click="demo2.show()">Show</button>
-
-                                        <select ng-model="myselect" mobiscroll-select="remSettings" mobiscroll-instance="demo1" multiple>
-                                            <option value="0.30">0.30</option>
-                                            <option value="1.00">1.00</option>
-                                            <option value="1.30">1.30</option>
-                                            <option value="2.00">2.00</option>
-                                            <option value="2.30">2.30</option>
-                                            <option value="3.00">3.00</option>
-                                            <option value="3.30">3.30</option>
-                                            <option value="4.00">4.00</option>
-                                            <option value="4.30">4.30</option>
-                                            <option value="5.00">5.00</option>
-                                            <option value="5.30">5.30</option>
-                                            <option value="6.00">6.00</option>
-                                            <option value="6.30">6.30</option>
-                                            <option value="7.00">7.00</option>
-                                            <option value="7.30">7.30</option>
-                                            <option value="8.00">8.00</option>
-                                            <option value="8.30">8.30</option>
-                                            <option value="9.00">9.00</option>
-                                            <option value="9.30">9.30</option>
-                                            <option value="10.00">10.00</option>
-                                            <option value="10.30">10.30</option>
-                                            <option value="11.00">11.00</option>
-                                            <option value="11.30">11.30</option>
-                                            <option value="12.00">12.00</option>
-                                            <option value="12.30">12.30</option>
-                                            <option value="13.00">13.00</option>
-                                            <option value="13.30">13.30</option>
-                                            <option value="14.00">14.00</option>
-                                            <option value="14.30">14.30</option>
-                                            <option value="15.00">15.00</option>
-                                            <option value="15.30">15.30</option>
-                                            <option value="16.00">16.00</option>
-                                            <option value="16.30">16.30</option>
-                                            <option value="17.00">17.00</option>
-                                            <option value="17.30">17.30</option>
-                                            <option value="18.00">18.00</option>
-                                            <option value="18.30">18.30</option>
-                                            <option value="19.00">19.00</option>
-                                            <option value="19.30">19.30</option>
-                                            <option value="20.00">20.00</option>
-                                            <option value="20.30">20.30</option>
-                                            <option value="21.00">21.00</option>
-                                            <option value="21.30">21.30</option>
-                                            <option value="22.00">22.00</option>
-                                            <option value="22.30">22.30</option>
-                                            <option value="23.00">23.00</option>
-                                            <option value="23.30">23.30</option>
-                                            <option value="24.00">24.00</option>
-                                        </select>
-
-                                        <button ng-click="demo1.clear()">Clear</button>
-                                        <button ng-click="demo1.show()">Show</button>
-
-
-                                   <button  type="button" class="btn btn-primary push-right" style="float: left" ng-click="addTime()">Add new time</button>
-                                    </div>
-                                </section>
-                            </div>
-
-                            <section>
-                            <!--    <header>
-                                    <h2>Reminders</h2>
-                                </header>
-
-                              <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="panel panel-primary" style="">
-                                            <div class="panel-heading">Reminders list</div>
-                                            <div class="panel-body">
-                                                <ul>
-                                                    <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                     <!-- by Lipcan               <div class="col-xs-6">
-                                        <div class="panel panel-success" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-errors': ''">
-                                            <div class="panel-heading">Reminders list</div>
-                                            <div class="panel-body">
-                                                <ul class="selected-conditions">
-                                                    <li ng-repeat="condition in conditions"><div id="{{condition.id}}" bind-html-compile="condition.parsedCondition"></div></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <em ng-show="alarmTemplateModel.conditionsInvalid" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-error-message': ''">Conditions are invalid!</em>
-                                    </div>
-
-                                <div class="col-xs-6">
-                                    <div class="panel panel-primary" style="">
-                                        <div class="panel-heading">Reminders list</div>
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> by Lipcan -->
-                            <!--    </div>  -->
-                            </section>
-
-                            <section>
-                                <button type="submit" class="btn btn-primary push-right" style="float: right">Save schedule</button>
-                            </section>
-
-                        </fieldset>
-                    </form>
-
+                <br/>
+                <div>
+                    <div class="col-md-9">
+                        <md-input-container class="md-block" style="margin-bottom: 0">
+                            <label>Please select reminders</label>
+                            <input type="text" ng-model="myselect" ng-click="demo1.show()">
+                            <select style="display: none" ng-model="myselect" mobiscroll-select="remSettings" mobiscroll-instance="demo1" multiple>
+                                <option value="0.30">0.30</option>
+                                <option value="1.00">1.00</option>
+                                <option value="1.30">1.30</option>
+                                <option value="2.00">2.00</option>
+                                <option value="2.30">2.30</option>
+                                <option value="3.00">3.00</option>
+                                <option value="3.30">3.30</option>
+                                <option value="4.00">4.00</option>
+                                <option value="4.30">4.30</option>
+                                <option value="5.00">5.00</option>
+                                <option value="5.30">5.30</option>
+                                <option value="6.00">6.00</option>
+                                <option value="6.30">6.30</option>
+                                <option value="7.00">7.00</option>
+                                <option value="7.30">7.30</option>
+                                <option value="8.00">8.00</option>
+                                <option value="8.30">8.30</option>
+                                <option value="9.00">9.00</option>
+                                <option value="9.30">9.30</option>
+                                <option value="10.00">10.00</option>
+                                <option value="10.30">10.30</option>
+                                <option value="11.00">11.00</option>
+                                <option value="11.30">11.30</option>
+                                <option value="12.00">12.00</option>
+                                <option value="12.30">12.30</option>
+                                <option value="13.00">13.00</option>
+                                <option value="13.30">13.30</option>
+                                <option value="14.00">14.00</option>
+                                <option value="14.30">14.30</option>
+                                <option value="15.00">15.00</option>
+                                <option value="15.30">15.30</option>
+                                <option value="16.00">16.00</option>
+                                <option value="16.30">16.30</option>
+                                <option value="17.00">17.00</option>
+                                <option value="17.30">17.30</option>
+                                <option value="18.00">18.00</option>
+                                <option value="18.30">18.30</option>
+                                <option value="19.00">19.00</option>
+                                <option value="19.30">19.30</option>
+                                <option value="20.00">20.00</option>
+                                <option value="20.30">20.30</option>
+                                <option value="21.00">21.00</option>
+                                <option value="21.30">21.30</option>
+                                <option value="22.00">22.00</option>
+                                <option value="22.30">22.30</option>
+                                <option value="23.00">23.00</option>
+                                <option value="23.30">23.30</option>
+                                <option value="24.00">24.00</option>
+                            </select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-button type="button" class="md-raised" ng-click="demo1.clear()">Clear reminders</md-button>
+                        <!--<md-button type="button" class="md-raised md-primary" ng-click="demo1.show()">Show reminders</md-button>-->
+                    </div>
 
                 </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/ng-template" id="valueModal.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Set a value</h3>
-        </div>
-        <div class="modal-body">
-            <div class="form-inline">
-                <div class="form-group">
-                    <label for="value">{{label}}</label>
-                    <input type="text" ng-class="cssClass" id="value" ng-model="model.value">
+            </section>
+
+            <section class="md-padding">
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2"><md-button type="button" class="md-raised md-primary padding-left-right-16" ng-click="addTime()" ng-disabled="!myselect || !mytime">Add new time</md-button></div>
+                    <div class="col-sm-5"></div>
                 </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-    <script type="text/ng-template" id="operatorModal.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Set an operator</h3>
-        </div>
-        <div class="modal-body">
-            <div class="form-inline" style="width: 158px; margin: 0 auto">
-                <div class="form-group">
-                    <select id="selectedOperator" ng-model="selectedOperator" ng-options="t.value for t in operators">
-                        <!--<option ng-repeat="operator in operators" value="{{operator.id}}">{{operator.value}}</option>-->
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-</div>
+            </section>
+
+            <div style="clear: both"></div>
+            <br/>
+
+            <section class="md-padding" >
+                <md-button type="submit" class="md-raised md-primary padding-left-right-16" style="float: right">Save Schedule</md-button>
+            </section>
+
+        </fieldset>
+    </form>
+</md-content>
