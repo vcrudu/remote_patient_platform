@@ -6,6 +6,23 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
 
          $scope.currentGroupName = $stateParams.groupName;
 
+        $scope.tabIndex = 0;
+
+        $scope.$watch(function(){
+            return $state.$current.name
+        }, function(newVal, oldVal){
+            if (newVal === 'provider.patients_groups_members.groupalarmrules' || newVal === 'provider.patients_groups_members.alarmbuilder_edit' || newVal === 'provider.patients_groups_members.alarmbuilder') {
+                $scope.tabIndex = 1;
+            } else if (newVal === 'provider.patients_groups_members.schedules'
+                || newVal === 'provider.patients_groups_members.schedulebuilder_edit'
+                || newVal === 'provider.patients_groups_members.schedulebuilder') {
+                $scope.tabIndex = 2;
+            }
+            else {
+                $scope.tabIndex = 0;
+            }
+        });
+
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
                     $scope.patientsGroupsMembers = data.items;

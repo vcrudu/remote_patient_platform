@@ -491,6 +491,9 @@ li.active a md-icon svg {
 .fab-action-button md-icon svg {
   fill: white;
 }
+.capitalizeFirstLetter:first-letter {
+  text-transform: capitalize;
+}
 md-input-container .mbsc-control {
   display: none !important;
 }
