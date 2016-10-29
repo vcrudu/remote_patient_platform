@@ -63,8 +63,7 @@
                     "headerView": {templateUrl: "loggedOutHeader.html"},
                     "mainView": {templateUrl: "confirmSubmit.html"}
                 }
-            })
-            .state('activate', {
+            }).state('activate', {
                 url: "/activate",
                 views: {
                     "headerView": {

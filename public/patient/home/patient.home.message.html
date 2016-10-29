@@ -19,9 +19,8 @@
         <p style="text-transform: capitalize;font-weight: 400;">
         {{vm.message.greetings}}
         </p>
-        <br>
-        <p style="text-transform: capitalize; margin-right: 8px;margin-left: 8px">
-            {{vm.message.content}}
+       <br>
+        <p ng-bind-html="vm.message.content" style="text-transform: capitalize; margin-right: 8px;margin-left: 8px">
         </p>
         <br><span style="font-weight: 400">Thanks,</span><br>
         <span style="font-weight: 500">Trichrome Healthcare</span>

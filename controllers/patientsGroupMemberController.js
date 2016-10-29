@@ -101,10 +101,8 @@ var util = require('util');
             });
         });
 
-        router.post('/patient-member-group-invitation', function (req, res) {
-
-
-            snsClient.onPatientInvitedToGroupEvent(req.body.patientId, req.decoded.email, req.body.groupName,
+        router.post('/patientsgroupmember/invitation', function (req, res) {
+            snsClient.SendOnPatientInvitedToGroupEvent(req.body.patientId, req.decoded.email, req.body.groupName,
                 function (err, data) {
                     if (err) {
                         res.status(500).json({
@@ -119,25 +117,41 @@ var util = require('util');
                 });
         });
 
-        router.post('/patient-member-group-invitation-approve', function (req, res) {
+        router.post('/patientsgroupmember/authorise-membership', function (req, res) {
+            var authorisationToken = req.query.authorisation;
+
+            var jwt = require('jsonwebtoken');
+            var decodedAuthorisationToken = jwt.decode(authorisationToken);
+
             var groupMember = {
-                providerId: req.decoded.providerId,
-                groupName: req.decoded.groupName,
-                patientId: req.decoded.patientId,
+                providerId: decodedAuthorisationToken.providerId,
+                groupName: decodedAuthorisationToken.groupName,
+                patientId: decodedAuthorisationToken.email,
                 createDateTime: (new Date()).getTime(),
-                createdBy: req.decoded.providerId
+                createdBy: decodedAuthorisationToken.providerId
             };
 
-            patientsGroupMemberRepository.save(groupMember, function () {
+            patientsGroupMemberRepository.save(groupMember, function (err, data) {
                 if (err) {
                     res.status(500).json({
                         success: false
                     });
-                }
-                if (data) {
-                    res.status(200).json({
-                        success: true
-                    });
+                } else {
+
+                    snsClient.SendOnInvitationToGroupAccepted(decodedAuthorisationToken.email,
+                        decodedAuthorisationToken.providerId,
+                        decodedAuthorisationToken.groupName,
+                        function (err) {
+                            if (err) {
+                                res.status(500).json({
+                                    success: false
+                                });
+                            } else {
+                                res.status(200).json({
+                                    success: true
+                                });
+                            }
+                        });
                 }
             });
         });

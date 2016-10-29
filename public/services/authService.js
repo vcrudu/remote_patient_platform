@@ -275,7 +275,16 @@ angular.module('app')
                         data: {email : email}
                     };
                     $http(req).then(success,error);
+                },
+                authoriseGroupMembership : function (authorisation, success, error) {
+                    var req = {
+                        method: 'POST',
+                        headers: {
+                            'x-access-token': authorisation
+                        },
+                        url: appSettings.getServerUrl() + '/v1/api/patientsgroupmember/authorise-membership?authorisation='+authorisation
+                    };
+                    $http(req).then(success,error);
                 }
             };
-
         }]);

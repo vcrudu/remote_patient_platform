@@ -16,9 +16,11 @@ angular.module('app').controller('registerMedicalCtrl',['$scope','$log','$state'
 
             var healthProblems = [];
 
-            Object.keys($scope.newUser.healthProblems).forEach(function (key) {
-                healthProblems.push(key.toString());
-            });
+            if($scope.newUser.healthProblems) {
+                Object.keys($scope.newUser.healthProblems).forEach(function (key) {
+                    healthProblems.push(key.toString());
+                });
+            }
 
             $scope.newUser.healthProblems = healthProblems;
         }
