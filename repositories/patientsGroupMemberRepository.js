@@ -3,6 +3,7 @@
   var AWS = require('aws-sdk');
   var connectionOptions = require('./awsOptions');
   var _ = require("underscore");
+  var loggerProvider    = require('../logging');
 
   var getDbLocal = function () {
 
@@ -79,12 +80,63 @@
           return;
         }
 
-        if (data.Item!==undefined) {
+        if (data.Item) {
           var mappedPatientsGroupMemberObject = mapPatientsGroupMemberFromDbEntity(data.Item);
           callback(null, mappedPatientsGroupMemberObject);
         } else {
           callback(true, null);
         }
+      });
+    },
+
+    getByPatientId: function (patientId, callback) {
+
+      if (!this.dynamoDb) {
+        this.dynamoDb = getDbLocal();
+      }
+
+      var params = {
+        KeyConditionExpression: '#patientId=:patientId AND ' +
+        '#groupId>=:groupId',
+
+        ExpressionAttributeNames: {
+          "#patientId": "patientId",
+          "#groupId": "groupId"
+        },
+        ExpressionAttributeValues: {
+          ":patientId": {"S": patientId},
+          ":groupId": {"S": String.fromCharCode(0)}
+        },
+        IndexName: 'patientId-groupId-index',
+        TableName: 'PatientsGroupMember',
+        Limit: 700
+      };
+
+      var mapPatientsGroupMemberFromDbEntity = function (dbEntity) {
+        var patientsGroupMember = {};
+
+        patientsGroupMember.groupId = dbEntity.groupId.S;
+        patientsGroupMember.patientId = dbEntity.patientId.S;
+        return patientsGroupMember;
+      };
+
+      this.dynamoDb.query(params, function (err, data) {
+        if (err) {
+          loggerProvider.getLogger().error(err);
+          callback(err, null);
+          return;
+        }
+
+        var dbMembers = data.Items;
+
+        var resultMembers = [];
+
+        _.forEach(dbMembers, function (dbMember) {
+          var member = mapPatientsGroupMemberFromDbEntity(dbMember);
+          resultMembers.push(member);
+        });
+
+        callback(null, resultMembers);
       });
     },
 

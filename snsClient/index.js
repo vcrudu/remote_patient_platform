@@ -3,8 +3,10 @@
  */
 
 (function() {
+    var systemConfig = require('../config/systemConfig');
     var userRepository = require('../repositories/usersRepository');
     var usersDetailsRepository = require('../repositories/usersDetailsRepository');
+    var providersRepository = require('../repositories/providersRepository');
     var moment = require('moment');
     var AWS = require('aws-sdk');
     var patientApplicationArn = 'arn:aws:sns:eu-west-1:160466482332:app/GCM/trichrome_health_monitor';
@@ -131,7 +133,57 @@
         });
     }
 
-    function onPatientInvitedToGroupEvent(patientId, providerId, groupName, callback) {
+    function SendOnPatientInvitedToGroupEvent(patientId, providerId, groupName, callback) {
+
+        providersRepository.getOne(providerId, function (err, provider) {
+            var jwt          = require("jsonwebtoken");
+            var eventPayload =
+            {
+                userId: patientId,
+                providerId: providerId,
+                groupName: groupName,
+                providerTitle: provider.title,
+                providerFullName: provider.name + ' ' + provider.surname,
+                approveLink: '<a href=' + systemConfig.systemHost + '/#/patient/approve-group-invitation?authorisation=' + jwt.sign({
+                    email: patientId,
+                    groupName: groupName,
+                    providerId: providerId
+                }, process.env.JWT_SECRET) + '&groupName=' + groupName + '>link</a>'
+            };
+
+            var params = {
+                Message: JSON.stringify({
+                    name: "OnPatientInvitedToGroup",
+                    payload: eventPayload
+                }), /* required */
+                MessageAttributes: {
+                    userId: {
+                        DataType: 'String',
+                        StringValue: patientId /* required */
+                    },
+                    providerId: {
+                        DataType: 'String',
+                        StringValue: providerId /* required */
+                    },
+                    groupName: {
+                        DataType: 'String',
+                        StringValue: groupName /* required */
+                    }
+                },
+                TopicArn: 'arn:aws:sns:eu-west-1:160466482332:hcm-registration'
+            };
+            snsClient.publish(params, function (err, data) {
+                if (err) {
+                    logging.getLogger().error(err);
+                }
+                if (callback)
+                    callback(err, data);        // successful response
+            });
+        });
+    }
+
+    function SendOnInvitationToGroupAccepted(patientId, providerId, groupName, callback) {
+
         var eventPayload =
         {
             userId: patientId,
@@ -141,7 +193,7 @@
 
         var params = {
             Message: JSON.stringify({
-                name: "onPatientInvitedToGroup",
+                name: "OnInvitationToGroupAccepted",
                 payload: eventPayload
             }), /* required */
             MessageAttributes: {
@@ -168,7 +220,6 @@
                 callback(err, data);        // successful response
         });
     }
-
 
     function sendOnDevicesOrderingEvent(userId, orderDetails, callback) {
         var eventPayload = {
@@ -401,7 +452,8 @@
         sendAppointmentEmail: sendAppointmentEmail,
         registerWithSNS: registerWithSNS,
         getSnsEndpointAttributes: getSnsEndpointAttributes,
-        onPatientInvitedToGroupEvent:onPatientInvitedToGroupEvent,
+        SendOnPatientInvitedToGroupEvent:SendOnPatientInvitedToGroupEvent,
+        SendOnInvitationToGroupAccepted:SendOnInvitationToGroupAccepted,
         setSnsEndpointAttributes: setSnsEndpointAttributes,
         sendInitStateMchineEvent: sendInitStateMchineEvent,
         sendOnProvideDetailsEvent: sendOnProvideDetailsEvent,

@@ -219,7 +219,6 @@
                         if (err) {
                             socket.emit('errorRetrieveUser', data);
                         } else if (user) {
-
                             var callerSocket = _.find(namespace.sockets, function (aSocket) {
                                 return aSocket.id === user.socketId;
                             });

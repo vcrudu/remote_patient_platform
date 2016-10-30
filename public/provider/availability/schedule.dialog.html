@@ -9,7 +9,7 @@
             <section>
                 <br>
                 <md-input-container class="md-block" md-is-error="submitted && scheduleForm.schedule.$invalid">
-                    <label>Describe the reason</label>
+                    <label>Specify the time intervals</label>
                     <textarea name="schedule" id="schedule" ng-model="scheduleValue" rows="4" required ng-pattern="/((([0-1][0-9])|([2][0-3])):([0-5][0-9]))(\s)*[-](\s)*((([0-1][0-9])|([2][0-3])):([0-5][0-9]))/g"></textarea>
                     <div ng-messages="scheduleForm.schedule.$error">
                         <div ng-message="required">

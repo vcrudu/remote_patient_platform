@@ -49,39 +49,39 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "provider/appointments/provider.call.html",
         controller: 'providerCallCtrl as vm'
     }).state("provider.patients_groups", {
-        url: "/provider.patients_groups",
+        url: "/patients_groups",
         templateUrl: "provider/patients_groups/provider.patients_groups.html",
         controller: 'providerPatientsGroupsCtrl'
-    }).state("provider.patients_group_members", {
-        url: "/provider.patients_group_members/:groupName",
+    }).state("provider.patients_groups_members", {
+        url: "/patients_groups/:groupName",
         templateUrl: "provider/patients_groups/provider.patients_group_members_and_alarm_rules.html",
         controller: 'providerPatientsGroupMembersCtrl'
-    }).state("provider.patients_group_members.members", {
-        url: "/provider.patients_group_members/:groupName",
-        templateUrl: "provider/patients_groups/provider.patients_group_members.html",
-        controller: 'providerPatientsGroupMembersCtrl'
-    }).state("provider.patients_group_members.groupalarmrules", {
-        url: "/provider.group_alarm_list/:groupName",
+    }).state("provider.patients_groups_members.members", {
+        url: "/members",
+        templateUrl: "provider/patients_groups/provider.patients_group_members.html"/*,
+         controller: 'providerPatientsGroupMembersCtrl'*/
+    }).state("provider.patients_groups_members.groupalarmrules", {
+        url: "/alarms",
         templateUrl: "provider/alarms/provider.group.alarm.list.html",
         controller: "providerGroupAlarmList"
-    }).state("provider.patients_group_members.schedules", {
-        url: "/provider.group_schedule_list/:groupName",
+    }).state("provider.patients_groups_members.schedules", {
+        url: "/schedules",
         templateUrl: "provider/alarms/provider.group.schedule.list.html",
         controller: "providerGroupScheduleList"
-    }).state("provider.patients_group_members.alarmbuilder", {
-        url: "/provider.group_alarm_builder/:groupName",
+    }).state("provider.patients_groups_members.alarmbuilder", {
+        url: "/alarmbuilder",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
-    }).state("provider.patients_group_members.schedulebuilder", {
-        url: "/provider.group_schedule_builder/:groupName",
+    }).state("provider.patients_groups_members.schedulebuilder", {
+        url: "/schedulebuilder",
         templateUrl: "provider/alarms/provider.group.schedule.builder.html",
         controller: "providerGroupScheduleBuilderCtrl"
-    }).state("provider.patients_group_members.alarmbuilder_edit", {    // state("provider.group_alarm_builder_edit", {
-        url: "/provider.group_alarm_builder/:alarmName/:groupName",
+    }).state("provider.patients_groups_members.alarmbuilder_edit", {    // state("provider.group_alarm_builder_edit", {
+        url: "/alarmbuilder_edit/:alarmName",
         templateUrl: "provider/alarms/provider.group.alarm.builder.html",
         controller: "providerGroupAlarmBuilderCtrl"
-    }).state("provider.patients_group_members.schedulebuilder_edit", {
-        url: "/provider.group_schedule_builder/:scheduleName/:groupName",
+    }).state("provider.patients_groups_members.schedulebuilder_edit", {
+        url: "/schedulebuilder_edit/:scheduleName",
         templateUrl: "provider/alarms/provider.group.schedule.builder.html",
         controller: "providerGroupScheduleBuilderCtrl"
     }).state("provider.home", {
@@ -96,7 +96,7 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         templateUrl: "provider/home/provider.home.message.html",
         controller: 'providerHomeMessageCtrl as vm'
     }).state("provider.patients_group_members.vitalsigns", {
-        url: "/patient.vitalsigns?token",
+        url: "/patient.vitalsigns",
         templateUrl: "patient/vitalSigns/member.vitalsigns.html",
         controller: 'memberVitalSignsCtrl'
     });

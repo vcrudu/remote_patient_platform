@@ -106,7 +106,7 @@
                     this.setState({ deviceIcon: "images/oximeter-JPD-500F-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png" });
+                    this.setState({ deviceIcon: "images/UA-651BLE-350x240.png" });
                     break;
                 case "Weight":
                     this.setState({ deviceIcon: "images/UC-355PBT-Ci.png" });
@@ -181,7 +181,7 @@
                     this.setState({ deviceIcon: "images/oximeter-JPD-500F-icon.png" });
                     break;
                 case "BloodPressure":
-                    this.setState({ deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png" });
+                    this.setState({ deviceIcon: "images/UA-651BLE-350x240.png" });
                     break;
                 case "Weight":
                     this.setState({ deviceIcon: "images/blood-pressure-monitor-icon.png" });

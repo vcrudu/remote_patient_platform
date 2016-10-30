@@ -9,7 +9,7 @@
         'historyService','$localStorage','$rootScope',
         function ($scope, $log, $state, toastr, authService, historyService,$localStorage, $rootScope) {
             $scope.bodyClass = "desktop-detected pace-done";
-            $scope.gender = $localStorage.user;
+            //$scope.gender = $localStorage.user;
             $scope.histories = [];
 
             if (window.socket && window.socket.connected) {

@@ -38,7 +38,7 @@
 
 
             
-            patientGroupAlarmRepository.getAll(groupIdAlarm,function(groupAlarms, err) {
+            patientGroupAlarmRepository.getAll(groupIdAlarm,function(err, groupAlarms) {
                 if(err) {
 
                     var incidentTicket = logging.getIncidentTicketNumber("nt");

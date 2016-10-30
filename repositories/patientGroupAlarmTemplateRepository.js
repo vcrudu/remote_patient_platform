@@ -55,7 +55,7 @@
                     });
 
    
-                    callback(globalAlarms, null);
+                    callback(null, globalAlarms);
                 }else{
                     callback(null, null);
                 }

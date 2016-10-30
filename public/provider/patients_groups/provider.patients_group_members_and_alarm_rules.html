@@ -1,49 +1,37 @@
-<div id="ribbon">
-	<!--			<span class="ribbon-button-alignment">
-					<span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true" data-reset-msg="Would you like to RESET all your saved widgets and clear LocalStorage?"><i class="fa fa-refresh"></i></span>
-				</span>  -->
-
-    <!-- breadcrumb -->
-    <ol class="breadcrumb"><li>Patients Groups</li><li>{{currentGroupName}}</li></ol>
-    <!-- end breadcrumb -->
-
-</div>
-
-
-
-
-
-
-
-
-<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
-    <header>
-        <span class="widget-icon"> <i class="fa fa-stethoscope"></i> </span>
-
-     <!--   <h2>{{currentGroupName}} group members and Alarm rules</h2>  -->
-
-
-        <ul class="nav nav-tabs pull-right in">
-            <li ui-sref-active="active">
-                <a ui-sref="provider.patients_group_members.members">  <span
-                        class="hidden-mobile hidden-tablet">Patients group members</span></a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="provider.patients_group_members.groupalarmrules">  <span
-                        class="hidden-mobile hidden-tablet">Alarm rules</span> </a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="provider.patients_group_members.schedules">  <span
-                        class="hidden-mobile hidden-tablet">Schedule plan</span> </a>
-            </li>
-
-        </ul>
-
-
-    </header>
-    <div>
-        <div class="widget-body">
-            <ui-view></ui-view>
+<div ng-cloak>
+    <md-toolbar layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <h2><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon>&nbsp;&nbsp;{{currentGroupName}} Group</h2>
         </div>
+    </md-toolbar>
+    <md-content class="md-padding">
+        <md-tabs md-dynamic-height md-border-bottom md-selected="tabIndex">
+            <md-tab ui-sref="provider.patients_groups_members.members">
+                <md-tab-label><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="tab-icon"></md-icon>&nbsp;&nbsp;Members</md-tab-label>
+                <md-tab-body><ui-view></ui-view></md-tab-body>
+
+            </md-tab>
+            <md-tab ui-sref="provider.patients_groups_members.groupalarmrules">
+                <md-tab-label><md-icon md-svg-src="resourses/img/material-icons/ic_add_alert_black_48px.svg" class="tab-icon"></md-icon>&nbsp;&nbsp;Alarm rules</md-tab-label>
+                <md-tab-body><ui-view></ui-view></md-tab-body>
+            </md-tab>
+            <md-tab ui-sref="provider.patients_groups_members.schedules">
+                <md-tab-label><md-icon md-svg-src="resourses/img/material-icons/ic_alarm_add_black_48px.svg" class="tab-icon"></md-icon>&nbsp;&nbsp;Schedule plan</md-tab-label>
+                <md-tab-body><ui-view></ui-view></md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+    <div class="fab-action-button">
+        <md-button class="md-fab md-primary md-ink-ripple" ng-click="addPatient()" ng-if="'provider.patients_groups_members.members' | isState">
+            <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+        </md-button>
+
+        <md-button class="md-fab md-primary md-ink-ripple" ng-click="addAlarmTemplate()" ng-if="'provider.patients_groups_members.groupalarmrules' | isState">
+            <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+        </md-button>
+
+        <md-button class="md-fab md-primary md-ink-ripple" ng-click="addSchedule()" ng-if="'provider.patients_groups_members.schedules' | isState">
+            <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+        </md-button>
     </div>
 </div>

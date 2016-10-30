@@ -2,8 +2,9 @@
  * Created by Victor on 14/07/2015.
  */
 (function(){
-     angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage',
-    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm', 'ui.calendar','mobiscroll-select','mobiscroll-datetime','ngAria', 'ngMaterial', 'ngMessages']);
+     angular.module('app', ['ui.router','ui.bootstrap.datetimepicker','angular-underscore','underscore','ngStorage', 'ngSanitize',
+    'ngAnimate','toastr','angularSpinner','LocalStorageModule','ngRoute','ngDialog','ui.bootstrap','rcWizard','rcForm',
+         'ui.calendar','mobiscroll-select','mobiscroll-datetime','ngAria', 'ngMaterial', 'ngMessages', 'md.data.table']);
 
     angular.module('app').factory('authorisationInterceptor',['$localStorage','$location',function($localStorage, $location){
         return{
