@@ -1,0 +1,40 @@
+<div style="padding-top: 8px">
+    <md-table-container>
+        <table md-table md-progress="promise">
+            <thead md-head>
+                <tr md-row>
+                    <th md-column>Template Name</th>
+                    <th md-column>Description</th>
+                    <th md-column>Actions</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="alarmTemplate in alarmTemplates">
+                    <td md-cell><h3>{{alarmTemplate.alarmName}}</h3></td>
+                    <td md-cell>
+                        <md-list>
+                            <md-list-item ng-repeat="ruleText in alarmTemplate.rulesText" style="min-height: 24px;height: 24px">
+                                <div class="md-list-item-text">
+                                    <div ng-bind-html="ruleText | rawHtml"></div>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </td>
+                    <td md-cell>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_edit_black_48px.svg" class="name" ng-click="handleAlarmTemplateSelected(alarmTemplate)">
+                            <md-tooltip md-direction="bottom">
+                                Edit
+                            </md-tooltip>
+                        </md-icon>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_delete_forever_black_48px.svg" class="name" ng-click="deleteAlarmTemplate(alarmTemplate)">
+                            <md-tooltip md-direction="bottom">
+                                Delete
+                            </md-tooltip>
+                        </md-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</div>
+

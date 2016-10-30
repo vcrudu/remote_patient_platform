@@ -1,0 +1,111 @@
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h3>Alarm Builder</h3>
+    </div>
+</md-toolbar>
+
+<md-content class="md-padding">
+    <form name="alarmBuilderForm" novalidate ng-submit="submitForm(alarmBuilderForm.$valid)">
+        <fieldset>
+            <section>
+                <md-button type="submit" class="md-raised md-primary padding-left-right-16" style="float: right">Save Alarm</md-button>
+            </section>
+
+            <div style="clear: both"></div>
+            <div>
+                <section>
+                    <md-input-container class="md-block" flex-gt-sm md-is-error="formWasSubmitted && alarmBuilderForm.alarmName.$error.required">
+                        <label>Alarm Name</label>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_notifications_none_black_48px.svg" class="name"></md-icon>
+                        <input type="text" name="alarmName" ng-model="alarmTemplateModel.alarmName" required>
+                        <div ng-messages="alarmBuilderForm.alarmName.$error">
+                            <div ng-message="required">
+                                Alarm Name is reuired!
+                            </div>
+                        </div>
+                    </md-input-container>
+                </section>
+                <section>
+                    <md-input-container class="md-block" md-is-error="formWasSubmitted && alarmBuilderForm.alarmDescription.$error.required">
+                        <label>Group Alarm Description</label>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_chat_bubble_outline_black_48px.svg" class="name"></md-icon>
+                        <textarea name="alarmDescription" id="alarmDescription" ng-model="alarmTemplateModel.alarmDescription" rows="5" required></textarea>
+                        <div ng-messages="alarmBuilderForm.alarmDescription.$error">
+                            <div ng-message="required">
+                                Alarm Description is required!
+                            </div>
+                        </div>
+                    </md-input-container>
+                </section>
+            </div>
+
+            <section>
+                <header>
+                    <h2>Available Conditions</h2>
+                </header>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="panel panel-primary" style="">
+                            <div class="panel-heading">Devices Conditions</div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li ng-repeat="template in availableTemplates" ng-click="moveToConditions(template)"><span ng-bind-html="template.phrase | rawHtml"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="panel panel-success" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-errors': ''">
+                            <div class="panel-heading">Alarm conditions</div>
+                            <div class="panel-body">
+                                <ul class="selected-conditions">
+                                    <li ng-repeat="condition in conditions"><div id="{{condition.id}}" bind-html-compile="condition.parsedCondition"></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="color: rgb(221,44,0)" class="md-input-message-animation" ng-show="alarmTemplateModel.conditionsInvalid" ng-class="alarmTemplateModel.conditionsInvalid ? 'has-error-message': ''">Conditions are invalid!</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <md-button type="submit" class="md-raised md-primary padding-left-right-16" style="float: right">Save Alarm</md-button>
+            </section>
+
+        </fieldset>
+    </form>
+
+    <script type="text/ng-template" id="valueModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Set a value</h3>
+        </div>
+        <div class="modal-body">
+            <md-input-container class="md-block" style="margin-bottom: 0" flex-gt-sm md-is-error="formWasSubmitted && alarmBuilderForm.alarmName.$error.required">
+                <label>{{label}}</label>
+                <input type="text" name="value" id="value" ng-model="model.value">
+            </md-input-container>
+        </div>
+        <div class="modal-footer">
+            <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+            <md-button class="md-raised md-primary" ng-click="ok()">OK</md-button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="operatorModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Set an operator</h3>
+        </div>
+        <div class="modal-body">
+            <md-input-container  class="md-block">
+                <label>Select Operator</label>
+                <md-select name="selectedOperator" id="selectedOperator" ng-model="selectedOperator">
+                    <md-option ng-repeat="t in operators" value="{{t.id}}">{{t.value}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="modal-footer">
+            <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+            <md-button class="md-raised md-primary" ng-click="ok()">OK</md-button>
+        </div>
+    </script>
+</md-content>

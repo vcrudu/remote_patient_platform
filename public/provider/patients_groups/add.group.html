@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title"><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon>&nbsp;&nbsp;Add new group</h4>
+</div>
+<div class="modal-body hidden-overflow ">
+    <form name="groupNameForm" novalidate class="smart-form" id="scheduleForm">
+        <section>
+            <br />
+            <md-input-container class="md-block" flex-gt-sm md-is-error="submitted && (groupNameForm.groupName.$error.required || groupNameForm.groupName.$error.checkExistsGroupName)">
+                <label>Group Name</label>
+                <input type="text" name="groupName" id="groupName" ng-model="groupName" check-exists-group-name required>
+                <div ng-messages="groupNameForm.groupName.$error">
+                    <div ng-message="required">
+                        Group Name is required!
+                    </div>
+                    <div ng-message="checkExistsGroupName">
+                        Group Name already exists!
+                    </div>
+                </div>
+            </md-input-container>
+        </section>
+    </form>
+</div>
+<div class="modal-footer">
+    <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+    <md-button class="md-raised md-primary" ng-click="apply()">Apply</md-button>
+</div>

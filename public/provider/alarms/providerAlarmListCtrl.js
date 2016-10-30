@@ -5,6 +5,9 @@
 (function() {
     angular.module('app').controller('providerAlarmListCtrl', ["$scope", "$http", "_", "appSettings", "$localStorage", "$state", "alarmBuilderFactoryService", "toastr",
         function ($scope, $http, _, appSettings, $localStorage, $state, alarmBuilderFactoryService, toastr) {
+
+
+
             $scope.alarmTemplates = [];
             $scope.availableTemplates = [];
 
@@ -27,14 +30,14 @@
 
                         var index = -1;
                         for(var i=0; i<$scope.alarmTemplates.length;i++) {
-                            if (template.alarmName == $scope.alarmTemplates[0].alarmName) {
+                            if (template.alarmName == $scope.alarmTemplates[i].alarmName) { // update by Lipcan 29.09.2016 was $scope.alarmTemplates[0].alarmName
                                 index = i;
                                 break;
                             }
                         }
 
                         if (index > -1) {
-                            alert(index);
+                            // alert(index);
                             $scope.alarmTemplates.splice(index, 1);
                         }
                     } else {
@@ -71,7 +74,7 @@
 
                                         if (template != null) {
                                             var text = "<b><u>" + (rule.prefix ? "where" : "where not") + "</u></b> " + template.phrase;
-                                            
+
                                             var args = rule.arguments;
 
                                             switch (template.name) {
@@ -105,7 +108,7 @@
                                                     text = text.replace("<u><b>value</b></u>", "<u><b>"+ textValue +"</b></u>");
                                                     break;
                                             }
-                                            
+
                                             alarmTemplate.rulesText.push(text);
                                         }
                                     });

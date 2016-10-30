@@ -21,7 +21,7 @@
     module.exports = {
         getAll: function(callback) {
             var scanParams = {
-                TableName: TABLE_NAME,
+                TableName: TABLE_NAME
             };
 
             var dynamodb = getDb();
@@ -71,10 +71,12 @@
             });
         },
 
+      
+
         new : function(globalAlarm, callback) {
 
             var dynamodb = getDb();
-
+          
             var params = {
                 Item: alarmTemplateDbMapper.mapGlobalAlarmToDbEntity(globalAlarm),
                 TableName: TABLE_NAME,
@@ -82,7 +84,7 @@
                 ReturnItemCollectionMetrics: 'SIZE',
                 ReturnValues: 'ALL_OLD'
             };
-
+         
             dynamodb.putItem(params, function(err, data) {
                 if(err){
                     loggerProvider.getLogger().error(err);

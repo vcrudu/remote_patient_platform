@@ -1,0 +1,19 @@
+<md-toolbar layout="row" class="md-hue-3">
+    <div class="md-toolbar-tools">
+        <h2><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon>&nbsp;&nbsp;Patients Groups</h2>
+    </div>
+</md-toolbar>
+
+<md-list-item class="md-2-line" ng-repeat="group in patientsGroups" ng-click="goToGroupDetails(group);">
+    <div class="md-list-item-text">
+        <h3>{{group.groupName}}</h3>
+    </div>
+    <md-divider></md-divider>
+</md-list-item>
+<div style="clear: both"></div>
+
+<div class="fab-action-button">
+    <md-button class="md-fab md-primary md-ink-ripple" ng-click="addGroup()">
+        <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+    </md-button>
+</div>

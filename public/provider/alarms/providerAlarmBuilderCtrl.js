@@ -57,6 +57,7 @@
                     if (res.success) {
                         $scope.alarmTemplateModel.alarmNameDisabled = true;
                         toastr.success('Alarm Template saved!','Success');
+                        $state.go("provider.alarm_list");
                     } else {
                     }
                 }).error(function (err) {
@@ -155,20 +156,29 @@
                             return alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
                         },
                         selectedOperator: function () {
-                            return conditionObj.operator;
+                            return conditionObj.operator.id;
                         }
                     }
                 });
 
                 modal.result.then(function (data) {
+                    var operators = alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
+
+                    var operator = undefined;
+                    for(var i=0;i<operators.length;i++) {
+                        if (operators[i].id === data) {
+                            operator = operators[i];
+                        }
+                    }
+
                     var element = $("#" + conditionObj.id);
                     if (element && element.length > 0) {
                         var minValueSpan = element.find(".Operator");
                         if (minValueSpan && minValueSpan.length > 0) {
-                            minValueSpan.attr("data-value", data.id)
-                            minValueSpan.text(data.value);
+                            minValueSpan.attr("data-value", operator.id)
+                            minValueSpan.text(operator.value);
 
-                            conditionObj.operator = data;
+                            conditionObj.operator = operator;
                         }
                     }
                 }, function (arg) {
@@ -211,12 +221,16 @@
                             url: appSettings.getServerUrl() + '/v1/api/globalalarms',
                             headers: {
                                 'x-access-token': $localStorage.user.token
-                            },
+                            }
                         };
 
                         $http(req).success(function (res) {
                             if (res.success) {
-                                var foundAlarm = _.find(res.items, function (globalAlarm) { return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
+                                var foundAlarm = _.find(res.items, function (globalAlarm) {
+                                //    console.log("GLOBALALRM IS !!!!!!!!!!!!!!!!     "+globalAlarm.alarmName);
+                                 //   console.log("GLOBAL ALARM DESCRIPTIONO !!!!!!!!    "+globalAlarm.alarmDescription);
+
+                                    return globalAlarm.alarmName.toLowerCase() === $state.params.alarmName.toLowerCase() });
 
                                 if (foundAlarm) {
                                     $scope.alarmTemplateModel.alarmName = foundAlarm.alarmName;
@@ -231,7 +245,7 @@
                                                 id: alarmBuilderFactoryService.guid(),
                                                 prefix: rule.prefix,
                                                 name: template.name
-                                            }
+                                            };
 
                                             var booleanCondition = rule.prefix ? alarmBuilderFactoryService.booleanConditions[0].value : alarmBuilderFactoryService.booleanConditions[1].value;
                                             var parsedCondition = template.template.replace("$BooleanPrefix$", "<span data-param=\"" + booleanCondition + "\" class=\"BooleanPrefix\" ng-click=\"changePrefix(this)\">" + booleanCondition + "</span>");
@@ -249,8 +263,12 @@
                                                     condition.operator = operator;
                                                     condition.value1 = alarmBuilderFactoryService.getConditionValueBasedOnTemplate(rule.arguments[2].textValue, template);
 
-                                                    var value = condition.value1.toString().replace("'", "");
-                                                    value = value.replace("'", "");
+
+                                                 
+                                                 // commented by Lipcan 29.09.2016
+                                                  //  var value = condition.value1.replace("'", "");
+                                                 //   value = value.replace("'", "");
+                                                    var value = condition.value1; // added by Lipcan 29.09.2016
 
                                                     condition.value2 = undefined;
                                                     parsedCondition = parsedCondition.replace("$Operator$", "<span data-param=\"" + operator.value + "\" class=\"Operator\" ng-click=\"setOperator(this)\">" + operator.value + "</span>");

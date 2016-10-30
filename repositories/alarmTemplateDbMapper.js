@@ -72,12 +72,27 @@
     
     module.exports  = {
         mapGlobalAlarmToDbEntity : function(globalAlarm) {
+         
+
             var dbEntity = {
                 alarmName: {S: globalAlarm.alarmName},
                 alarmDescription: {S: globalAlarm.alarmDescription},
             };
 
             var rules = buildArray(globalAlarm.rules, mapRuleToDbEntity);
+
+            dbEntity.rules = {L:rules};
+
+            return dbEntity;
+        },
+        mapGroupAlarmToDbEntity : function(byGroupId, groupAlarm) {
+            var dbEntity = {
+                groupId: {S: byGroupId},
+                alarmName: {S: groupAlarm.alarmName},
+                alarmDescription: {S: groupAlarm.alarmDescription},
+            };
+
+            var rules = buildArray(groupAlarm.rules, mapRuleToDbEntity);
 
             dbEntity.rules = {L:rules};
 
@@ -93,6 +108,40 @@
             if (globalAlarm.rules && globalAlarm.rules.L && globalAlarm.rules.L.length > 0) {
                 for(var i=0;i<globalAlarm.rules.L.length; i++) {
                     var ruleMap = globalAlarm.rules.L[i].M;
+
+                    if (ruleMap) {
+                        var ruleObj = {
+                            ruleTemplate: ruleMap.ruleTemplate.S,
+                            prefix: ruleMap.prefix.BOOL,
+                            arguments: [],
+                            conditions: []
+                        }
+
+                        if (ruleMap.arguments && ruleMap.arguments.L && ruleMap.arguments.L.length > 0) {
+                            ruleObj.arguments = buildArray(ruleMap.arguments.L, mapArgumentFromDbEntity)
+                        }
+
+                        if (ruleMap.conditions && ruleMap.conditions.L && ruleMap.conditions.L.length > 0) {
+                            ruleObj.conditions = buildArray(ruleMap.conditions.L, mapConditionFromDbEntity)
+                        }
+
+                        appEntity.rules.push(ruleObj);
+                    }
+                }
+            }
+
+            return appEntity;
+        },
+        mapGroupAlarmFromDbEntity : function(groupAlarm) {
+            var appEntity = {
+                alarmName: groupAlarm.alarmName.S,
+                alarmDescription: groupAlarm.alarmDescription ? groupAlarm.alarmDescription.S : "",
+                rules: []
+            }
+
+            if (groupAlarm.rules && groupAlarm.rules.L && groupAlarm.rules.L.length > 0) {
+                for(var i=0;i<groupAlarm.rules.L.length; i++) {
+                    var ruleMap = groupAlarm.rules.L[i].M;
 
                     if (ruleMap) {
                         var ruleObj = {

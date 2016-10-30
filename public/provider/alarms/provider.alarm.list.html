@@ -1,39 +1,53 @@
-<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
-    <header>
-        <span class="widget-icon"> <i class="fa fa-user-md"></i> </span>
-        <h2>Available Alarm Templates</h2>
-    </header>
-    <div>
-        <div class="widget-body">
-            <section>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Template Name</th>
-                        <th>Description</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="alarmTemplate in alarmTemplates">
-                        <td><a href="javascript:void(0)" ng-click="handleAlarmTemplateSelected(alarmTemplate)">{{alarmTemplate.alarmName}}</a></td>
-                        <td>
-                            <ul>
-                                <li ng-repeat="ruleText in alarmTemplate.rulesText">
-                                    <div ng-bind-html="ruleText | rawHtml"></div>
-                                </li>
-                            </ul>
-                        </td>
-                        <td style="vertical-align:middle;"><div style="text-align:center;"><button type="button" class="btn btn-warning" ng-click="deleteAlarmTemplate(alarmTemplate)">Delete</button></div></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
-            <section>
-                <div class="row">
-                    <div class="col-xs-12"><button ui-sref="provider.alarm_builder" type="button" class="btn btn-primary push-right" style="float: right">New</button></div>
-                </div>
-            </section>
+<div ng-cloak>
+    <md-toolbar layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <h2><md-icon md-svg-src="resourses/img/material-icons/ic_notifications_none_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;{{currentGroupName}} Alarm Templates</h2>
         </div>
-    </div>
+    </md-toolbar>
+
+    <md-content class="md-padding">
+        <md-table-container>
+            <table md-table md-progress="promise">
+                <thead md-head>
+                <tr md-row>
+                    <th md-column>Template Name</th>
+                    <th md-column>Description</th>
+                    <th md-column>Actions</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="alarmTemplate in alarmTemplates">
+                    <td md-cell><h3>{{alarmTemplate.alarmName}}</h3></td>
+                    <td md-cell>
+                        <md-list>
+                            <md-list-item ng-repeat="ruleText in alarmTemplate.rulesText" style="min-height: 24px;height: 24px">
+                                <div class="md-list-item-text">
+                                    <div ng-bind-html="ruleText | rawHtml"></div>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </td>
+                    <td md-cell>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_edit_black_48px.svg" class="name" ng-click="handleAlarmTemplateSelected(alarmTemplate)">
+                            <md-tooltip md-direction="bottom">
+                                Edit
+                            </md-tooltip>
+                        </md-icon>
+                        <md-icon md-svg-src="resourses/img/material-icons/ic_delete_forever_black_48px.svg" class="name" ng-click="deleteAlarmTemplate(alarmTemplate)">
+                            <md-tooltip md-direction="bottom">
+                                Delete
+                            </md-tooltip>
+                        </md-icon>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-content>
+</div>
+
+<div class="fab-action-button">
+    <md-button class="md-fab md-primary md-ink-ripple pull-right" ui-sref="provider.alarm_builder">
+        <md-icon md-svg-src="resourses/img/material-icons/ic_add_black_48px.svg"></md-icon>
+    </md-button>
 </div>
