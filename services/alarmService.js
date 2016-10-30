@@ -4,7 +4,7 @@
 
 (function(){
     var eventsRepository = require('../repositories').Events;
-    var globalAlarmsRepository = require('../repositories').GlobalAlarmTemplate;
+    var patientGroupAlarmTemplateRepository = require('../repositories').PatientGroupAlarmTemplateRepository;
     var userDetailsRepository = require('../repositories').UsersDetails;
     var _ = require('underscore');
     const util = require('util');
@@ -41,7 +41,7 @@
                             var gender = user.gender?user.gender:user.sex;
                             var weight = user.weight;
 
-                            globalAlarmsRepository.getAll(function(g_err, alarmsResult) {
+                            patientGroupAlarmTemplateRepository.getAll(function(g_err, alarmsResult) {
                                 if (g_err) {
                                     return callback(g_err, null);
                                 }

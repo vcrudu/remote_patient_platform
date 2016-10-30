@@ -131,28 +131,37 @@ var util = require('util');
                 createdBy: decodedAuthorisationToken.providerId
             };
 
-            patientsGroupMemberRepository.save(groupMember, function (err, data) {
-                if (err) {
-                    res.status(500).json({
-                        success: false
+            patientsGroupMemberRepository.getOne(groupMember, function (err, member) {
+                if (member) {
+                    res.status(200).json({
+                        success: true
                     });
-                } else {
-
-                    snsClient.SendOnInvitationToGroupAccepted(decodedAuthorisationToken.email,
-                        decodedAuthorisationToken.providerId,
-                        decodedAuthorisationToken.groupName,
-                        function (err) {
-                            if (err) {
-                                res.status(500).json({
-                                    success: false
-                                });
-                            } else {
-                                res.status(200).json({
-                                    success: true
-                                });
-                            }
-                        });
+                    return;
                 }
+
+                patientsGroupMemberRepository.save(groupMember, function (err, data) {
+                    if (err) {
+                        res.status(500).json({
+                            success: false
+                        });
+                    } else {
+
+                        snsClient.SendOnInvitationToGroupAccepted(decodedAuthorisationToken.email,
+                            decodedAuthorisationToken.providerId,
+                            decodedAuthorisationToken.groupName,
+                            function (err) {
+                                if (err) {
+                                    res.status(500).json({
+                                        success: false
+                                    });
+                                } else {
+                                    res.status(200).json({
+                                        success: true
+                                    });
+                                }
+                            });
+                    }
+                });
             });
         });
 

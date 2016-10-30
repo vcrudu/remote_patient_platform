@@ -14,6 +14,7 @@ var globalAlarmTemplateRepository = require('./globalAlarmTemplateRepository');
 var patientGroupAlarmTemplateRepository = require('./patientGroupAlarmTemplateRepository');
 var schedulePlanRepository = require('./schedulePlanRepository');
 var patientSymptomsRepository = require('./patientSymptomsRepository');
+var patientGroupAlarmTemplateRepository = require('./patientGroupAlarmTemplateRepository');
 
 module.exports ={
     Users:usersRepository,
@@ -28,5 +29,6 @@ module.exports ={
     GlobalAlarmTemplate:globalAlarmTemplateRepository,
     PatientGroupAlarmTemplateRepository: patientGroupAlarmTemplateRepository,
     PatientSymptomsRepository:patientSymptomsRepository,
-    SchedulePlanRepository: schedulePlanRepository
+    SchedulePlanRepository: schedulePlanRepository,
+    PatientGroupAlarmTemplateRepository:patientGroupAlarmTemplateRepository
 };
