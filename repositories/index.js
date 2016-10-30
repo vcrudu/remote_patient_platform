@@ -14,21 +14,21 @@ var globalAlarmTemplateRepository = require('./globalAlarmTemplateRepository');
 var patientGroupAlarmTemplateRepository = require('./patientGroupAlarmTemplateRepository');
 var schedulePlanRepository = require('./schedulePlanRepository');
 var patientSymptomsRepository = require('./patientSymptomsRepository');
-var patientGroupAlarmTemplateRepository = require('./patientGroupAlarmTemplateRepository');
+var patientsGroupMemberRepository = require('./patientsGroupMemberRepository');
 
-module.exports ={
-    Users:usersRepository,
-    UsersDetails:usersDetailsRepository,
-    Devices:devicesRepository,
-    Orders:ordersRepository,
-    Events:eventsRepository,
-    Providers:providersRepository,
-    Slots:slotsRepository,
-    Notifications:notificationsRepository,
-    SnsEndpoints:snsEndpointsRepository,
-    GlobalAlarmTemplate:globalAlarmTemplateRepository,
+module.exports = {
+    Users: usersRepository,
+    UsersDetails: usersDetailsRepository,
+    Devices: devicesRepository,
+    Orders: ordersRepository,
+    Events: eventsRepository,
+    Providers: providersRepository,
+    Slots: slotsRepository,
+    Notifications: notificationsRepository,
+    SnsEndpoints: snsEndpointsRepository,
+    GlobalAlarmTemplate: globalAlarmTemplateRepository,
     PatientGroupAlarmTemplateRepository: patientGroupAlarmTemplateRepository,
-    PatientSymptomsRepository:patientSymptomsRepository,
+    PatientSymptomsRepository: patientSymptomsRepository,
     SchedulePlanRepository: schedulePlanRepository,
-    PatientGroupAlarmTemplateRepository:patientGroupAlarmTemplateRepository
+    PatientsGroupMemberRepository: patientsGroupMemberRepository
 };
