@@ -52,9 +52,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="dtp in dayTimePoints">
+                                        <tr ng-click ="clickOnTr(dtp)" ng-repeat="dtp in dayTimePoints" ng-class="{selectedTime: dtp.id === idSelectedTime}">
                                             <td>{{dtp.time}}</td>
-                                            <td>{{dtp.reminders}}</td>
+                                            <td>{{dtp.reminders.join()}}</td>
                                             <td style="vertical-align:middle;"><div style="text-align:center;"><button type="button" class="btn btn-warning" ng-click="deleteScheduleTime(dtp)">Delete</button></div></td>
                                             <!--        <td>
                                                           <ul>

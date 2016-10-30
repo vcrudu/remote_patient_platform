@@ -8,6 +8,8 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
 
          $scope.currentGroupName = $stateParams.groupName;
 
+
+
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
 
@@ -19,6 +21,46 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$scope', 
 
             },
             function(err) {});
+
+       $scope.openPatient = function() {
+
+
+
+        /*           if ($stateParams.token) {
+                       var req = {
+                           method: 'POST',
+                           url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                           headers: {
+                               'x-access-token': $stateParams.token
+                           }
+                       };
+                       return $http(req).then(function (res) {
+                           if (!res.error) {
+                               $localStorage.user = res.data.data;
+                               if (window.socket) {
+                                   window.socket.connect();
+                               } else {
+                                   window.socket = window.io.connect(appSettings.getServerUrl());
+                                   window.socket.on('connect', function () {
+                                       window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                       $rootScope.$broadcast('socket.connect', 'connected');
+                                   });
+
+                                   window.socket.on('disconnect', function () {
+                                       $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                   });
+                               }
+                           }
+                       });
+                   } else {
+                       return null;
+                   }
+
+
+           $state.go("provider.patients_group_members.vitalsigns");*/
+       };
+
+
 
         $scope.addPatient = function () {
 

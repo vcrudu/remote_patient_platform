@@ -16,9 +16,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="groupSchedule in groupSchedules">
+                    <tr  ng-repeat="groupSchedule in groupSchedules">
                         <td><a href="javascript:void(0)" ng-click="handleScheduleTypeSelected(groupSchedule)">{{groupSchedule.scheduleName}}</a></td>
-                        <td>{{groupSchedule.dayTimePoints}}</td>
+                        <td>{{groupSchedule.dayTimePoints.join()}}</td>
               <!--        <td>
                             <ul>
                                 <li ng-repeat="ruleText in alarmTemplate.rulesText">

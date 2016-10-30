@@ -95,5 +95,9 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.home.message",
         templateUrl: "provider/home/provider.home.message.html",
         controller: 'providerHomeMessageCtrl as vm'
+    }).state("provider.patients_group_members.vitalsigns", {
+        url: "/patient.vitalsigns?token",
+        templateUrl: "patient/vitalSigns/member.vitalsigns.html",
+        controller: 'memberVitalSignsCtrl'
     });
 }]);

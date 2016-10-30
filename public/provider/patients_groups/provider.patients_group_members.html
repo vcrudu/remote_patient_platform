@@ -68,10 +68,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr data-ng-repeat="patient in patientsGroupsMembers | filter:searchKeywords" ng-click="openPatient(patient)" class="hand">
+                                    <tr data-ng-repeat="patient in patientsGroupsMembers | filter:searchKeywords |  orderBy: 'patientId'"  ng-click="openPatient(patient)" class="hand">
                                         <td>
                                             <a href="" ng-click="openPatient(patient)">
-                                                {{patient.patientId}}
+                                                {{patient.patientId }}
                                             </a>
                                         </td>
 

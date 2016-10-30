@@ -22,8 +22,8 @@
                 $state.go("provider.patients_group_members.schedulebuilder_edit", {scheduleName: template.scheduleName, groupName: $stateParams.groupName });
             };
 
+
            
-     
      
       //     
             // 
