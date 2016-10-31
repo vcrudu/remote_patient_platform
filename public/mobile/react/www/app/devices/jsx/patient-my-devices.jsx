@@ -146,16 +146,12 @@
                     this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"});
                     break;
                 case "BloodPressure":
-<<<<<<< HEAD
                     if (this.props.model === "UA-767PBT-Ci") {
                         this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"});
                     }
                     else {
                         this.setState({deviceIcon: "images/UA-651BLE-350x240.png"});
                     }
-=======
-                    this.setState({deviceIcon: "images/UA-651BLE-350x240.png"})
->>>>>>> origin/PatientsGroup
                     break;
                 case "Weight":
                     this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"});
