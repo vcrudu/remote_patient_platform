@@ -149,6 +149,6 @@
         }
     });
 
-    ReactDOM.render(React.createElement(BLOOD_PRESSURE, { carouselWizard: "#wizard", deviceModelType: "BloodPressure" }), document.getElementById("blood-pressure"));
+    ReactDOM.render(React.createElement(BLOOD_PRESSURE, { carouselWizard: "#wizard", deviceModelType: "BloodPressure-New" }), document.getElementById("blood-pressure"));
     ReactDOM.render(React.createElement(BLOOD_PRESSURE_PROGRESS, null), document.getElementById("blood-pressure-pair-progress"));
 })();
