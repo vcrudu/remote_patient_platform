@@ -128,7 +128,7 @@
                         }
                     });
                 });
-
+    
                 //Todo-here cancel event from caller should be different event
                 socket.on('cancelByRecipient', function (data) {
                     var namespace = io.sockets;
