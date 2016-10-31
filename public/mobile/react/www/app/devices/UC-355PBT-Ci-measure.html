@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>UC-355PBT-Ci</title>
+    <title>UA-767PBT-Ci</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
     <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
     <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
     <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
@@ -16,25 +17,58 @@
 
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="styles/wizard.css">
-    <link rel="stylesheet" href="styles/UC-355PBT-Ci.css">
+    <link rel="stylesheet" href="styles/bloodpressure.css">
 </head>
 <body>
 
 <!-- Full Page Image Background Carousel Header -->
 <header id="measure-wizard" class="carousel slide">
+    <div id="blood-pressure-measure-progress"></div>
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
         <div class="item active">
             <!-- Set the first background image using inline CSS below. -->
-            <div class="fill" style="background-image:url('images/UC-355PBT-Ci%20Slide%20One.png');"></div>
+            <div class="carousel-caption">
+                <h3 class="primary-text">Step 1</h3>
+                <h5 class="primary-text">Wrap the cuff smoothly and snugly around the upper part of your arm then press power button and wait while your Blood Pressure is taking measurements.</h5>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-measure-01.png" alt="Slide 1" class="img-responsive"/>
+            </div>
         </div>
         <div class="item">
-            <!-- Set the second background image using inline CSS below. -->
-            <div class="fill" style="background-image:url('images/UC-355PBT-Ci%20Slide%20Two.png');"></div>
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption">
+                <h3 class="primary-text">Step 2</h3>
+                <h5 class="primary-text">Confirm your measurements, please.</h5>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-measure-02.png" alt="Slide 2" class="img-responsive"/>
+            </div>
+        </div>
+        <div class="item">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption">
+                <h3 class="primary-text">Step 3</h3>
+                <h5 class="primary-text">Your Blood Pressure measurements have been sent to the cloud. Thank you!</h5>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-measure-03.png" alt="Slide 3" class="img-responsive"/>
+            </div>
+        </div>
+        <div class="item">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption">
+                <h3 class="primary-text">Step 4</h3>
+                <h5 class="primary-text">Your Oximeter measurements have been sent to the cloud. Thank you!</h5>
+            </div>
+            <div class="fill">
+                <img src="images/oxymeter-measure-04.png" alt="Slide 1" class="img-responsive"/>
+            </div>
         </div>
     </div>
 
-    <div id="uc-355pbt-ci-measure" class="container">
+    <div id="blood-pressure-measure">
     </div>
 </header>
 
@@ -49,6 +83,7 @@
 <script type="text/javascript" src="../lib/react/react.js"></script>
 <script type="text/javascript" src="../lib/react/react-dom.js"></script>
 <script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
 
 <script type="text/javascript" src="js/UC-355PBT-Ci-measure.js"></script>
 

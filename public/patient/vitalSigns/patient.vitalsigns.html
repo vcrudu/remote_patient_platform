@@ -22,11 +22,50 @@
             </md-card-title>
         </md-card>
     </md-content>
-    <!--<md-toolbar layout="row" class="md-hue-3">
+    <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
             <h2><md-icon md-svg-src="resourses/img/material-icons/ic_equalizer_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Latest Vital Signs</h2>
         </div>
-    </md-toolbar>-->
+    </md-toolbar>
+    <div>
+        <div class="col-lg-3 col-md-3 col-sm-6 no-padding" ng-show="latestHistories.bloodPressure">
+            <div class="measure">
+                <center style="margin-top: 16px">
+                    <img src="resourses/img/vital-sgns/sick_15-512.png" width="48" class="img-responsive">
+                </center>
+                <H2>Blood Pressure</H2>
+                <div style="text-align: center">{{latestHistories.bloodPressure.FirstValue}} / {{latestHistories.bloodPressure.SecondValue}} mmHg</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 no-padding" ng-show="latestHistories.heartRate">
+            <div class="measure">
+                <center style="margin-top: 16px">
+                    <img src="resourses/img/vital-sgns/thin-0813_heart_vitals_pulse_rate_health-512.png" width="48" class="img-responsive">
+                </center>
+                <H2>Heart Rate</H2>
+                <div>{{latestHistories.heartRate.FirstValue}} bmp</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 no-padding" ng-show="latestHistories.bloodOxygen">
+            <div class="measure">
+                <center style="margin-top: 16px">
+                    <img src="resourses/img/vital-sgns/118-512.png" width="48" class="img-responsive">
+                </center>
+                <H2>Blood Oxygen</H2>
+                <div>{{latestHistories.bloodOxygen.FirstValue}} °C%</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 no-padding" ng-show="latestHistories.temperature">
+            <div class="measure">
+                <center style="margin-top: 16px">
+                    <img src="resourses/img/vital-sgns/thermometer-png-icon-19.png" width="48" class="img-responsive">
+                </center>
+                <H2>Temperature</H2>
+                <div>{{latestHistories.temperature.FirstValue}} °C</div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
     <md-toolbar layout="row" class="md-hue-3">
         <div class="md-toolbar-tools">
             <h2><md-icon md-svg-src="resourses/img/material-icons/ic_equalizer_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Vital Signs History</h2>
