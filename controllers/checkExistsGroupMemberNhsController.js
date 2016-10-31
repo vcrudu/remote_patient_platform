@@ -12,9 +12,9 @@
                     success: false
                 });
             }
-          
+
             usersDetailsRepository.getUserEmailDetailsByNhsNumber(req.query.nhsNumber, function (err, user) {
-               
+
                 if (err) {
 
                     res.json({
@@ -29,9 +29,8 @@
                         byGroupIdAndPatientId.groupName = req.query.groupName;
                         byGroupIdAndPatientId.patientId = user[0].email;
 
-
-                        patientsGroupMemberRepository.getOne(byGroupIdAndPatientId, function (err, data) {
-                            if (err) {
+                        patientsGroupMemberRepository.getByPatientId(byGroupIdAndPatientId.patientId, function (err, members) {
+                            if (err || members.length === 0) {
                                 res.json({
                                     success: false,
                                     data: user
@@ -44,9 +43,7 @@
 
                                 });
                             }
-
                         });
-
                     } else {
                         res.json({
                             success: false,

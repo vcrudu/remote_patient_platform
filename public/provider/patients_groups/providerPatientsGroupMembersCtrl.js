@@ -58,7 +58,7 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
                                 }
                             };
 
-                            $http.post("/v1/api/patient-member-group-invitation",post_data, config).then(function () {
+                            $http.post("/v1/api//patientsgroupmember/invitation",post_data, config).then(function () {
                                 $modalInstance.dismiss();
                                 toastr.success('Invitation was sent successfully !');
                             }, function () {

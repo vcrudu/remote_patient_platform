@@ -22,6 +22,10 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/message",
         templateUrl: "patient/home/patient.home.message.html",
         controller: 'patientHomeMessageCtrl as vm'
+    }).state("patient.home.approve", {
+        url: "/approve",
+        templateUrl: "patient/home/group.member.approve.html",
+        controller: 'groupMemberApproveCtrl as vm'
     }).state("patient.vitalsigns", {
         url: "/patient.vitalsigns?token",
         templateUrl: "patient/vitalSigns/patient.vitalsigns.html",
@@ -138,32 +142,45 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
             url: "/patientsgroupmember",
             templateUrl: "patient/appointments/patient.call.html",
             controller: 'patientsGroupsMembers'
-            //resolve:{
-            //    providers:function($http,$localStorage,appSettings){
-            //
-            //        var req = {
-            //            method: 'GET',
-            //            url: appSettings.serverUrl + '/v1/api/providers/',
-            //            headers: {
-            //                'Access-Control-Request-Origin': 'http://localhost:8081',
-            //                'x-access-token': $localStorage.user.token
-            //            }
-            //        };
-            //
-            //        return $http(req).then(function(res){
-            //            return res.data.result;
-            //        });
-            //    }
-            //}
-        })/*.state("patient.appointments", {
-            url: "/patient.appointments",
-            templateUrl: "patient/appointments/patient.appointments.html",
-            controller: 'patientAppointmentsCtrl'
-        }).state("patient.appointments.book", {
-            url: "/patient.appointments.book",
-            templateUrl: "patient/appointments/book.html",
-            controller: 'patientAppointmentsBookCtrl'
-        })*/.state("patient.appointments", {
+        })
+        .state("patient.approve-group-invitation", {
+            url: "/approve-group-invitation?authorisation",
+            templateUrl: "outer-links/group.member.approve.html",
+            controller: "groupMemberApproveCtrl as vm",
+            resolve: {
+                promiseObj2: function ($http, $stateParams, $localStorage, appSettings, $rootScope) {
+                    if ($stateParams.authorisation) {
+                        var req = {
+                            method: 'POST',
+                            url: appSettings.getServerUrl() + '/v1/api/token_signin',
+                            headers: {
+                                'x-access-token': $stateParams.authorisation
+                            }
+                        };
+                        return $http(req).then(function (res) {
+                            if (!res.error) {
+                                $localStorage.user = res.data.data;
+                                if (window.socket) {
+                                    window.socket.connect();
+                                } else {
+                                    window.socket = window.io.connect(appSettings.getServerUrl());
+                                    window.socket.on('connect', function () {
+                                        window.socket.emit('authenticate', {token: $localStorage.user.token});
+                                        $rootScope.$broadcast('socket.connect', 'connected');
+                                    });
+
+                                    window.socket.on('disconnect', function () {
+                                        $rootScope.$broadcast('socket.disconnect', 'disconnected');
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        return null;
+                    }
+                }
+            }
+        }).state("patient.appointments", {
         url: "/patient.appointments?token",
         templateUrl: "patient/appointments/patient.appointments.view.html",
         controller: 'patientAppointmentsViewCtrl',

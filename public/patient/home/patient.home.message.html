@@ -20,8 +20,7 @@
         {{vm.message.greetings}}
         </p>
         <br>
-        <p style="text-transform: initial; margin-right: 8px;margin-left: 8px" class="capitalizeFirstLetter">
-            {{vm.message.content}}
+        <p ng-bind-html="vm.message.content" style="text-transform: initial; margin-right: 8px;margin-left: 8px" class="capitalizeFirstLetter">
         </p>
         <br><span style="font-weight: 400">Thanks,</span><br>
         <span style="font-weight: 500">Trichrome Healthcare</span>

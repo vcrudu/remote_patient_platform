@@ -111,13 +111,7 @@ var snsClient = require('../snsClient');
                             res.status(200).json({
                                 success: true
                             });
-                            notification.sendEvent(req.decoded.email, 'newMeasurement', eventToSave.getMeasurement());
-                            snsClient.sendOnMeasurementReceivedEvent(req.decoded.email, eventToSave.getMeasurement(),function (err) {
-                                if (err) {
-                                    logging.getLogger().error("The system failed to send OnMeasurementReceivedEvent for the event: "
-                                        + eventToSave.getMeasurement().measurementType + " for the patient " + req.decoded.email);
-                                }
-                            });
+
                             alarmsService.getSatisfiedAlarms(eventToSave, function (err, alarms) {
                                 var satisfiedAlarms = alarms;
 
@@ -129,6 +123,14 @@ var snsClient = require('../snsClient');
                                                     + globalAlarm.alarmName + " for the patient " + req.decoded.email);
                                             }
                                         });
+                                    });
+                                } else {
+                                    notification.sendEvent(req.decoded.email, 'newMeasurement', eventToSave.getMeasurement());
+                                    snsClient.sendOnMeasurementReceivedEvent(req.decoded.email, eventToSave.getMeasurement(), function (err) {
+                                        if (err) {
+                                            logging.getLogger().error("The system failed to send OnMeasurementReceivedEvent for the event: "
+                                                + eventToSave.getMeasurement().measurementType + " for the patient " + req.decoded.email);
+                                        }
                                     });
                                 }
                             });

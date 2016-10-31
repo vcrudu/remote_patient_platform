@@ -9,9 +9,9 @@
                 <md-input-container  class="md-block" flex-gt-sm md-is-error="formWasSubmitted && scheduleBuilderForm.scheduleList.$error.required">
                     <label>Schedule Name</label>
                     <md-select id="scheduleList" name="scheduleList" ng-model="data.scheduleList" required>
-                        <md-option value="Hypertension" ng-click="foundScheduleName()">Hypertension</md-option>
-                        <md-option value="Diabetes" ng-click="foundScheduleName()">Diabetes</md-option>
-                        <md-option value="Fever" ng-click="foundScheduleName()">Fever</md-option>
+                        <md-option value="Blood Pressure" ng-click="foundScheduleName()">Blood Pressure</md-option>
+                        <md-option value="Blood Glucose" ng-click="foundScheduleName()">Blood Glucose</md-option>
+                        <md-option value="Body Temperature" ng-click="foundScheduleName()">Body Temperature</md-option>
                         <md-option value="INR" ng-click="foundScheduleName()">INR</md-option>
                     </md-select>
                     <div ng-messages="scheduleBuilderForm.scheduleList.$error">
