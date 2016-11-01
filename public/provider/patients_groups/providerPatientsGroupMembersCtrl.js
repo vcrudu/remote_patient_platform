@@ -66,11 +66,6 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
                             });
                         }
                       };
-                },
-                resolve: {
-                    event: function () {
-                        return event;
-                    }
                 }
             });
         };

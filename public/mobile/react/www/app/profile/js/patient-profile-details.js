@@ -1780,7 +1780,6 @@
                 if (result.success) {
                     indeterminateProgress.end();
 
-                    debugger;
                     var healthProblemsText = "";
                     if (result.data.healthProblems) {
 
