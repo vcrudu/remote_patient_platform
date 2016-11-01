@@ -2,9 +2,8 @@
  * Created by Victor on 29/04/2015.
  */
 
-(function(){
-    angular.module('app').
-    controller('mainCtrl', ['$scope','$state','$localStorage','toastr','authService',function($scope, $state, $localStorage, toastr, authService) {
+(function() {
+    angular.module('app').controller('mainCtrl', ['$scope', '$state', '$localStorage', 'toastr', 'authService', function ($scope, $state, $localStorage, toastr, authService) {
         $scope.extr_page = "extr-page";
         $scope.bodyClass = "desktop-detected pace-done";
 
@@ -12,7 +11,16 @@
 
         var hash = window.location.hash;
 
-        setLayout();
+        if (hash != "" &&
+            hash.indexOf("login") == -1 &&
+            hash.indexOf("register") == -1 &&
+            hash.indexOf("confirmSubmit") == -1 &&
+            hash.indexOf("reset") == -1 &&
+            hash.indexOf("need-activate") == -1 &&
+            hash.indexOf("approve-group-invitation") == -1 &&
+            hash.indexOf("activate") == -1) {
+            setLayout();
+        }
 
 
         function setLayout() {
@@ -28,17 +36,8 @@
             $scope.containerClass = "";
         }
 
-/*        if (hash != "" &&
-            hash.indexOf("login") == -1 &&
-            hash.indexOf("register") == -1 &&
-            hash.indexOf("confirmSubmit") == -1 &&
-            hash.indexOf("reset") == -1 &&
-            hash.indexOf("need-activate") == -1 &&
-            hash.indexOf("approve-group-invitation") == -1 &&
-            hash.indexOf("activate") == -1) {*/
 
-
-            $scope.$on('signin', function () {
+        $scope.$on('signin', function () {
             setLayout();
         });
 

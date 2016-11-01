@@ -140,6 +140,6 @@
         }
     });
 
-    ReactDOM.render(<BLOOD_PRESSURE carouselWizard="#wizard" deviceModelType="BloodPressure"/>, document.getElementById("blood-pressure"));
+    ReactDOM.render(<BLOOD_PRESSURE carouselWizard="#wizard" deviceModelType="BloodPressure-New"/>, document.getElementById("blood-pressure"));
     ReactDOM.render(<BLOOD_PRESSURE_PROGRESS />, document.getElementById("blood-pressure-pair-progress"));
 })();

@@ -8,6 +8,12 @@
             $scope.bodyClass = "desktop-detected pace-done";
             $scope.gender = $localStorage.user;
             $scope.histories = [];
+            $scope.latestHistories = {
+                bloodPressure: null,
+                bloodOxygen: null,
+                temperature: null,
+                heartRate: null
+            }
 
             if (window.socket && window.socket.connected) {
                 window.socket.on('newMeasurement', function (data) {
@@ -20,7 +26,7 @@
                     if(data.measurementType=== "bloodPressure"){
                         FirstValue = data.value.systolic;
                         SecondValue = data.value.diastolic;
-                    }else{
+                    }else {
                         FirstValue = data.value;
                     }
 
@@ -96,10 +102,34 @@
                             deviceName: history.deviceName
                         };
                     });
+
+                    $scope.fillLatestHistories($scope.histories);
                 },
                 function (error) {
                     console.error(error);
                 })
+            };
+
+            $scope.fillLatestHistories = function(histories) {
+                angular.forEach(histories, function (history) {
+                    switch (history.deviceType) {
+                        case "bloodPressure":
+                            $scope.latestHistories.bloodPressure = history.Measurements[history.Measurements.length - 1];
+                            break;
+                        case "temperature":
+                            $scope.latestHistories.temperature = history.Measurements[history.Measurements.length - 1];
+                            break;
+                        case "bloodOxygen":
+                            $scope.latestHistories.bloodOxygen = history.Measurements[history.Measurements.length - 1];
+                            break;
+                        case "temperature":
+                            $scope.latestHistories.temperature = history.Measurements[history.Measurements.length - 1];
+                            break;
+                        case "heartRate":
+                            $scope.latestHistories.heartRate = history.Measurements[history.Measurements.length - 1];
+                            break;
+                    }
+                });
             };
 
             $scope.getHistories();

@@ -61,7 +61,8 @@
     }
 
     function mapHealthProblemsToDbEntity(item) {
-        var dateTemp = item.date.getTime().toString();
+        var tempDate = item.date ? new Date(item.date) : new Date();
+        var dateTemp = tempDate.getTime().toString();
         return {
             M: {
                 problemType: {S: item.problemType},

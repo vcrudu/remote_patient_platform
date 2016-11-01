@@ -72,16 +72,21 @@
             switch (this.props.modelType)
             {
                 case "Temperature":
-                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    this.setState({deviceIcon: "images/thermometer-icon.png"});
                     break;
                 case "BloodOxygen":
-                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"});
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/UA-651BLE-350x240.png"})
+                    if (this.props.model === "UA-767PBT-Ci") {
+                        this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"});
+                    }
+                    else {
+                        this.setState({deviceIcon: "images/UA-651BLE-350x240.png"});
+                    }
                     break;
                 case "Weight":
-                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"})
+                    this.setState({deviceIcon: "images/UC-355PBT-Ci.png"});
                     break;
             }
         },
@@ -97,7 +102,12 @@
                     Bridge.Redirect.redirectTo("BloodOxygen-measure.html");
                     break;
                 case "BloodPressure":
-                    Bridge.Redirect.redirectTo("BloodPressure-measure.html");
+                    if (this.props.model === "UA-767PBT-Ci") {
+                        Bridge.Redirect.redirectTo("UC-355PBT-Ci-measure.html");
+                    }
+                    else {
+                        Bridge.Redirect.redirectTo("BloodPressure-measure.html");
+                    }
                     break;
             }
         },
@@ -126,19 +136,25 @@
             }
         },
         componentDidMount: function() {
+            debugger;
             switch (this.props.modelType)
             {
                 case "Temperature":
-                    this.setState({deviceIcon: "images/thermometer-icon.png"})
+                    this.setState({deviceIcon: "images/thermometer-icon.png"});
                     break;
                 case "BloodOxygen":
-                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"})
+                    this.setState({deviceIcon: "images/oximeter-JPD-500F-icon.png"});
                     break;
                 case "BloodPressure":
-                    this.setState({deviceIcon: "images/UA-651BLE-350x240.png"})
+                    if (this.props.model === "UA-767PBT-Ci") {
+                        this.setState({deviceIcon: "images/blood-pressure-UA-767BT-Ci-monitor-icon.png"});
+                    }
+                    else {
+                        this.setState({deviceIcon: "images/UA-651BLE-350x240.png"});
+                    }
                     break;
                 case "Weight":
-                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"})
+                    this.setState({deviceIcon: "images/blood-pressure-monitor-icon.png"});
                     break;
             }
         },
@@ -154,7 +170,12 @@
                     Bridge.Redirect.redirectTo("BloodOxygen.html");
                     break;
                 case "BloodPressure":
-                    Bridge.Redirect.redirectTo("BloodPressure.html");
+                    if (this.props.model === "UA-767PBT-Ci") {
+                        Bridge.Redirect.redirectTo("UC-355PBT-Ci.html");
+                    }
+                    else {
+                        Bridge.Redirect.redirectTo("BloodPressure.html");
+                    }
                     break;
             }
         },
