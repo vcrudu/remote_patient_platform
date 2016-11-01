@@ -22,7 +22,7 @@
             </md-card-title>
         </md-card>
     </md-content>
-    <md-toolbar layout="row" class="md-hue-3">
+    <md-toolbar layout="row" class="md-hue-3" ng-show="latestHistories.bloodPressure || latestHistories.heartRate || latestHistories.bloodOxygen || latestHistories.temperature">
         <div class="md-toolbar-tools">
             <h2><md-icon md-svg-src="resourses/img/material-icons/ic_equalizer_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Latest Vital Signs</h2>
         </div>
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <md-toolbar layout="row" class="md-hue-3">
+    <md-toolbar layout="row" class="md-hue-3" ng-show="latestHistories.bloodPressure || latestHistories.heartRate || latestHistories.bloodOxygen || latestHistories.temperature">
         <div class="md-toolbar-tools">
             <h2><md-icon md-svg-src="resourses/img/material-icons/ic_equalizer_black_48px.svg" class="name"></md-icon>&nbsp;&nbsp;Vital Signs History</h2>
         </div>

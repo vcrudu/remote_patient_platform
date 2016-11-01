@@ -82,10 +82,16 @@
         eventToTrigger = 'OnMeasurementExpected';
         timeZone = 'Europe/London';
         var healthProblems = userDetails.getHealthProblems();
-        if (healthProblems.find(function (healthProblem) {
-                return healthProblem.problemType.toLowerCase().indexOf("hypertension") != -1;
-            })) {
 
+        var containsHyperTension = false;
+        for(var i=0;i<healthProblems.length;i++) {
+            if (healthProblems[i].problemType.toString().toLowerCase().indexOf("hypertension") !== -1) {
+                containsHyperTension = true;
+                break;
+            }
+        }
+
+        if (containsHyperTension) {
             var globalMeasurementScheduleRepository = new GlobalMeasurementScheduleRepository(getDb());
 
             globalMeasurementScheduleRepository.getOne('bloodPressure', function (err, globalMeasurementScheduleData) {
@@ -123,12 +129,15 @@
 
                     }, function (err) {
                         loggerProvider.getLogger().error(err);
+                        callback(err);
                     }, function () {
                         loggerProvider.getLogger().info("Schedule plan hypertension for the user " + userId);
                         callback();
                     });
                 }
             });
+        } else {
+            callback();
         }
     };
 
