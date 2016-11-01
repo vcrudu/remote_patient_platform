@@ -62,7 +62,6 @@
                                 $(explainContainer).slideToggle();
                             }
                             else {
-                                debugger;
                             }
 
                             indeterminateProgress.end();
@@ -1118,6 +1117,13 @@
 
                     var healthProblemsText = "";
                     if(result.data.healthProblems){
+
+                        for(var i=0;i<result.data.healthProblems.length;i++) {
+                            if (result.data.healthProblems[i].problemType) {
+                                result.data.healthProblems[i] = result.data.healthProblems[i].problemType;
+                            }
+                        }
+
                         healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
                             if (all === "") {
                                 all = healthProblem;
@@ -1215,6 +1221,11 @@
 
             var healthProblems = this.refs.patientMedicalInfo.state.diseases.split(", ");
 
+            var healthProblemsObjects = [];
+            for (var i = 0; i < healthProblems.length; i++) {
+                healthProblemsObjects.push({date: new Date(), problemType: healthProblems[i], description: healthProblems[i]});
+            }
+
             var objectToPost = {
                 "id": this.state.userDetails.id,
                 "name": this.refs.patientInfoComponent.state.firstName,
@@ -1235,17 +1246,42 @@
                 "ethnicity": this.refs.patientMedicalInfo.state.ethnicity,
                 "nhsNumber": this.refs.patientMedicalInfo.state.nhsNumber,
                 "otherIdentifiers": [],
-                "healthProblems": healthProblems,
+                "healthProblems": healthProblemsObjects,
                 "phone": this.refs.patientAddress.state.phone,
                 "mobile": this.refs.patientAddress.state.mobile,
                 "weight": this.refs.patientMedicalInfo.state.weight,
                 "height": this.refs.patientMedicalInfo.state.height
             };
 
+            var component = this;
             Bridge.Patient.saveDetails(objectToPost, function(result) {
                 indeterminateProgress.start();
                 if (result.success) {
                     indeterminateProgress.end();
+
+                    var healthProblemsText = "";
+                    if(result.data.healthProblems){
+
+                        for(var i=0;i<result.data.healthProblems.length;i++) {
+                            if (result.data.healthProblems[i].problemType) {
+                                result.data.healthProblems[i] = result.data.healthProblems[i].problemType;
+                            }
+                        }
+
+                        healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
+                            if (all === "") {
+                                all = healthProblem;
+                            } else {
+                                all = all + ", " + healthProblem;
+                            }
+                            return all;
+                        }, "");
+                    }
+
+                    component.refs.patientMedicalInfo.updateState({
+                        diseases: healthProblemsText,
+                        diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
+                    });
                 }
             });
         },

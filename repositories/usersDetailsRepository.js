@@ -213,7 +213,7 @@
                 }
 
                 loggerProvider.getLogger().debug("The "+TABLE_NAME+" has been updated successfully.");
-                callback(null, data);
+                callback(null, patientDetails);
             });
         },
 

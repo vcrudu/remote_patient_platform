@@ -14,6 +14,9 @@
     var providersRepository     = require('../repositories').Providers;
     var usersRepository     = require('../repositories').Users;
     var domainModel = require('@vcrudu/hcm.domainmodel');
+    var UserFactory                = require('../model').UserFactory;
+    var scheduleManagerService =require ('../services/scheduleManagerService');
+
     var logging = require("../logging");
     var _ = require("underscore");
     var snsClient = require('../snsClient');
@@ -114,9 +117,38 @@
                                 logging.getLogger().error(new Error("Failed to send OnProvideDetailsEvent"));
                             }
                         });
-                        res.send({
-                            success:true,
-                            result:req.body.model
+                        
+                        userDetailsRepository.findPatient(req.body.model.email, function(getOneByEmailError, userDetails) {
+                            if (getOneByEmailError) {
+                                
+                            } else {
+                                userDetails.healthProblems = req.body.model.healthProblems;
+
+                                var containsHypertension = false;
+                                var healthProblems = userDetails.getHealthProblems();
+                                for(var i=0;i<healthProblems.length;i++) {
+                                    healthProblems[i].date = new Date(healthProblems[i].date);
+                                    if (healthProblems[i].problemType.toString().toLowerCase().indexOf("hypertension") !== -1) {
+                                        containsHypertension = true;
+                                        break;
+                                    }
+                                }
+
+                                if (containsHypertension) {
+                                    scheduleManagerService.setupSchedulePlan(userDetails, function () {
+                                        res.send({
+                                            success:true,
+                                            result:req.body.model
+                                        });
+                                    });
+                                } else {
+
+                                    res.send({
+                                        success:true,
+                                        result:req.body.model
+                                    });
+                                }
+                            }
                         });
                     }
                 });
