@@ -466,18 +466,18 @@
                 </select>
 
                 <select className="hide" name="Category" id="sDiseases" ref="sDiseases" multiple>
-                    <option value="Asthma (on medication)">Asthma (on medication)</option>
-                    <option value="Cancer">Cancer</option>
-                    <option value="Diabetes">Diabetes</option>
-                    <option value="Epilepsy">Epilepsy</option>
-                    <option value="Stroke/TIA">Stroke/TIA</option>
-                    <option value="Hypertension (high blood pressure)">Hypertension (high blood pressure)</option>
-                    <option value="Chronic heart disease">Chronic heart disease</option>
-                    <option value="Chronic kidney disease">Chronic kidney disease</option>
-                    <option value="Chronic lung disease">Chronic lung disease</option>
-                    <option value="Hypothyroidism (underactive thyroid)">Hypothyroidism (underactive thyroid)</option>
-                    <option value="Mental health concerns (give details)">Mental health concerns (give details)</option>
-                    <option value="Previous operations">Previous operations</option>
+                    <option value="asthma">Asthma (on medication)</option>
+                    <option value="cancer">Cancer</option>
+                    <option value="diabetes">Diabetes</option>
+                    <option value="epilepsy">Epilepsy</option>
+                    <option value="stroke">Stroke/TIA</option>
+                    <option value="hypertension">Hypertension (high blood pressure)</option>
+                    <option value="heart">Chronic heart disease</option>
+                    <option value="kidney">Chronic kidney disease</option>
+                    <option value="lung">Chronic lung disease</option>
+                    <option value="hypothyroidism">Hypothyroidism (underactive thyroid)</option>
+                    <option value="mental">Mental health concerns (give details)</option>
+                    <option value="operations">Previous operations</option>
                 </select>
             </div>;
         }
@@ -1115,20 +1115,129 @@
                         mobile: result.data.mobile ? result.data.mobile : "",
                     });
 
+                    debugger;
                     var healthProblemsText = "";
+                    var healthProblemsArray = [];
                     if(result.data.healthProblems){
 
+                        /*var tempArr = [];
                         for(var i=0;i<result.data.healthProblems.length;i++) {
-                            if (result.data.healthProblems[i].problemType) {
-                                result.data.healthProblems[i] = result.data.healthProblems[i].problemType;
+                            tempArr.push()
+                        }*/
+
+                        result.data.healthProblems.map(function(hp) {
+                            var problemType = ""
+                            switch (hp) {
+                                case "Asthma (on medication)":
+                                case "asthma":
+                                    problemType = "asthma";
+                                    break;
+                                case "Cancer":
+                                case "cancer":
+                                    problemType = "cancer";
+                                    break;
+                                case "Diabetes":
+                                case "diabetes":
+                                    problemType = "diabetes";
+                                    break;
+                                case "Epilepsy":
+                                case "epilepsy":
+                                    problemType = "epilepsy";
+                                    break;
+                                case "Stroke/TIA":
+                                case "stroke":
+                                    problemType = "stroke";
+                                    break;
+                                case "Hypertension (high blood pressure)":
+                                case "hypertension":
+                                    problemType = "hypertension";
+                                    break;
+                                case "Chronic heart disease":
+                                case "heart":
+                                    problemType = "heart";
+                                    break;
+                                case "Chronic kidney disease":
+                                case "kidney":
+                                    problemType = "kidney";
+                                    break;
+                                case "Chronic lung disease":
+                                case "lung":
+                                    problemType = "lung";
+                                    break;
+                                case "Hypothyroidism (underactive thyroid)":
+                                case "hypothyroidism":
+                                    problemType = "hypothyroidism";
+                                    break;
+                                case "Mental health concerns (give details)":
+                                case "mental":
+                                    problemType = "mental";
+                                    break;
+                                case "Previous operations":
+                                case "operations":
+                                    problemType = "operations";
+                                    break;
                             }
-                        }
+                            healthProblemsArray.push(problemType);
+                        });
 
                         healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
+
+                            var description = ""
+                            switch (healthProblem) {
+                                case "Asthma (on medication)":
+                                case "asthma":
+                                    description = "Asthma (on medication)";
+                                    break;
+                                case "Cancer":
+                                case "cancer":
+                                    description = "Cancer";
+                                    break;
+                                case "Diabetes":
+                                case "diabetes":
+                                    description = "Diabetes";
+                                    break;
+                                case "Epilepsy":
+                                case "epilepsy":
+                                    description = "Epilepsy";
+                                    break;
+                                case "Stroke/TIA":
+                                case "stroke":
+                                    description = "Stroke/TIA";
+                                    break;
+                                case "Hypertension (high blood pressure)":
+                                case "hypertension":
+                                    description = "Hypertension (high blood pressure)";
+                                    break;
+                                case "Chronic heart disease":
+                                case "heart":
+                                    description = "Chronic heart disease";
+                                    break;
+                                case "Chronic kidney disease":
+                                case "kidney":
+                                    description = "Chronic kidney disease";
+                                    break;
+                                case "Chronic lung disease":
+                                case "lung":
+                                    description = "Chronic lung disease";
+                                    break;
+                                case "Hypothyroidism (underactive thyroid)":
+                                case "hypothyroidism":
+                                    description = "Hypothyroidism (underactive thyroid)";
+                                    break;
+                                case "Mental health concerns (give details)":
+                                case "mental":
+                                    description = "Mental health concerns (give details)";
+                                    break;
+                                case "Previous operations":
+                                case "operations":
+                                    description = "Previous operations";
+                                    break;
+                            }
+
                             if (all === "") {
-                                all = healthProblem;
+                                all = description;
                             } else {
-                                all = all + ", " + healthProblem;
+                                all = all + ", " + description;
                             }
                             return all;
                         }, "");
@@ -1140,7 +1249,7 @@
                         height: result.data.height ? result.data.height : "",
                         weight: result.data.weight ? result.data.weight : "",
                         diseases: healthProblemsText,
-                        diseasesArray: result.data.healthProblems ? result.data.healthProblems : []
+                        diseasesArray: healthProblemsArray
                     });
 
                     Bridge.Symptomate.getLastEvidence(function (result) {
@@ -1218,12 +1327,78 @@
                 }
                 return;
             }
-
+debugger;
             var healthProblems = this.refs.patientMedicalInfo.state.diseases.split(", ");
 
             var healthProblemsObjects = [];
             for (var i = 0; i < healthProblems.length; i++) {
-                healthProblemsObjects.push({date: new Date(), problemType: healthProblems[i], description: healthProblems[i]});
+
+                var problemType = ""
+                var description = ""
+                switch (healthProblems[i]) {
+                    case "Asthma (on medication)":
+                    case "asthma":
+                        problemType = "asthma";
+                        description = "Asthma (on medication)";
+                        break;
+                    case "Cancer":
+                    case "cancer":
+                        problemType = "cancer";
+                        description = "Cancer";
+                        break;
+                    case "Diabetes":
+                    case "diabetes":
+                        problemType = "diabetes";
+                        description = "Diabetes";
+                        break;
+                    case "Epilepsy":
+                    case "epilepsy":
+                        problemType = "epilepsy";
+                        description = "Epilepsy";
+                        break;
+                    case "Stroke/TIA":
+                    case "stroke":
+                        problemType = "stroke";
+                        description = "Stroke/TIA";
+                        break;
+                    case "Hypertension (high blood pressure)":
+                    case "hypertension":
+                        problemType = "hypertension";
+                        description = "Hypertension (high blood pressure)";
+                        break;
+                    case "Chronic heart disease":
+                    case "heart":
+                        problemType = "heart";
+                        description = "Chronic heart disease";
+                        break;
+                    case "Chronic kidney disease":
+                    case "kidney":
+                        problemType = "kidney";
+                        description = "Chronic kidney disease";
+                        break;
+                    case "Chronic lung disease":
+                    case "lung":
+                        problemType = "lung";
+                        description = "Chronic lung disease";
+                        break;
+                    case "Hypothyroidism (underactive thyroid)":
+                    case "hypothyroidism":
+                        problemType = "hypothyroidism";
+                        description = "Hypothyroidism (underactive thyroid)";
+                        break;
+                    case "Mental health concerns (give details)":
+                    case "mental":
+                        problemType = "mental";
+                        description = "Mental health concerns (give details)";
+                        break;
+                    case "Previous operations":
+                    case "operations":
+                        problemType = "operations";
+                        description = "Previous operations";
+                        break;
+                }
+                
+                healthProblemsObjects.push({date: new Date(), problemType: problemType, description: description});
             }
 
             var objectToPost = {
@@ -1262,20 +1437,20 @@
                     var healthProblemsText = "";
                     if(result.data.healthProblems){
 
+                        healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
+                            if (all === "") {
+                                all = healthProblem.description;
+                            } else {
+                                all = all + ", " + healthProblem.description;
+                            }
+                            return all;
+                        }, "");
+
                         for(var i=0;i<result.data.healthProblems.length;i++) {
                             if (result.data.healthProblems[i].problemType) {
                                 result.data.healthProblems[i] = result.data.healthProblems[i].problemType;
                             }
                         }
-
-                        healthProblemsText = result.data.healthProblems.reduce(function(all, healthProblem) {
-                            if (all === "") {
-                                all = healthProblem;
-                            } else {
-                                all = all + ", " + healthProblem;
-                            }
-                            return all;
-                        }, "");
                     }
 
                     component.refs.patientMedicalInfo.updateState({
