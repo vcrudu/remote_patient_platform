@@ -116,7 +116,8 @@
                 nhsNumber: tryGetStringProperty(dbEntity.nhsNumber),
                 phone: tryGetStringProperty(dbEntity.phone),
                 mobile: tryGetStringProperty(dbEntity.mobile),
-                address: mapAddressFromDbEntity(dbEntity)
+                address: mapAddressFromDbEntity(dbEntity),
+                email: tryGetStringProperty(dbEntity.email)
                 /* address: dbEntity.fullAddress.M,
                 avatar: buildDynamoDbString(patient.avatar),
                 externalId: buildDynamoDbString(patient.externalId),

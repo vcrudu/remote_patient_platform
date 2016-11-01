@@ -75,7 +75,8 @@ var util = require('util');
                             } else {
 
 
-                                result.push({patientId: userDetails.firstname + ' ' + userDetails.surname});
+                         //       result.push({patientId: userDetails.firstname + ' ' + userDetails.surname, email: userDetails.email});
+                                result.push(userDetails);
                                 if (data.length == result.length) {
                                     sendResultToClient(result);
                                 }

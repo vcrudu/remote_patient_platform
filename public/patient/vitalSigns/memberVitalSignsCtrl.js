@@ -5,11 +5,22 @@
  * Created by Victor on 23/06/2015.
  */
 (function() {
-    angular.module('app').controller('memberVitalSignsCtrl', ['$scope', '$log', '$state', 'toastr', 'authService',
-        'historyService','$localStorage','$rootScope',
-        function ($scope, $log, $state, toastr, authService, historyService,$localStorage, $rootScope) {
+    angular.module('app').controller('memberVitalSignsCtrl', ['$scope', '$log', "$stateParams",'$state', 'toastr', 'authService',
+        'memberHistoryService','$localStorage','$rootScope',
+        function ($scope, $log, $stateParams, $state, toastr, authService, memberHistoryService,$localStorage, $rootScope) {
             $scope.bodyClass = "desktop-detected pace-done";
             //$scope.gender = $localStorage.user;
+
+
+           $localStorage.memberemail = $state.params.patient.email;
+           $scope.email = $state.params.patient.email;
+           $scope.firstname = $state.params.patient.firstname;
+           $scope.surname = $state.params.patient.surname;
+           $scope.birthDate = $state.params.patient.dateOfBirth;
+           $scope.phoneNumber =$state.params.patient.phone;
+           $scope.mobileNumber = $state.params.patient.mobile;
+           $scope.address1 = $state.params.patient.address.addressLine1;
+
             $scope.histories = [];
 
             if (window.socket && window.socket.connected) {
@@ -20,10 +31,10 @@
 
                     var FirstValue;
                     var SecondValue;
-                    if(data.measurementType=== "bloodPressure"){
+                    if (data.measurementType === "bloodPressure") {
                         FirstValue = data.value.systolic;
                         SecondValue = data.value.diastolic;
-                    }else{
+                    } else {
                         FirstValue = data.value;
                     }
 
@@ -48,8 +59,7 @@
 
                         $rootScope.$broadcast('newMeasurement', history);
                     }
-                    else
-                    {
+                    else {
                         var newHistory = {
                             Id: data.measurementType,
                             Measurements: [
@@ -90,7 +100,7 @@
             }
 
             $scope.getHistories = function () {
-                historyService.getHistories(function (histories) {
+                memberHistoryService.getHistories(function (histories) {
                         $scope.histories = histories;
                         angular.forEach($scope.histories, function (history) {
                             history.dashboard = {
@@ -107,23 +117,10 @@
 
             $scope.getHistories();
 
-            historyService.getPatientDetails(function (result) {
-                    $scope.birthDate = result.dateOfBirth;
-                    $scope.givenName = result.name;
-                    $scope.familyName = result.surname;
-                    $scope.address1 = result.address.addressLine1;
-                    $scope.cityVillage = result.address.town;
-                    $scope.county = result.address.county;
-                    $scope.postalCode = result.address.postCode;
-                    $scope.country = result.address.country;
-                    $scope.avatar= result.gender==='Male'?'/resourses/img/avatars/male.png':'/resourses/img/avatars/female.png';
-                    $scope.email = result.email;
-                    $scope.phoneNumber = result.phone;
-                    $scope.mobileNumber = result.mobile;
-                },
-                function (error) {
-                    console.error(error);
-                });
+
+           
+
+          
         }
     ]);
 })();

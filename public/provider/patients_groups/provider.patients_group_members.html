@@ -1,8 +1,13 @@
 
 <md-list-item class="md-2-line" ng-repeat="patient in patientsGroupsMembers">
     <div class="md-list-item-text">
-        <h3>{{patient.patientId}}</h3>
+        <h3><a href="" ng-click="memberSelected(patient)">
+         {{patient.firstname}}    {{patient.surname}}
+
+
+        </a></h3>
     </div>
+
     <md-divider></md-divider>
 </md-list-item>
 <div style="clear: both"></div>
