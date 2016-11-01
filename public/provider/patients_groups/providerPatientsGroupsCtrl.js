@@ -51,11 +51,6 @@ angular.module('app').controller('providerPatientsGroupsCtrl', ['$scope', '$log'
                             });
                         }
                     };
-                },
-                resolve: {
-                    event: function () {
-                        return event;
-                    }
                 }
             });
         };

@@ -6,6 +6,9 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
 
          $scope.currentGroupName = $stateParams.groupName;
 
+
+
+
         $scope.tabIndex = 0;
 
         $scope.$watch(function(){
@@ -23,12 +26,20 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
             }
         });
 
+
          patientsGroupMembersService.getPatientsGroupMembers(function(data) {
                 if (data) {
                     $scope.patientsGroupsMembers = data.items;
                 }
             },
             function(err) {});
+
+       $scope.memberSelected = function(patient) {
+                 
+                  $state.go("provider.patients_groups_members.vitalsigns", {patient: patient});
+       };
+
+
 
         $scope.addPatient = function () {
             var modal = $modal.open({
@@ -66,11 +77,6 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
                             });
                         }
                       };
-                },
-                resolve: {
-                    event: function () {
-                        return event;
-                    }
                 }
             });
         };

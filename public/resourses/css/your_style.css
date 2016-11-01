@@ -160,6 +160,10 @@ background-color: #f4f411;
     margin-top:20px!important;
 }
 
+.selectedTime {
+    background-color: red;
+}
+
 
 
 .inbox-data-date {

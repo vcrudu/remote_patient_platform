@@ -95,5 +95,12 @@ angular.module('app').config(['$stateProvider', function ($stateProvider) {
         url: "/provider.home.message",
         templateUrl: "provider/home/provider.home.message.html",
         controller: 'providerHomeMessageCtrl as vm'
+    }).state("provider.patients_groups_members.vitalsigns", {
+        url: "/patient.vitalsigns/:email",
+        templateUrl: "patient/vitalSigns/member.vitalsigns.html",
+        controller: 'memberVitalSignsCtrl',
+        params: {
+            patient: null
+        }
     });
 }]);

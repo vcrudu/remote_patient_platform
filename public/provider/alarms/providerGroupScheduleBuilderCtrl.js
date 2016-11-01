@@ -9,9 +9,36 @@
         function ($scope, $http, $modal, $stateParams,  appSettings, $localStorage, $state, _, toastr) {
 
             $scope.groupName = $stateParams.groupName;
+            $scope.idSelectedTime = null;
+
+            $scope.setSelected = function(idSelectedTime) {
 
 
+                $scope.idSelectedTime = idSelectedTime;
+
+            };
          $scope.dayTimePoints=[];
+
+
+            $scope.clickOnTr = function(scheduleTime) {
+
+
+
+                var index = -1;
+                for(var i=0; i<$scope.dayTimePoints.length;i++) {
+                    if (scheduleTime.time == $scope.dayTimePoints[i].time) {
+
+                        $scope.mytime = $scope.dayTimePoints[i].time;
+                        $scope.myselect = $scope.dayTimePoints[i].reminders ;
+
+                     //   $scope.setSelected(scheduleTime.id);
+
+                        //index = i;
+                        break;
+                    }
+                }
+
+            };
 
 
             $scope.deleteScheduleTime = function(scheduleTime) {

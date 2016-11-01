@@ -9,6 +9,7 @@
                $state.go("provider.patients_groups_members.schedulebuilder");
             });
 
+
             $scope.groupSchedules = [];
             $scope.init = function() {
                     var req = {
