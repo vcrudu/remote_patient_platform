@@ -1,12 +1,11 @@
 
-<md-list-item class="md-2-line" ng-repeat="patient in patientsGroupsMembers">
+<md-list-item class="md-2-line" ng-repeat="patient in patientsGroupsMembers" ng-click="memberSelected(patient)">
     <div class="md-list-item-text">
-        <h3><a href="" ng-click="memberSelected(patient)">
-         {{patient.firstname}}    {{patient.surname}}
-
-
-        </a></h3>
+        <h3>{{patient.firstname}}&nbsp;{{patient.surname}}</h3>
     </div>
+    <md-button class="md-secondary md-icon-button" aria-label="view" ng-click="memberSelected(patient)">
+        <md-icon md-svg-src="resourses/img/material-icons/ic_forward_black_48px.svg"></md-icon>
+    </md-button>
 
     <md-divider></md-divider>
 </md-list-item>

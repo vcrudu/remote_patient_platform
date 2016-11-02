@@ -122,8 +122,7 @@
                             <div className="mdl-card__title">
                                 <h2 className="mdl-card__title-text">{this.state.message.title}</h2>
                             </div>
-                            <div className="mdl-card__supporting-text">
-                                {this.state.message.content}
+                            <div className="mdl-card__supporting-text" dangerouslySetInnerHTML={{__html: this.state.message.content}}>
                             </div>
                             <div className="mdl-card__actions">
                                 {

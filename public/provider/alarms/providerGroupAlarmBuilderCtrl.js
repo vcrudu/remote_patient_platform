@@ -166,7 +166,7 @@
                             return alarmBuilderFactoryService.getOperatorsByConditionName(conditionObj.name);
                         },
                         selectedOperator: function () {
-                            return conditionObj.operator.id;
+                            return conditionObj.operator ? conditionObj.operator.id : conditionObj.operator;
                         }
                     }
                 });

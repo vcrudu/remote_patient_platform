@@ -140,11 +140,7 @@
                                     this.state.message.title
                                 )
                             ),
-                            React.createElement(
-                                "div",
-                                { className: "mdl-card__supporting-text" },
-                                this.state.message.content
-                            ),
+                            React.createElement("div", { className: "mdl-card__supporting-text", dangerouslySetInnerHTML: { __html: this.state.message.content } }),
                             React.createElement(
                                 "div",
                                 { className: "mdl-card__actions" },
