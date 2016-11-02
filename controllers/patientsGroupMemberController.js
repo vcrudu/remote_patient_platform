@@ -195,9 +195,33 @@ var util = require('util');
         });
 
 
-        //      router.delete('/patientsgroupmember', function(req, res){
-        //         res.status(400);
-        //    });
+              router.delete('/patientsgroupmember', function(req, res){
+                
+                  var savedItem = {};
+                  savedItem.providerId = req.decoded.email;
+                  savedItem.groupName = req.query.groupName;
+                  savedItem.patientId = req.query.patientId;
+                 
+                 
+                  patientsGroupMemberRepository.delete(savedItem, function (err, data) {
+                      if (err) {
+                          res.status(500).json({
+                              success: false,
+
+                          });
+                      } else {
+
+                          res.json({
+                              success: true,
+                              description: "The PatientsGroupMember Item was deleted!!!"
+                          });
+
+                      }
+                  });
+                  
+                  
+                 
+            });
 
         //      router.get('/patientsgroup/:providerId', function(req, res){
         //        res.send("This is a patientsGroup with providerId Page!!!");

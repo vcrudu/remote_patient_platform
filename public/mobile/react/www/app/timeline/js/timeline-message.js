@@ -109,7 +109,8 @@
                     Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
                     break;
                 case "goToDevices":
-                    Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
+                    debugger;
+                    Bridge.Redirect.openUrl("#/patient/patient.devices/patient.devices.buy");
                     break;
                 case "goToTimeline":
                     history.go(-1);
@@ -140,11 +141,7 @@
                                     this.state.message.title
                                 )
                             ),
-                            React.createElement(
-                                "div",
-                                { className: "mdl-card__supporting-text" },
-                                this.state.message.content
-                            ),
+                            React.createElement("div", { className: "mdl-card__supporting-text", dangerouslySetInnerHTML: { __html: this.state.message.content } }),
                             React.createElement(
                                 "div",
                                 { className: "mdl-card__actions" },
