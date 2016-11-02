@@ -1,9 +1,9 @@
 {
-  "email":"vcrudu@hotmail.com",
+  "email":"thcauditor@gmail.com",
   "name":"Victor",
-  "surname":"Crudu",
+  "surname":"Lungu",
   "passwordHash":"$2a$10$VQ8sxqXJ9rLd1NdccPcW3uaTDJuYfbxmMBbhGta9ED7WZ5g.vYogS",
-  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InZjcnVkdUBob3RtYWlsLmNvbSIsImlhdCI6MTQ1NjEzNzYwNX0.rcMl8OI4J1M1W33VrOCmoGS06VTYvs3qYKew5zptBVg",
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRoY2F1ZGl0b3JAZ21haWwuY29tIiwiaWF0IjoxNDc4MDc1NDg2fQ.Dc2bJd1Gy8R6XKcAHxZUTLhiLAlz1itEDau7HyqdEe8",
   "isActive":true,
   "type":"patient",
   "onlineStatus":"offline",

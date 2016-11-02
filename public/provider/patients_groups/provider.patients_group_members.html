@@ -1,4 +1,5 @@
 
+
 <div style="clear: both"></div>
 
 <div style="padding-top: 8px">
@@ -14,10 +15,11 @@
             <tr md-row ng-repeat="patient in patientsGroupsMembers">
                 <td md-cell>
                     <h3><a href="" ng-click="memberSelected(patient)">
-                    {{patient.firstname}}    {{patient.surname}}
+                    {{patient.firstname}}&nbsp;{{patient.surname}}
 
                </a></h3>
                 </td>
+
 
                 <td md-cell>
                     <md-icon md-svg-src="resourses/img/material-icons/ic_person_black_24px.svg" class="name" ng-click="memberSelected(patient)">
