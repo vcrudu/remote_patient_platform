@@ -138,7 +138,7 @@
 
         router.delete('/groupschedule/', function(req, res) {
 
-            logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.alarmName + " alarm requested to be deleted.");
+            logging.getLogger().trace({url:req.url,userId:req.decoded.email},req.params.alarmName + " schedule requested to be deleted.");
 
             //     console.log("ALARM NAME IS   !!!!   "+req.query.alarmName);
             //     console.log("GROUPID IS !!!!!   "+req.decoded.email+"#"+req.query.groupname);

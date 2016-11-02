@@ -11,6 +11,44 @@
 
 
             $scope.groupSchedules = [];
+
+            $scope.deleteSchedule = function(template) {
+                var req = {
+                    method: 'DELETE',
+                    url: appSettings.getServerUrl() + '/v1/api/groupschedule?scheduleName=' + template.scheduleName+"&groupname="+$stateParams.groupName,
+                    headers: {
+                        'x-access-token': $localStorage.user.token
+                    }
+                };
+
+                $http(req).success(function (res) {
+                    if (res.success) {
+                        toastr.success('Schedule deleted!','Success');
+
+                        var index = -1;
+                        for(var i=0; i<$scope.groupSchedules.length;i++) {
+                            if (template.scheduleName == $scope.groupSchedules[i].scheduleName) {
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        if (index > -1) {
+                            //   alert(index);
+                            $scope.groupSchedules.splice(index, 1);
+                        }
+                    } else {
+                        toastr.success('Error happen!','Error');
+                    }
+                }).error(function (err) {
+                    toastr.success('Error happen!','Error');
+                });
+            };
+
+
+
+
+
             $scope.init = function() {
                     var req = {
                         method: 'GET',
