@@ -21,13 +21,13 @@
 
 <nav>
     <ul ng-show="isPatient">
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="patient.home.inbox"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Inbox</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="patient.vitalsigns"><i class="fa fa-lg fa-fw fa-heart-o"></i> <span class="menu-item-parent">Vital Signs</span></a>
             </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="patient.devices"><i class="fa fa-lg fa-fw fa-stethoscope"></i> <span class="menu-item-parent">Devices</span></a>
         </li>
 
@@ -44,32 +44,32 @@
             </ul>
         </li>-->
 
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="patient.appointments"><i class="fa fa-lg fa-fw fa-user-md"></i> <span class="menu-item-parent">Book</span></a>
         </li>
 
     </ul>
 
     <ul ng-show="isProvider">
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.home.inbox"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Inbox</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.call"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Call</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.appointments"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">My Appointments</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.availability"><i class="fa fa-lg fa-fw fa-calendar-o"></i> <span class="menu-item-parent">Availability</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.alarm_list"><i class="fa fa-lg fa-fw fa-bell-o"></i> <span class="menu-item-parent">Alarm Builder</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.patients_groups"><md-icon md-svg-src="resourses/img/material-icons/ic_group_black_24px.svg" class="name"></md-icon> <span class="menu-item-parent">Patients Groups</span></a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" onclick="$('.navbar-toggle').click();">
             <a ui-sref="provider.settings"><i class="fa fa-lg fa-fw fa-cog"></i> <span class="menu-item-parent">Settings</span></a>
         </li>
 

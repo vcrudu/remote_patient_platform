@@ -105,7 +105,8 @@
                     Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
                     break;
                 case "goToDevices":
-                    Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
+                    debugger;
+                    Bridge.Redirect.openUrl("#/patient/patient.devices/patient.devices.buy");
                     break;
                 case "goToTimeline":
                     history.go(-1);
