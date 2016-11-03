@@ -35,7 +35,10 @@
             $scope.containerClass = "";
 
             setTimeout(function () {
-                $scope.showHtml = true;
+                $scope.$apply(function () {
+                    $scope.showHtml = true;
+                });
+
             }, 200);
         }
 
@@ -44,7 +47,7 @@
         });
 
         $scope.$on('login', function () {
-            debugger;
+
             $scope.extr_page = "extr-page";
         });
 

@@ -3,14 +3,14 @@
  */
 angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'authService',
     function($scope, $state, toastr, authService){
-        setTimeout(function () {
+        /*setTimeout(function () {
             $scope.$parent.$parent.$apply(function () {
                 $scope.$parent.$parent.showHtml = false;
                 $scope.$parent.$parent.extr_page = "extr-page";
                 $scope.$parent.$parent.containerClass = "container";
             });
 
-        }, 1);
+        }, 1);*/
 
       $scope.userCredentials = {
           email: "",
@@ -48,7 +48,7 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'aut
                                   $scope.$parent.$parent.showHtml = false;
                                   $scope.$parent.$parent.extr_page = "";
 
-                                  $state.go('provider.availability');
+                                  $state.go('provider.home.inbox');
                                   $scope.$emit('signin');
                               });
                           }, 1);
