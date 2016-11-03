@@ -3,6 +3,15 @@
  */
 angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'authService',
     function($scope, $state, toastr, authService){
+        setTimeout(function () {
+            $scope.$parent.$parent.$apply(function () {
+                $scope.$parent.$parent.showHtml = false;
+                $scope.$parent.$parent.extr_page = "extr-page";
+                $scope.$parent.$parent.containerClass = "container";
+            });
+
+        }, 1);
+
       $scope.userCredentials = {
           email: "",
           password: ""
@@ -21,14 +30,28 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'aut
                     switch (success.type){
                       case "patient":
                       {
-                        $state.go('patient.home.inbox');
-                        $scope.$emit('signin');
+                          setTimeout(function () {
+                              $scope.$parent.$parent.$apply(function () {
+                                  $scope.$parent.$parent.showHtml = false;
+                                  $scope.$parent.$parent.extr_page = "";
+                                  $state.go('patient.home.inbox');
+                                  $scope.$emit('signin');
+                              });
+                          }, 1);
+
                         break;
                       }
                       case "provider":
                       {
-                        $state.go('provider.availability');
-                        $scope.$emit('signin');
+                          setTimeout(function () {
+                              $scope.$parent.$parent.$apply(function () {
+                                  $scope.$parent.$parent.showHtml = false;
+                                  $scope.$parent.$parent.extr_page = "";
+
+                                  $state.go('provider.availability');
+                                  $scope.$emit('signin');
+                              });
+                          }, 1);
                         break;
                       }
                     }
@@ -43,4 +66,13 @@ angular.module('app').controller('loginCtrl',['$scope', '$state', 'toastr', 'aut
               );
           }
       };
+
+        setTimeout(function () {
+            $scope.$parent.$parent.$apply(function () {
+                $scope.$parent.$parent.extr_page = "extr-page";
+                $scope.$parent.$parent.containerClass = "container";
+                $scope.$parent.$parent.showHtml = true;
+            });
+
+        }, 100);
 }]);
