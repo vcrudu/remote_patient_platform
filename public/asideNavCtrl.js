@@ -23,6 +23,13 @@ angular.module('app').controller('asideNavCtrl',['$scope', '$localStorage', func
         }
     };
 
+    $scope.handleSideMenuItemClick = function() {
+        if ($("body").hasClass("mobile-view-activated")) {
+            $(".navbar-toggle").click();
+        }
+    }
+
+
     $scope.$on('socket.connect', function(evt, eventText) {
         setTimeout(function () {
             $scope.$apply(function(){

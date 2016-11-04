@@ -59,6 +59,13 @@
         };
     }]);
 
+    angular.module('app').filter('customNumber', function(){
+        return function(input, size) {
+            var zero = (size ? size : 4) - input.toString().length + 1;
+            return Array(+(zero > 0 && zero)).join("0") + input;
+        }
+    });
+
     angular.module('app').filter('toFormatedDate', ['$sce', function($sce){
         return function(val) {
             return moment(val).format('MMMM Do YYYY, h:mm:ss a');
