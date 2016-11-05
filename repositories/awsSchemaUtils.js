@@ -47,13 +47,13 @@
             if (err) {
                 callback(err, null);
             } else if (result) {
-                dynamoDb.deleteTable(params, function (err) {
+                /*dynamoDb.deleteTable(params, function (err) {
                     dynamoDb.waitFor('tableNotExists', params, function(err, data) {
                         if (err) loggerProvider.getLogger().error(err); // an error occurred
                         else     callback(err);           // successful response
                     });
 
-                });
+                });*/
             }
         });
     }

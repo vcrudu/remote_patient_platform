@@ -10,6 +10,7 @@
     var _ = require('underscore');
     var uuid = require('node-uuid');
     var schedulePlanRepository     = require('../repositories').SchedulePlanRepository;
+    var scheduleManagerService = require('../services/scheduleManagerService');
 
 
     module.exports.init = function(router) {
@@ -25,7 +26,7 @@
 
 
 
-            schedulePlanRepository.getList(byGroupId,function(groupSchedules, err) {
+            schedulePlanRepository.getList(byGroupId,function(err, groupSchedules) {
                 if(err) {
 
                     var incidentTicket = logging.getIncidentTicketNumber("nt");
@@ -46,7 +47,6 @@
 
 
         router.post('/groupschedule', function(req, res){
-
 
             
             var byGroupId = req.decoded.email+"#"+req.body.groupname;
@@ -94,11 +94,11 @@
                                 });
                             }
                             else {
-
-
-                                res.json({
-                                    success: true,
-                                    item: req.body.scheduleData
+                                scheduleManagerService.setupSchedulePlanForGroup(byGroupId, function (err) {
+                                    res.json({
+                                        success: true,
+                                        item: req.body.scheduleData
+                                    });
                                 });
                             }
                         });
@@ -122,9 +122,11 @@
                                 });
                             }
                             else {
-                                res.json({
-                                    success: true,
-                                    item: req.body.scheduleData,
+                                scheduleManagerService.setupSchedulePlanForGroup(byGroupId, function (err) {
+                                    res.json({
+                                        success: true,
+                                        item: req.body.scheduleData,
+                                    });
                                 });
                             }
                         });
@@ -144,19 +146,27 @@
             //     console.log("GROUPID IS !!!!!   "+req.decoded.email+"#"+req.query.groupname);
             var byGroupId = req.decoded.email+"#"+req.query.groupname;
 
-            schedulePlanRepository.delete(byGroupId, req.query.scheduleName, function(err,data){
+            scheduleManagerService.deleteSchedulePlanForGroup(byGroupId, function (err) {
                 if(err){
                     res.status(500).json({
                         success:false,
                         error:err
                     });
-                }else{
-                    res.status(200).json({
-                        success:true
+                }else {
+                    schedulePlanRepository.delete(byGroupId, req.query.scheduleName, function(err,data){
+                        if(err){
+                            res.status(500).json({
+                                success:false,
+                                error:err
+                            });
+                        }else{
+                            res.status(200).json({
+                                success: true
+                            });
+                        }
                     });
                 }
             });
-
         });
     }
 })();

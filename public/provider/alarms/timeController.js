@@ -9,7 +9,7 @@ app.controller('timeController', ['$scope', function ($scope) {
         theme: 'mobiscroll',
         display: 'bottom',
         headerText: false,
-        maxWidth: 90
+        maxWidth: 190
     };
 
 }]);

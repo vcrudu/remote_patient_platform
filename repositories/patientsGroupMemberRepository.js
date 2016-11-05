@@ -297,14 +297,14 @@
         TableName: name
       };
 
-      this.dynamoDb.deleteTable(params, function (err, data) {
+      /*this.dynamoDb.deleteTable(params, function (err, data) {
 
         if (err) {
           callback(err, false);
         } else {
           callback(null, true)
         }
-      });
+      });*/
     },
 
     checkExistsTable: function (tableName, callback) {

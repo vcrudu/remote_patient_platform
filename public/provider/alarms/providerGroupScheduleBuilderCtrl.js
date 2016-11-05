@@ -181,7 +181,7 @@
                     theme: 'mobiscroll',
                     display: 'bottom',
                     headerText: false,
-                    maxWidth: 90
+                    maxWidth: 190
                 };
 
            
