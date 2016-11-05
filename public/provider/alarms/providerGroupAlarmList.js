@@ -16,7 +16,7 @@
             $scope.deleteAlarmTemplate = function(template) {
                 var req = {
                     method: 'DELETE',
-                    url: appSettings.getServerUrl() + '/v1/api//groupalarm?alarmName=' + template.alarmName+"&groupname="+$stateParams.groupName,
+                    url: appSettings.getServerUrl() + '/v1/api/groupalarm?alarmName=' + template.alarmName+"&groupname="+$stateParams.groupName,
                     headers: {
                         'x-access-token': $localStorage.user.token
                     }

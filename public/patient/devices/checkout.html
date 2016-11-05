@@ -1,75 +1,128 @@
-<md-content class="" layout="row" ng-if="vm.basket.Items.length">
-    <md-card style="width: 100%; min-height: inherit">
-        <md-card-content>
-            <div class=" col-md-12 col-sm-12">
+<div class="hidden-xs">
+    <md-content class="" layout="row" ng-if="vm.basket.Items.length">
+        <md-card style="width: 100%; min-height: inherit">
+            <md-card-content>
+                <div class=" col-md-12 col-sm-12">
 
-                <div class="row">
-                    <div class="col-xs-8 ">
-                        <b>Product</b>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="pull-right ">
-                            <b>Quantity</b>
+                    <div class="row">
+                        <div class="col-xs-8 ">
+                            <b>Product</b>
                         </div>
-                    </div>
-                    <div class="col-xs-2 ">
-                        <div class="pull-right ">
-                            <b>Price</b>
-                        </div>
-                    </div>
-
-                </div>
-                <br/>
-                <md-divider></md-divider>
-                <div class="padding-top-10">
-                    <div ng-repeat="item in vm.basket.Items" class="padding-top-10">
-                        <div class="row">
-                            <div class="col-xs-2 ">
-                                <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img" style="max-height: 150px; margin-top: 20px;">
-                            </div>
-                            <div class="col-xs-6">
-                                <h3 class="md-headline">{{item.Device.model}}
-                                    <small><p>({{item.Device.deviceModelType}})</p></small>
-                                </h3>
-                                <p>
-                                    {{item.Device.description}}
-                                </p>
-                            </div>
-                            <div class="col-xs-2 ">
-                                <div class="pull-right text-center">
-                                    <div class=" text-primary font-md" style="margin-top: 20px">
-                                        <div class="form-group ">
-                                            <input type="number" min="0" class="form-control text-right" ng-model="item.Quantity" >
-                                        </div>
-                                    </div>
-                                    <a href="" class="text-primary pull-right" ng-click="vm.removeItem(item)">
-                                        Remove
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-2 ">
-                                <div class="pull-right text-primary font-md" style="margin-top: 20px">
-                                    &pound{{item.Price | number :2}}
-                                </div>
+                        <div class="col-xs-2">
+                            <div class="pull-right ">
+                                <b>Quantity</b>
                             </div>
                         </div>
-                        <md-divider></md-divider>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-sm-12" style="margin-right: 0px;padding-right:1px">
-                <br>
-                <div class="pull-right">
-                    <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s):&nbsp; <span class="text-primary font-md">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
-                    <br>
+                        <div class="col-xs-2 ">
+                            <div class="pull-right ">
+                                <b>Price</b>
+                            </div>
+                        </div>
 
+                    </div>
+                    <br/>
+                    <md-divider></md-divider>
                     <div class="padding-top-10">
-                        <md-button class="md-raised md-primary pull-right padding-left-right-16" ui-sref="patient.devices.checkout-pay"><i class="fa fa-shopping-cart"></i>
-                            &nbsp;Proceed to checkout</md-button>
+                        <div ng-repeat="item in vm.basket.Items" class="padding-top-10">
+                            <div class="row">
+                                <div class="col-xs-2 ">
+                                    <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-responsive img" style="max-height: 150px; margin-top: 20px;">
+                                </div>
+                                <div class="col-xs-6">
+                                    <h3 class="md-headline">{{item.Device.model}}
+                                        <small><p>({{item.Device.deviceModelType}})</p></small>
+                                    </h3>
+                                    <p>
+                                        {{item.Device.description}}
+                                    </p>
+                                </div>
+                                <div class="col-xs-2 ">
+                                    <div class="pull-right text-center">
+                                        <div class=" text-primary font-md" style="margin-top: 20px">
+                                            <div class="form-group ">
+                                                <input type="number" min="0" class="form-control text-right" ng-model="item.Quantity" >
+                                            </div>
+                                        </div>
+                                        <a href="" class="text-primary pull-right" ng-click="vm.removeItem(item)">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 ">
+                                    <div class="pull-right text-primary font-md" style="margin-top: 20px">
+                                        &pound{{item.Price | number :2}}
+                                    </div>
+                                </div>
+                            </div>
+                            <md-divider></md-divider>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-12 col-sm-12" style="margin-right: 0px;padding-right:1px">
+                    <br>
+                    <div class="pull-right">
+                        <span><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s):&nbsp; <span class="text-primary font-md">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
+                        <br>
 
-            </div>
-        </md-card-content>
-    </md-card>
-</md-content>
+                        <div class="padding-top-10">
+                            <md-button class="md-raised md-primary pull-right padding-left-right-16" ui-sref="patient.devices.checkout-pay"><i class="fa fa-shopping-cart"></i>
+                                &nbsp;Proceed to checkout</md-button>
+                        </div>
+                    </div>
+
+                </div>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>
+<div class="visible-xs">
+    <md-content class="row" style="margin-right: 0px; margin-left: 0px;" ng-if="vm.basket.Items.length">
+        <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="item in vm.basket.Items" style="padding-right: 0px; padding-left: 0px;">
+            <md-card>
+                <div style="height: 150px;margin-top: 20px">
+                    <img ng-src="{{item.Device.imagesUrls[0]}}" class="img-rounded img-responsive" style="margin-left: auto;margin-right: auto;max-height: 150px;">
+                </div>
+                <md-card-title>
+                    <md-card-title-text>
+                        <h3 class="md-headline">{{item.Device.model}}
+                            <small><p>({{item.Device.deviceModelType}})</p></small>
+                        </h3>
+                        <p>{{item.Device.description}}</p>
+                        <div>
+                            <div class="col-xs-5">
+                                <div class="font-md">
+                                    <div class="form-group ">
+                                        <input type="number" min="0" class="form-control text-right" ng-model="item.Quantity" >
+                                    </div>
+                                </div>
+                                <a href="" class="text-primary pull-right" ng-click="vm.removeItem(item)">
+                                    Remove
+                                </a>
+                            </div>
+                            <div class="col=xs-2">
+
+                            </div>
+                            <div class="col=xs-5">
+                                <h2 class="text-primary pull-right" style="margin: 0; font-weight: 500">
+                                    &pound{{item.Price | number :2}}
+                                </h2>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+        </div>
+        <md-card style="min-height:inherit;">
+            <md-card-title>
+                <md-card-title-text style="text-align: right">
+                    <span class="pull-right"><b>Subtotal {{vm.basket.getTotalItems() | number :0}} item(s):&nbsp; <span class="text-primary font-md">&pound{{vm.basket.getAmount() | number :2}}</span></b></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="column" layout-align="start">
+                <md-button class="md-raised md-primary pull-right padding-left-right-16" ui-sref="patient.devices.checkout-pay"><i class="fa fa-shopping-cart"></i>
+                    &nbsp;Proceed to checkout</md-button>
+            </md-card-actions>
+        </md-card>
+    </md-content>
+</div>

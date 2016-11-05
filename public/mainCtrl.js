@@ -8,6 +8,7 @@
         $scope.bodyClass = "desktop-detected pace-done";
 
         $scope.containerClass = "container";
+        $scope.showHtml = true;
 
         var hash = window.location.hash;
 
@@ -22,9 +23,7 @@
             setLayout();
         }
 
-
         function setLayout() {
-
             if ($localStorage.user) {
                 $scope.extr_page = "";
             }
@@ -34,26 +33,35 @@
 
             $scope.userName = authService.getUserName();
             $scope.containerClass = "";
-        }
 
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.showHtml = true;
+                });
+
+            }, 200);
+        }
 
         $scope.$on('signin', function () {
             setLayout();
         });
 
         $scope.$on('login', function () {
-            debugger;
+
             $scope.extr_page = "extr-page";
         });
 
         $scope.logOut = function () {
-            authService.logout(function () {
-                $scope.containerClass = "container";
-                toastr.info('Logged out!', 'Information');
-            });
-
+            $scope.showHtml = false;
             $scope.extr_page = "extr-page";
-            $state.go('login');
+            $scope.containerClass = "container";
+
+            setTimeout(function () {
+                authService.logout(function () {
+                    toastr.info('Logged out!', 'Information');
+                    $state.go('login');
+                });
+            }, 100);
         };
     }]);
 })();

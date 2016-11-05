@@ -105,7 +105,8 @@
                     Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
                     break;
                 case "goToDevices":
-                    Bridge.Redirect.openUrl("/#/patient/patient.devices/patient.devices.buy");
+                    debugger;
+                    Bridge.Redirect.openUrl("#/patient/patient.devices/patient.devices.buy");
                     break;
                 case "goToTimeline":
                     history.go(-1);
@@ -122,8 +123,7 @@
                             <div className="mdl-card__title">
                                 <h2 className="mdl-card__title-text">{this.state.message.title}</h2>
                             </div>
-                            <div className="mdl-card__supporting-text">
-                                {this.state.message.content}
+                            <div className="mdl-card__supporting-text" dangerouslySetInnerHTML={{__html: this.state.message.content}}>
                             </div>
                             <div className="mdl-card__actions">
                                 {

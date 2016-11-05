@@ -60,14 +60,14 @@
                 TableName: TABLE_NAME
             };
 
-            dynamoDb.deleteTable(params, function (err) {
+            /*dynamoDb.deleteTable(params, function (err) {
 
                 if (err) {
                     callback(err, false);
                 } else {
                     callback(null, true);
                 }
-            });
+            });*/
         },
 
         getList: function(byGroupId, callback) {
@@ -109,7 +109,7 @@
                     });
 
 
-                    callback(schedulesList, null);
+                    callback(null,schedulesList);
                 }else{
                     callback(null, null);
                 }

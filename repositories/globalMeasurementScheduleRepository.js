@@ -66,14 +66,14 @@ var GlobalMeasurementScheduleRepository = function () {
                 TableName: TABLE_NAME
             };
 
-            this._dynamoDb.deleteTable(params, function (err) {
+            /*this._dynamoDb.deleteTable(params, function (err) {
 
                 if (err) {
                     callback(err, false);
                 } else {
                     callback(null, true);
                 }
-            });
+            });*/
         }
     }, {
         key: 'getOne',

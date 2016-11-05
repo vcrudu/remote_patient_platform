@@ -39,7 +39,42 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
                   $state.go("provider.patients_groups_members.vitalsigns", {patient: patient});
        };
 
+        $scope.deleteMember = function(patient) {
 
+            
+            
+            var req = {
+                method: 'DELETE',
+                url: appSettings.getServerUrl() + '/v1/api/patientsgroupmember?patientId=' + patient.email+"&groupName="+$stateParams.groupName,
+                headers: {
+                    'x-access-token': $localStorage.user.token
+                }
+            };
+
+            $http(req).success(function (res) {
+                if (res.success) {
+                    toastr.success('Member deleted!','Success');
+
+                    var index = -1;
+                    for(var i=0; i<$scope.patientsGroupsMembers.length;i++) {
+                        if (patient.scheduleName == $scope.patientsGroupsMembers[i].scheduleName) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index > -1) {
+                        //   alert(index);
+                        $scope.patientsGroupsMembers.splice(index, 1);
+                    }
+                } else {
+                    toastr.success('Error happen!','Error');
+                }
+            }).error(function (err) {
+                toastr.success('Error happen!','Error');
+            });
+            
+        };
 
         $scope.addPatient = function () {
             var modal = $modal.open({
@@ -69,7 +104,7 @@ angular.module('app').controller('providerPatientsGroupMembersCtrl', ['$rootScop
                                 }
                             };
 
-                            $http.post("/v1/api//patientsgroupmember/invitation",post_data, config).then(function () {
+                            $http.post("/v1/api/patientsgroupmember/invitation",post_data, config).then(function () {
                                 $modalInstance.dismiss();
                                 toastr.success('Invitation was sent successfully !');
                             }, function () {

@@ -184,6 +184,50 @@
         }
       });
     },
+    getListByGroupId: function (groupId, callback) {
+
+      if (!this.dynamoDb) {
+        this.dynamoDb = getDbLocal();
+      }
+
+      var mapPatientsGroupMemberFromDbEntity = function (dbEntity) {
+        var patientsGroupMember = {};
+        patientsGroupMember.groupId = dbEntity.groupId.S;
+        patientsGroupMember.patientId = dbEntity.patientId.S;
+        patientsGroupMember.createDateTime = dbEntity.createDateTime.N;
+        patientsGroupMember.createdBy = dbEntity.createdBy.S;
+        return patientsGroupMember;
+      };
+
+      var params = {
+
+        TableName: "PatientsGroupMember",
+
+        KeyConditionExpression: 'groupId=:groupId',
+
+        ExpressionAttributeValues: {
+          ":groupId": {S: groupId}
+        }
+      };
+
+      this.dynamoDb.query(params, function (err, data) {
+
+        if (err) {
+          callback(err, null);
+          return;
+        }
+        var listOfPatientsGroupMember = [];
+        if (data.Items) {
+          _.forEach(data.Items, function (item) {
+            var patientsGroupMemberItem = mapPatientsGroupMemberFromDbEntity(item);
+            listOfPatientsGroupMember.push(patientsGroupMemberItem);
+          });
+          callback(null, listOfPatientsGroupMember);
+        } else {
+          callback(null, null);
+        }
+      });
+    },
 
     save: function (patientsGroupMember, callback) {
 
@@ -253,14 +297,14 @@
         TableName: name
       };
 
-      this.dynamoDb.deleteTable(params, function (err, data) {
+      /*this.dynamoDb.deleteTable(params, function (err, data) {
 
         if (err) {
           callback(err, false);
         } else {
           callback(null, true)
         }
-      });
+      });*/
     },
 
     checkExistsTable: function (tableName, callback) {
