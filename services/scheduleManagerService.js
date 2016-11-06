@@ -43,7 +43,7 @@
             {
                 recurrent: true,
                 eventToTrigger: eventToTrigger,
-                timeString: timeString,
+                timeString: timeString.toLowerCase().replace(' ',''),
                 jobProcessorName: "sendStateMachineEvent",
                 scheduleType: scheduleType,
                 offsetInMinutes: offsetInMinutes,
