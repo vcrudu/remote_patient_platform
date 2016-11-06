@@ -29,8 +29,8 @@
                                         timezone, callback) {
 
         var reqOptions = {
-            hostname: 'localhost',//'hcm-scheduler.eu-west-1.elasticbeanstalk.com',
-            port: 3030,
+            hostname: 'hcm-scheduler.eu-west-1.elasticbeanstalk.com',
+            port: 80,
             path: "/jobs",
             method: "POST",
             headers: {
@@ -86,8 +86,8 @@
                                       scheduleType, callback) {
 
         var reqOptions = {
-            hostname: 'localhost',
-            port: 3030,
+            hostname: 'hcm-scheduler.eu-west-1.elasticbeanstalk.com',
+            port: 80,
             path: "/jobs?userId=" + userId + "&jobProcessorName=sendStateMachineEvent&scheduleType=" + scheduleType,
             method: "DELETE",
             headers: {
