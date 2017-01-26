@@ -472,6 +472,24 @@
                                                     }, 0);
                                                 }
                                             });
+
+                                            usersRepository.findOneByEmail(data.recipient, function (err, recipientUser) {
+                                                if (recipientUser.socketIds && recipientUser.socketIds.length > 0) {
+                                                    for (var i = 0; i < recipientUser.socketIds.length; i ++) {
+                                                        var recipientSocket = _.find(namespace.sockets, function (aSocket) {
+                                                            return aSocket.id === recipientUser.socketIds[i];//user.socketId;
+                                                        });
+                                                        if (recipientSocket && recipientSocket.connected) {
+                                                            if (recipientSocket.id === data.recipientSocketId) {
+                                                                continue;
+                                                            }
+                                                            else {
+                                                                recipientSocket.emit('cancelByCaller', data);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            });
                                         }
                                     });
                                 }
